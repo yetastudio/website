@@ -8,22 +8,3 @@
 	gap: 24px;
 	font-family: var(--font-funnel-display);
 }
-
-.title {
-	font-size: 3.15rem;
-	font-weight: 700;
-}
-
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-	a:hover {
-		text-decoration: underline;
-		text-underline-offset: 4px;
-	}
-}
-
-@media (prefers-color-scheme: dark) {
-	.logo {
-		filter: invert();
-	}
-}
