@@ -3,6 +3,7 @@
 	--background-secondary: #f5f6f4;
 	--foreground: #0a0b04;
 	--foreground-secondary: #0f1108;
+	--background-pattern: url('https://res.cloudinary.com/doowhwdzj/image/upload/v1745612133/background-pattern-light_rqsfhj.png');
 }
 
 @media (prefers-color-scheme: dark) {
@@ -11,6 +12,7 @@
 		--background-secondary: #0f1108;
 		--foreground: #f5f6f4;
 		--foreground-secondary: #e4e5e0;
+		--background-pattern: url('https://res.cloudinary.com/doowhwdzj/image/upload/v1745611892/background-pattern_euhioh.png');
 	}
 }
 
@@ -26,6 +28,10 @@ body {
 	font-family: Arial, Helvetica, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	background-image: var(--background-pattern);
+	background-position: top center;
+	background-size: auto;
+	background-repeat: repeat;
 }
 
 * {
