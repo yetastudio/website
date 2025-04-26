@@ -1,0 +1,19 @@
+.titleContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+}
+
+.title {
+	font-size: 3.15rem;
+	font-weight: 700;
+}
+
+.logo {
+	@media (prefers-color-scheme: light) {
+		& {
+			mix-blend-mode: difference;
+		}
+	}
+}
