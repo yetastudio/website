@@ -1,10 +1,14 @@
-import Image from "next/image";
+
+//! Components
+import { Header, Hero, Footer } from "@/app/components/layout";
+
+//! Styles
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
     <div className={styles.page}>
-      <h1 className={styles.title}>Yeta Studio</h1>
+      <Hero />
     </div>
   );
 }
