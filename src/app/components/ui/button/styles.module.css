@@ -1,0 +1,158 @@
+.button {
+	/* Base */
+	width: fit-content;
+	height: fit-content;
+	position: relative;
+	padding: var(--8) var(--16);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: var(--4);
+
+	font-family: var(--font-funnel-display);
+	text-align: center;
+	vertical-align: middle;
+	transition: all 200ms;
+	border: none;
+
+	/* Sizes */
+	&.sm {
+		font-size: var(--10);
+	}
+
+	&.md {
+		height: var(--40);
+		font-size: var(--14);
+
+		@media (min-width: 768px) {
+			& {
+				height: var(--48);
+			}
+		}
+	}
+
+	&.lg {
+		font-size: var(--14);
+
+		@media (min-width: 768px) {
+			& {
+				height: var(--60);
+			}
+		}
+	}
+
+	/* Radius */
+	&.squared {
+		border-radius: var(--5);
+
+		&::before {
+			content: '';
+			position: absolute;
+			padding: 1px;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			border-radius: inherit;
+			background: var(--border-gradient);
+			mask: var(--mask-gradient);
+			-webkit-mask-composite: xor;
+			mask-composite: exclude;
+			pointer-events: none;
+		}
+	}
+
+	&.rounded {
+		border-radius: var(--12);
+
+		&::before {
+			content: '';
+			position: absolute;
+			padding: 1px;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			border-radius: inherit;
+			background: var(--border-gradient);
+			mask: var(--mask-gradient);
+			-webkit-mask-composite: xor;
+			mask-composite: exclude;
+			pointer-events: none;
+		}
+	}
+
+	/* Variants */
+	&.solid {
+		background-color: var(--background);
+	}
+
+	&.ghost {
+		background: none;
+
+		&::before {
+			content: none;
+			background: none;
+			padding: 0;
+		}
+	}
+
+	&.outline {
+		background: none;
+
+		&::before {
+			content: '';
+			position: absolute;
+			padding: 1px;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			border-radius: inherit;
+			background: var(--border-gradient);
+			mask: var(--mask-gradient);
+			-webkit-mask-composite: xor;
+			mask-composite: exclude;
+			pointer-events: none;
+		}
+	}
+
+	/* Icons */
+	&.icon-middle {
+		padding: var(--8) var(--7);
+	}
+
+	&.icon-left {
+		padding-left: var(--12);
+	}
+
+	&.icon-right {
+		padding-right: var(--12);
+	}
+
+	/* Boolean-Based Styles */
+	&.isFull {
+		width: 100%;
+	}
+
+	&.isDisabled {
+		cursor: not-allowed;
+		opacity: 0.5;
+	}
+
+	&.isLoading {
+		cursor: wait;
+	}
+
+	/* Pseudo-Classes */
+	&:hover {
+		cursor: pointer;
+		background-color: var(--background-secondary);
+	}
+
+	&:active {
+		background-color: var(--background-tertiary);
+		cursor: pointer;
+		transition: 0ms;
+	}
+}
