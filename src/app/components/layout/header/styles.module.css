@@ -1,18 +1,17 @@
-.headerBorder {
-	position: relative;
-	inset: 0px;
+.header {
 	width: 100%;
-	height: var(--60);
-	padding: 1px;
+	height: 100%;
 	display: flex;
-	align-items: center;
-	justify-content: center;
-	background: var(--border-gradient);
-	border-radius: var(--13);
-	z-index: 1;
 }
 
-.header {
+.logo {
+	@media (prefers-color-scheme: light) {
+		filter: invert(1);
+	}
+}
+
+.mobile {
+	display: flex;
 	position: relative;
 	width: 100%;
 	height: 100%;
@@ -41,6 +40,33 @@
 	}
 }
 
-.logo {
-	mix-blend-mode: difference;
+.desktop {
+	display: flex;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: var(--10);
+	border-radius: var(--12);
+	z-index: 10;
+}
+
+@media ((min-width: 360px) and (max-width: 768px)) {
+	.mobile {
+		display: inherit;
+	}
+	.desktop {
+		display: none;
+	}
+}
+
+@media (min-width: 769px) {
+	.mobile {
+		display: none;
+	}
+	.desktop {
+		display: inherit;
+	}
 }
