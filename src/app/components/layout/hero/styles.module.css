@@ -17,8 +17,9 @@
 }
 
 .titleContainer {
+	width: 100%;
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
 	gap: 1rem;
 }
@@ -26,12 +27,21 @@
 .title {
 	font-size: var(--50);
 	font-weight: 700;
+
+	@media (min-width: 1440px) {
+		font-size: var(--90);
+	}
 }
 
-.subtitle {
-	font-size: var(--20);
-	font-weight: 400;
-	align-self: flex-start;
+.logoWrapper {
+	position: relative;
+	width: 50px;
+	height: 50px;
+
+	@media (min-width: 1440px) {
+		width: 104px;
+		height: 104px;
+	}
 }
 
 .logo {
@@ -48,6 +58,12 @@
 	font-size: var(--20);
 	font-weight: 400;
 	text-align: center;
+
+	@media (min-width: 1440px) {
+		width: 100%;
+		font-size: var(--32);
+		margin-top: var(--64);
+	}
 }
 
 .heroCTAs {
@@ -55,6 +71,10 @@
 	padding: var(--8);
 	margin-top: var(--20);
 	border-radius: var(--20);
+
+	@media (min-width: 1440px) {
+		margin-top: var(--64);
+	}
 
 	display: flex;
 	flex-direction: column;

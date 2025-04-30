@@ -10,22 +10,21 @@ function Hero() {
     <div className={styles.hero}>
       <div
         className={styles.heroContent}>
-        <h2 className={styles.subtitle}>
-          We are
-        </h2>
         <div className={styles.titleContainer}>
           <h1 className={styles.title}>
             Yeta
           </h1>
-          <Image
-            className={styles.logo}
-            priority
-            width={50}
-            height={50}
-            quality={100}
-            alt={"Yeta Studio Logo Mark"}
-            src={"https://res.cloudinary.com/doowhwdzj/image/upload/v1745707536/Variant_Dark_wcqmcg.svg"}
-          />
+          <div className={styles.logoWrapper}>
+            <Image
+              className={styles.logo}
+              src={"https://res.cloudinary.com/doowhwdzj/image/upload/v1745707536/Variant_Dark_wcqmcg.svg"}
+              alt={"Yeta Studio Logo Mark"}
+              fill
+              priority
+              quality={100}
+              style={{ objectFit: 'cover' }}
+            />
+          </div>
           <h1 className={styles.title}>
             Studio
           </h1>
