@@ -10,9 +10,12 @@
 	gap: var(--4);
 
 	font-family: var(--font-funnel-display);
+	font-weight: 400;
 	text-align: center;
 	vertical-align: middle;
 	transition: all 200ms;
+
+	color: var(--foreground);
 	border: none;
 
 	/* Sizes */
@@ -27,6 +30,7 @@
 		@media (min-width: 768px) {
 			& {
 				height: var(--48);
+				font-size: var(--16);
 			}
 		}
 	}
@@ -36,6 +40,7 @@
 
 		@media (min-width: 768px) {
 			& {
+				font-size: var(--16);
 				height: var(--60);
 			}
 		}
