@@ -1,0 +1,61 @@
+.navBar {
+	position: fixed;
+	top: var(--34);
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	width: fit-content;
+	height: var(--60);
+	padding: var(--12) var(--24);
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 64px;
+
+	border-radius: var(--12);
+	background-color: var(--background);
+	z-index: 10;
+
+	&::before {
+		content: '';
+		position: absolute;
+		padding: 1px;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		border-radius: inherit;
+		background: var(--border-gradient);
+		mask: var(--mask-gradient);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+		pointer-events: none;
+	}
+}
+
+.navItem {
+	position: relative;
+	font-size: var(--16);
+	font-weight: 400;
+	color: var(--foreground);
+	transition: all 200ms ease;
+}
+
+.navItem:hover {
+	opacity: 0.8;
+}
+
+.navItem.active {
+	font-weight: 500;
+}
+
+.navItem.active::after {
+	content: '';
+	position: absolute;
+	bottom: -4px;
+	left: 0;
+	width: 100%;
+	height: 1px;
+	background-color: var(--foreground);
+}
