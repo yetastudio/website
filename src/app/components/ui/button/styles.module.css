@@ -1,9 +1,10 @@
 .button {
 	/* Base */
+	position: relative;
 	width: fit-content;
 	height: fit-content;
-	position: relative;
 	padding: var(--8) var(--16);
+
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -13,10 +14,10 @@
 	font-weight: 400;
 	text-align: center;
 	vertical-align: middle;
-	transition: all 200ms;
 
-	color: var(--foreground);
 	border: none;
+	color: var(--foreground);
+	transition: all 200ms ease;
 
 	/* Sizes */
 	&.sm {
@@ -28,10 +29,8 @@
 		font-size: var(--14);
 
 		@media (min-width: 768px) {
-			& {
-				height: var(--48);
-				font-size: var(--16);
-			}
+			height: var(--48);
+			font-size: var(--16);
 		}
 	}
 
@@ -39,10 +38,8 @@
 		font-size: var(--14);
 
 		@media (min-width: 768px) {
-			& {
-				font-size: var(--16);
-				height: var(--60);
-			}
+			font-size: var(--16);
+			height: var(--60);
 		}
 	}
 
@@ -153,11 +150,12 @@
 	&:hover {
 		cursor: pointer;
 		background-color: var(--background-secondary);
+		transition: all 100ms ease;
 	}
 
 	&:active {
-		background-color: var(--background-tertiary);
 		cursor: pointer;
-		transition: 0ms;
+		background-color: var(--background-tertiary);
+		transition: all 0ms;
 	}
 }
