@@ -1,5 +1,5 @@
 //! Types
-import { ReactNode } from "react";
+import { NavItemProps } from "@/app/types";
 
 //! Components
 import Link from "next/link";
@@ -7,15 +7,11 @@ import Link from "next/link";
 //! Styles
 import styles from "./styles.module.css";
 
-type NavItemProps = {
-  href: string;
-  children: ReactNode;
-  isActive?: boolean;
-};
+function NavItem(props: NavItemProps) {
+  const { href, children } = props;
 
-function NavItem({ href, children, isActive = false }: NavItemProps) {
   return (
-    <Link href={href} className={`${styles.navItem} ${isActive ? styles.active : ''}`}>
+    <Link href={href} className={styles.navItem}>
       {children}
     </Link>
   );
