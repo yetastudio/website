@@ -16,3 +16,8 @@ export type ButtonProps = {
 	iconPosition?: 'left' | 'middle' | 'right';
 	onClick?: () => void;
 };
+
+export type NavItemProps = {
+	href: string;
+	children: ReactNode;
+};
