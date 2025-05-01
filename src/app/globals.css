@@ -33,6 +33,11 @@
 	--72: 4.5rem;
 	--80: 5rem;
 	--90: 5.25rem;
+	--104: 6rem;
+	--112: 6.5rem;
+	--120: 7rem;
+	--124: 7.125rem;
+	--128: 8rem;
 
 	/** Colors */
 	--background: #e4e5e0;
@@ -107,7 +112,7 @@ body {
 
 	/* Scrollbar */
 	::-webkit-scrollbar {
-		width: 8px;
+		width: var(--8);
 	}
 
 	::-webkit-scrollbar-track {
@@ -115,7 +120,7 @@ body {
 	}
 
 	::-webkit-scrollbar-thumb {
-		border-radius: 8px;
+		border-radius: var(--8);
 		background-color: var(--neutral-dark-05);
 	}
 
