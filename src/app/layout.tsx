@@ -1,5 +1,5 @@
-
 //! Next Core
+import localFont from 'next/font/local';
 import type { Metadata } from 'next';
 
 //! Metadata
@@ -35,13 +35,37 @@ export const metadata: Metadata = {
 };
 
 //! Fonts
-import { Funnel_Display } from "next/font/google";
+const editorialNew = localFont({
+  src: '../../public/fonts/PPEditorialNew-Regular.otf',
+  variable: '--font-editorial-new',
+  weight: '400',
+});
 
-const funnelDisplay = Funnel_Display({
-  variable: "--font-funnel-display",
-  weight: ["400", "500", "600", "700"],
-  style: ["normal"],
-  subsets: ["latin"],
+const editorialNewItalic = localFont({
+  src: '../../public/fonts/PPEditorialNew-Italic.otf',
+  variable: '--font-editorial-new-italic',
+  weight: '400',
+});
+
+const funnelDisplayLight = localFont({
+  src: '../../public/fonts/FunnelDisplay-Light.woff2',
+  variable: "--font-funnel-display-light",
+  weight: "300",
+});
+const funnelDisplayRegular = localFont({
+  src: '../../public/fonts/FunnelDisplay-Regular.woff2',
+  variable: "--font-funnel-display-regular",
+  weight: "400",
+});
+const funnelDisplayMedium = localFont({
+  src: '../../public/fonts/FunnelDisplay-Medium.woff2',
+  variable: "--font-funnel-display-medium",
+  weight: "500",
+});
+const funnelDisplayBold = localFont({
+  src: '../../public/fonts/FunnelDisplay-Bold.woff2',
+  variable: "--font-funnel-display-bold",
+  weight: "700",
 });
 
 //! Styles
@@ -54,7 +78,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${funnelDisplay.variable}`}>
+      <body className={`${funnelDisplayLight.variable} ${funnelDisplayRegular.variable} 
+      ${funnelDisplayMedium.variable} ${funnelDisplayBold.variable}
+      ${editorialNew.variable} ${editorialNewItalic.variable}
+      `}>
         {children}
       </body>
     </html>
