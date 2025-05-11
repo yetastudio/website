@@ -1,5 +1,6 @@
 :root {
 	/** Spacing System */
+
 	--4: 0.25rem;
 	--5: 0.3125rem;
 	--6: 0.375rem;
@@ -47,7 +48,9 @@
 	--foreground-secondary: #0f1108;
 	--background-pattern: url('https://res.cloudinary.com/doowhwdzj/image/upload/v1745806029/background-pattern-light_bf44li.png');
 
-	/** (Diff Opacity) */
+	/** Diff Opacity */
+	--background-70: rgba(228, 229, 224, 70%);
+
 	--neutral-dark-05: rgba(10, 11, 4, 5%);
 	--neutral-dark-10: rgba(10, 11, 4, 10%);
 	--neutral-dark-15: rgba(10, 11, 4, 15%);
@@ -55,11 +58,15 @@
 	--neutral-light-10: rgba(245, 246, 244, 10%);
 	--neutral-light-15: rgba(245, 246, 244, 15%);
 
+	/** Gradients */
 	--border-gradient: linear-gradient(
 		180deg,
 		var(--neutral-dark-15) 15%,
 		var(--neutral-dark-05) 100%
 	);
+
+	--border-shadow: 0px -1px 1px 0.5px rgba(15, 17, 8, 0.1) inset,
+		0px 0px 1px 1.5px rgba(245, 246, 244, 0.5) inset;
 
 	--mask-gradient: linear-gradient(#fff 0 0) content-box,
 		linear-gradient(#fff 0 0);
@@ -74,11 +81,18 @@
 		--foreground-secondary: #f5f6f4;
 		--background-pattern: url('https://res.cloudinary.com/doowhwdzj/image/upload/v1745806246/background-pattern-dark_dz3fvv.png');
 
+		/** Diff Opacity */
+		--background-70: rgba(10, 11, 4, 70%);
+
+		/** Gradients */
 		--border-gradient: linear-gradient(
 			180deg,
 			var(--neutral-light-15) 15%,
 			var(--neutral-light-05) 100%
 		);
+
+		--border-shadow: 0px -1px 1px 0.5px rgba(0, 0, 0, 0.7) inset,
+			0px 0px 1px 1.5px rgba(228, 229, 224, 0.05) inset;
 	}
 }
 
@@ -104,6 +118,8 @@ body {
 	box-sizing: border-box;
 	padding: 0;
 	margin: 0;
+	font-family: var(--font-funnel-display-regular);
+	font-weight: 400;
 
 	/* UX Enhacement */
 	user-select: none;
