@@ -46,6 +46,7 @@
 	/* Radius */
 	&.squared {
 		border-radius: var(--5);
+		box-shadow: var(--border-shadow);
 
 		&::before {
 			content: '';
@@ -66,6 +67,7 @@
 
 	&.rounded {
 		border-radius: var(--12);
+		box-shadow: var(--border-shadow);
 
 		&::before {
 			content: '';
@@ -91,6 +93,7 @@
 
 	&.ghost {
 		background: none;
+		box-shadow: none;
 
 		&::before {
 			content: none;
