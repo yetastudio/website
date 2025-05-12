@@ -4,6 +4,7 @@ import { Button } from "@/app/components/ui";
 
 //! Styles
 import styles from "./styles.module.css";
+import { HighlightVector, StrokeVector } from "../../ui/svgs";
 
 function Hero() {
   return (
@@ -29,10 +30,14 @@ function Hero() {
             Studio
           </h1>
         </div>
-        <h2 className={styles.slogan}>
-          ‘Cause <u><b>great</b></u> brands
-          aren’t built on <del>luck</del>.
-        </h2>
+        <div className={styles.sloganContainer}>
+          <HighlightVector />
+          <StrokeVector />
+          <h2 className={styles.slogan}>
+            ‘Cause <del>great</del> brands
+            aren’t built on <del>luck</del>.
+          </h2>
+        </div>
         <div className={styles.heroCTAs}>
           <Button title="Why choose Yeta Studio" radius="rounded" isFullWidth />
           <Button title="Let's build something" radius="rounded" isFullWidth />
