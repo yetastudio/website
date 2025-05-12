@@ -1,0 +1,27 @@
+.highlightVector {
+	position: relative;
+	top: 41px;
+	left: -2px;
+
+	@media (min-width: 1440px) {
+		& {
+			transform: scale(1.6);
+			top: 83px;
+			left: -3px;
+		}
+	}
+}
+
+.strokeVector {
+	position: relative;
+	top: 68px;
+	left: 65px;
+
+	@media (min-width: 1440px) {
+		& {
+			transform: scale(1.6);
+			top: 135px;
+			left: 104px;
+		}
+	}
+}
