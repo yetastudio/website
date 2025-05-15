@@ -2,6 +2,9 @@
 import localFont from 'next/font/local';
 import type { Metadata } from 'next';
 
+//! Context
+import { ThemeProvider } from './context/ThemeContext';
+
 //! Metadata
 export const metadata: Metadata = {
   title: '✹ Yeta Studio™',
@@ -82,7 +85,9 @@ export default function RootLayout({
       ${funnelDisplayMedium.variable} ${funnelDisplayBold.variable}
       ${editorialNew.variable} ${editorialNewItalic.variable}
       `}>
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
