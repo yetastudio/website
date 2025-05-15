@@ -1,3 +1,4 @@
+/** Hero Section Vectors */
 .highlightVector {
 	position: relative;
 	top: 41px;
@@ -24,4 +25,45 @@
 			left: 104px;
 		}
 	}
+}
+
+/** Summary Section Vectors */
+.blueSummaryVectorBox {
+	position: relative;
+	bottom: 64px;
+	right: 172px;
+}
+
+.blueSummaryVector {
+	position: absolute;
+}
+
+.orangeSummaryVectorBox {
+	position: relative;
+	bottom: 64px;
+	left: 69px;
+}
+
+.orangeSummaryVector {
+	position: absolute;
+}
+
+.pinkSummaryVectorBox {
+	position: relative;
+	top: 425px;
+	right: 172px;
+}
+
+.pinkSummaryVector {
+	position: absolute;
+}
+
+.violetSummaryVectorBox {
+	position: relative;
+	top: 437px;
+	left: 73px;
+}
+
+.violetSummaryVector {
+	position: absolute;
 }
