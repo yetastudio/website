@@ -1,6 +1,15 @@
 //! React Core
 import { ReactNode } from 'react';
 
+//! Context
+export type ThemeProviderProps = {
+	children: ReactNode;
+};
+
+export type ThemeContextType = {
+	isDarkMode: boolean;
+};
+
 //! Lucide React
 import { LucideIcon } from 'lucide-react';
 
