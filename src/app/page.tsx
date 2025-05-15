@@ -1,6 +1,5 @@
-
 //! Components
-import { Header, Hero, Footer } from "@/app/components/layout";
+import { Header, Hero, Summary, Footer } from "@/app/components/layout";
 
 //! Styles
 import styles from "./page.module.css";
@@ -10,6 +9,7 @@ export default function Home() {
     <div className={styles.page}>
       <Header />
       <Hero />
+      <Summary />
     </div>
   );
 }
