@@ -1,8 +1,3 @@
-// "use client"
-
-//! React Core
-// import { useEffect, useState } from 'react';
-
 //! Components
 import Image from "next/image";
 import { BlueSummaryVector, OrangeSummaryVector, PinkSummaryVector, VioletSummaryVector } from "../../ui/svgs";
@@ -11,24 +6,12 @@ import { BlueSummaryVector, OrangeSummaryVector, PinkSummaryVector, VioletSummar
 import styles from "./styles.module.css";
 
 function Summary() {
-  // const [isDarkMode, setIsDarkMode] = useState(false);
-
-  // useEffect(() => {
-  //   const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-  //   setIsDarkMode(darkModeMediaQuery.matches);
-
-  //   const handler = (e: any) => setIsDarkMode(e.matches);
-  //   darkModeMediaQuery.addEventListener('change', handler);
-
-  //   return () => darkModeMediaQuery.removeEventListener('change', handler);
-  // }, []);
-
   return (
     <div className={styles.summary}>
-      {/* <BlueSummaryVector />
+      <BlueSummaryVector />
       <OrangeSummaryVector />
       <PinkSummaryVector />
-      <VioletSummaryVector /> */}
+      <VioletSummaryVector />
       <div className={styles.summaryContent}>
         <div className={styles.summmaryHead}>
           <div className={styles.titleContainer}>
