@@ -34,18 +34,10 @@
 	right: 172px;
 }
 
-.blueSummaryVector {
-	position: absolute;
-}
-
 .orangeSummaryVectorBox {
 	position: relative;
 	bottom: 64px;
 	left: 69px;
-}
-
-.orangeSummaryVector {
-	position: absolute;
 }
 
 .pinkSummaryVectorBox {
@@ -54,16 +46,18 @@
 	right: 172px;
 }
 
-.pinkSummaryVector {
-	position: absolute;
-}
-
 .violetSummaryVectorBox {
 	position: relative;
 	top: 437px;
 	left: 73px;
 }
 
+.blueSummaryVector,
+.orangeSummaryVector,
+.pinkSummaryVector,
 .violetSummaryVector {
 	position: absolute;
+	filter: grayscale(100%);
+	opacity: 0.4;
+	transition: all 0.3s ease-in-out;
 }

@@ -1,3 +1,9 @@
+"use client"
+
+//! Custom Hooks
+import { useTheme } from '@/app/hooks/useTheme'
+
+//! Styles
 import styles from './styles.module.css'
 
 export const HighlightVector = () => (
@@ -31,8 +37,10 @@ export const StrokeVector = () => (
   </svg>
 )
 
-export const BlueSummaryVector = () => (
-  <div
+export const BlueSummaryVector = () => {
+  const { isDarkMode } = useTheme()
+
+  return (<div
     className={styles.blueSummaryVectorBox}
   >
     <svg
@@ -54,147 +62,158 @@ export const BlueSummaryVector = () => (
         d="m10.427-9.756 13.8 39.964m0 0-.997 39.184m.997-39.184L-20 60.425m44.227-30.217 43.063 2.73m-43.063-2.73L48.17-31.2M24.227 30.208l59.191 31.971m-59.19-31.971L.782 72.12m23.444-41.913L-17.839-7.027m42.066 37.235L64.63 1.356M24.227 30.208l-36.412-3.314m36.412 3.314L48.17 76.8"
       />
       <path
-        stroke="url(#a)"
+        stroke="url(#blue-summary-gradient)"
         strokeWidth={6.545}
         d="m10.427-9.756 13.8 39.964m0 0-.997 39.184m.997-39.184L-20 60.425m44.227-30.217 43.063 2.73m-43.063-2.73L48.17-31.2M24.227 30.208l59.191 31.971m-59.19-31.971L.782 72.12m23.444-41.913L-17.839-7.027m42.066 37.235L64.63 1.356M24.227 30.208l-36.412-3.314m36.412 3.314L48.17 76.8"
       />
       <defs>
         <linearGradient
-          id="a"
+          id="blue-summary-gradient"
           x1={55}
           x2={-10.5}
           y1={90.3}
           y2={-22.2}
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#0690FF" />
-          <stop offset={1} stopColor="#0E325D" />
+          <stop stopColor={!isDarkMode ? "#48CCFF" : "#0690FF"} />
+          <stop offset={1} stopColor={!isDarkMode ? "#0690FF" : "#0E325D"} />
         </linearGradient>
       </defs>
     </svg>
-  </div>
-)
+  </div>)
+}
 
-export const OrangeSummaryVector = () => (
-  <div className={styles.orangeSummaryVectorBox}>
-    <svg
-      className={styles.orangeSummaryVector}
-      xmlns="http://www.w3.org/2000/svg"
-      width={102}
-      height={89}
-      fill="none"
-    >
-      <path
-        stroke="#E4E5E0"
-        strokeWidth={7}
-        d="M84.096-14.963 94.46 5.998 62.933-4.247l43.67 37.85L47.166 4.905l48.16 32.019-69.06-26.3 112.61 73.441L1.998 22.824 89.943 80.62 33.984 56.27 51.87 86.252"
-      />
-      <path
-        stroke="#0A0B04"
-        strokeOpacity={0.2}
-        strokeWidth={7}
-        d="M84.096-14.963 94.46 5.998 62.933-4.247l43.67 37.85L47.166 4.905l48.16 32.019-69.06-26.3 112.61 73.441L1.998 22.824 89.943 80.62 33.984 56.27 51.87 86.252"
-      />
-      <path
-        stroke="url(#a)"
-        strokeWidth={7}
-        d="M84.096-14.963 94.46 5.998 62.933-4.247l43.67 37.85L47.166 4.905l48.16 32.019-69.06-26.3 112.61 73.441L1.998 22.824 89.943 80.62 33.984 56.27 51.87 86.252"
-      />
-      <defs>
-        <linearGradient
-          id="a"
-          x1={103.473}
-          x2={51.588}
-          y1={-3.776}
-          y2={86.091}
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#80290E" />
-          <stop offset={1} stopColor="#FB5607" />
-        </linearGradient>
-      </defs>
-    </svg>
-  </div>
-)
-export const PinkSummaryVector = () => (
-  <div className={styles.pinkSummaryVectorBox}>
-    <svg
-      className={styles.pinkSummaryVector}
-      xmlns="http://www.w3.org/2000/svg"
-      width={124}
-      height={97}
-      fill="none"
-    >
-      <path
-        stroke="#E4E5E0"
-        strokeWidth={8}
-        d="m6.223 3.745 66.213 45.514L9.58 26.989l63.524 43.65-100.518-42.462 148.88 91.249L-56.98 41.282l139.907 80.594-101.686-33.807 86.58 54.869-77.364-30.565 56.744 67.32"
-      />
-      <path
-        stroke="#0A0B04"
-        strokeOpacity={0.2}
-        strokeWidth={8}
-        d="m6.223 3.745 66.213 45.514L9.58 26.989l63.524 43.65-100.518-42.462 148.88 91.249L-56.98 41.282l139.907 80.594-101.686-33.807 86.58 54.869-77.364-30.565 56.744 67.32"
-      />
-      <path
-        stroke="url(#a)"
-        strokeWidth={8}
-        d="m6.223 3.745 66.213 45.514L9.58 26.989l63.524 43.65-100.518-42.462 148.88 91.249L-56.98 41.282l139.907 80.594-101.686-33.807 86.58 54.869-77.364-30.565 56.744 67.32"
-      />
-      <defs>
-        <linearGradient
-          id="a"
-          x1={46.609}
-          x2={20.869}
-          y1={179.779}
-          y2={1.629}
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#57001E" />
-          <stop offset={1} stopColor="#FF0558" />
-        </linearGradient>
-      </defs>
-    </svg>
-  </div>
-)
-export const VioletSummaryVector = () => (
-  <div className={styles.violetSummaryVectorBox}>
-    <svg
-      className={styles.violetSummaryVector}
-      xmlns="http://www.w3.org/2000/svg"
-      width={98}
-      height={85}
-      fill="none"
-    >
-      <path
-        stroke="#E4E5E0"
-        strokeWidth={8}
-        d="M43.317 26.419 66.66 56.157m0 0 25.702 27.076M66.66 56.157l32.67-28.304M66.66 56.157 39.486 90.689M66.66 56.157.82 51.447m65.84 4.71 12.607 66.163M66.66 56.157l45.32 8.252m-45.32-8.252L68.89.877"
-      />
-      <path
-        stroke="#0A0B04"
-        strokeOpacity={0.2}
-        strokeWidth={8}
-        d="M43.317 26.419 66.66 56.157m0 0 25.702 27.076M66.66 56.157l32.67-28.304M66.66 56.157 39.486 90.689M66.66 56.157.82 51.447m65.84 4.71 12.607 66.163M66.66 56.157l45.32 8.252m-45.32-8.252L68.89.877"
-      />
-      <path
-        stroke="url(#a)"
-        strokeWidth={8}
-        d="M43.317 26.419 66.66 56.157m0 0 25.702 27.076M66.66 56.157l32.67-28.304M66.66 56.157 39.486 90.689M66.66 56.157.82 51.447m65.84 4.71 12.607 66.163M66.66 56.157l45.32 8.252m-45.32-8.252L68.89.877"
-      />
-      <defs>
-        <linearGradient
-          id="a"
-          x1={36.844}
-          x2={100.785}
-          y1={10.794}
-          y2={99.8}
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#7543E3" />
-          <stop offset={1} stopColor="#2B1560" />
-        </linearGradient>
-      </defs>
-    </svg>
-  </div>
-)
+export const OrangeSummaryVector = () => {
+  const { isDarkMode } = useTheme()
+  return (
+    <div className={styles.orangeSummaryVectorBox}>
+      <svg
+        className={styles.orangeSummaryVector}
+        xmlns="http://www.w3.org/2000/svg"
+        width={102}
+        height={89}
+        fill="none"
+      >
+        <path
+          stroke="#E4E5E0"
+          strokeWidth={7}
+          d="M84.096-14.963 94.46 5.998 62.933-4.247l43.67 37.85L47.166 4.905l48.16 32.019-69.06-26.3 112.61 73.441L1.998 22.824 89.943 80.62 33.984 56.27 51.87 86.252"
+        />
+        <path
+          stroke="#0A0B04"
+          strokeOpacity={0.2}
+          strokeWidth={7}
+          d="M84.096-14.963 94.46 5.998 62.933-4.247l43.67 37.85L47.166 4.905l48.16 32.019-69.06-26.3 112.61 73.441L1.998 22.824 89.943 80.62 33.984 56.27 51.87 86.252"
+        />
+        <path
+          stroke="url(#orange-summary-gradient)"
+          strokeWidth={7}
+          d="M84.096-14.963 94.46 5.998 62.933-4.247l43.67 37.85L47.166 4.905l48.16 32.019-69.06-26.3 112.61 73.441L1.998 22.824 89.943 80.62 33.984 56.27 51.87 86.252"
+        />
+        <defs>
+          <linearGradient
+            id="orange-summary-gradient"
+            x1={103.473}
+            x2={51.588}
+            y1={-3.776}
+            y2={86.091}
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor={!isDarkMode ? "#FB5607" : "#80290E"} />
+            <stop offset={1} stopColor={!isDarkMode ? "#FF8D35" : "#FB5607"} />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  )
+}
+
+export const PinkSummaryVector = () => {
+  const { isDarkMode } = useTheme()
+  return (
+    <div className={styles.pinkSummaryVectorBox}>
+      <svg
+        className={styles.pinkSummaryVector}
+        xmlns="http://www.w3.org/2000/svg"
+        width={124}
+        height={97}
+        fill="none"
+      >
+        <path
+          stroke="#E4E5E0"
+          strokeWidth={8}
+          d="m6.223 3.745 66.213 45.514L9.58 26.989l63.524 43.65-100.518-42.462 148.88 91.249L-56.98 41.282l139.907 80.594-101.686-33.807 86.58 54.869-77.364-30.565 56.744 67.32"
+        />
+        <path
+          stroke="#0A0B04"
+          strokeOpacity={0.2}
+          strokeWidth={8}
+          d="m6.223 3.745 66.213 45.514L9.58 26.989l63.524 43.65-100.518-42.462 148.88 91.249L-56.98 41.282l139.907 80.594-101.686-33.807 86.58 54.869-77.364-30.565 56.744 67.32"
+        />
+        <path
+          stroke="url(#pink-summary-gradient)"
+          strokeWidth={8}
+          d="m6.223 3.745 66.213 45.514L9.58 26.989l63.524 43.65-100.518-42.462 148.88 91.249L-56.98 41.282l139.907 80.594-101.686-33.807 86.58 54.869-77.364-30.565 56.744 67.32"
+        />
+        <defs>
+          <linearGradient
+            id="pink-summary-gradient"
+            x1={46.609}
+            x2={20.869}
+            y1={179.779}
+            y2={1.629}
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor={!isDarkMode ? "#FF0558" : "#57001E"} />
+            <stop offset={1} stopColor={!isDarkMode ? "#FF5D88" : "#FF0558"} />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  )
+}
+
+export const VioletSummaryVector = () => {
+  const { isDarkMode } = useTheme()
+  return (
+    <div className={styles.violetSummaryVectorBox}>
+      <svg
+        className={styles.violetSummaryVector}
+        xmlns="http://www.w3.org/2000/svg"
+        width={98}
+        height={85}
+        fill="none"
+      >
+        <path
+          stroke="#E4E5E0"
+          strokeWidth={8}
+          d="M43.317 26.419 66.66 56.157m0 0 25.702 27.076M66.66 56.157l32.67-28.304M66.66 56.157 39.486 90.689M66.66 56.157.82 51.447m65.84 4.71 12.607 66.163M66.66 56.157l45.32 8.252m-45.32-8.252L68.89.877"
+        />
+        <path
+          stroke="#0A0B04"
+          strokeOpacity={0.2}
+          strokeWidth={8}
+          d="M43.317 26.419 66.66 56.157m0 0 25.702 27.076M66.66 56.157l32.67-28.304M66.66 56.157 39.486 90.689M66.66 56.157.82 51.447m65.84 4.71 12.607 66.163M66.66 56.157l45.32 8.252m-45.32-8.252L68.89.877"
+        />
+        <path
+          stroke="url(#violet-summary-gradient)"
+          strokeWidth={8}
+          d="M43.317 26.419 66.66 56.157m0 0 25.702 27.076M66.66 56.157l32.67-28.304M66.66 56.157 39.486 90.689M66.66 56.157.82 51.447m65.84 4.71 12.607 66.163M66.66 56.157l45.32 8.252m-45.32-8.252L68.89.877"
+        />
+        <defs>
+          <linearGradient
+            id="violet-summary-gradient"
+            x1={36.844}
+            x2={100.785}
+            y1={10.794}
+            y2={99.8}
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor={!isDarkMode ? "#A491F4" : "#7543E3"} />
+            <stop offset={1} stopColor={!isDarkMode ? "#6632CF" : "#2B1560"} />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  )
+}
