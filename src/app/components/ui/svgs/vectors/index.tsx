@@ -217,3 +217,93 @@ export const VioletSummaryVector = () => {
     </div>
   )
 }
+
+export const YellowLeftSummaryVector = () => {
+  const { isDarkMode } = useTheme()
+  return (
+    <div className={styles.yellowLeftSummaryVectorBox}>
+      <svg
+        className={styles.yellowLeftSummaryVector}
+        xmlns="http://www.w3.org/2000/svg"
+        width={28}
+        height={39}
+        fill="none"
+      >
+        <path
+          stroke="#E4E5E0"
+          strokeWidth={2.368}
+          d="M25.027 12.718 12.497 8.98m11.056 11.213L1 18.226m22.553 9L10.58 30.472m16.116 4.033L18.492 37.8m8.205-32.557L19.82 1.8"
+        />
+        <path
+          stroke="#0A0B04"
+          strokeOpacity={0.2}
+          strokeWidth={2.368}
+          d="M25.027 12.718 12.497 8.98m11.056 11.213L1 18.226m22.553 9L10.58 30.472m16.116 4.033L18.492 37.8m8.205-32.557L19.82 1.8"
+        />
+        <path
+          stroke="url(#yellow-left-gradient)"
+          strokeWidth={2.368}
+          d="M25.027 12.718 12.497 8.98m11.056 11.213L1 18.226m22.553 9L10.58 30.472m16.116 4.033L18.492 37.8m8.205-32.557L19.82 1.8"
+        />
+        <defs>
+          <linearGradient
+            id="yellow-left-gradient"
+            x1={1}
+            x2={26.697}
+            y1={19.8}
+            y2={19.8}
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor={!isDarkMode ? "#CE9C00" : "#734710"} />
+            <stop offset={1} stopColor={!isDarkMode ? "#FFE31C" : "#CE9C00"} />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  )
+}
+
+export const YellowRightSummaryVector = () => {
+  const { isDarkMode } = useTheme()
+  return (
+    <div className={styles.yellowRightSummaryVectorBox}>
+      <svg
+        className={styles.yellowRightSummaryVector}
+        xmlns="http://www.w3.org/2000/svg"
+        width={27}
+        height={39}
+        fill="none"
+      >
+        <path
+          stroke="#E4E5E0"
+          strokeWidth={2.368}
+          d="M2.67 12.718 15.2 8.98M4.145 20.193l22.552-1.967m-22.552 9 12.971 3.246M1 34.505 9.205 37.8M1 5.243 7.879 1.8"
+        />
+        <path
+          stroke="#0A0B04"
+          strokeOpacity={0.2}
+          strokeWidth={2.368}
+          d="M2.67 12.718 15.2 8.98M4.145 20.193l22.552-1.967m-22.552 9 12.971 3.246M1 34.505 9.205 37.8M1 5.243 7.879 1.8"
+        />
+        <path
+          stroke="url(#yellow-right-gradient)"
+          strokeWidth={2.368}
+          d="M2.67 12.718 15.2 8.98M4.145 20.193l22.552-1.967m-22.552 9 12.971 3.246M1 34.505 9.205 37.8M1 5.243 7.879 1.8"
+        />
+        <defs>
+          <linearGradient
+            id="yellow-right-gradient"
+            x1={26.697}
+            x2={1}
+            y1={19.8}
+            y2={19.8}
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor={!isDarkMode ? "#CE9C00" : "#734710"} />
+            <stop offset={1} stopColor={!isDarkMode ? "#FFE31C" : "#CE9C00"} />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  )
+}

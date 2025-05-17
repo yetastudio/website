@@ -6,6 +6,8 @@ import {
 	OrangeSummaryVector,
 	PinkSummaryVector,
 	VioletSummaryVector,
+	YellowLeftSummaryVector,
+	YellowRightSummaryVector,
 } from './vectors';
 
 export {
@@ -15,6 +17,8 @@ export {
 	OrangeSummaryVector,
 	PinkSummaryVector,
 	VioletSummaryVector,
+	YellowLeftSummaryVector,
+	YellowRightSummaryVector,
 };
 
 //* icons

@@ -42,20 +42,34 @@
 
 .pinkSummaryVectorBox {
 	position: relative;
-	top: 425px;
+	top: 423px;
 	right: 172px;
 }
 
 .violetSummaryVectorBox {
 	position: relative;
-	top: 437px;
+	top: 435px;
 	left: 73px;
+}
+
+.yellowLeftSummaryVectorBox {
+	position: relative;
+	top: 242px;
+	right: 127px;
+}
+
+.yellowRightSummaryVectorBox {
+	position: relative;
+	top: 242px;
+	left: 100px;
 }
 
 .blueSummaryVector,
 .orangeSummaryVector,
 .pinkSummaryVector,
-.violetSummaryVector {
+.violetSummaryVector,
+.yellowLeftSummaryVector,
+.yellowRightSummaryVector {
 	position: absolute;
 	filter: grayscale(100%);
 	opacity: 0.4;
