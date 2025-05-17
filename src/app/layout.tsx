@@ -38,7 +38,13 @@ export const metadata: Metadata = {
 };
 
 //! Fonts
-const editorialNew = localFont({
+const editorialNewLight = localFont({
+  src: '../../public/fonts/PPEditorialNew-Ultralight.otf',
+  variable: '--font-editorial-new-light',
+  weight: '400',
+});
+
+const editorialNewRegular = localFont({
   src: '../../public/fonts/PPEditorialNew-Regular.otf',
   variable: '--font-editorial-new',
   weight: '400',
@@ -83,7 +89,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${funnelDisplayLight.variable} ${funnelDisplayRegular.variable} 
       ${funnelDisplayMedium.variable} ${funnelDisplayBold.variable}
-      ${editorialNew.variable} ${editorialNewItalic.variable}
+      ${editorialNewLight.variable} ${editorialNewRegular.variable} ${editorialNewItalic.variable}
       `}>
         <ThemeProvider>
           {children}
