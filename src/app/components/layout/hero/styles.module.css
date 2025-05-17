@@ -44,8 +44,10 @@
 	height: var(--50);
 
 	@media (min-width: 1440px) {
-		width: var(--104);
-		height: var(--104);
+		& {
+			width: var(--104);
+			height: var(--104);
+		}
 	}
 }
 
