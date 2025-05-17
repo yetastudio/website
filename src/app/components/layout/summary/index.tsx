@@ -1,6 +1,6 @@
 //! Components
 import Image from "next/image";
-import { BlueSummaryVector, OrangeSummaryVector, PinkSummaryVector, VioletSummaryVector } from "../../ui/svgs";
+import { BlueSummaryVector, OrangeSummaryVector, PinkSummaryVector, VioletSummaryVector, YellowLeftSummaryVector, YellowRightSummaryVector } from "../../ui/svgs";
 
 //! Styles
 import styles from "./styles.module.css";
@@ -12,6 +12,8 @@ function Summary() {
       <OrangeSummaryVector />
       <PinkSummaryVector />
       <VioletSummaryVector />
+      <YellowLeftSummaryVector />
+      <YellowRightSummaryVector />
       <div className={styles.summaryContent}>
         <div className={styles.summmaryHead}>
           <div className={styles.titleContainer}>

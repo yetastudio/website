@@ -66,6 +66,7 @@
 	max-width: 200px;
 	line-height: 20px;
 	text-align: center;
+	font-family: var(--font-editorial-new-light);
 	font-size: var(--20);
 }
 
@@ -93,10 +94,12 @@
 	width: var(--20);
 	height: var(--20);
 
-	@media (min-width: 1440px) {
+	/* @media (min-width: 1440px) {
+	& {
 		width: var(--104);
 		height: var(--104);
 	}
+	} */
 }
 
 .logo {
