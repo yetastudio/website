@@ -77,6 +77,9 @@ const funnelDisplayBold = localFont({
   weight: "700",
 });
 
+//! UI Core
+import Cursor from '@/components/ui/cursor';
+
 //! Styles
 import "./globals.css";
 
@@ -92,6 +95,7 @@ export default function RootLayout({
       ${editorialNewLight.variable} ${editorialNewRegular.variable} ${editorialNewItalic.variable}
       `}>
         <ThemeProvider>
+          <Cursor />
           {children}
         </ThemeProvider>
       </body>
