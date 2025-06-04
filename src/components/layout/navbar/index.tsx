@@ -1,5 +1,5 @@
 //! Types
-import { NavItemProps } from "@/app/types";
+import { NavItemProps } from "@/types";
 
 //! Components
 import Link from "next/link";

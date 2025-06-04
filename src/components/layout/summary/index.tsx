@@ -1,5 +1,6 @@
 //! Components
 import Image from "next/image";
+import Chip from "@/components/ui/chip";
 import { BlueSummaryVector, OrangeSummaryVector, PinkSummaryVector, VioletSummaryVector, YellowLeftSummaryVector, YellowRightSummaryVector } from "../../ui/svgs";
 
 //! Styles
@@ -32,8 +33,8 @@ function Summary() {
             <h3 className={styles.title}>Studio</h3>
           </div>
           <h4 className={styles.subtitle}>in a nutshell</h4>
-
         </div>
+        <Chip children={"Working with worldwide visionary brands"} isInverted />
         <p className={styles.description}>
           We craft <span>pixel-perfect</span> websites for brands that value <span>visual excellence</span> and <span>meaningful</span> user experiences.
         </p>

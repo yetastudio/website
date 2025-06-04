@@ -30,37 +30,37 @@
 /** Summary Section Vectors */
 .blueSummaryVectorBox {
 	position: relative;
-	bottom: 64px;
+	bottom: 40px;
 	right: 172px;
 }
 
 .orangeSummaryVectorBox {
 	position: relative;
-	bottom: 64px;
+	bottom: 40px;
 	left: 69px;
 }
 
 .pinkSummaryVectorBox {
 	position: relative;
-	top: 423px;
+	top: 467px;
 	right: 172px;
 }
 
 .violetSummaryVectorBox {
 	position: relative;
-	top: 435px;
+	top: 479px;
 	left: 73px;
 }
 
 .yellowLeftSummaryVectorBox {
 	position: relative;
-	top: 242px;
+	top: 307px;
 	right: 127px;
 }
 
 .yellowRightSummaryVectorBox {
 	position: relative;
-	top: 242px;
+	top: 307px;
 	left: 100px;
 }
 

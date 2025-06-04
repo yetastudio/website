@@ -1,5 +1,5 @@
 //! Types
-import { ButtonProps } from '@/app/types';
+import { ButtonProps } from '@/types';
 
 //! Styles
 import styles from './styles.module.css';

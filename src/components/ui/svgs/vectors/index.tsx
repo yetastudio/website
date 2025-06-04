@@ -1,7 +1,7 @@
 "use client"
 
 //! Custom Hooks
-import { useTheme } from '@/app/hooks/useTheme'
+import { useTheme } from '@/hooks/useTheme'
 
 //! Styles
 import styles from './styles.module.css'

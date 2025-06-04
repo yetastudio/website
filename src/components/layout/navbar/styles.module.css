@@ -43,7 +43,6 @@
 	padding: var(--12) var(--16);
 	font-size: var(--16);
 	font-weight: 400;
-	color: var(--foreground);
 	border-radius: var(--4);
 	transition: all 200ms ease;
 }

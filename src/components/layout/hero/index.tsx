@@ -1,6 +1,6 @@
 //! Components
 import Image from "next/image";
-import { Button } from "@/app/components/ui";
+import { Button } from "@/components/ui";
 
 //! Styles
 import styles from "./styles.module.css";

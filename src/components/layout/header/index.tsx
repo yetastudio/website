@@ -1,7 +1,7 @@
 //! Components
 import Image from "next/image";
-import { NavBar } from "@/app/components/layout";
-import { Button } from "@/app/components/ui";
+import { NavBar } from "@/components/layout";
+import { Button } from "@/components/ui";
 import { ArrowUpRight, Menu } from "lucide-react";
 
 //! Styles
