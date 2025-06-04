@@ -3,7 +3,7 @@ import localFont from 'next/font/local';
 import type { Metadata } from 'next';
 
 //! Context
-import { ThemeProvider } from './context/ThemeContext';
+import { ThemeProvider } from '@/context/ThemeContext';
 
 //! Metadata
 export const metadata: Metadata = {
