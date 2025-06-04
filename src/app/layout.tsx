@@ -79,6 +79,8 @@ const funnelDisplayBold = localFont({
 
 //! UI Core
 import Cursor from '@/components/ui/cursor';
+import ReactLenis from 'lenis/react';
+
 
 //! Styles
 import "./globals.css";
@@ -94,10 +96,12 @@ export default function RootLayout({
       ${funnelDisplayMedium.variable} ${funnelDisplayBold.variable}
       ${editorialNewLight.variable} ${editorialNewRegular.variable} ${editorialNewItalic.variable}
       `}>
-        <ThemeProvider>
-          <Cursor />
-          {children}
-        </ThemeProvider>
+        <ReactLenis options={{ lerp: 0.1, duration: 1.7, smoothWheel: true }} root>
+          <ThemeProvider>
+            <Cursor />
+            {children}
+          </ThemeProvider>
+        </ReactLenis>
       </body>
     </html>
   );
