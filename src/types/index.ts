@@ -1,7 +1,6 @@
-//! React Core
 import { ReactNode } from 'react';
+import { LucideIcon } from 'lucide-react';
 
-//! Context
 export type ThemeProviderProps = {
 	children: ReactNode;
 };
@@ -9,9 +8,6 @@ export type ThemeProviderProps = {
 export type ThemeContextType = {
 	isDarkMode: boolean;
 };
-
-//! Lucide React
-import { LucideIcon } from 'lucide-react';
 
 export type ButtonProps = {
 	title?: string;
@@ -29,4 +25,13 @@ export type ButtonProps = {
 export type NavItemProps = {
 	href: string;
 	children: ReactNode;
+};
+
+export type ChipProps = {
+	children: ReactNode;
+	size?: 'sm' | 'md' | 'lg';
+	isInverted?: boolean;
+	isFullWidth?: boolean;
+	icon?: LucideIcon;
+	iconPosition?: 'left' | 'middle' | 'right';
 };
