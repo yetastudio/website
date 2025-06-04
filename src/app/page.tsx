@@ -1,5 +1,5 @@
 //! Components
-import { Header, Hero, Summary, Footer } from "@/app/components/layout";
+import { Header, Hero, Summary, Footer } from "@/components/layout";
 
 //! Styles
 import styles from "./page.module.css";
