@@ -1,0 +1,17 @@
+.cursor {
+	position: fixed;
+	width: 20px;
+	height: 20px;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	fill: none;
+	pointer-events: none;
+	mix-blend-mode: difference;
+
+	@media (hover: none) and (pointer: coarse) {
+		& {
+			display: none;
+		}
+	}
+}
