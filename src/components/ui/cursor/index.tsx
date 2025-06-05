@@ -1,13 +1,15 @@
 "use client"
 
 //! React Core
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 //! React Hooks
 import { useTheme } from "@/hooks/useTheme";
 
 //! GSAP
-import { gsap } from "gsap";
+import { Expo, gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+gsap.registerPlugin(useGSAP);
 
 //! Styles
 import styles from "./styles.module.css"
@@ -17,27 +19,42 @@ export default function Cursor() {
   const { isDarkMode } = useTheme()
 
   const cursorRef = useRef<SVGSVGElement | null>(null);
-  const mouseRef = useRef({ x: 0, y: 0, });
+  const mouseRef = useRef<any>({ x: null, y: null, });
+
+  const [isMobileDevice, setIsMobileDevice] = useState(false);
 
   useEffect(() => {
-    const cursor = cursorRef.current as SVGSVGElement;
+    const checkIfMobile = () => {
+      return ((window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches));
+    };
 
-    if (!cursor) return;
+    setIsMobileDevice(checkIfMobile());
 
-    const updateCursorPosition = () => {
-      gsap.set(cursor, {
-        x: mouseRef.current.x,
-        y: mouseRef.current.y,
-      });
+    const handleResize = () => {
+      setIsMobileDevice(checkIfMobile());
+    };
 
-      requestAnimationFrame(updateCursorPosition);
-    }
+    window.addEventListener('resize', handleResize);
 
-    requestAnimationFrame(updateCursorPosition);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useGSAP(() => {
+    if (isMobileDevice || !cursorRef.current) return;
+
+    const cursor = cursorRef.current;
+
+    mouseRef.current = {
+      x: gsap.quickTo(cursor, "x", { duration: 0.2, ease: Expo.easeOut }),
+      y: gsap.quickTo(cursor, "y", { duration: 0.2, ease: Expo.easeOut })
+    };
 
     const onMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY }
-    }
+      mouseRef.current.x(e.clientX);
+      mouseRef.current.y(e.clientY);
+    };
 
     const onMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -47,7 +64,7 @@ export default function Cursor() {
       if (cursor) {
         cursor.style.display = isInteractive ? 'none' : 'inherit';
       }
-    }
+    };
 
     window.addEventListener("mousemove", onMouseMove, { passive: true });
     document.addEventListener("mouseover", onMouseOver, { passive: true });
@@ -55,8 +72,16 @@ export default function Cursor() {
     return () => {
       window.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseover", onMouseOver);
-    }
-  }, [])
+    };
+  }, {
+    dependencies: [isMobileDevice],
+    scope: cursorRef,
+    revertOnUpdate: true,
+  });
+
+  if (isMobileDevice) {
+    return null;
+  }
 
   return (
     <svg
