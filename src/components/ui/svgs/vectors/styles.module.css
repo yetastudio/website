@@ -28,50 +28,47 @@
 }
 
 /** Summary Section Vectors */
-.blueSummaryVectorBox {
+.topLeftSummaryVectorBox {
 	position: relative;
 	bottom: 40px;
 	right: 172px;
 }
 
-.orangeSummaryVectorBox {
+.topRightSummaryVectorBox {
 	position: relative;
 	bottom: 40px;
-	left: 69px;
+	left: 70px;
 }
 
-.pinkSummaryVectorBox {
+.bottomLeftSummaryVectorBox {
 	position: relative;
 	top: 467px;
 	right: 172px;
 }
 
-.violetSummaryVectorBox {
+.bottomRightSummaryVectorBox {
 	position: relative;
 	top: 479px;
 	left: 73px;
 }
 
-.yellowLeftSummaryVectorBox {
+.middleLeftSummaryVectorBox {
 	position: relative;
 	top: 307px;
 	right: 127px;
 }
 
-.yellowRightSummaryVectorBox {
+.middleRightSummaryVectorBox {
 	position: relative;
 	top: 307px;
 	left: 100px;
 }
 
-.blueSummaryVector,
-.orangeSummaryVector,
-.pinkSummaryVector,
-.violetSummaryVector,
-.yellowLeftSummaryVector,
-.yellowRightSummaryVector {
+.topLeftSummaryVector,
+.topRightSummaryVector,
+.bottomLeftSummaryVector,
+.bottomRightSummaryVector,
+.middleLeftSummaryVector,
+.middleRightSummaryVector {
 	position: absolute;
-	filter: grayscale(100%);
-	opacity: 0.4;
-	transition: all 0.3s ease-in-out;
 }

@@ -2,23 +2,23 @@
 import {
 	HighlightVector,
 	StrokeVector,
-	BlueSummaryVector,
-	OrangeSummaryVector,
-	PinkSummaryVector,
-	VioletSummaryVector,
-	YellowLeftSummaryVector,
-	YellowRightSummaryVector,
+	TopLeftSummaryVector,
+	TopRightSummaryVector,
+	BottomLeftSummaryVector,
+	BottomRightSummaryVector,
+	MiddleLeftSummaryVector,
+	MiddleRightSummaryVector,
 } from './vectors';
 
 export {
 	HighlightVector,
 	StrokeVector,
-	BlueSummaryVector,
-	OrangeSummaryVector,
-	PinkSummaryVector,
-	VioletSummaryVector,
-	YellowLeftSummaryVector,
-	YellowRightSummaryVector,
+	TopLeftSummaryVector,
+	TopRightSummaryVector,
+	BottomLeftSummaryVector,
+	BottomRightSummaryVector,
+	MiddleLeftSummaryVector,
+	MiddleRightSummaryVector,
 };
 
 //* icons
