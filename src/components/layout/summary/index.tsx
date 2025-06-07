@@ -7,12 +7,12 @@ import { useTheme } from "@/hooks/useTheme";
 import Image from "next/image";
 import Chip from "@/components/ui/chip";
 import {
-  BlueSummaryVector,
-  OrangeSummaryVector,
-  PinkSummaryVector,
-  VioletSummaryVector,
-  YellowLeftSummaryVector,
-  YellowRightSummaryVector
+  TopLeftSummaryVector,
+  TopRightSummaryVector,
+  BottomLeftSummaryVector,
+  BottomRightSummaryVector,
+  MiddleLeftSummaryVector,
+  MiddleRightSummaryVector,
 } from "../../ui/svgs";
 
 //! Styles
@@ -23,12 +23,12 @@ function Summary() {
 
   return (
     <div className={styles.summary}>
-      <BlueSummaryVector />
-      <OrangeSummaryVector />
-      <PinkSummaryVector />
-      <VioletSummaryVector />
-      <YellowLeftSummaryVector />
-      <YellowRightSummaryVector />
+      <TopLeftSummaryVector />
+      <TopRightSummaryVector />
+      <BottomLeftSummaryVector />
+      <BottomRightSummaryVector />
+      <MiddleLeftSummaryVector />
+      <MiddleRightSummaryVector />
       <div className={styles.summaryContent}>
         <div className={styles.summmaryHead}>
           <div className={styles.titleContainer}>
