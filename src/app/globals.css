@@ -59,6 +59,19 @@
 	--neutral-light-15: rgba(245, 246, 244, 15%);
 
 	/** Gradients */
+	--foreground-gradient: linear-gradient(
+		180deg,
+		#111307 0%,
+		#0f1108 60%,
+		#0a0b04 100%
+	);
+
+	--foreground-gradient-inverted: linear-gradient(
+		180deg,
+		#c5c7bc 0%,
+		#60615c 100%
+	);
+
 	--mask-gradient: linear-gradient(#fff 0 0) content-box,
 		linear-gradient(#fff 0 0);
 
@@ -94,6 +107,14 @@
 		--background-70: rgba(10, 11, 4, 70%);
 
 		/** Gradients */
+		--foreground-gradient: linear-gradient(180deg, #c5c7bc 0%, #60615c 100%);
+
+		--foreground-gradient-inverted: linear-gradient(
+			180deg,
+			#111307 0%,
+			#0f1108 60%,
+			#0a0b04 100%
+		);
 		--border-gradient: linear-gradient(
 			180deg,
 			var(--neutral-light-15) 15%,
