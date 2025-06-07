@@ -6,12 +6,6 @@
 	align-items: center;
 }
 
-.logo {
-	@media (prefers-color-scheme: light) {
-		filter: invert(1);
-	}
-}
-
 .mobile {
 	display: flex;
 	position: fixed;

@@ -32,6 +32,10 @@
 .title {
 	font-size: var(--50);
 	font-weight: 700;
+	background: var(--foreground-gradient);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 
 	@media (min-width: 1440px) {
 		font-size: var(--90);
@@ -47,14 +51,6 @@
 		& {
 			width: var(--104);
 			height: var(--104);
-		}
-	}
-}
-
-.logo {
-	@media (prefers-color-scheme: light) {
-		& {
-			mix-blend-mode: difference;
 		}
 	}
 }

@@ -1,12 +1,26 @@
+"use client"
+
+//! Hooks
+import { useTheme } from "@/hooks/useTheme";
+
 //! Components
 import Image from "next/image";
 import Chip from "@/components/ui/chip";
-import { BlueSummaryVector, OrangeSummaryVector, PinkSummaryVector, VioletSummaryVector, YellowLeftSummaryVector, YellowRightSummaryVector } from "../../ui/svgs";
+import {
+  BlueSummaryVector,
+  OrangeSummaryVector,
+  PinkSummaryVector,
+  VioletSummaryVector,
+  YellowLeftSummaryVector,
+  YellowRightSummaryVector
+} from "../../ui/svgs";
 
 //! Styles
 import styles from "./styles.module.css";
 
 function Summary() {
+  const { isDarkMode } = useTheme()
+
   return (
     <div className={styles.summary}>
       <BlueSummaryVector />
@@ -22,7 +36,10 @@ function Summary() {
             <div className={styles.logoBox}>
               <Image
                 className={styles.logo}
-                src={"https://res.cloudinary.com/doowhwdzj/image/upload/v1747237025/Variant_Dark_Style_Transparent_p5qq52.svg"}
+                src={isDarkMode ?
+                  "https://res.cloudinary.com/doowhwdzj/image/upload/v1749262439/light-logo-mark_iza4vx.svg" :
+                  "https://res.cloudinary.com/doowhwdzj/image/upload/v1749262439/dark-logo-mark_a77ofi.svg"
+                }
                 alt={"Yeta Studio Logo Mark"}
                 fill
                 priority

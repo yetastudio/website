@@ -1,3 +1,8 @@
+"use client"
+
+//! Hooks
+import { useTheme } from "@/hooks/useTheme";
+
 //! Components
 import Image from "next/image";
 import { Button } from "@/components/ui";
@@ -7,6 +12,8 @@ import styles from "./styles.module.css";
 import { HighlightVector, StrokeVector } from "../../ui/svgs";
 
 function Hero() {
+  const { isDarkMode } = useTheme();
+
   return (
     <div className={styles.hero}>
       <div
@@ -18,7 +25,10 @@ function Hero() {
           <div className={styles.logoWrapper}>
             <Image
               className={styles.logo}
-              src={"https://res.cloudinary.com/doowhwdzj/image/upload/v1745707536/Variant_Dark_wcqmcg.svg"}
+              src={isDarkMode ?
+                "https://res.cloudinary.com/doowhwdzj/image/upload/v1749262076/dark-brand-mark-filled_jclhlv.svg" :
+                "https://res.cloudinary.com/doowhwdzj/image/upload/v1749262075/light-brand-mark-filled_r2tp4w.svg"
+              }
               alt={"Yeta Studio Logo Mark"}
               fill
               priority

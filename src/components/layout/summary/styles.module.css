@@ -44,6 +44,10 @@
 .title {
 	font-family: var(--font-funnel-display-bold);
 	font-size: var(--20);
+	background: var(--foreground-gradient-inverted);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .subtitle {
@@ -93,19 +97,4 @@
 	position: relative;
 	width: var(--20);
 	height: var(--20);
-
-	/* @media (min-width: 1440px) {
-	& {
-		width: var(--104);
-		height: var(--104);
-	}
-	} */
-}
-
-.logo {
-	@media (prefers-color-scheme: dark) {
-		& {
-			mix-blend-mode: difference;
-		}
-	}
 }
