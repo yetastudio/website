@@ -32,36 +32,74 @@
 	position: relative;
 	bottom: 40px;
 	right: 172px;
+
+	@media (min-width: 1280px) {
+		& {
+			transform: scale(1.2);
+			right: 407px;
+		}
+	}
 }
 
 .topRightSummaryVectorBox {
 	position: relative;
 	bottom: 40px;
 	left: 70px;
+	@media (min-width: 1280px) {
+		& {
+			transform: scale(1.2);
+			left: 286px;
+		}
+	}
 }
 
 .bottomLeftSummaryVectorBox {
 	position: relative;
 	top: 467px;
 	right: 172px;
+	@media (min-width: 1280px) {
+		& {
+			transform: scale(1.2);
+			right: 406px;
+		}
+	}
 }
 
 .bottomRightSummaryVectorBox {
 	position: relative;
 	top: 479px;
 	left: 73px;
+
+	@media (min-width: 1280px) {
+		& {
+			transform: scale(1.2);
+			left: 290px;
+		}
+	}
 }
 
 .middleLeftSummaryVectorBox {
 	position: relative;
 	top: 307px;
 	right: 127px;
+
+	@media (min-width: 1280px) {
+		& {
+			transform: scale(1.2);
+		}
+	}
 }
 
 .middleRightSummaryVectorBox {
 	position: relative;
 	top: 307px;
 	left: 100px;
+
+	@media (min-width: 1280px) {
+		& {
+			transform: scale(1.2);
+		}
+	}
 }
 
 .topLeftSummaryVector,
