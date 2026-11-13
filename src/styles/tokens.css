@@ -262,7 +262,7 @@
 	--measure: 36rem;
 	--measure-narrow: 15.625rem; /* 250: Figma narrow paragraphs (Summary card, mobile Why Yeta light) */
 	--section-gap: var(--space-48);
-	--header-height: 60px;
+	--header-height: 48px; /* slimmer than the Figma 60: the user asked for less vertical padding */
 
 	/* ───────────────────────── Motion ───────────────────────── */
 	--duration-instant: 0ms; /* press */

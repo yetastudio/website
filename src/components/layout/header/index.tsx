@@ -19,76 +19,93 @@ import { cx } from '@/lib/cx';
 //! Styles
 import styles from './styles.module.css';
 
-/** Highlights the nav item of the section in view (landing only). */
-function useActiveSection(enabled: boolean) {
-	const [active, setActive] = useState<SectionId | null>(null);
-
-	useEffect(() => {
-		if (!enabled) return;
-		const targets = SECTIONS.map(({ id }) => document.getElementById(id)).filter((node): node is HTMLElement => Boolean(node));
-		const observer = new IntersectionObserver(
-			(entries) => {
-				const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-				if (visible) setActive(visible.target.id as SectionId);
-			},
-			{ rootMargin: '-40% 0px -50% 0px', threshold: [0, 0.25, 0.5] }
-		);
-		targets.forEach((target) => observer.observe(target));
-		return () => observer.disconnect();
-	}, [enabled]);
-
-	return active;
-}
+const clamp = (value: number, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+const lerp = (from: number, to: number, t: number) => from + (to - from) * t;
 
 /**
- * transitions.dev "Tabs sliding": a white pill behind the active link. JS writes the link's
- * offset and width onto one indicator and CSS tweens it, so it slides from section to
- * section as you scroll. It snaps (no tween) when it first appears and on resize.
+ * The white active pill follows the scroll (landing only). A reading line sits at 40% of the
+ * viewport; between two sections the pill travels from one link to the next in proportion to how
+ * far that line has gone from the first section's top to the next one's, so it moves while you
+ * scroll instead of jumping. Above the first section it fades in as that section nears the line.
+ * The link the pill mostly covers is the active one (aria-current). It is the transitions.dev
+ * "Tabs sliding" pill, driven by scroll instead of a tween.
  */
-function useNavIndicator(active: SectionId | null) {
+function useScrollNav(enabled: boolean) {
 	const navRef = useRef<HTMLElement>(null);
 	const indicatorRef = useRef<HTMLSpanElement>(null);
-	const visible = useRef(false);
+	const [active, setActive] = useState<SectionId | null>(null);
 
 	useEffect(() => {
 		const nav = navRef.current;
 		const indicator = indicatorRef.current;
-		if (!nav || !indicator) return;
+		if (!enabled || !nav || !indicator) return;
+		indicator.style.transition = 'none'; // the scroll is the animation
+		nav.dataset.pill = 'ready';
+		let frame = 0;
 
-		const moveTo = (animate: boolean) => {
-			const link = active ? nav.querySelector<HTMLElement>(`a[href="#${active}"]`) : null;
-			if (!link) {
-				delete nav.dataset.pill;
-				return false;
-			}
+		const update = () => {
+			frame = 0;
+			const sections = SECTIONS.map(({ id }) => document.getElementById(id));
+			const links = SECTIONS.map(({ id }) => nav.querySelector<HTMLElement>(`a[href="#${id}"]`));
+			if (sections.some((node) => !node) || links.some((node) => !node)) return;
+
+			const line = window.innerHeight * 0.4;
+			const tops = sections.map((node) => node!.getBoundingClientRect().top - line);
 			const box = nav.getBoundingClientRect();
-			const rect = link.getBoundingClientRect();
-			// The pill pads the link by --nav-pill-pad on each side; top and height come from CSS.
-			const pad = parseFloat(getComputedStyle(nav).getPropertyValue('--nav-pill-pad')) || 0;
-			const write = () => {
-				indicator.style.transform = `translateX(${rect.left - box.left - nav.clientLeft - pad}px)`;
-				indicator.style.width = `${rect.width + pad * 2}px`;
-			};
-			if (!animate) {
-				const prev = indicator.style.transition;
-				indicator.style.transition = 'none';
-				write();
-				void indicator.offsetWidth;
-				indicator.style.transition = prev;
+			// Pad each link by the nav's padding minus the pill's inset, so the pill keeps the inset on every side.
+			const pad = parseFloat(getComputedStyle(nav).paddingLeft) - parseFloat(getComputedStyle(indicator).top);
+			const geometry = links.map((link) => {
+				const rect = link!.getBoundingClientRect();
+				return { x: rect.left - box.left - nav.clientLeft - pad, width: rect.width + pad * 2 };
+			});
+
+			const last = SECTIONS.length - 1;
+			let index = -1;
+			tops.forEach((top, i) => {
+				if (top <= 0) index = i;
+			});
+
+			let x: number;
+			let width: number;
+			let opacity = 1;
+			let current: number | null;
+			if (index < 0) {
+				opacity = clamp(1 - tops[0] / (window.innerHeight * 0.5));
+				({ x, width } = geometry[0]);
+				current = opacity >= 0.5 ? 0 : null;
+			} else if (index >= last) {
+				({ x, width } = geometry[last]);
+				current = last;
 			} else {
-				write();
+				const progress = clamp(-tops[index] / (tops[index + 1] - tops[index]));
+				x = lerp(geometry[index].x, geometry[index + 1].x, progress);
+				width = lerp(geometry[index].width, geometry[index + 1].width, progress);
+				current = progress < 0.5 ? index : index + 1;
 			}
-			nav.dataset.pill = 'ready';
-			return true;
+
+			indicator.style.transform = `translateX(${x}px)`;
+			indicator.style.width = `${width}px`;
+			indicator.style.opacity = String(opacity);
+			setActive(current === null ? null : SECTIONS[current].id);
 		};
 
-		visible.current = moveTo(visible.current);
-		const observer = new ResizeObserver(() => moveTo(false));
+		const schedule = () => {
+			if (!frame) frame = requestAnimationFrame(update);
+		};
+		schedule();
+		window.addEventListener('scroll', schedule, { passive: true });
+		window.addEventListener('resize', schedule);
+		const observer = new ResizeObserver(schedule);
 		observer.observe(nav);
-		return () => observer.disconnect();
-	}, [active]);
+		return () => {
+			cancelAnimationFrame(frame);
+			window.removeEventListener('scroll', schedule);
+			window.removeEventListener('resize', schedule);
+			observer.disconnect();
+		};
+	}, [enabled]);
 
-	return { navRef, indicatorRef };
+	return { navRef, indicatorRef, active };
 }
 
 /**
@@ -100,8 +117,7 @@ export function Header() {
 	const tc = useTranslations('common');
 	const pathname = usePathname();
 	const onLanding = pathname === '/';
-	const active = useActiveSection(onLanding);
-	const { navRef, indicatorRef } = useNavIndicator(active);
+	const { navRef, indicatorRef, active } = useScrollNav(onLanding);
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	const navLinks = (variant: 'pill' | 'sheet') =>
@@ -137,10 +153,10 @@ export function Header() {
 					{/* The theme button sits beside the brand mark so both sides of the centred pill weigh the same. */}
 					<div className={styles.lead}>
 						<LocaleLink href="/" className={styles.home} aria-label={tc('home')}>
-							<BrandMark size={60} alt="" className={styles.markDesktop} />
+							<BrandMark size={48} alt="" className={styles.markDesktop} />
 							<BrandMark size={40} alt="" className={styles.markMobile} />
 						</LocaleLink>
-						<ThemeSwitch variant="cycle" size="2xl" buttonVariant="glass" className={styles.cycleDesktop} />
+						<ThemeSwitch variant="cycle" size="xl" buttonVariant="glass" className={styles.cycleDesktop} />
 						<ThemeSwitch variant="cycle" size="lg" buttonVariant="ghost" className={styles.cycleMobile} />
 					</div>
 
@@ -150,7 +166,7 @@ export function Header() {
 					</nav>
 
 					<div className={styles.actions}>
-						<Button href={BOOKING_URL} size="2xl" iconEnd="external-link" className={styles.cta}>
+						<Button href={BOOKING_URL} size="xl" iconEnd="external-link" className={styles.cta}>
 							{t('getInTouch')}
 						</Button>
 						<Button
