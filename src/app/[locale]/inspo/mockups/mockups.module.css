@@ -11,6 +11,49 @@
 	width: 100%;
 }
 
+/*
+ * Neutral stage: a raised surface veiled over one brand wash at low strength, so the hue reads as
+ * a tint and the ground stays neutral (accents are about a tenth of a frame, never the ground).
+ */
+.neutralStage {
+	--stage-veil: color-mix(in oklab, var(--color-surface-raised) 86%, transparent);
+	position: relative;
+	display: grid;
+	place-items: center;
+	overflow: hidden;
+	isolation: isolate;
+	padding: var(--space-24);
+	border-radius: var(--radius-2xl);
+	background: linear-gradient(var(--stage-veil), var(--stage-veil)), var(--stage-wash, var(--color-surface-tint));
+	box-shadow:
+		inset 0 0 0 var(--stroke-hairline) var(--color-border-faint),
+		var(--shadow-bevel);
+}
+
+.neutralStage[data-hue='pink'] {
+	--stage-wash: var(--wash-pink);
+}
+
+.neutralStage[data-hue='orange'] {
+	--stage-wash: var(--wash-orange);
+}
+
+.neutralStage[data-hue='yellow'] {
+	--stage-wash: var(--wash-yellow);
+}
+
+.neutralStage[data-hue='green'] {
+	--stage-wash: var(--wash-green);
+}
+
+.neutralStage[data-hue='blue'] {
+	--stage-wash: var(--wash-blue);
+}
+
+.neutralStage[data-hue='violet'] {
+	--stage-wash: var(--wash-violet);
+}
+
 /* ───────────── 02 Process walkthrough ───────────── */
 
 .walkthrough {
@@ -130,8 +173,31 @@
 
 .statTile {
 	--stat-tile-aspect: 3 / 4;
+	display: grid;
+	place-items: center;
 	width: 100%;
 	aspect-ratio: var(--stat-tile-aspect);
+}
+
+/* The tile's one accent: a dot in the hue its figure belongs to. */
+.statDot {
+	--stat-dot: 0.375rem;
+	width: var(--stat-dot);
+	height: var(--stat-dot);
+	border-radius: var(--radius-pill);
+	background: var(--color-text-faint);
+}
+
+.statDot[data-hue='pink'] {
+	background: var(--color-accent-pink);
+}
+
+.statDot[data-hue='violet'] {
+	background: var(--color-accent-violet);
+}
+
+.statDot[data-hue='orange'] {
+	background: var(--color-accent-orange);
 }
 
 .stat {

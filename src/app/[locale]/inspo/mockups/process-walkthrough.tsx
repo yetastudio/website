@@ -8,10 +8,13 @@ import { useTranslations } from 'next-intl';
 import { useAutoplay } from './use-autoplay';
 
 //! Components
-import { Button, GradientTile, PaginationDots, Text } from '@/components/ui';
+import { Button, PaginationDots, Text } from '@/components/ui';
 import { ProcessScene } from '@/components/ui/process-scene';
 import { isProcessStep } from '@/components/ui/process-scene/shared';
 import { PROCESS } from '@/components/layout/content';
+
+//! Utils
+import { cx } from '@/lib/cx';
 
 //! Styles
 import styles from './mockups.module.css';
@@ -63,9 +66,9 @@ export function ProcessWalkthroughMockup() {
 						<span className={styles.walkTitleNumeral}>{String(active + 1).padStart(2, '0')}</span> {t(`steps.${step.key}.title`)}
 					</Text>
 					{/* The step's own Stageshow scene (the Our Process card's), restarted on every step. */}
-					<GradientTile key={step.key} hue={step.hue} shape="process" className={styles.walkTile}>
+					<div key={step.key} className={cx(styles.walkTile, styles.neutralStage)} data-hue={step.hue}>
 						{isProcessStep(step.key) && <ProcessScene step={step.key} />}
-					</GradientTile>
+					</div>
 					{/* Every description sits in one cell; the box holds the longest, so the page below never shifts. */}
 					<div className={styles.walkCopy}>
 						{PROCESS.map((item, index) => (

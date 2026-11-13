@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useAutoplay } from './use-autoplay';
 
 //! Components
-import { GradientTile, Text, type TileHue } from '@/components/ui';
+import { Surface, Text, type TileHue } from '@/components/ui';
 
 //! Styles
 import styles from './mockups.module.css';
@@ -53,7 +53,7 @@ function CountUp({ value, primed, start }: { value: number; primed: boolean; sta
 }
 
 /**
- * Proposal 03: results set large in Editorial on gradient stat tiles. The figures are the
+ * Proposal 03: results set large in Editorial on neutral raised tiles, each marked by one hue dot. The figures are the
  * Yeta case study's own and are read from the code (locales, themes, registry), so the
  * mockup never shows a made-up number.
  */
@@ -100,8 +100,9 @@ export function ResultsMockup({ facts }: { facts: ResultFacts }) {
 			<ul className={styles.stats}>
 				{stats.map((stat) => (
 					<li key={stat.key} className={styles.statItem}>
-						<GradientTile hue={stat.hue} shape="testimonial-compact" intensity="strong" className={styles.statTile}>
+						<Surface tone="raised" radius="xl" bevel className={styles.statTile}>
 							<span className={styles.stat}>
+								<span className={styles.statDot} data-hue={stat.hue} aria-hidden="true" />
 								<Text as="span" family="serif" weight="regular" leading="none" className={styles.statValue}>
 									<CountUp value={stat.value} primed={autoplay.enabled} start={autoplay.seen && autoplay.enabled} />
 								</Text>
@@ -109,7 +110,7 @@ export function ResultsMockup({ facts }: { facts: ResultFacts }) {
 									{stat.label}
 								</Text>
 							</span>
-						</GradientTile>
+						</Surface>
 					</li>
 				))}
 			</ul>
