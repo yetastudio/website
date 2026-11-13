@@ -137,14 +137,7 @@ export function PathScene() {
 	const copy = SCENE_COPY.path;
 	return (
 		<Scene step="path">
-			<Stage<PathState>
-				width={TILE_WIDTH}
-				height={TILE_HEIGHT}
-				initial={PATH_POSTER}
-				poster={PATH_POSTER}
-				script={pathScript}
-				className={styles.path}
-			>
+			<Stage<PathState> width={TILE_WIDTH} height={TILE_HEIGHT} initial={PATH_POSTER} poster={PATH_POSTER} script={pathScript} className={styles.path}>
 				{(s, rect) => {
 					const home = rect('home');
 					const services = rect('services');
@@ -268,14 +261,7 @@ export function TechScene() {
 	const copy = SCENE_COPY.tech;
 	return (
 		<Scene step="tech">
-			<Stage<TechState>
-				width={TILE_WIDTH}
-				height={TILE_HEIGHT}
-				initial={TECH_POSTER}
-				poster={TECH_POSTER}
-				script={techScript}
-				className={styles.tech}
-			>
+			<Stage<TechState> width={TILE_WIDTH} height={TILE_HEIGHT} initial={TECH_POSTER} poster={TECH_POSTER} script={techScript} className={styles.tech}>
 				{(s) => (
 					<div className={cx(look.panel, styles.stack)}>
 						<div className={styles.stackHead}>
@@ -321,14 +307,7 @@ export function LegacyScene() {
 	const copy = SCENE_COPY.legacy;
 	return (
 		<Scene step="legacy">
-			<Stage<LegacyState>
-				width={TILE_WIDTH}
-				height={TILE_HEIGHT}
-				initial={LEGACY_POSTER}
-				poster={LEGACY_POSTER}
-				script={legacyScript}
-				className={styles.legacy}
-			>
+			<Stage<LegacyState> width={TILE_WIDTH} height={TILE_HEIGHT} initial={LEGACY_POSTER} poster={LEGACY_POSTER} script={legacyScript} className={styles.legacy}>
 				{(s) => (
 					<div className={cx(look.panel, styles.log)}>
 						<div className={styles.logHead}>
@@ -391,14 +370,7 @@ export function ImpactScene() {
 	const launchX = points[IMPACT_LAUNCH]?.x ?? 0;
 	return (
 		<Scene step="impact">
-			<Stage<ImpactState>
-				width={TILE_WIDTH}
-				height={TILE_HEIGHT}
-				initial={IMPACT_POSTER}
-				poster={IMPACT_POSTER}
-				script={impactScript}
-				className={styles.impact}
-			>
+			<Stage<ImpactState> width={TILE_WIDTH} height={TILE_HEIGHT} initial={IMPACT_POSTER} poster={IMPACT_POSTER} script={impactScript} className={styles.impact}>
 				{(s) => (
 					<div className={cx(look.panel, styles.metrics)}>
 						<div className={styles.metricsHead}>
@@ -431,3 +403,4 @@ export const TILE_SCENES: Record<CraftStep, () => JSX.Element> = {
 	legacy: LegacyScene,
 	impact: ImpactScene,
 };
+
