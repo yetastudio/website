@@ -214,7 +214,40 @@
     },
     "carousel": "Our process, step by step",
     "card": "step",
-    "step": "Step"
+    "step": "Step",
+    "scenes": {
+      "discover": {
+        "doc": "Interview notes",
+        "quote": "I never know which plan to pick.",
+        "tag": "Insight"
+      },
+      "define": {
+        "doc": "Project brief",
+        "draft": "Draft",
+        "approved": "Approved"
+      },
+      "design": {
+        "frame": "Home",
+        "radius": "Radius"
+      },
+      "develop": {
+        "file": "page.tsx",
+        "line": "return <Hero />",
+        "command": "npm run build",
+        "building": "Building…",
+        "passed": "Compiled"
+      },
+      "integrate": {
+        "connect": "Connect",
+        "connected": "Connected"
+      },
+      "launch": {
+        "env": "Production",
+        "building": "Building",
+        "ready": "Ready",
+        "url": "yourbrand.com"
+      }
+    }
   },
   "testimonials": {
     "title": "Testimonials",

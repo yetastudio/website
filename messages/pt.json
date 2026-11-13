@@ -214,7 +214,40 @@
     },
     "carousel": "Nosso processo, passo a passo",
     "card": "passo",
-    "step": "Passo"
+    "step": "Passo",
+    "scenes": {
+      "discover": {
+        "doc": "Notas da entrevista",
+        "quote": "Nunca sei qual plano escolher.",
+        "tag": "Insight"
+      },
+      "define": {
+        "doc": "Briefing do projeto",
+        "draft": "Rascunho",
+        "approved": "Aprovado"
+      },
+      "design": {
+        "frame": "Início",
+        "radius": "Raio"
+      },
+      "develop": {
+        "file": "page.tsx",
+        "line": "return <Hero />",
+        "command": "npm run build",
+        "building": "Compilando…",
+        "passed": "Compilado"
+      },
+      "integrate": {
+        "connect": "Conectar",
+        "connected": "Conectado"
+      },
+      "launch": {
+        "env": "Produção",
+        "building": "Compilando",
+        "ready": "Pronto",
+        "url": "suamarca.com.br"
+      }
+    }
   },
   "testimonials": {
     "title": "Depoimentos",

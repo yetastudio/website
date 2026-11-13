@@ -1,0 +1,248 @@
+/* Stageshow kit: the Yeta Studio look (theme="yeta", this copy's default).
+ *
+ * Added to the vendored kit for yeta.studio; not part of upstream Stageshow.
+ * Every kit token reads a semantic token of the host (src/styles/tokens.css).
+ * Those are light-dark() pairs, so a stage follows the color-scheme of
+ * whatever it sits in: the page theme, a `.scheme-inverse` gradient tile (a
+ * light tile on the dark site and vice versa) or a pinned `.scheme-light` /
+ * `.scheme-dark` showcase panel. No theme prop, no second stylesheet.
+ *
+ * The parts the kit only restyles under data-theme="dark" (line cursors, the
+ * arrow ink, code colours, the floating sidebar, toasts, scroll thumbs, the
+ * message thread) get scheme-aware rules here too, so they read on either
+ * scheme. A scene changes the accent with `accent` or `tokens` on its Stage. */
+
+@layer stageshow {
+  .ss-stage[data-theme="yeta"] {
+    /* Surfaces: the product sits on the raised step, the canvas is the page tone */
+    --ss-canvas: var(--color-surface);
+    --ss-surface: var(--color-surface-raised);
+    --ss-chrome: var(--color-surface-raised);
+    --ss-raised: var(--color-surface-raised);
+    --ss-well: transparent;
+
+    /* Placeholder ink: the strong text colour at five quiet steps (one neutral family) */
+    --ss-ink-1: color-mix(in srgb, var(--color-text-strong) 5%, transparent);
+    --ss-ink-2: color-mix(in srgb, var(--color-text-strong) 7%, transparent);
+    --ss-ink-3: color-mix(in srgb, var(--color-text-strong) 10%, transparent);
+    --ss-ink-4: color-mix(in srgb, var(--color-text-strong) 14%, transparent);
+    --ss-ink-5: color-mix(in srgb, var(--color-text-strong) 20%, transparent);
+    --ss-fill: color-mix(in srgb, var(--color-text-strong) 10%, var(--color-surface-raised));
+
+    /* Lines, text and icons (icons opaque, so strokes never paint darker where they meet) */
+    --ss-line: var(--color-divider);
+    --ss-line-faint: var(--color-border-faint);
+    --ss-text: var(--color-text-subtle);
+    --ss-text-strong: var(--color-text-strong);
+    --ss-text-faint: var(--color-text-faint);
+    --ss-icon: color-mix(in srgb, var(--color-text) 64%, var(--color-surface-raised));
+    --ss-icon-faint: color-mix(in srgb, var(--color-text) 32%, var(--color-surface-raised));
+
+    /* One accent: the design system's interactive violet (links, focus). A scene on a
+       gradient tile passes its tile's hue instead (Stage `accent`). */
+    --ss-accent: var(--color-accent-violet);
+    --ss-accent-2: var(--color-accent-pink);
+    --ss-accent-soft: color-mix(in srgb, var(--ss-accent) 16%, transparent);
+    --ss-accent-text: var(--ss-accent);
+
+    /* Status: the palette's own hues, the 700/400 steps that read on either scheme */
+    --ss-success: var(--color-accent-green);
+    --ss-success-soft: color-mix(in srgb, var(--color-success) 18%, transparent);
+    --ss-success-text: var(--color-accent-green);
+    --ss-warning: var(--color-warning);
+    --ss-warning-soft: color-mix(in srgb, var(--color-warning) 20%, transparent);
+    --ss-warning-text: var(--color-accent-yellow);
+    --ss-danger: var(--color-danger);
+    --ss-danger-soft: color-mix(in srgb, var(--color-danger) 14%, transparent);
+    --ss-danger-text: var(--color-danger-text);
+
+    /* Type: Funnel Display for every UI string; PP Editorial New is the host's accent,
+       used by scenes on purpose (a title), never for UI labels; the system mono for code */
+    --ss-font: var(--font-sans);
+    --ss-serif: var(--font-serif);
+    --ss-mono: var(--font-mono);
+
+    /* Named avatars: one brand hue per person (Avatar.tsx reads these), inverse ink on them */
+    --ss-person-1: var(--color-accent-orange);
+    --ss-person-2: var(--color-accent-green);
+    --ss-person-3: var(--color-accent-blue);
+    --ss-person-4: var(--color-accent-pink);
+    --ss-person-5: var(--color-accent-violet);
+    --ss-person-6: var(--color-accent-yellow);
+    --ss-person-text: var(--color-text-inverse);
+
+    /* Shape: the design system's radius scale (Figma Radius=Default 5 for small parts) */
+    --ss-radius-sm: var(--radius-xs);
+    --ss-radius-md: var(--radius-sm);
+    --ss-radius-lg: var(--radius-md);
+    --ss-radius-window: var(--radius-lg);
+    --ss-radius-pill: var(--radius-pill);
+
+    /* Density: the design system's Medium control */
+    --ss-control: var(--control-md);
+
+    /* Depth: Figma's bevel on every surface, a hairline on every edge and a soft fall.
+       The fall is ink on either scheme: the strong text on light, the inverse text on dark. */
+    --yeta-shadow-ink: light-dark(var(--color-text-strong), var(--color-text-inverse));
+    --ss-shadow-card: var(--shadow-bevel), 0 0 0 1px var(--color-border-faint);
+    --ss-shadow-window:
+      var(--shadow-bevel), 0 0 0 1px var(--color-border-faint), 0 4px 16px color-mix(in srgb, var(--yeta-shadow-ink) 10%, transparent);
+    --ss-shadow-float: var(--shadow-overlay);
+    --ss-shadow-hero:
+      var(--shadow-bevel), 0 0 0 1px var(--color-border-faint), 0 30px 60px -12px color-mix(in srgb, var(--yeta-shadow-ink) 24%, transparent),
+      0 18px 36px -18px color-mix(in srgb, var(--yeta-shadow-ink) 28%, transparent);
+    --ss-shadow-satellite:
+      var(--shadow-bevel), 0 0 0 1px light-dark(var(--color-border), var(--color-border-strong)),
+      0 14px 28px -10px color-mix(in srgb, var(--yeta-shadow-ink) 46%, transparent),
+      0 4px 10px -4px color-mix(in srgb, var(--yeta-shadow-ink) 24%, transparent);
+    --ss-shadow-ground:
+      var(--shadow-bevel), 0 0 0 1px light-dark(var(--color-border-faint), var(--color-border)),
+      0 18px 36px -18px color-mix(in srgb, var(--yeta-shadow-ink) 42%, transparent);
+    --ss-shadow-lift: 0 0 0 1px var(--color-border), 0 12px 28px -6px color-mix(in srgb, var(--yeta-shadow-ink) 32%, transparent);
+
+    /* Line cursors (I-beam, crosshair) and the arrow style's ink follow the surface,
+       as macOS's invert on dark: ink line, opposite edge */
+    --ss-cursor-line: var(--color-text-strong);
+    --ss-cursor-edge: var(--color-surface-raised);
+    --ss-cursor-ink: var(--color-text-strong);
+
+    color: var(--color-text);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  /* The classic arrow on every scheme: a black outline round a white body (the macOS
+     pointer's two paths with their fills swapped). Only the arrow is pinned light, so
+     it never inverts; the line cursors keep following the surface. */
+  .ss-stage[data-theme="yeta"] .ss-cursor__glyph[data-glyph="pointer"] {
+    color-scheme: light;
+  }
+
+  .ss-stage[data-theme="yeta"] .ss-cursor__glyph[data-glyph="pointer"] path:first-child {
+    fill: var(--color-text-strong);
+  }
+
+  .ss-stage[data-theme="yeta"] .ss-cursor__glyph[data-glyph="pointer"] path:last-child {
+    fill: var(--color-surface-raised);
+  }
+
+  /* The click ring: the scene's accent, as the kit draws it, on the bevel's hairline */
+  .ss-stage[data-theme="yeta"] .ss-ripple {
+    border-width: 1px;
+  }
+
+  /* Buttons are the design system's: neutral control surfaces with the bevel, never a
+     coloured fill. Primary is the solid Button (the control surface, strong ink),
+     secondary sits on the panel with a hairline; hue stays in washes and small marks. */
+  .ss-stage[data-theme="yeta"] .ss-button {
+    box-shadow: var(--shadow-bevel), inset 0 0 0 1px var(--ss-ink-3);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .ss-stage[data-theme="yeta"] .ss-button[data-variant="primary"] {
+    background: var(--color-surface-control);
+    color: var(--color-text-strong);
+    box-shadow: var(--shadow-bevel), inset 0 0 0 1px var(--color-border-faint);
+  }
+
+  .ss-stage[data-theme="yeta"] .ss-button[data-variant="primary"][data-hover] {
+    background: var(--color-surface-control-hover);
+  }
+
+  .ss-stage[data-theme="yeta"] .ss-button:is([data-variant="ghost"], [data-variant="tertiary"]) {
+    box-shadow: none;
+  }
+
+  /* Code reads in ink, as the design system has no syntax palette: keywords and names in
+     the strong ink, strings a step quieter */
+  .ss-stage[data-theme="yeta"] .ss-code {
+    --ss-code-key: var(--color-text-strong);
+    --ss-code-str: var(--color-text-subtle);
+    --ss-code-num: var(--color-text-strong);
+    --ss-code-fn: var(--color-text-strong);
+  }
+
+  /* A floating sidebar is a raised, bevelled panel on either scheme */
+  .ss-stage[data-theme="yeta"] .ss-window[data-side="floating"] > .ss-window__side {
+    background: var(--ss-raised);
+    box-shadow:
+      var(--shadow-bevel),
+      0 0 0 1px var(--color-border-faint);
+  }
+
+  /* Toast: the design system's inverse surface (its own Toast is ink on the canvas) */
+  .ss-stage[data-theme="yeta"] .ss-toast {
+    background: var(--color-surface-inverse);
+    color: var(--color-text-inverse);
+    box-shadow: var(--shadow-overlay);
+  }
+
+  .ss-stage[data-theme="yeta"] .ss-toast__action {
+    color: color-mix(in srgb, var(--color-text-inverse) 60%, transparent);
+  }
+
+  .ss-stage[data-theme="yeta"] .ss-scroller__thumb {
+    background: var(--color-border-strong);
+  }
+
+  /* Messages: received bubbles on the raised step, sent ones in the accent */
+  .ss-stage[data-theme="yeta"] .ss-thread {
+    --ss-them: var(--color-surface-control-hover);
+    --ss-them-text: var(--color-text-strong);
+  }
+
+  .ss-stage[data-theme="yeta"] .ss-tapback {
+    background: var(--ss-raised);
+    box-shadow:
+      var(--shadow-bevel),
+      0 1px 3px color-mix(in srgb, var(--yeta-shadow-ink) 24%, transparent);
+  }
+
+  /* Marks drawn on a filled disc (avatars, checks, connector dots): the inverse ink, so they
+     read on the deep 700 steps (light scheme) and the pastel 400 steps (dark scheme) alike */
+  .ss-stage[data-theme="yeta"] .ss-avatar:is([data-tone="accent"], [data-tone="success"]) {
+    color: var(--color-text-inverse);
+  }
+
+  .ss-stage[data-theme="yeta"] .ss-check__tick {
+    stroke: var(--color-text-inverse);
+  }
+
+  .ss-stage[data-theme="yeta"] .ss-connector__dot {
+    stroke: var(--ss-raised);
+  }
+
+  /* Segmented thumbs carry the bevel, as the design system's SegmentedControl pill does */
+  .ss-stage[data-theme="yeta"] .ss-seg__thumb {
+    box-shadow: var(--shadow-bevel), 0 0 0 1px var(--color-border-faint);
+  }
+
+  /* Code and terminals: the system mono, in ink. A terminal is always a dark surface: the
+     brand's dark, not a stock gray. Only a status mark (the tick on a passing run) takes a hue. */
+  .ss-stage[data-theme="yeta"] .ss-code {
+    font-family: var(--ss-mono);
+  }
+
+  .ss-stage[data-theme="yeta"] .ss-window[data-chrome="terminal"] {
+    color-scheme: dark;
+    --ss-term-bg: var(--color-surface-raised);
+    box-shadow: var(--shadow-bevel), 0 0 0 1px var(--color-border), var(--ss-shadow-hero);
+  }
+
+  .ss-stage[data-theme="yeta"] .ss-term {
+    --ss-term-path: var(--color-text-subtle);
+    --ss-term-sigil: var(--color-text-faint);
+    --ss-term-ok: var(--color-text-strong);
+    --ss-term-err: var(--color-danger-text);
+    --ss-term-dim: var(--color-text-faint);
+    color: var(--color-text-subtle);
+  }
+
+  .ss-stage[data-theme="yeta"] .ss-term .ok svg {
+    color: var(--color-success);
+  }
+
+  .ss-stage[data-theme="yeta"] .ss-term__title {
+    color: var(--color-text-faint);
+  }
+}

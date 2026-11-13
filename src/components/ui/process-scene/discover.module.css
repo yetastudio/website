@@ -1,0 +1,105 @@
+/* Discover: interview notes hung from the tile's top-left corner, off the right and bottom edges. */
+
+.stage {
+	/* Illustration geometry, in stage px (the tile is 342 × 160) */
+	--doc-left: 24px;
+	--doc-top: 24px;
+	--doc-width: 350px;
+	--doc-height: 168px;
+	--rest-x: 304px;
+	--rest-y: 128px;
+}
+
+.doc {
+	left: var(--doc-left);
+	top: var(--doc-top);
+	width: var(--doc-width);
+	height: var(--doc-height);
+	padding: var(--space-14) var(--space-16);
+}
+
+.head {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+	height: var(--space-20);
+}
+
+.date {
+	margin-left: var(--space-8);
+}
+
+.lines {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+	margin-top: var(--space-12);
+}
+
+.quoteRow {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+	height: var(--space-20);
+	margin-top: var(--space-10);
+}
+
+.quote {
+	position: relative;
+	white-space: nowrap;
+}
+
+/* Zero-width marks at the quote's ends, measured for the drag */
+.anchor {
+	display: inline-block;
+	width: 0;
+	height: var(--text-xs);
+	vertical-align: text-bottom;
+}
+
+.sel {
+	border-radius: var(--stroke-hairline);
+	background-color: transparent;
+	box-decoration-break: clone;
+	transition: background-color var(--duration-enter) ease;
+}
+
+/* While dragging: the system selection, in the focus colour */
+.sel[data-hl='select'] {
+	background-color: color-mix(in srgb, var(--color-focus-ring) 24%, transparent);
+	transition: none;
+}
+
+/* Kept: the research highlight, in the tile's hue */
+.sel[data-hl='mark'] {
+	background-color: light-dark(
+		color-mix(in srgb, var(--scene-accent) 18%, transparent),
+		color-mix(in srgb, var(--scene-accent) 30%, transparent)
+	);
+}
+
+/* The tag arrives whole from just above and lifts off the same way */
+.tag {
+	display: inline-flex;
+	flex: none;
+	opacity: 0;
+	transform: translateY(calc(var(--space-4) * -1)) scale(0.96);
+	will-change: transform;
+	transition:
+		opacity var(--duration-exit) ease,
+		transform var(--duration-exit) ease;
+}
+
+.tag[data-on] {
+	opacity: 1;
+	transform: none;
+	transition:
+		opacity var(--duration-enter) var(--ease-out),
+		transform var(--duration-overlay) var(--ease-out);
+}
+
+.rest {
+	position: absolute;
+	left: var(--rest-x);
+	top: var(--rest-y);
+}

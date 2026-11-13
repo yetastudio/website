@@ -1,0 +1,580 @@
+/*
+ * /inspo Stageshow scenes. The kit's Yeta look (vendor/stageshow/yeta.css) supplies
+ * every --ss-* token; these rules only place things. Lengths in custom properties are
+ * illustration geometry in stage px (where a window hangs, how far it bleeds), not
+ * UI spacing; UI spacing, radii and type read the design system's scale.
+ */
+
+/* The mockup wrapper: a picture to assistive tech (role="img" + label), nothing focusable. */
+.frame {
+	/* The site's dot pattern at half size, for pages drawn in miniature. */
+	--mini-pattern-size: 195px 422px;
+	width: 100%;
+	user-select: none;
+}
+
+.frame :global(.ss-stage) {
+	overflow: hidden;
+}
+
+/* ───────────── 01 Hero demo ───────────── */
+
+.heroStage {
+	--hero-win-left: 20px;
+	--hero-win-top: 20px;
+	--hero-win-width: 480px;
+	--hero-win-height: 380px;
+	--hero-rest-x: 452px;
+	--hero-rest-y: 250px;
+	--hero-tile-height: 120px;
+	--hero-reveal-dur: 0.75s;
+}
+
+.heroStage :global(.ss-stage[data-layout='compact']) {
+	--hero-win-left: 14px;
+	--hero-win-top: 14px;
+	--hero-win-width: 312px;
+	--hero-win-height: 360px;
+	--hero-rest-x: 290px;
+	--hero-rest-y: 236px;
+	--hero-tile-height: 96px;
+}
+
+.heroWindow {
+	position: absolute;
+	left: var(--hero-win-left);
+	top: var(--hero-win-top);
+	width: var(--hero-win-width);
+	height: var(--hero-win-height);
+	box-shadow: var(--ss-shadow-hero);
+}
+
+/* One browser per scheme, stacked; the one in front opens out of the switch the cursor pressed. */
+.heroLayer {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+}
+
+.heroLayer[data-front] {
+	z-index: 2;
+	clip-path: circle(0 at var(--reveal-at));
+	transition: clip-path var(--hero-reveal-dur) var(--ease-smooth);
+}
+
+.heroLayer[data-front][data-open] {
+	clip-path: circle(150% at var(--reveal-at));
+}
+
+.heroPage {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-12);
+	padding: var(--space-12) var(--space-16) 0;
+	background-color: var(--color-surface);
+	background-image: var(--pattern-image);
+	background-size: var(--mini-pattern-size);
+	color: var(--color-text);
+	text-align: center;
+}
+
+.heroNav {
+	display: flex;
+	align-items: center;
+	gap: var(--space-10);
+	align-self: stretch;
+	padding: var(--space-4) var(--space-4) var(--space-4) var(--space-10);
+	border-radius: var(--radius-md);
+	background-color: var(--color-surface-glass);
+}
+
+.heroNav > :nth-child(2) {
+	margin-left: auto;
+}
+
+.heroSwitch {
+	display: inline-flex;
+	gap: var(--space-2);
+	margin-left: auto;
+	padding: var(--space-2);
+	border-radius: var(--radius-sm);
+	background-color: var(--color-surface-tint);
+}
+
+.heroSwitchItem {
+	display: grid;
+	place-items: center;
+	width: var(--control-xs);
+	height: var(--control-xs);
+	border-radius: var(--radius-xs);
+	color: var(--color-text-strong);
+}
+
+/* Icons stay one opaque colour; the idle one fades as a whole. */
+.heroSwitchItem:not([data-on]) > svg {
+	opacity: 0.5;
+}
+
+.heroSwitchItem[data-on] {
+	background-color: var(--color-surface-control);
+	box-shadow: var(--shadow-bevel);
+}
+
+.heroWordmark {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+	margin-top: var(--space-8);
+	font-size: var(--text-2xl);
+	font-weight: var(--font-weight-bold);
+	line-height: var(--leading-snug);
+	letter-spacing: var(--tracking-tight);
+	white-space: nowrap;
+}
+
+.heroWord {
+	color: var(--color-text-strong);
+	background-image: var(--gradient-display);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.heroSlogan {
+	font-size: var(--text-xs);
+	line-height: var(--leading-snug);
+	color: var(--color-text);
+}
+
+.heroSlogan em {
+	font-family: var(--font-serif);
+	font-style: normal;
+	letter-spacing: var(--tracking-normal);
+}
+
+.heroCta {
+	display: inline-flex;
+	align-items: center;
+	min-height: var(--control-sm);
+	padding: 0 var(--space-12);
+	border-radius: var(--radius-md);
+	background-color: var(--color-surface-control);
+	color: var(--color-text-strong);
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-light);
+}
+
+.heroTiles {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: var(--space-8);
+	align-self: stretch;
+	margin-top: var(--space-4);
+}
+
+.heroTile {
+	height: var(--hero-tile-height);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-bevel);
+}
+
+.heroTile[data-hue='pink'] {
+	background-image: var(--wash-pink);
+}
+
+.heroTile[data-hue='yellow'] {
+	background-image: var(--wash-yellow);
+}
+
+.heroTile[data-hue='blue'] {
+	background-image: var(--wash-blue);
+}
+
+.heroRest {
+	position: absolute;
+	left: var(--hero-rest-x);
+	top: var(--hero-rest-y);
+	width: 1px;
+	height: 1px;
+}
+
+/* ───────────── 04 Before / after ───────────── */
+
+.baStage {
+	--ba-win-left: 20px;
+	--ba-win-top: 20px;
+	--ba-win-width: 480px;
+	--ba-win-height: 380px;
+	/* The kit Badge's side padding: the label, not the pill, lines up with the copy. */
+	--ba-tag-pad: 9px;
+	--ba-rest-x: 470px;
+	--ba-rest-y: 256px;
+	--ba-image-height: 132px;
+	--ba-knob: 32px;
+}
+
+.baStage :global(.ss-stage[data-layout='compact']) {
+	--ba-win-left: 14px;
+	--ba-win-top: 14px;
+	--ba-win-width: 312px;
+	--ba-win-height: 360px;
+	--ba-rest-x: 300px;
+	--ba-rest-y: 240px;
+	--ba-image-height: 112px;
+}
+
+.baWindow {
+	position: absolute;
+	left: var(--ba-win-left);
+	top: var(--ba-win-top);
+	width: var(--ba-win-width);
+	height: var(--ba-win-height);
+	box-shadow: var(--ss-shadow-hero);
+}
+
+.baCompare {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+}
+
+.baBefore,
+.baAfter {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-24);
+	padding: var(--space-12) var(--space-16) 0;
+}
+
+.baPushRight {
+	margin-left: auto;
+}
+
+/* Two columns that meet at the middle, so a split at 50% shows one whole headline per side. */
+.baColumns {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	align-items: start;
+	gap: var(--space-24);
+	padding-top: var(--space-24);
+}
+
+.baCopy {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--space-8);
+	min-width: 0;
+}
+
+/* Before: the template, flat and untreated: no bevel, no wash, no accent type. */
+.baBefore {
+	background-color: var(--color-surface-raised);
+}
+
+.baBeforeNav {
+	display: flex;
+	align-items: center;
+	gap: var(--space-10);
+	padding-block: var(--space-6);
+	border-bottom: var(--stroke-hairline) solid var(--ss-line);
+}
+
+.baBeforeTitle {
+	margin-bottom: var(--space-4);
+	font-size: var(--text-lg);
+	font-weight: var(--font-weight-regular);
+	line-height: var(--leading-snug);
+	letter-spacing: var(--tracking-normal);
+	color: var(--ss-text);
+}
+
+.baBeforeButton {
+	width: var(--space-64);
+	height: var(--control-xs);
+	margin-top: var(--space-6);
+	background-color: var(--ss-ink-4);
+}
+
+.baBeforeImage {
+	height: var(--ba-image-height);
+	background-color: var(--ss-ink-2);
+}
+
+/* After: the page as shipped. */
+.baAfterClip {
+	position: absolute;
+	inset: 0;
+	clip-path: inset(0 0 0 calc(var(--ba-x) * 100%));
+}
+
+.baAfter {
+	background-color: var(--color-surface);
+	background-image: var(--pattern-image);
+	background-size: var(--mini-pattern-size);
+}
+
+.baAfterNav {
+	display: flex;
+	align-items: center;
+	gap: var(--space-10);
+	padding: var(--space-6) var(--space-10);
+	border-radius: var(--radius-md);
+	background-color: var(--color-surface-glass);
+}
+
+.baAfterTile {
+	height: var(--ba-image-height);
+	border-radius: var(--radius-lg);
+	background-image: var(--wash-violet);
+	box-shadow: var(--shadow-bevel);
+}
+
+.baAfterTitle {
+	margin-bottom: var(--space-4);
+	font-size: var(--text-lg);
+	font-weight: var(--font-weight-semibold);
+	line-height: var(--leading-snug);
+	letter-spacing: var(--tracking-tight);
+	color: var(--color-text-strong);
+	background-image: var(--gradient-display);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.baAfterTitle em {
+	font-family: var(--font-serif);
+	font-weight: var(--font-weight-regular);
+	letter-spacing: var(--tracking-normal);
+}
+
+.baAfterButton {
+	display: grid;
+	place-items: center;
+	min-width: var(--space-80);
+	height: var(--control-sm);
+	margin-top: var(--space-6);
+	border-radius: var(--radius-md);
+	background-color: var(--color-surface-control);
+}
+
+.baStage :global(.ss-stage[data-layout='compact']) .baBeforeTitle,
+.baStage :global(.ss-stage[data-layout='compact']) .baAfterTitle {
+	font-size: var(--text-md);
+}
+
+/* Each half carries its own label, so a label leaves with its half. */
+.baTag {
+	position: absolute;
+	top: var(--space-48);
+	box-shadow: var(--shadow-bevel);
+}
+
+.baTagStart {
+	left: calc(var(--space-16) - var(--ba-tag-pad));
+}
+
+.baTagEnd {
+	right: calc(var(--space-16) - var(--ba-tag-pad));
+}
+
+/* The divider and its knob follow the hand. */
+.baDivider {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: calc(var(--ba-x) * 100%);
+	width: var(--stroke-hairline);
+	background-color: var(--color-text-strong);
+}
+
+.baKnob {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	display: grid;
+	place-items: center;
+	width: var(--ba-knob);
+	height: var(--ba-knob);
+	border-radius: var(--radius-pill);
+	background-color: var(--color-surface-control);
+	color: var(--color-text-strong);
+	box-shadow: var(--ss-shadow-satellite);
+	transform: translate(-50%, -50%);
+}
+
+.baRest {
+	position: absolute;
+	left: var(--ba-rest-x);
+	top: var(--ba-rest-y);
+	width: 1px;
+	height: 1px;
+}
+
+/* ───────────── 07 Booking ───────────── */
+
+.bookFrame {
+	position: absolute;
+	inset: 0;
+}
+
+.bookStage {
+	--book-card-left: 20px;
+	--book-card-top: 20px;
+	--book-card-width: 400px;
+	--book-card-height: 290px;
+	--book-card-inset: 14px;
+	--book-card-cut: 96px;
+	--book-rest-x: 316px;
+	--book-rest-y: 188px;
+	height: 100%;
+}
+
+.bookStage :global(.ss-stage) {
+	--ss-accent: var(--color-accent-violet);
+	--ss-accent-2: var(--color-accent-violet);
+	--ss-accent-soft: color-mix(in srgb, var(--color-accent-violet) 16%, transparent);
+	--ss-accent-text: var(--color-accent-violet);
+	background: transparent;
+}
+
+.bookCard {
+	position: absolute;
+	left: var(--book-card-left);
+	top: var(--book-card-top);
+	width: var(--book-card-width);
+	height: var(--book-card-height);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+	padding: var(--book-card-inset);
+	border-radius: var(--radius-lg);
+	background-color: var(--color-surface-raised);
+	box-shadow: var(--ss-shadow-ground);
+}
+
+.bookHead {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+	padding-right: var(--book-card-cut);
+}
+
+.bookIcon {
+	color: var(--ss-accent);
+}
+
+.bookTitle {
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text-strong);
+}
+
+.bookMeta {
+	margin-left: auto;
+	font-size: var(--text-xs);
+	color: var(--color-text-subtle);
+}
+
+.bookDays,
+.bookSlots {
+	/* The card runs off the tile's right edge: its controls stop a gutter short of the cut. */
+	margin-right: var(--book-card-cut);
+}
+
+.bookDays :global(.ss-seg__option) {
+	height: auto;
+	padding-block: var(--space-6);
+}
+
+.bookDay {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-2);
+	line-height: var(--leading-snug);
+}
+
+.bookWeekday {
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-regular);
+	color: var(--color-text-subtle);
+}
+
+.bookDate {
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-medium);
+}
+
+.bookSlots {
+	/* Three times don't need the week's width: the track hugs them. */
+	align-self: flex-start;
+	width: max-content;
+	margin-right: 0;
+}
+
+.bookSlots :global(.ss-seg__option) {
+	/* 2px track + 10px: the first time starts on the Confirm label's edge (12px in). */
+	padding-inline: var(--space-10);
+	font-variant-numeric: tabular-nums;
+}
+
+/* Nothing picked yet: the thumb fades where it is, no segment reads as chosen. */
+.bookDays[data-none] :global(.ss-seg__thumb),
+.bookSlots[data-none] :global(.ss-seg__thumb) {
+	opacity: 0;
+}
+
+.bookDays :global(.ss-seg__thumb),
+.bookSlots :global(.ss-seg__thumb) {
+	transition:
+		transform 0.3s var(--ease-smooth),
+		opacity 0.2s ease;
+}
+
+.bookDays[data-none] :global(.ss-seg__option[data-on]),
+.bookSlots[data-none] :global(.ss-seg__option[data-on]) {
+	color: var(--ss-text);
+}
+
+.bookActions {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+	margin-top: var(--space-2);
+}
+
+.bookActions [data-idle] {
+	opacity: 0.5;
+}
+
+.bookActions :global(.ss-button) {
+	transition:
+		transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1),
+		background-color 160ms ease,
+		color 160ms ease,
+		opacity 200ms ease,
+		padding 220ms var(--ease-smooth);
+}
+
+.bookReschedule {
+	opacity: 0;
+}
+
+.bookReschedule[data-show] {
+	opacity: 1;
+}
+
+.bookRest {
+	position: absolute;
+	left: var(--book-rest-x);
+	top: var(--book-rest-y);
+	width: 1px;
+	height: 1px;
+}

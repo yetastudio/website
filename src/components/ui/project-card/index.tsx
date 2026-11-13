@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element -- tool logos are tiny static SVGs. */
 
 //! React Core
-import { useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 
 //! Next Core
 import Image from 'next/image';
@@ -196,15 +196,60 @@ export type ProjectCardProps = {
 	className?: string;
 };
 
-/** Figma Project Overview Card, Status=Idle. "See more" calls `onOpen` to show the Active state. */
+const REDUCED_MOTION = '(prefers-reduced-motion: reduce)';
+
+function subscribeReducedMotion(onChange: () => void) {
+	const query = window.matchMedia(REDUCED_MOTION);
+	query.addEventListener('change', onChange);
+	return () => query.removeEventListener('change', onChange);
+}
+
+/** Server and first hydration pass assume reduced motion, so autoplay only ever starts on the client. */
+function useReducedMotion() {
+	return useSyncExternalStore(subscribeReducedMotion, () => window.matchMedia(REDUCED_MOTION).matches, () => true);
+}
+
+/**
+ * Figma Project Overview Card, Status=Idle. "See more" calls `onOpen` to show the Active state.
+ * On desktop the shots play on their own: the active dot fills over `--autoplay-interval`, then
+ * the next shot fades in. Autoplay pauses on hover, on keyboard focus and off-screen, and is off
+ * with reduced motion; the dots still pick a shot by hand.
+ */
 export function ProjectCard({ project, size = 'desktop', onOpen, priority, className }: ProjectCardProps) {
 	const t = useTranslations('ourWork');
 	const [shot, setShot] = useState(0);
+	const [hovered, setHovered] = useState(false);
+	const [focused, setFocused] = useState(false);
+	const [inView, setInView] = useState(false);
+	const cardRef = useRef<HTMLElement>(null);
+	const reduceMotion = useReducedMotion();
 	const isDesktop = size === 'desktop';
 	const sizes = isDesktop ? '(min-width: 1024px) 449px, 90vw' : '(min-width: 768px) 334px, 90vw';
+	const shotCount = project.shots.length;
+	const autoplay = isDesktop && shotCount > 1 && !reduceMotion;
+
+	useEffect(() => {
+		const card = cardRef.current;
+		if (!card || !autoplay) return;
+		const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.4 });
+		observer.observe(card);
+		return () => observer.disconnect();
+	}, [autoplay]);
+
+	const advance = useCallback(() => setShot((current) => (current + 1) % shotCount), [shotCount]);
 
 	return (
-		<article className={cx(styles.card, styles[size], 'u-outline')} aria-label={`${t('caseStudy')}: ${project.name}`}>
+		<article
+			ref={cardRef}
+			className={cx(styles.card, styles[size], 'u-outline')}
+			aria-label={`${t('caseStudy')}: ${project.name}`}
+			onPointerEnter={() => setHovered(true)}
+			onPointerLeave={() => setHovered(false)}
+			onFocus={() => setFocused(true)}
+			onBlur={(event) => {
+				if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocused(false);
+			}}
+		>
 			<header className={styles.header}>
 				<p className={styles.eyebrow}>{t('caseStudy')}</p>
 				<h3 className={styles.title}>
@@ -222,7 +267,13 @@ export function ProjectCard({ project, size = 'desktop', onOpen, priority, class
 
 			<footer className={styles.footer}>
 				{isDesktop && project.shots.length > 1 ? (
-					<PaginationDots count={project.shots.length} index={shot} onSelect={setShot} itemLabel="image" />
+					<PaginationDots
+						count={shotCount}
+						index={shot}
+						onSelect={setShot}
+						itemLabel="image"
+						autoplay={autoplay ? { paused: hovered || focused || !inView, onComplete: advance } : undefined}
+					/>
 				) : (
 					<span />
 				)}

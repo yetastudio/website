@@ -8,6 +8,8 @@ import { useTranslations } from 'next-intl';
 
 //! Components
 import { Button, LogoMark } from '@/components/ui';
+import { Reveal } from '@/components/ui/reveal';
+import { revealLine } from '@/components/ui/reveal/line';
 import { BOOKING_URL } from '../sections';
 
 //! Utils
@@ -28,21 +30,22 @@ function Doodle({ name, className }: { name: 'great-sparkle' | 'luck-strike'; cl
 
 /**
  * Figma Hero: "Yeta [logo tile] Studio" wordmark, the slogan with its sparkle and
- * strike-through doodles, and the two-button group.
+ * strike-through doodles, and the two-button group. The three enter with the
+ * transitions.dev Texts reveal right after hydration.
  */
 export function Hero() {
 	const t = useTranslations('hero');
 
 	return (
-		<section className={styles.hero} aria-labelledby="hero-title">
-			<h1 id="hero-title" className={styles.title}>
+		<Reveal as="section" trigger="mount" className={styles.hero} aria-labelledby="hero-title">
+			<h1 id="hero-title" className={cx(styles.title, revealLine(1))}>
 				<span className={styles.word}>Yeta</span>
 				{/* 58.5 @390 → 96 @1920: tracks the wordmark size (Figma ratio 96 / 89.6). */}
 				<LogoMark canvas="auto" size="calc(var(--text-display) * 1.0714)" alt="✹" />
 				<span className={styles.word}>Studio</span>
 			</h1>
 
-			<p className={styles.slogan}>
+			<p className={cx(styles.slogan, revealLine(2))}>
 				{t.rich('slogan', {
 					br: () => <br />,
 					great: (chunks: ReactNode) => (
@@ -60,7 +63,7 @@ export function Hero() {
 				})}
 			</p>
 
-			<div className={cx(styles.group, 'u-outline')}>
+			<div className={cx(styles.group, 'u-outline', revealLine(3))}>
 				<Button href="#why-yeta" size="xl" fullWidth>
 					{t('whyChoose')}
 				</Button>
@@ -68,7 +71,7 @@ export function Hero() {
 					{t('letsBuild')}
 				</Button>
 			</div>
-		</section>
+		</Reveal>
 	);
 }
 

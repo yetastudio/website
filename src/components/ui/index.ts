@@ -29,6 +29,8 @@ export { PaginationDots } from './pagination-dots';
 export { Tooltip } from './tooltip';
 export { Accordion, AccordionItem } from './accordion';
 export { Dialog } from './dialog';
+export { Reveal } from './reveal';
+export { revealLine } from './reveal/line';
 export { LocaleSwitch } from './locale-switch';
 export { ToastProvider, useToast } from './toast';
 export { Input, Textarea } from './field';

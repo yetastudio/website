@@ -1,0 +1,934 @@
+/*
+ * Section library mockups: one per shelf, the best of its references rebuilt in the Yeta look.
+ * Every mockup is an inline-size container, so it lays out by the canvas it sits on (a 358 phone
+ * column or a desktop row), not by the viewport. Lengths in custom properties are mockup geometry;
+ * spacing, radii, type and color read the scale.
+ */
+
+.container {
+	container-type: inline-size;
+	width: 100%;
+}
+
+/* A section frame: the slice of page the mockup stands for, cropped like a product shot. */
+.frame {
+	position: relative;
+	overflow: hidden;
+	border-radius: var(--radius-xl);
+	box-shadow: inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
+}
+
+/*
+ * Sky band (Altitude, Air, Atlas): built from tokens, so the same rule draws a day sky on the
+ * light canvas and a night sky on the dark one. Two soft clouds sit in the corners only.
+ */
+.sky {
+	--sky-top: color-mix(in oklab, var(--color-accent-blue) 46%, var(--color-surface));
+	--sky-mid: color-mix(in oklab, var(--color-accent-blue) 14%, var(--color-surface));
+	--sky-cloud: color-mix(in oklab, var(--color-surface) 55%, transparent);
+	--sky:
+		radial-gradient(48% 40% at 14% 12%, var(--sky-cloud) 0%, transparent 70%),
+		radial-gradient(36% 30% at 88% 6%, var(--sky-cloud) 0%, transparent 70%),
+		linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 64%, var(--color-surface) 100%);
+	background: var(--sky);
+}
+
+/* Small wash swatches, one per brand hue (FLORA, mymind). Washes are bright on both canvases. */
+.hued[data-hue='pink'] {
+	--hue: var(--color-accent-pink);
+	--hue-wash: var(--wash-pink);
+}
+.hued[data-hue='orange'] {
+	--hue: var(--color-accent-orange);
+	--hue-wash: var(--wash-orange);
+}
+.hued[data-hue='yellow'] {
+	--hue: var(--color-accent-yellow);
+	--hue-wash: var(--wash-yellow);
+}
+.hued[data-hue='green'] {
+	--hue: var(--color-accent-green);
+	--hue-wash: var(--wash-green);
+}
+.hued[data-hue='blue'] {
+	--hue: var(--color-accent-blue);
+	--hue-wash: var(--wash-blue);
+}
+.hued[data-hue='violet'] {
+	--hue: var(--color-accent-violet);
+	--hue-wash: var(--wash-violet);
+}
+
+.numeral {
+	font-variant-numeric: lining-nums tabular-nums;
+}
+
+/* ───────────── 01 Navigation ───────────── */
+
+.navStage {
+	--nav-stage-height: 15rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: var(--nav-stage-height);
+	padding: var(--space-20) var(--space-12) 0;
+}
+
+.navRow {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-8);
+	width: 100%;
+}
+
+.navTray {
+	display: flex;
+	align-items: center;
+	gap: var(--space-12);
+}
+
+.navMarkSlot {
+	display: inline-flex;
+	padding-inline-start: var(--space-4);
+}
+
+.navLinks {
+	display: none;
+	align-items: center;
+	gap: var(--space-20);
+	list-style: none;
+}
+
+.navLink {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-6);
+	white-space: nowrap;
+}
+
+.navDot {
+	--nav-dot: 0.375rem;
+	flex: none;
+	width: var(--nav-dot);
+	height: var(--nav-dot);
+	border-radius: var(--radius-pill);
+	background: var(--hue);
+}
+
+/* The theme switch lives inside the pill (Fourmula): two glyphs, the current one lifted. */
+.navTheme {
+	display: inline-flex;
+	gap: var(--space-2);
+	padding: var(--space-2);
+	border-radius: var(--radius-pill);
+	background: var(--color-surface-tint);
+	color: var(--color-text-faint);
+}
+
+.navThemeGlyph {
+	display: grid;
+	place-items: center;
+	padding: var(--space-6);
+	border-radius: var(--radius-pill);
+}
+
+.navThemeOn {
+	background: var(--color-surface-raised);
+	color: var(--color-text-strong);
+	box-shadow: var(--shadow-bevel);
+}
+
+.navMenu {
+	display: inline-flex;
+}
+
+/* The hero under the nav, cropped by the frame: context, not content. */
+.navHint {
+	margin-top: auto;
+	translate: 0 34%;
+	text-align: center;
+	white-space: nowrap;
+}
+
+@container (min-width: 30rem) {
+	.navLinks {
+		display: flex;
+	}
+
+	.navMenu {
+		display: none;
+	}
+}
+
+/* ───────────── 02 Hero ───────────── */
+
+.heroSky {
+	--hero-sky-height: 10rem;
+	display: grid;
+	place-items: start center;
+	height: var(--hero-sky-height);
+	padding-top: var(--space-24);
+}
+
+.heroBody {
+	--hero-curve: 3.5rem;
+	--hero-arc: 50% 50% 0 0 / var(--hero-curve) var(--hero-curve) 0 0;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-32);
+	margin-top: calc(-1 * var(--hero-curve));
+	padding: var(--space-48) var(--space-20) var(--space-40);
+	border-radius: var(--hero-arc);
+	background: var(--color-surface);
+}
+
+.heroSplit {
+	display: grid;
+	gap: var(--space-4);
+	width: 100%;
+}
+
+.heroLine {
+	font-size: clamp(var(--text-3xl), 7.4cqi, var(--text-display));
+	letter-spacing: var(--tracking-tight);
+}
+
+.heroLine:last-child {
+	justify-self: end;
+	text-align: end;
+}
+
+@container (min-width: 30rem) {
+	.heroSky {
+		--hero-sky-height: 12rem;
+	}
+
+	.heroBody {
+		--hero-curve: 4.5rem;
+		padding-inline: var(--space-40);
+	}
+}
+
+/* ───────────── 03 Why Yeta ───────────── */
+
+.why {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-32);
+	padding: var(--space-32) var(--space-20);
+}
+
+.whyClaim {
+	max-width: 18ch;
+}
+
+/* Numbered reasons in hairline-ruled columns (Metalab): a ledger of claims, not a grid of icons. */
+.whyReasons {
+	display: grid;
+	grid-template-columns: 1fr;
+	column-gap: var(--space-24);
+	list-style: none;
+}
+
+.whyReason {
+	display: flex;
+	align-items: baseline;
+	gap: var(--space-16);
+	padding-block: var(--space-16);
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+}
+
+/* One wash per highlight, a single glyph and a short line (FLORA). */
+.whyTiles {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var(--space-12);
+	list-style: none;
+}
+
+.whyTile {
+	--why-tile-height: 8.5rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	min-height: var(--why-tile-height);
+	padding: var(--space-16);
+	border-radius: var(--radius-lg);
+	background: var(--hue-wash);
+	color: var(--color-text-strong);
+}
+
+.whyGlyph {
+	display: grid;
+	place-items: center;
+	align-self: flex-start;
+	padding: var(--space-8);
+	border-radius: var(--radius-pill);
+	background: var(--color-surface-glass);
+	backdrop-filter: blur(var(--blur-glass));
+}
+
+@container (min-width: 30rem) {
+	.why {
+		padding: var(--space-40);
+	}
+
+	.whyReasons {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.whyTiles {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@container (min-width: 44rem) {
+	.why {
+		padding: var(--space-48);
+	}
+
+	.whyReasons {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+/* ───────────── 04 Our Craft ───────────── */
+
+.craft {
+	display: grid;
+	gap: var(--space-24);
+	padding: var(--space-24) var(--space-12);
+}
+
+.craftList {
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+}
+
+/* The list items are system Buttons; only their height and inner type are tuned here. */
+.craftItem {
+	--button-min-height: 2.75rem;
+	justify-content: flex-start;
+	text-align: start;
+}
+
+.craftLabel {
+	display: inline-flex;
+	align-items: baseline;
+	gap: var(--space-12);
+	transition: color var(--duration-enter) var(--ease-out);
+}
+
+/* Scales with the canvas so every line stays on one row, from a phone column up. */
+.craftTitle {
+	font-size: clamp(var(--text-lg), 5.6cqi, var(--text-2xl));
+}
+
+.craftStage {
+	--craft-stage-aspect: 16 / 10;
+	display: grid;
+	place-items: center;
+	aspect-ratio: var(--craft-stage-aspect);
+	padding: var(--space-20);
+	border-radius: var(--radius-xl);
+	background: var(--hue-wash);
+	color: var(--color-text-strong);
+}
+
+/* A framed card floats in the wash: the deliverable, not an icon (Fiasco, Phantom Studios). */
+.craftCard {
+	--craft-card-width: 34ch;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+	width: min(100%, var(--craft-card-width));
+}
+
+.craftCardHead {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+}
+
+@container (min-width: 44rem) {
+	.craft {
+		grid-template-columns: 1fr 1fr;
+		align-items: center;
+		gap: var(--space-40);
+		padding: var(--space-40);
+	}
+
+	.craftItem {
+		--button-min-height: 3.25rem;
+	}
+}
+
+/* ───────────── 05 Our Work ───────────── */
+
+.work {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-24);
+	padding: var(--space-24) var(--space-16);
+}
+
+.workHead {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+}
+
+.workStatement {
+	max-width: 30ch;
+}
+
+.workFilters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-6);
+	list-style: none;
+}
+
+.workGrid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var(--space-16);
+	list-style: none;
+}
+
+.workItem {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-10);
+	min-width: 0;
+}
+
+/* The finished site, framed on a wash that bleeds past the shot (OFF+BRAND, Webflow). */
+.workWash {
+	--work-shot-inset: 12%;
+	display: grid;
+	padding: var(--space-24) 0 0 var(--work-shot-inset);
+	overflow: hidden;
+	border-radius: var(--radius-lg);
+	background: var(--hue-wash);
+}
+
+.workShot {
+	--work-shot-aspect: 16 / 10;
+	position: relative;
+	aspect-ratio: var(--work-shot-aspect);
+	overflow: hidden;
+	border-radius: var(--radius-md) 0 0 0;
+	box-shadow: var(--shadow-overlay);
+}
+
+.workImage {
+	object-fit: cover;
+	object-position: top left;
+}
+
+.workCaption {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-12);
+}
+
+/* The open tile: dashed, quiet, an invitation instead of an invented client. */
+.workOpen {
+	--work-open-dash: 1.5px;
+	align-items: center;
+	justify-content: center;
+	padding: var(--space-32) var(--space-16);
+	border: var(--work-open-dash) dashed var(--color-border);
+	border-radius: var(--radius-lg);
+	text-align: center;
+}
+
+@container (min-width: 30rem) {
+	.work {
+		padding: var(--space-32);
+	}
+
+	.workGrid {
+		grid-template-columns: 1fr 1fr;
+		align-items: start;
+	}
+
+	/* Staggered pair (Fiasco): the second column starts lower. */
+	.workItem:nth-child(2) {
+		margin-top: var(--space-48);
+	}
+
+	.workOpen {
+		grid-column: 1 / -1;
+	}
+}
+
+/* ───────────── 06 Our Process ───────────── */
+
+.process {
+	--process-height: 34rem;
+	--process-fade: linear-gradient(180deg, var(--color-surface) 72%, transparent 100%);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-24);
+	height: var(--process-height);
+	padding: var(--space-32) var(--space-20) 0;
+	background: var(--hue-wash);
+	color: var(--color-text-strong);
+	mask-image: var(--process-fade);
+}
+
+.processClaim {
+	max-width: 16ch;
+}
+
+.processRows {
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+}
+
+.processRow {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: start;
+	gap: var(--space-16);
+	padding-block: var(--space-16);
+	border-top: var(--stroke-hairline) solid color-mix(in oklab, var(--color-text-strong) 22%, transparent);
+}
+
+.processNumeral {
+	font-size: clamp(var(--text-3xl), 9cqi, var(--text-5xl));
+	letter-spacing: var(--tracking-tight);
+}
+
+.processText {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-4);
+	min-width: 0;
+}
+
+.processTitle {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-8);
+}
+
+.processCopy {
+	display: -webkit-box;
+	overflow: hidden;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+
+@container (min-width: 30rem) {
+	.process {
+		--process-height: 30rem;
+		padding: var(--space-40) var(--space-40) 0;
+	}
+
+	.processRow {
+		grid-template-columns: 5ch 12ch 1fr;
+		align-items: baseline;
+		gap: var(--space-20);
+	}
+
+	.processText {
+		display: contents;
+	}
+}
+
+/* ───────────── 07 Results and clients ───────────── */
+
+.ledger {
+	display: flex;
+	flex-direction: column;
+}
+
+.ledgerSky {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-20);
+	padding: var(--space-32) var(--space-20) var(--space-24);
+}
+
+.ledgerRows {
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+}
+
+.ledgerRow {
+	display: flex;
+	align-items: center;
+	gap: var(--space-20);
+	padding-block: var(--space-12);
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.ledgerFigure {
+	--ledger-figure-width: 2.6ch;
+	min-width: var(--ledger-figure-width);
+	font-size: clamp(var(--text-4xl), 11cqi, var(--text-display));
+	letter-spacing: var(--tracking-tight);
+}
+
+.ledgerCaption {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-2);
+}
+
+/* Clients as serif wordmarks, edge to edge, one lit in its hue (Craft Agency). */
+.ledgerClients {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: var(--space-8) var(--space-20);
+	padding: var(--space-20);
+	list-style: none;
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.ledgerWordmark {
+	font-size: clamp(var(--text-xl), 5.4cqi, var(--text-3xl));
+	letter-spacing: var(--tracking-tight);
+}
+
+.ledgerLit {
+	color: var(--color-accent-violet);
+	font-style: italic;
+}
+
+@container (min-width: 30rem) {
+	.ledgerSky {
+		padding: var(--space-40) var(--space-40) var(--space-32);
+	}
+
+	.ledgerClients {
+		padding-inline: var(--space-40);
+	}
+}
+
+/* ───────────── 08 Testimonials ───────────── */
+
+.quote {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-24);
+	padding: var(--space-40) var(--space-20) var(--space-24);
+	background: var(--hue-wash);
+	color: var(--color-text-strong);
+	transition: background var(--duration-enter) var(--ease-out);
+}
+
+/* Every quote sits in the same cell; the tallest sets the height. */
+.quoteStack {
+	display: grid;
+	width: 100%;
+}
+
+.quoteItem {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-20);
+	grid-area: 1 / 1;
+	text-align: center;
+	opacity: 0;
+	visibility: hidden;
+	transition:
+		opacity var(--duration-enter) var(--ease-out),
+		visibility var(--duration-enter);
+}
+
+.quoteItem[data-on] {
+	opacity: 1;
+	visibility: visible;
+}
+
+.quoteText {
+	max-width: 26ch;
+	font-size: clamp(var(--text-xl), 5.6cqi, var(--text-4xl));
+}
+
+.quoteBy {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-10);
+}
+
+.quoteAvatar {
+	--quote-avatar: 2rem;
+	width: var(--quote-avatar);
+	height: var(--quote-avatar);
+	border-radius: var(--radius-pill);
+	object-fit: cover;
+}
+
+@container (min-width: 30rem) {
+	.quote {
+		padding: var(--space-64) var(--space-40) var(--space-32);
+	}
+}
+
+/* ───────────── 09 About the studio ───────────── */
+
+.about {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-32);
+	padding: var(--space-32) var(--space-20);
+}
+
+.aboutStatement {
+	max-width: 24ch;
+	font-size: clamp(var(--text-2xl), 6cqi, var(--text-4xl));
+}
+
+/* The statement's last words fade to grey (Analogue Agency). */
+.aboutFade {
+	color: var(--color-text-faint);
+}
+
+.aboutBody {
+	display: grid;
+	gap: var(--space-20);
+}
+
+/* Four one-word values in a hairline grid (Mother Design). */
+.aboutValues {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	list-style: none;
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+	border-left: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.aboutValue {
+	--about-cell-height: 6rem;
+	display: flex;
+	align-items: flex-end;
+	min-height: var(--about-cell-height);
+	padding: var(--space-12);
+	border-right: var(--stroke-hairline) solid var(--color-divider);
+	border-bottom: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.aboutWord {
+	font-size: clamp(var(--text-xl), 4.6cqi, var(--text-3xl));
+	letter-spacing: var(--tracking-tight);
+}
+
+.aboutNote {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-10);
+}
+
+.aboutSignature {
+	align-self: flex-end;
+	padding-top: var(--space-8);
+}
+
+@container (min-width: 30rem) {
+	.about {
+		padding: var(--space-40);
+	}
+
+	.aboutBody {
+		grid-template-columns: 3fr 2fr;
+		align-items: end;
+	}
+}
+
+/* ───────────── 10 Closing call to action ───────────── */
+
+.cta {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-20);
+	padding: var(--space-48) var(--space-20);
+	text-align: center;
+}
+
+.ctaLine {
+	max-width: 14ch;
+	font-size: clamp(var(--text-3xl), 8.4cqi, var(--text-display));
+	letter-spacing: var(--tracking-tight);
+}
+
+@container (min-width: 30rem) {
+	.cta {
+		padding: var(--space-64) var(--space-40);
+	}
+}
+
+/* ───────────── 11 Footer ───────────── */
+
+/* Warm light from two corners (Daylight), built from the accent so it reads on both canvases. */
+.footer {
+	--footer-glow: color-mix(in oklab, var(--color-accent-orange) 34%, transparent);
+	--footer-light:
+		radial-gradient(60% 55% at 0% 100%, var(--footer-glow) 0%, transparent 70%),
+		radial-gradient(50% 45% at 100% 100%, var(--footer-glow) 0%, transparent 70%);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-24);
+	padding: var(--space-32) var(--space-20) var(--space-16);
+	background: var(--footer-light);
+}
+
+.footerTop {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-16);
+}
+
+.footerColumns {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--space-20);
+	padding-top: var(--space-20);
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.footerColumn {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+}
+
+.footerColumn:last-child {
+	grid-column: 1 / -1;
+}
+
+/* The studio's name as the page's last word, edge to edge (Claude Type, Opacity). */
+.footerSign {
+	font-size: 17cqi;
+	letter-spacing: var(--tracking-tight);
+	white-space: nowrap;
+	text-align: center;
+}
+
+.footerBase {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: var(--space-8);
+}
+
+@container (min-width: 30rem) {
+	.footer {
+		padding: var(--space-40) var(--space-40) var(--space-20);
+	}
+
+	.footerColumns {
+		grid-template-columns: 1fr 1fr 2fr;
+	}
+
+	.footerColumn:last-child {
+		grid-column: auto;
+	}
+}
+
+/* ───────────── 12 Case study page ───────────── */
+
+.case {
+	display: flex;
+	flex-direction: column;
+	padding-bottom: var(--space-24);
+}
+
+.caseBand {
+	--case-straddle: 3rem;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+	padding: var(--space-32) var(--space-20) calc(var(--space-24) + var(--case-straddle));
+	background: var(--hue-wash);
+	color: var(--color-text-strong);
+}
+
+.caseTitle {
+	font-size: clamp(var(--text-4xl), 12cqi, var(--text-display));
+	letter-spacing: var(--tracking-tight);
+}
+
+.caseLine {
+	max-width: 44ch;
+}
+
+/* The facts card overlaps the band's lower edge (Deel): one layer, no extra section. */
+.caseFacts {
+	--case-straddle: 3rem;
+	position: relative;
+	margin: calc(-1 * var(--case-straddle)) var(--space-16) 0;
+}
+
+.caseFactList {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--space-12) var(--space-16);
+}
+
+.caseFact {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-2);
+}
+
+/* The shots run off the right edge (COLLINS): a strip, not a framed gallery. */
+.caseStrip {
+	display: flex;
+	gap: var(--space-12);
+	margin-top: var(--space-20);
+	padding-inline-start: var(--space-16);
+}
+
+.caseShot {
+	--case-shot-width: 78%;
+	--case-shot-aspect: 16 / 10;
+	position: relative;
+	flex: none;
+	width: var(--case-shot-width);
+	aspect-ratio: var(--case-shot-aspect);
+	overflow: hidden;
+	border-radius: var(--radius-md);
+	box-shadow: inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
+}
+
+@container (min-width: 30rem) {
+	.caseBand {
+		padding-inline: var(--space-40);
+	}
+
+	.caseFacts {
+		margin-inline: var(--space-40) var(--space-40);
+	}
+
+	.caseFactList {
+		grid-template-columns: repeat(4, auto);
+		justify-content: space-between;
+	}
+
+	.caseStrip {
+		padding-inline-start: var(--space-40);
+	}
+
+	.caseShot {
+		--case-shot-width: 58%;
+	}
+}

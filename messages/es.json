@@ -214,7 +214,40 @@
     },
     "carousel": "Nuestro proceso, paso a paso",
     "card": "paso",
-    "step": "Paso"
+    "step": "Paso",
+    "scenes": {
+      "discover": {
+        "doc": "Notas de la entrevista",
+        "quote": "Nunca sé qué plan elegir.",
+        "tag": "Hallazgo"
+      },
+      "define": {
+        "doc": "Brief del proyecto",
+        "draft": "Borrador",
+        "approved": "Aprobado"
+      },
+      "design": {
+        "frame": "Inicio",
+        "radius": "Radio"
+      },
+      "develop": {
+        "file": "page.tsx",
+        "line": "return <Hero />",
+        "command": "npm run build",
+        "building": "Compilando…",
+        "passed": "Compilado"
+      },
+      "integrate": {
+        "connect": "Conectar",
+        "connected": "Conectado"
+      },
+      "launch": {
+        "env": "Producción",
+        "building": "Compilando",
+        "ready": "Listo",
+        "url": "tumarca.com"
+      }
+    }
   },
   "testimonials": {
     "title": "Testimonios",
