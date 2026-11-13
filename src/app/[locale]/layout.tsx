@@ -71,7 +71,7 @@ export default async function LocaleLayout({
 				<script dangerouslySetInnerHTML={{ __html: themeScript }} />
 				{/* Texts reveal starts hidden and waits for JS; without JS, show everything at rest. */}
 				<noscript>
-					<style>{'.t-stagger-line{opacity:1!important;transform:none!important;filter:none!important}'}</style>
+					<style>{'.t-stagger-line{opacity:1!important;transform:none!important;filter:none!important}[data-doodle] path{stroke-dashoffset:0!important}'}</style>
 				</noscript>
 			</head>
 			<body>

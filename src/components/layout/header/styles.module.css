@@ -148,10 +148,10 @@
 
 /* Tabs sliding pill (.t-tabs-pill) behind the active link: white with black type in both themes.
    It keeps the nav's inset on every side (the first link's pill sits as far from the edge as from
-   the top), and its radius is the nav's radius minus that inset. JS writes translateX and width. */
+   the top), and its radius is the nav's radius minus that inset. JS writes translateX, width and
+   opacity from the scroll position (useScrollNav). */
 .pill {
-	--nav-pill-inset: var(--space-8);
-	--nav-pill-pad: var(--space-16); /* nav padding-inline (24) minus the inset */
+	--nav-pill-inset: var(--space-6);
 }
 
 .pill .indicator {
@@ -192,6 +192,7 @@
 
 .actions .cta,
 .lead .cycleDesktop {
+	--button-min-height: var(--header-height); /* the CTA and theme button share the bar's height */
 	display: none;
 }
 
