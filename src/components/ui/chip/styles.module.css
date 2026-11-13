@@ -1,100 +1,81 @@
 .chip {
-	/* Base */
 	position: relative;
-	width: fit-content;
-	height: fit-content;
-	max-height: 20px;
-	padding: var(--4) var(--8);
-
-	display: flex;
-	justify-content: center;
+	display: inline-flex;
+	flex-shrink: 0;
 	align-items: center;
-	gap: var(--4);
+	justify-content: center;
+	gap: var(--space-4);
+	width: fit-content;
+	border-radius: var(--radius-pill);
+	backdrop-filter: blur(var(--blur-tint));
+	-webkit-backdrop-filter: blur(var(--blur-tint));
+	color: var(--color-text);
+	font-family: var(--font-sans);
+	font-weight: var(--font-weight-light);
+	letter-spacing: var(--tracking-tight);
+	line-height: var(--leading-none);
+	white-space: nowrap;
+	text-decoration: none;
+	transition: background-color var(--duration-micro) var(--ease-out);
+}
 
-	font-family: var(--font-funnel-display);
-	font-weight: 400;
-	text-align: center;
-	vertical-align: middle;
+.tint {
+	background-color: var(--color-surface-tint);
+}
 
-	border-radius: var(--12);
-	box-shadow: var(--border-shadow);
-	transition: all 200ms ease;
+.solid {
+	background-color: var(--color-surface-control);
+}
 
-	&::before {
-		content: '';
-		position: absolute;
-		padding: 1px;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		border-radius: inherit;
-		background: var(--border-gradient);
-		mask: var(--mask-gradient);
-		-webkit-mask-composite: xor;
-		mask-composite: exclude;
-		pointer-events: none;
+/* Figma Size=Small: 19px tall, 10px label */
+.xs {
+	min-height: var(--control-xs);
+	padding: var(--space-4) var(--space-8);
+	font-size: var(--text-2xs);
+}
+
+/* Section subtitle: Small ×1.2 → 22.8px tall, 12px label */
+.sm {
+	min-height: calc(var(--control-xs) * 1.2);
+	padding: calc(var(--space-4) * 1.35) calc(var(--space-8) * 1.2);
+	font-size: var(--text-xs);
+}
+
+/* Figma Size=Large: 30px tall, 14px label */
+.lg {
+	min-height: var(--control-sm);
+	padding: var(--space-8) var(--space-16) var(--space-8) var(--space-14);
+	font-size: var(--text-sm);
+}
+
+/* Feature chip: Large ×1.40625 → 42.5px tall, 19.7px label */
+.xl {
+	min-height: calc(var(--control-sm) * 1.40625);
+	padding: calc(var(--space-8) * 1.40625) calc(var(--space-16) * 1.40625) calc(var(--space-8) * 1.40625) calc(var(--space-14) * 1.40625);
+	gap: calc(var(--space-4) * 1.40625);
+	font-size: var(--text-feature);
+}
+
+.xl .icon {
+	width: var(--text-feature);
+	height: var(--text-feature);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.interactive:hover {
+		background-color: var(--color-surface-tint-hover);
 	}
 
-	/* Sizes */
-
-	&.sm {
-		font-size: var(--10);
-	}
-
-	&.md {
-		font-size: var(--12);
-	}
-
-	&.lg {
-		font-size: var(--14);
-	}
-
-	/* Icons */
-
-	&.icon-middle {
-		padding: var(--8) var(--7);
-	}
-
-	&.icon-left {
-		padding-left: var(--12);
-	}
-
-	&.icon-right {
-		padding-right: var(--12);
-	}
-
-	/* Boolean-Based Styles */
-
-	&.isInverted {
-		color: var(--background-secondary);
-		background: var(--foreground);
-		box-shadow: var(--border-shadow-inverted);
-
-		&::before {
-			content: '';
-			position: absolute;
-			padding: 1px;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			border-radius: inherit;
-			background: var(--border-gradient-inverted);
-			mask: var(--mask-gradient);
-			-webkit-mask-composite: xor;
-			mask-composite: exclude;
-			pointer-events: none;
-		}
-
-		@media (prefers-color-scheme: light) {
-			& {
-				background: var(--foreground-secondary);
-			}
-		}
-	}
-
-	&.isFull {
-		width: 100%;
+	.solid.interactive:hover {
+		background-color: var(--color-surface-control-hover);
 	}
 }
+
+.tone-neutral { color: inherit; }
+.tone-pink { color: var(--color-accent-pink); }
+.tone-orange { color: var(--color-accent-orange); }
+.tone-yellow { color: var(--color-accent-yellow); }
+.tone-green { color: var(--color-accent-green); }
+.tone-blue { color: var(--color-accent-blue); }
+.tone-violet { color: var(--color-accent-violet); }
+.tone-red { color: var(--color-accent-red); }

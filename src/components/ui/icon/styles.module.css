@@ -1,0 +1,26 @@
+.icon {
+	display: inline-block;
+	flex-shrink: 0;
+	color: inherit;
+	vertical-align: middle;
+}
+
+.sm {
+	width: var(--icon-sm);
+	height: var(--icon-sm);
+}
+
+.md {
+	width: var(--icon-md);
+	height: var(--icon-md);
+}
+
+.lg {
+	width: var(--icon-lg);
+	height: var(--icon-lg);
+}
+
+.xl {
+	width: var(--icon-xl);
+	height: var(--icon-xl);
+}

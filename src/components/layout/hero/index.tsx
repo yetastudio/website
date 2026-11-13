@@ -1,60 +1,75 @@
-"use client"
+/* eslint-disable @next/next/no-img-element -- decorative inline SVG artwork, no optimisation needed. */
+
+//! React Core
+import type { ReactNode } from 'react';
 
 //! Hooks
-import { useTheme } from "@/hooks/useTheme";
+import { useTranslations } from 'next-intl';
 
 //! Components
-import Image from "next/image";
-import { Button } from "@/components/ui";
+import { Button, LogoMark } from '@/components/ui';
+import { BOOKING_URL } from '../sections';
+
+//! Utils
+import { cx } from '@/lib/cx';
 
 //! Styles
-import styles from "./styles.module.css";
-import { HighlightVector, StrokeVector } from "../../ui/svgs";
+import styles from './styles.module.css';
 
-function Hero() {
-  const { isDarkMode } = useTheme();
+/** A hand-drawn mark from Figma, themed by swapping the light/dark export. */
+function Doodle({ name, className }: { name: 'great-sparkle' | 'luck-strike'; className: string }) {
+	return (
+		<span className={cx(styles.doodle, className)} aria-hidden="true">
+			<img src={`/landing/hero/${name}-light.svg`} alt="" className="u-only-light" draggable={false} />
+			<img src={`/landing/hero/${name}-dark.svg`} alt="" className="u-only-dark" draggable={false} />
+		</span>
+	);
+}
 
-  return (
-    <div className={styles.hero}>
-      <div
-        className={styles.heroContent}>
-        <div className={styles.titleContainer}>
-          <h1 className={styles.title}>
-            Yeta
-          </h1>
-          <div className={styles.logoWrapper}>
-            <Image
-              className={styles.logo}
-              src={isDarkMode ?
-                "https://res.cloudinary.com/doowhwdzj/image/upload/v1749262076/dark-brand-mark-filled_jclhlv.svg" :
-                "https://res.cloudinary.com/doowhwdzj/image/upload/v1749262075/light-brand-mark-filled_r2tp4w.svg"
-              }
-              alt={"Yeta Studio Logo Mark"}
-              fill
-              priority
-              quality={100}
-              style={{ objectFit: 'cover' }}
-            />
-          </div>
-          <h1 className={styles.title}>
-            Studio
-          </h1>
-        </div>
-        <div className={styles.sloganContainer}>
-          <HighlightVector />
-          <StrokeVector />
-          <h2 className={styles.slogan}>
-            ‘Cause <del>great</del> brands
-            aren’t built on <del>luck</del>.
-          </h2>
-        </div>
-        <div className={styles.heroCTAs}>
-          <Button title="Why choose Yeta Studio" radius="rounded" isFullWidth />
-          <Button title="Let's build something" radius="rounded" isFullWidth />
-        </div>
-      </div>
-    </div>
-  )
+/**
+ * Figma Hero: "Yeta [logo tile] Studio" wordmark, the slogan with its sparkle and
+ * strike-through doodles, and the two-button group.
+ */
+export function Hero() {
+	const t = useTranslations('hero');
+
+	return (
+		<section className={styles.hero} aria-labelledby="hero-title">
+			<h1 id="hero-title" className={styles.title}>
+				<span className={styles.word}>Yeta</span>
+				{/* 58.5 @390 → 96 @1920: tracks the wordmark size (Figma ratio 96 / 89.6). */}
+				<LogoMark canvas="auto" size="calc(var(--text-display) * 1.0714)" alt="✹" />
+				<span className={styles.word}>Studio</span>
+			</h1>
+
+			<p className={styles.slogan}>
+				{t.rich('slogan', {
+					br: () => <br />,
+					great: (chunks: ReactNode) => (
+						<span className={styles.editorial}>
+							<Doodle name="great-sparkle" className={styles.sparkle} />
+							{chunks}
+						</span>
+					),
+					luck: (chunks: ReactNode) => (
+						<span className={cx(styles.editorial, styles.struck)}>
+							{chunks}
+							<Doodle name="luck-strike" className={styles.strike} />
+						</span>
+					),
+				})}
+			</p>
+
+			<div className={cx(styles.group, 'u-outline')}>
+				<Button href="#why-yeta" size="xl" fullWidth>
+					{t('whyChoose')}
+				</Button>
+				<Button href={BOOKING_URL} size="xl" fullWidth>
+					{t('letsBuild')}
+				</Button>
+			</div>
+		</section>
+	);
 }
 
 export default Hero;

@@ -1,16 +1,30 @@
 .cursor {
 	position: fixed;
-	width: 20px;
-	height: 20px;
 	top: 0;
 	left: 0;
-	z-index: 999;
-	fill: none;
+	z-index: var(--z-cursor);
+	width: var(--icon-lg);
+	height: var(--icon-lg);
 	pointer-events: none;
-
-	@media (hover: none) and (pointer: coarse) {
-		& {
-			display: none;
-		}
-	}
+	opacity: 0;
+	transition: opacity var(--duration-micro) var(--ease-out);
 }
+
+.cursor[data-visible='true'] {
+	opacity: 1;
+}
+
+.cursor[data-hidden='true'] {
+	opacity: 0;
+}
+
+.arrow {
+	fill: url(#yeta-cursor-fill);
+	stroke: url(#yeta-cursor-stroke);
+}
+
+/* Light canvas: metallic body, ink rim. Dark canvas: ink body, metallic rim. */
+.fillTop { stop-color: light-dark(var(--palette-neutral-300), var(--palette-neutral-900)); }
+.fillBottom { stop-color: light-dark(var(--palette-neutral-600), var(--palette-neutral-950)); }
+.strokeTop { stop-color: light-dark(var(--palette-neutral-900), var(--palette-neutral-300)); }
+.strokeBottom { stop-color: light-dark(var(--palette-neutral-950), var(--palette-neutral-600)); }

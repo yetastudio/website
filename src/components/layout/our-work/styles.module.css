@@ -1,0 +1,26 @@
+/* Figma "Our Work": three 513-wide Idle Desktop cards, gap 40 (1619 total); mobile stacked deck. */
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 32.0625rem));
+	justify-content: center;
+	gap: var(--space-40);
+	width: 100%;
+}
+
+@media (min-width: 768px) {
+	.section {
+		padding-block: var(--space-64);
+	}
+
+	/* Figma: 20/48 paragraph with a forced break after "development" (<brmd> in the copy). */
+	.header > :last-child {
+		line-height: var(--space-48);
+	}
+}
+
+@media (min-width: 1280px) {
+	.grid {
+		grid-template-columns: repeat(3, minmax(0, 32.0625rem));
+	}
+}

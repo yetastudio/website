@@ -1,0 +1,150 @@
+/* Figma "¿Why Yeta Studio?" — mobile 584:284, desktop 1487:2370. */
+
+.section {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-block: var(--space-64) var(--space-40);
+}
+
+.column {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-48);
+	width: 100%;
+	max-width: 43.125rem; /* 690 */
+	--lead-max: 17.5rem; /* mobile paragraph measure (Figma 280) */
+	--section-title-gap: var(--space-20); /* Figma 1487:2382: title → chip 20 at every width */
+}
+
+
+/* First paragraph: one copy on wide screens, theme-specific copy on phones (Figma 584:290 / 1577:2334). */
+.p1Wide {
+	display: none;
+}
+
+.p1MobileLight {
+	max-width: 15.625rem; /* 250 */
+	line-height: 1.875; /* 16/30 */
+}
+
+/* ── Mobile chip card (Figma 728:665: radius 32, padding 16, gap 12) ── */
+.card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-12);
+	padding: var(--space-16);
+	border-radius: var(--space-32);
+	background-color: var(--color-surface-control);
+	list-style: none;
+}
+
+/* ── Wrapped row (768–1439) ── */
+.row {
+	display: none;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: var(--space-12);
+	list-style: none;
+}
+
+/* ── Floating clusters (≥ 1440) ── */
+.cluster {
+	display: none;
+	list-style: none;
+}
+
+@media (min-width: 768px) {
+	.column {
+		--lead-max: 43.125rem;
+		--section-header-gap: var(--space-64); /* Figma: heading block → paragraph 64 */
+	}
+
+	.p1Wide {
+		display: block;
+	}
+
+	.p1Mobile {
+		display: none;
+	}
+
+	.card {
+		display: none;
+	}
+
+	.row {
+		display: flex;
+	}
+}
+
+@media (min-width: 1440px) {
+	.section {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 43.125rem) minmax(0, 1fr);
+		column-gap: var(--space-80);
+		align-items: center;
+		min-height: 45.625rem; /* 730 */
+		padding-block: var(--space-48);
+	}
+
+	.row {
+		display: none;
+	}
+
+	.cluster {
+		display: block;
+		position: relative;
+		align-self: stretch;
+	}
+
+	/* The chips keep their Figma geometry inside a 392.78 × 310.8 box that scales down
+	   on narrower desktops; it never needs more than its grid cell. */
+	.clusterInner {
+		--feature-scale: 0.7;
+		position: absolute;
+		top: 50%;
+		width: 24.55rem; /* 392.78 */
+		height: 19.425rem; /* 310.8: centre column height */
+		margin-top: -9.7125rem;
+		list-style: none;
+		scale: var(--feature-scale);
+	}
+
+	.left .clusterInner {
+		right: 0;
+		transform-origin: right center;
+	}
+
+	.right .clusterInner {
+		left: 0;
+		transform-origin: left center;
+	}
+
+	.floating {
+		position: absolute;
+	}
+
+	/* Left cluster: right-anchored, offsets = Figma gap − 80 column gap. */
+	.slot-a { top: 1.0219rem; right: var(--space-4); }
+	.slot-b { top: 8.0006rem; right: 7.83rem; }
+	.slot-c { top: 15.7469rem; right: 0; }
+
+	/* Right cluster: left-anchored. */
+	.slot-d { top: 0.4881rem; left: 0; }
+	.slot-e { top: 8.0825rem; left: 8.2619rem; }
+	.slot-f { top: 16.2806rem; left: 0; }
+}
+
+@media (min-width: 1536px) {
+	.clusterInner {
+		--feature-scale: 0.85;
+	}
+}
+
+@media (min-width: 1680px) {
+	.clusterInner {
+		--feature-scale: 1;
+	}
+}

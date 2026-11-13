@@ -1,0 +1,28 @@
+/* Figma "Testimonials": three 376-wide cards, gap 40 (1208 total), section padding 64/128; mobile fanned stack. */
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+	justify-items: center;
+	gap: var(--space-40);
+	width: 100%;
+	max-width: 75.5rem; /* 1208: three 376 cards + two 40 gaps */
+}
+
+@media (min-width: 768px) {
+	.section {
+		padding-block: var(--space-64) var(--space-128);
+	}
+
+	.header > :last-child {
+		gap: 0;
+		max-width: 31.25rem; /* 500 */
+	}
+}
+
+@media (min-width: 1280px) {
+	.grid {
+		grid-template-columns: repeat(3, 23.5rem);
+		justify-content: center;
+	}
+}

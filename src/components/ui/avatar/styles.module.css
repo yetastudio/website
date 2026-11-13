@@ -1,0 +1,57 @@
+.avatar {
+	position: relative;
+	display: inline-grid;
+	flex-shrink: 0;
+	place-items: center;
+	overflow: hidden;
+	border-radius: var(--radius-pill);
+	background-color: var(--color-surface-raised);
+}
+
+.sm {
+	width: var(--icon-lg);
+	height: var(--icon-lg);
+}
+
+.md {
+	width: var(--space-28);
+	height: var(--space-28);
+}
+
+.lg {
+	width: var(--space-40);
+	height: var(--space-40);
+}
+
+.image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.initials {
+	font-size: var(--text-2xs);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text-subtle);
+	line-height: var(--leading-none);
+}
+
+.lg .initials {
+	font-size: var(--text-sm);
+}
+
+.group {
+	display: inline-flex;
+	align-items: center;
+}
+
+.group > * + * {
+	margin-inline-start: calc(var(--space-8) * -1);
+	box-shadow:
+		0 0 0 var(--space-2) var(--color-surface),
+		var(--shadow-bevel);
+}
+
+.more {
+	background-color: var(--color-surface-control);
+}

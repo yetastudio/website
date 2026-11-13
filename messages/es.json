@@ -1,0 +1,246 @@
+{
+  "meta": {
+    "title": "Yeta ✹ Studio · Agencia de diseño y desarrollo",
+    "description": "Creamos sitios web pixel-perfect para marcas que valoran la excelencia visual y las experiencias de usuario con sentido."
+  },
+  "common": {
+    "menu": "Menú",
+    "openMenu": "Abrir menú",
+    "close": "Cerrar",
+    "dismiss": "Descartar",
+    "show": "Ver",
+    "hide": "Ocultar",
+    "optional": "opcional",
+    "opensNewTab": "se abre en una pestaña nueva",
+    "pagination": "Paginación",
+    "slide": "diapositiva",
+    "goTo": "Ir a {item} {number}",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "notifications": "Notificaciones",
+    "skipToContent": "Saltar al contenido",
+    "language": "Idioma",
+    "home": "Inicio de Yeta Studio"
+  },
+  "theme": {
+    "label": "Tema",
+    "system": "Sistema",
+    "light": "Claro",
+    "dark": "Oscuro"
+  },
+  "nav": {
+    "label": "Principal",
+    "whyYeta": "¿Por qué Yeta Studio?",
+    "whyYetaShort": "Por qué Yeta",
+    "ourCraft": "Nuestro oficio",
+    "ourWork": "Nuestro trabajo",
+    "ourProcess": "Nuestro proceso",
+    "testimonials": "Testimonios",
+    "getInTouch": "Hablemos"
+  },
+  "hero": {
+    "title": "Yeta Studio",
+    "slogan": "porque las <great>grandes</great> marcas<br></br>no se construyen con <luck>suerte</luck>.",
+    "whyChoose": "Por qué elegir Yeta Studio",
+    "letsBuild": "Construyamos algo"
+  },
+  "whyYeta": {
+    "title": "¿Por qué Yeta Studio?",
+    "chip": "Por qué las marcas eligen crecer con nosotros",
+    "p1": "Creamos experiencias que combinan <serif>creatividad</serif>, <serif>tecnología</serif> y <serif>estrategia</serif>.",
+    "p2": "Nuestro objetivo es construir <serif>experiencias digitales</serif> que marquen la <serif>diferencia</serif>.",
+    "p3": "Nacimos para <em>elevar</em> tu marca.",
+    "features": {
+      "insight": "Del insight al impacto",
+      "together": "Hechos para trabajar juntos",
+      "luck": "La suerte no tiene nada que ver",
+      "vision": "Convertimos la visión en producto",
+      "pixel": "Propósito en cada píxel",
+      "defy": "Marcas que desafían a la suerte"
+    },
+    "featuresLabel": "Cómo es trabajar con nosotros",
+    "highlights": {
+      "goals": "Tus objetivos son los nuestros",
+      "ideas": "Ideas que mueven marcas",
+      "collab": "Pensados para colaborar"
+    }
+  },
+  "ourCraft": {
+    "title": "Nuestro oficio",
+    "chip": "Cómo convertimos ideas en impacto",
+    "intro": "Construimos productos digitales que combinan <serif>rendimiento</serif>, <serif>usabilidad</serif> e <serif>impacto visual</serif>.",
+    "cta": "Pedí una <em>consultoría gratuita</em> y descubrí la diferencia.",
+    "button": "Agendar consultoría",
+    "cards": {
+      "idea": {
+        "title": "Empieza con una idea.",
+        "subtitle": "Todo gran producto nace de una chispa.",
+        "description": "Escuchamos a fondo, exploramos ideas y descubrimos lo que realmente importa: la base para crear con propósito."
+      },
+      "path": {
+        "title": "Trazando el camino.",
+        "subtitle": "Convertimos la complejidad en claridad.",
+        "description": "Las ideas se vuelven estructura: flujos, wireframes, conceptos. La estrategia se encuentra con la creatividad y la visión toma forma."
+      },
+      "intention": {
+        "title": "Diseño con intención.",
+        "subtitle": "Interfaces que se sienten tan bien como se ven.",
+        "description": "Diseñamos experiencias que le hablan a tus usuarios: intuitivas, elegantes y siempre alineadas con la voz de tu marca."
+      },
+      "tech": {
+        "title": "Tecnología moderna.",
+        "subtitle": "Elegimos las herramientas correctas para tu proyecto.",
+        "description": "Usamos tecnologías potentes para crear soluciones robustas que se adaptan y crecen con vos, no en tu contra."
+      },
+      "legacy": {
+        "title": "Del lanzamiento al legado.",
+        "subtitle": "Un producto es solo el comienzo.",
+        "description": "No lanzamos y desaparecemos. Nos quedamos cerca, medimos el rendimiento y ayudamos a que tu presencia digital evolucione."
+      },
+      "impact": {
+        "title": "Hecho para generar impacto.",
+        "subtitle": "Lo que construimos tiene sentido.",
+        "description": "Cada decisión se toma con intención. Al final, el diseño y el código son herramientas: estamos para que trabajen a favor de tu visión."
+      }
+    },
+    "intro2": "Nuestro oficio se adapta a <em>tus objetivos</em> — con un ojo atento al <serif>detalle</serif>, la <serif>experiencia</serif> y la <serif>innovación</serif>.",
+    "carousel": "Nuestro oficio, tarjeta por tarjeta",
+    "card": "tarjeta"
+  },
+  "ourWork": {
+    "title": "Nuestro trabajo",
+    "chip": "Lo que hacemos para que las marcas evolucionen",
+    "intro": "Así es como nuestros procesos de <serif>diseño</serif> y <serif>desarrollo</serif><brmd></brmd> se unen para generar <em>impacto</em>.",
+    "caseStudy": "Caso de estudio",
+    "seeMore": "Ver más",
+    "viewProject": "Ver proyecto",
+    "facts": {
+      "client": "Cliente",
+      "year": "Año",
+      "country": "País",
+      "industry": "Industria",
+      "services": "Servicios",
+      "url": "URL del proyecto"
+    },
+    "sections": {
+      "about": "Sobre el cliente",
+      "challenge": "El desafío",
+      "result": "El resultado"
+    },
+    "team": "El equipo de este proyecto",
+    "tools": "Herramientas que usamos en este proyecto",
+    "projects": {
+      "yeta": {
+        "name": "Yeta Studio",
+        "year": "2025",
+        "country": "Argentina",
+        "industry": "Agencia digital de tecnología",
+        "services": "Diseño web y desarrollo web",
+        "url": "yeta.studio",
+        "about": "Yeta Studio es una agencia de diseño y desarrollo que construye productos digitales para marcas que no dejan nada librado a la suerte.",
+        "challenge": "Nuestro propio sitio tenía que demostrar el oficio: un solo sistema para marca, producto y marketing, en dos temas y tres idiomas.",
+        "result": "Un design system basado en tokens y una landing donde cada sección reutiliza los mismos componentes, en claro u oscuro."
+      }
+    },
+    "carousel": "Casos de estudio",
+    "card": "caso de estudio"
+  },
+  "ourProcess": {
+    "title": "Nuestro proceso",
+    "chip": "Cómo trabajamos y qué esperar",
+    "intro": "Ya sea un desarrollo completo o un lanzamiento rápido,<brmd></brmd> hacemos que el proceso sea simple y colaborativo.",
+    "kickoff": "Así es como <em>arrancamos</em>",
+    "cta": "Hagamos algo <em>grande</em> juntos.",
+    "button": "Empezá tu proyecto",
+    "steps": {
+      "discover": {
+        "title": "Descubrir",
+        "description": "Empezamos por entender tu marca, tus necesidades y tus usuarios. La investigación guía nuestras decisiones desde el primer día."
+      },
+      "define": {
+        "title": "Definir",
+        "description": "Profundizamos en tus necesidades y diseñamos un plan a medida, de los requisitos técnicos a la visión creativa, para que cada detalle tenga propósito."
+      },
+      "design": {
+        "title": "Diseñar",
+        "description": "Convertimos ideas en diseño. En sesiones colaborativas creamos interfaces intuitivas y alineadas a tu marca que le hablan a tu audiencia."
+      },
+      "develop": {
+        "title": "Desarrollar",
+        "description": "Con frameworks modernos y flujos eficientes, damos vida al diseño con código limpio, escalable y hecho para rendir."
+      },
+      "integrate": {
+        "title": "Integrar",
+        "description": "Nos aseguramos de que tu nueva solución encaje con tus sistemas, herramientas y procesos: sin interrupciones, solo mejoras."
+      },
+      "launch": {
+        "title": "Lanzar",
+        "description": "Lanzamos, probamos y damos soporte. Y más que eso: seguimos a tu lado para que lo construido evolucione con tu marca y tus objetivos."
+      }
+    },
+    "carousel": "Nuestro proceso, paso a paso",
+    "card": "paso",
+    "step": "Paso"
+  },
+  "testimonials": {
+    "title": "Testimonios",
+    "chip": "Lo que dicen nuestros clientes",
+    "intro": "Más allá de los píxeles y el código, lo que construimos deja una <em>huella</em>.<br></br><br></br>Esto es lo que nuestros partners cuentan sobre su <em>recorrido</em> con Yeta Studio.",
+    "items": {
+      "jorge": {
+        "quote": "“Yeta combinó diseño, estrategia y tecnología de una forma que simplemente tenía sentido. Nos ayudaron a redefinir cómo nos comunicamos con nuestra audiencia.”",
+        "name": "Jorge R.",
+        "role": "Fundador",
+        "company": "Sintaxis",
+        "quoteMobile": "“Yeta combinó diseño, estrategia y tecnología de una forma que simplemente tenía sentido. No solo construyeron un sitio web: nos ayudaron a redefinir cómo nos comunicamos con nuestra audiencia.”"
+      },
+      "marcelo": {
+        "quote": "“Entendieron nuestro producto enseguida y tradujeron nuestra visión en una experiencia limpia y funcional que conecta con nuestros usuarios.”",
+        "name": "Marcelo Z.",
+        "role": "Fundador",
+        "company": "apx.school"
+      },
+      "lisette": {
+        "quote": "“Del kickoff a la entrega, Yeta superó las expectativas. Su proceso es estructurado pero flexible, creativo y a la vez guiado por datos.”",
+        "name": "Lisette T.",
+        "role": "Fundadora",
+        "company": "NovaTech"
+      }
+    },
+    "carousel": "Testimonios de clientes",
+    "card": "testimonio"
+  },
+  "summary": {
+    "title": "Yeta ✹ Studio",
+    "subtitle": "en pocas palabras",
+    "chip": "Trabajando con marcas <em>visionarias de todo el mundo</em>",
+    "p1": "Creamos sitios web <serif>pixel-perfect</serif> para marcas que valoran la <serif>excelencia visual</serif> y las experiencias de usuario con <serif>sentido</serif>.",
+    "motto": "<serif>Diseñamos</serif> y <serif>desarrollamos</serif> con <em>propósito</em>",
+    "p2": "Del <serif>diseño</serif> centrado en el usuario al <serif>desarrollo</serif> robusto. Cada <serif>píxel</serif> y cada <serif>línea de código</serif> se construye con intención."
+  },
+  "footer": {
+    "agency": "Entraste a la agencia",
+    "aboutTitle": "Nosotros",
+    "about": "Creamos sitios web pixel-perfect para marcas que valoran la excelencia visual y las experiencias de usuario con sentido.",
+    "ready": "¿Listo para empezar?",
+    "consultation": "¡Pedí una consultoría gratuita!",
+    "socials": "Redes",
+    "navigation": "Navegación",
+    "rights": "{year} © Todos los derechos reservados",
+    "signature": "✹ Yeta Studio™",
+    "links": {
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram",
+      "threads": "Threads",
+      "twitter": "Twitter"
+    }
+  },
+  "brand": {
+    "title": "Lineamientos de marca"
+  },
+  "notFound": {
+    "chip": "Página no encontrada",
+    "description": "Esta página no se construyó — y la <em>suerte</em> no la va a encontrar.",
+    "cta": "Volver al estudio"
+  }
+}
