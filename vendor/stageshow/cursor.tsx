@@ -1,6 +1,8 @@
 import type { ReactNode, Ref } from 'react'
 import { MacCrosshair, MacGrab, MacIbeam, MacOpenHand, MacPointer, MacPointingHand, MacResizeEW, MacResizeNESW, MacResizeNS, MacResizeNWSE, MacWait } from './cursors'
 import type { Point } from './measure'
+// Yeta: the studio's own cursor glyph (src/components/ui/cursor) for the `yeta` style.
+import { YetaCursor, YETA_CURSOR_HOTSPOT } from '@/components/ui/cursor'
 import './cursor.css'
 
 // The cursor a stage draws: the glyph for each kind, where its hotspot sits,
@@ -18,9 +20,10 @@ export type CursorKind = 'pointer' | 'ibeam' | 'crosshair' | 'hand' | 'open' | '
  * stays while a drag is held, and fades), invisible between taps. arrow: a
  * solid, rounded arrowhead, as illustrated product demos draw the pointer; it
  * stays an arrow over links and while dragging, and turns to an I-beam only
- * over text.
+ * over text. yeta (this site's default): the Yeta cursor glyph, behaving like
+ * arrow (an arrow everywhere, an I-beam over text).
  */
-export type CursorStyle = 'real' | 'large' | 'circle' | 'touch' | 'arrow'
+export type CursorStyle = 'real' | 'large' | 'circle' | 'touch' | 'arrow' | 'yeta'
 
 const GLYPHS: Record<CursorKind, () => ReactNode> = {
   pointer: MacPointer,
@@ -62,18 +65,18 @@ function SolidArrow() {
 }
 
 /** The cursor element. The stage moves it (a transform on cursorRef) and marks it pressed or idle. */
-export function Cursor({ cursorRef, style = 'real', kind }: { cursorRef: Ref<HTMLDivElement>; style?: CursorStyle; kind: CursorKind }) {
+export function Cursor({ cursorRef, style = 'yeta', kind }: { cursorRef: Ref<HTMLDivElement>; style?: CursorStyle; kind: CursorKind }) {
   return (
     <div ref={cursorRef} className="ss-cursor" data-style={style} data-kind={kind} aria-hidden>
       {style === 'touch' && <span className="ss-cursor__streak" />}
       <div className="ss-cursor__press">
         {(style === 'circle' || style === 'touch') && <span className="ss-cursor__dot" />}
         {style !== 'circle' && style !== 'touch' && (Object.keys(GLYPHS) as CursorKind[]).map((k) => {
-          const arrow = style === 'arrow'
-          // The arrow style has two glyphs: the arrow, and the I-beam over text
+          const arrow = style === 'arrow' || style === 'yeta'
+          // The arrow and yeta styles have two glyphs: the arrow, and the I-beam over text
           if (arrow && k !== 'pointer' && k !== 'ibeam') return null
-          const Glyph = arrow && k === 'pointer' ? SolidArrow : GLYPHS[k]
-          const hot = arrow && k === 'pointer' ? ARROW_HOTSPOT : HOTSPOT[k]
+          const Glyph = arrow && k === 'pointer' ? (style === 'yeta' ? YetaCursor : SolidArrow) : GLYPHS[k]
+          const hot = arrow && k === 'pointer' ? (style === 'yeta' ? YETA_CURSOR_HOTSPOT : ARROW_HOTSPOT) : HOTSPOT[k]
           const shown = arrow && kind !== 'ibeam' ? 'pointer' : kind
           return (
             <div

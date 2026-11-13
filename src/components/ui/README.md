@@ -49,7 +49,7 @@ Status: **stable** = drawn in Figma; **inspo** = added to fill a gap, same visua
 | `Surface` | stable | card shells | tone `canvas·raised·glass·tint·none`; radius; padding; `bevel` | — | — |
 | `BrandMark`, `LogoMark`, `MessyBrandMark` | stable | 110:77 · 110:60 · 110:84 | `canvas auto·inverse·light·dark`; `fill filled·transparent`; `size` (px or CSS length) | — | `alt` defaults to "Yeta Studio"; pass `""` when decorative. `inverse` swaps the artwork inside `.scheme-inverse` bands. |
 | `Wordmark` | stable | hero lockup | `canvas`, `alt`; sized by `font-size` | — | "Yeta [logo mark] Studio" as the hero draws it. Use it wherever the name is a logo, never a typed "Yeta ✹ Studio". |
-| `Cursor` | stable | 1059:1339 | — | hides over interactive elements | Mounted only on fine pointers; native cursor shows on controls. |
+| `YetaCursor` | stable | 1059:1339 | `className`; `YETA_CURSOR_HOTSPOT` | light / dark inks | Glyph only. Used solely inside Stageshow scenes (the kit's `yeta` cursor style, its default here) and the Why Yeta tour; the site never replaces the visitor's pointer. |
 | `SectionHeader` | stable | section title frames | `title`, `eyebrow`, children (lead) | — | Renders the section `h2`; pass `titleId` for `aria-labelledby`. |
 | `GradientTile` | stable | tile ellipses | `hue` ×6; `shape craft·craft-wide·process·testimonial·testimonial-compact`; `intensity soft·strong`; `underlay`/children | — | Blobs are `aria-hidden`. Inverse surface. |
 | `CraftCard` | stable | 1472:4250 | `layout row·stacked·responsive` | — | `article` + heading level prop. |

@@ -12,7 +12,7 @@ export const SCENE_HEIGHT = 160;
 /** The classic arrow, with a soft ring on each click so a press reads at tile size. */
 export const sceneCursor = (at: NonNullable<StageProps<object>['cursor']>['at']): NonNullable<StageProps<object>['cursor']> => ({
 	at,
-	style: 'real',
+	style: 'yeta',
 	ripple: true,
 });
 

@@ -62,7 +62,7 @@ function LeadScene() {
 			initial={LEAD_POSTER}
 			poster={LEAD_POSTER}
 			script={leadScript}
-			cursor={{ at: 'rest', style: 'real', ripple: true }}
+			cursor={{ at: 'rest', style: 'yeta', ripple: true }}
 			className={styles.leadStage}
 		>
 			{(s, _rect, layout) => (

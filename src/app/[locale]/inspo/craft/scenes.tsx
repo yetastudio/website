@@ -28,7 +28,7 @@ export const TILE_WIDTH = 240;
 export const TILE_HEIGHT = 160;
 
 /** The classic arrow, with a soft ring on each click so a press reads at tile size. */
-const CURSOR = { at: 'rest', style: 'real', ripple: true } as const;
+const CURSOR = { at: 'rest', style: 'yeta', ripple: true } as const;
 
 /** The scene's wrapper: its beat's hue, the tile's clip, hidden from assistive tech. */
 function Scene({ step, children }: { step: CraftStep; children: ReactNode }) {

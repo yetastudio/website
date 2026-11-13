@@ -121,7 +121,7 @@ function WalkthroughScene({ onStep }: { onStep: (step: number) => void }) {
 			initial={INITIAL}
 			poster={POSTER}
 			script={script}
-			cursor={{ at: 'rest', style: 'real', ripple: true }}
+			cursor={{ at: 'rest', style: 'yeta', ripple: true }}
 			className={styles.stage}
 		>
 			{(s, rect, layout) => {

@@ -8,6 +8,7 @@ import { bezier } from '@stageshow';
 
 //! Components
 import { LogoMark } from '@/components/ui/brand';
+import { YetaCursor } from '@/components/ui/cursor';
 import { WhyScene } from '@/components/ui/why-scene';
 import { SCENE_PAYOFF_MS, type WhySceneName } from '@/components/ui/why-scene/shared';
 
@@ -378,27 +379,11 @@ export function WhyTour({ children }: { children: ReactNode }) {
 
 /* ─────────────────────────────── The cursor ─────────────────────────────── */
 
-/** The site's cursor (ui/cursor), drawn for the tour, with Yeta's mark riding beside it. Decorative. */
+/** The Yeta cursor glyph (ui/cursor), drawn for the tour, with Yeta's mark riding beside it. Decorative. */
 function TourCursor({ cursorRef }: { cursorRef: RefObject<HTMLDivElement | null> }) {
 	return (
 		<div ref={cursorRef} className={styles.cursor} data-visible="false" aria-hidden="true">
-			<svg className={styles.arrow} viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path
-					className={styles.arrowPath}
-					strokeWidth={1.5}
-					d="M1.464 2.825c.995 5.4 2.578 10.843 3.997 15.788a1.003 1.003 0 0 0 1.752.343l4.102-5.22a1 1 0 0 1 .47-.33l5.302-1.768a.996.996 0 0 0 .245-1.77C12.854 6.843 8.16 3.822 3.538 1.322a1.41 1.41 0 0 0-2.074 1.502Z"
-				/>
-				<defs>
-					<linearGradient id="why-tour-cursor-fill" x1={10} x2={10} y1={0} y2={20.5} gradientUnits="userSpaceOnUse">
-						<stop className={styles.fillTop} />
-						<stop offset={1} className={styles.fillBottom} />
-					</linearGradient>
-					<linearGradient id="why-tour-cursor-stroke" x1={10} x2={10} y1={0} y2={20.5} gradientUnits="userSpaceOnUse">
-						<stop className={styles.strokeTop} />
-						<stop offset={1} className={styles.strokeBottom} />
-					</linearGradient>
-				</defs>
-			</svg>
+			<YetaCursor className={styles.arrow} />
 			<span className={styles.tag}>
 				<LogoMark size={16} alt="" />
 			</span>

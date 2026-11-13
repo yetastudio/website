@@ -12,7 +12,6 @@ import { ThemeProvider, themeScript } from '@/context/ThemeContext';
 import { editorialNew, funnelDisplay } from '../fonts';
 
 //! UI Core
-import Cursor from '@/components/ui/cursor';
 import { SmoothScroll } from '@/components/layout/smooth-scroll';
 
 //! Styles
@@ -79,7 +78,6 @@ export default async function LocaleLayout({
 				<NextIntlClientProvider messages={messages}>
 					<ThemeProvider>
 						<SmoothScroll>
-							<Cursor />
 							{children}
 						</SmoothScroll>
 					</ThemeProvider>
