@@ -72,7 +72,7 @@ export default function InspoShowcase({ facts }: { facts: ResultFacts }) {
 				description="Every reference above, saved in one private Mobbin collection. Only you and your teammates can open it; Mobbin images stay on Mobbin."
 			>
 				<div>
-					<Button href={MOBBIN_COLLECTION} variant="glass" size="lg" iconEnd="external-link">
+					<Button href={MOBBIN_COLLECTION} variant="glass" size="lg" iconStart="book">
 						Open “Yeta Studio · Narrative inspo”
 					</Button>
 				</div>

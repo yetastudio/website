@@ -148,7 +148,7 @@ export function BookingMockup() {
 					<DsText size="sm" tone="subtle" leading="relaxed">
 						Pick a time for a 30-minute intro. You’ll get the invite right away.
 					</DsText>
-					<Button href={BOOKING_URL} size="md" iconStart="calendar" iconEnd="external-link">
+					<Button href={BOOKING_URL} size="md" iconStart="calendar">
 						Book a call
 					</Button>
 				</div>

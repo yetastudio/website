@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 
 //! Components
 import { ShowcaseSection, ThemePair } from '@/components/showcase';
-import { Chip, Icon, Link, Surface, Text } from '@/components/ui';
+import { Chip, Link, Surface, Text } from '@/components/ui';
 
 //! Data
 import { PROPOSALS, STORY_MAP, mobbinUrl, type Proposal, type Reference } from './data';
@@ -122,7 +122,6 @@ export function StoryMap() {
 										{number && (
 											<Text as="span" size="xs" family="serif" italic tone="subtle" className={styles.beatNumber}>
 												{number}
-												<Icon name="arrow-right" size="sm" />
 											</Text>
 										)}
 									</>
