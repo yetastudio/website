@@ -96,7 +96,7 @@ export function ProposalSection({ proposal, children }: { proposal: Proposal; ch
 }
 
 /** One shelf of the section library: where it lands, what to look for, and its references. */
-export function LibraryShelf({ shelf, number }: { shelf: Shelf; number: string }) {
+export function LibraryShelf({ shelf, number, children }: { shelf: Shelf; number: string; children?: ReactNode }) {
 	return (
 		<ShowcaseSection id={`library-${shelf.id}`} eyebrow={`Section library · ${number}`} title={shelf.title} description={shelf.lookFor}>
 			<div className={styles.introMeta}>
@@ -105,6 +105,7 @@ export function LibraryShelf({ shelf, number }: { shelf: Shelf; number: string }
 				</Chip>
 				<Chip size="xs">{`${shelf.references.length} references`}</Chip>
 			</div>
+			{children && <ThemePair layout="column">{children}</ThemePair>}
 			<ul className={styles.referenceGrid}>
 				{shelf.references.map((reference) => (
 					<ReferenceCard key={reference.id} reference={reference} showKind={false} />

@@ -12,9 +12,13 @@ import { ClientWallMockup } from './mockups/client-wall';
 import { HeroDemoMockup } from './mockups/hero-demo';
 import { ProcessWalkthroughMockup } from './mockups/process-walkthrough';
 import { ResultsMockup, type ResultFacts } from './mockups/results';
+import { CraftMockup } from './mockups/library/craft';
+import { HeroMockup } from './mockups/library/hero';
+import { NavMockup } from './mockups/library/nav';
+import { WhyMockup } from './mockups/library/why';
 
 //! Data
-import { LIBRARY, LIBRARY_COLLECTION, MOBBIN_COLLECTION, PROPOSALS, type ProposalId } from './data';
+import { LIBRARY, LIBRARY_COLLECTION, MOBBIN_COLLECTION, PROPOSALS, type ProposalId, type ShelfId } from './data';
 
 //! Styles
 import styles from './styles.module.css';
@@ -47,6 +51,14 @@ export default function InspoShowcase({ facts }: { facts: ResultFacts }) {
 		'client-wall': <ClientWallMockup />,
 		'chapter-nav': <ChapterNavMockup />,
 		booking: <BookingMockup />,
+	};
+
+	// One live mockup per library shelf: the best of its references, rebuilt in the Yeta look.
+	const shelfMockups: Partial<Record<ShelfId, ReactNode>> = {
+		nav: <NavMockup />,
+		hero: <HeroMockup />,
+		value: <WhyMockup />,
+		services: <CraftMockup />,
 	};
 
 	return (
@@ -88,7 +100,9 @@ export default function InspoShowcase({ facts }: { facts: ResultFacts }) {
 			</ShowcaseSection>
 
 			{LIBRARY.map((shelf, index) => (
-				<LibraryShelf key={shelf.id} shelf={shelf} number={shelfNumber(index)} />
+				<LibraryShelf key={shelf.id} shelf={shelf} number={shelfNumber(index)}>
+					{shelfMockups[shelf.id]}
+				</LibraryShelf>
 			))}
 
 			<ShowcaseSection

@@ -1,0 +1,368 @@
+/*
+ * Section library mockups: one per shelf, the best of its references rebuilt in the Yeta look.
+ * Every mockup is an inline-size container, so it lays out by the canvas it sits on (a 358 phone
+ * column or a desktop row), not by the viewport. Lengths in custom properties are mockup geometry;
+ * spacing, radii, type and color read the scale.
+ */
+
+.container {
+	container-type: inline-size;
+	width: 100%;
+}
+
+/* A section frame: the slice of page the mockup stands for, cropped like a product shot. */
+.frame {
+	position: relative;
+	overflow: hidden;
+	border-radius: var(--radius-xl);
+	box-shadow: inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
+}
+
+/*
+ * Sky band (Altitude, Air, Atlas): built from tokens, so the same rule draws a day sky on the
+ * light canvas and a night sky on the dark one. Two soft clouds sit in the corners only.
+ */
+.sky {
+	--sky-top: color-mix(in oklab, var(--color-accent-blue) 46%, var(--color-surface));
+	--sky-mid: color-mix(in oklab, var(--color-accent-blue) 14%, var(--color-surface));
+	--sky-cloud: color-mix(in oklab, var(--color-surface) 55%, transparent);
+	--sky:
+		radial-gradient(48% 40% at 14% 12%, var(--sky-cloud) 0%, transparent 70%),
+		radial-gradient(36% 30% at 88% 6%, var(--sky-cloud) 0%, transparent 70%),
+		linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 64%, var(--color-surface) 100%);
+	background: var(--sky);
+}
+
+/* Small wash swatches, one per brand hue (FLORA, mymind). Washes are bright on both canvases. */
+.hued[data-hue='pink'] {
+	--hue: var(--color-accent-pink);
+	--hue-wash: var(--wash-pink);
+}
+.hued[data-hue='orange'] {
+	--hue: var(--color-accent-orange);
+	--hue-wash: var(--wash-orange);
+}
+.hued[data-hue='yellow'] {
+	--hue: var(--color-accent-yellow);
+	--hue-wash: var(--wash-yellow);
+}
+.hued[data-hue='green'] {
+	--hue: var(--color-accent-green);
+	--hue-wash: var(--wash-green);
+}
+.hued[data-hue='blue'] {
+	--hue: var(--color-accent-blue);
+	--hue-wash: var(--wash-blue);
+}
+.hued[data-hue='violet'] {
+	--hue: var(--color-accent-violet);
+	--hue-wash: var(--wash-violet);
+}
+
+.numeral {
+	font-variant-numeric: lining-nums tabular-nums;
+}
+
+/* ───────────── 01 Navigation ───────────── */
+
+.navStage {
+	--nav-stage-height: 15rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: var(--nav-stage-height);
+	padding: var(--space-20) var(--space-12) 0;
+}
+
+.navRow {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-8);
+	width: 100%;
+}
+
+.navTray {
+	display: flex;
+	align-items: center;
+	gap: var(--space-12);
+}
+
+.navMarkSlot {
+	display: inline-flex;
+	padding-inline-start: var(--space-4);
+}
+
+.navLinks {
+	display: none;
+	align-items: center;
+	gap: var(--space-20);
+	list-style: none;
+}
+
+.navLink {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-6);
+	white-space: nowrap;
+}
+
+.navDot {
+	--nav-dot: 0.375rem;
+	flex: none;
+	width: var(--nav-dot);
+	height: var(--nav-dot);
+	border-radius: var(--radius-pill);
+	background: var(--hue);
+}
+
+/* The theme switch lives inside the pill (Fourmula): two glyphs, the current one lifted. */
+.navTheme {
+	display: inline-flex;
+	gap: var(--space-2);
+	padding: var(--space-2);
+	border-radius: var(--radius-pill);
+	background: var(--color-surface-tint);
+	color: var(--color-text-faint);
+}
+
+.navThemeGlyph {
+	display: grid;
+	place-items: center;
+	padding: var(--space-6);
+	border-radius: var(--radius-pill);
+}
+
+.navThemeOn {
+	background: var(--color-surface-raised);
+	color: var(--color-text-strong);
+	box-shadow: var(--shadow-bevel);
+}
+
+.navMenu {
+	display: inline-flex;
+}
+
+/* The hero under the nav, cropped by the frame: context, not content. */
+.navHint {
+	margin-top: auto;
+	translate: 0 34%;
+	text-align: center;
+	white-space: nowrap;
+}
+
+@container (min-width: 30rem) {
+	.navLinks {
+		display: flex;
+	}
+
+	.navMenu {
+		display: none;
+	}
+}
+
+/* ───────────── 02 Hero ───────────── */
+
+.heroSky {
+	--hero-sky-height: 10rem;
+	display: grid;
+	place-items: start center;
+	height: var(--hero-sky-height);
+	padding-top: var(--space-24);
+}
+
+.heroBody {
+	--hero-curve: 3.5rem;
+	--hero-arc: 50% 50% 0 0 / var(--hero-curve) var(--hero-curve) 0 0;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-32);
+	margin-top: calc(-1 * var(--hero-curve));
+	padding: var(--space-48) var(--space-20) var(--space-40);
+	border-radius: var(--hero-arc);
+	background: var(--color-surface);
+}
+
+.heroSplit {
+	display: grid;
+	gap: var(--space-4);
+	width: 100%;
+}
+
+.heroLine {
+	font-size: clamp(var(--text-3xl), 7.4cqi, var(--text-display));
+	letter-spacing: var(--tracking-tight);
+}
+
+.heroLine:last-child {
+	justify-self: end;
+	text-align: end;
+}
+
+@container (min-width: 30rem) {
+	.heroSky {
+		--hero-sky-height: 12rem;
+	}
+
+	.heroBody {
+		--hero-curve: 4.5rem;
+		padding-inline: var(--space-40);
+	}
+}
+
+/* ───────────── 03 Why Yeta ───────────── */
+
+.why {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-32);
+	padding: var(--space-32) var(--space-20);
+}
+
+.whyClaim {
+	max-width: 18ch;
+}
+
+/* Numbered reasons in hairline-ruled columns (Metalab): a ledger of claims, not a grid of icons. */
+.whyReasons {
+	display: grid;
+	grid-template-columns: 1fr;
+	column-gap: var(--space-24);
+	list-style: none;
+}
+
+.whyReason {
+	display: flex;
+	align-items: baseline;
+	gap: var(--space-16);
+	padding-block: var(--space-16);
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+}
+
+/* One wash per highlight, a single glyph and a short line (FLORA). */
+.whyTiles {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var(--space-12);
+	list-style: none;
+}
+
+.whyTile {
+	--why-tile-height: 8.5rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	min-height: var(--why-tile-height);
+	padding: var(--space-16);
+	border-radius: var(--radius-lg);
+	background: var(--hue-wash);
+	color: var(--color-text-strong);
+}
+
+.whyGlyph {
+	display: grid;
+	place-items: center;
+	align-self: flex-start;
+	padding: var(--space-8);
+	border-radius: var(--radius-pill);
+	background: var(--color-surface-glass);
+	backdrop-filter: blur(var(--blur-glass));
+}
+
+@container (min-width: 30rem) {
+	.why {
+		padding: var(--space-40);
+	}
+
+	.whyReasons {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.whyTiles {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@container (min-width: 44rem) {
+	.why {
+		padding: var(--space-48);
+	}
+
+	.whyReasons {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+/* ───────────── 04 Our Craft ───────────── */
+
+.craft {
+	display: grid;
+	gap: var(--space-24);
+	padding: var(--space-24) var(--space-12);
+}
+
+.craftList {
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+}
+
+/* The list items are system Buttons; only their height and inner type are tuned here. */
+.craftItem {
+	--button-min-height: 2.75rem;
+	justify-content: flex-start;
+	text-align: start;
+}
+
+.craftLabel {
+	display: inline-flex;
+	align-items: baseline;
+	gap: var(--space-12);
+	transition: color var(--duration-enter) var(--ease-out);
+}
+
+/* Scales with the canvas so every line stays on one row, from a phone column up. */
+.craftTitle {
+	font-size: clamp(var(--text-lg), 5.6cqi, var(--text-2xl));
+}
+
+.craftStage {
+	--craft-stage-aspect: 16 / 10;
+	display: grid;
+	place-items: center;
+	aspect-ratio: var(--craft-stage-aspect);
+	padding: var(--space-20);
+	border-radius: var(--radius-xl);
+	background: var(--hue-wash);
+	color: var(--color-text-strong);
+}
+
+/* A framed card floats in the wash: the deliverable, not an icon (Fiasco, Phantom Studios). */
+.craftCard {
+	--craft-card-width: 34ch;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+	width: min(100%, var(--craft-card-width));
+}
+
+.craftCardHead {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+}
+
+@container (min-width: 44rem) {
+	.craft {
+		grid-template-columns: 1fr 1fr;
+		align-items: center;
+		gap: var(--space-40);
+		padding: var(--space-40);
+	}
+
+	.craftItem {
+		--button-min-height: 3.25rem;
+	}
+}
