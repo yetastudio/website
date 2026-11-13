@@ -1,5 +1,16 @@
 /* Figma "Testimonials": three 376-wide cards, gap 40 (1208 total), section padding 64/128; mobile fanned stack. */
 
+/*
+ * Mobile fan: the back cards peek out a full --space-32 on each side (card-stack's fan), which is
+ * more than the page gutter, so on a narrow phone the right one ran past the screen and the page
+ * scrolled sideways. Insetting the stack by the difference keeps both back cards whole on screen,
+ * still reading as a fan; the front card gives up those few pixels instead.
+ */
+.fan {
+	width: 100%;
+	padding-inline: calc(var(--space-32) - var(--page-gutter));
+}
+
 .grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
