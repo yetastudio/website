@@ -16,7 +16,7 @@
  * a tint and the ground stays neutral (accents are about a tenth of a frame, never the ground).
  */
 .neutralStage {
-	--stage-veil: color-mix(in oklab, var(--color-surface-raised) 86%, transparent);
+	--stage-veil: color-mix(in oklab, var(--color-surface-raised) 92%, transparent);
 	position: relative;
 	display: grid;
 	place-items: center;

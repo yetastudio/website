@@ -95,7 +95,7 @@ export const PROPOSALS: Proposal[] = [
 			},
 		],
 		mockup:
-			'Design system index (ghost buttons with Editorial numerals) beside the process tile, which plays that step’s Stageshow scene; the autoplay dot advances it, a click picks a step.',
+			'Four ways, each playing the step’s Stageshow scene on a neutral stage: A, an Editorial index beside the stage; B, a timeline of six chapter segments that fill; C, a sticky story driven by scroll; D, an accordion whose open row holds the scene.',
 		references: [
 			{
 				app: 'Fiasco',

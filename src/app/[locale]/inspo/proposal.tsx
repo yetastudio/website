@@ -53,7 +53,7 @@ function BriefItem({ label, children }: { label: string; children: ReactNode }) 
 }
 
 /** A proposal: what it adds, where it goes, a live mockup on both canvases, and its references. */
-export function ProposalSection({ proposal, children }: { proposal: Proposal; children: ReactNode }) {
+export function ProposalSection({ proposal, variants, children }: { proposal: Proposal; variants?: ShelfVariant[]; children?: ReactNode }) {
 	return (
 		<ShowcaseSection id={proposal.id} eyebrow={`Proposal ${proposal.number}`} title={proposal.title} description={proposal.summary}>
 			<div className={styles.brief}>
@@ -83,7 +83,7 @@ export function ProposalSection({ proposal, children }: { proposal: Proposal; ch
 				</BriefItem>
 			</div>
 
-			<ThemePair layout="column">{children}</ThemePair>
+			{variants ? <ShelfVariants title={proposal.title} variants={variants} /> : <ThemePair layout="column">{children}</ThemePair>}
 
 			<div className={styles.references}>
 				<Text as="h3" size="sm" tone="subtle">

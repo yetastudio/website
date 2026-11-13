@@ -4,7 +4,7 @@ import type { ComponentType, ReactNode } from 'react';
 //! Types
 import type { ResultFacts } from '../results';
 
-export type VariantId = 'a' | 'b' | 'c';
+export type VariantId = 'a' | 'b' | 'c' | 'd';
 
 /** One proposal for a shelf: what it is called, the references it is built from, and the mockup. */
 export type LibraryVariantDef = {

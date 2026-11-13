@@ -12,10 +12,12 @@ import CraftIllustrated from './craft';
 import { ClientWallMockup } from './mockups/client-wall';
 import { HeroDemoMockup } from './mockups/hero-demo';
 import { ProcessWalkthroughMockup } from './mockups/process-walkthrough';
+import { ProcessAccordionMockup, ProcessStickyMockup, ProcessTimelineMockup } from './mockups/process-variants';
 import { ResultsMockup, type ResultFacts } from './mockups/results';
 
 //! Library
 import { SHELF_VARIANTS } from './mockups/library/registry';
+import type { ShelfVariant } from './mockups/library/variant-types';
 
 //! Data
 import { LIBRARY, LIBRARY_COLLECTION, MOBBIN_COLLECTION, PROPOSALS, type ProposalId } from './data';
@@ -54,6 +56,16 @@ export default function InspoShowcase({ facts }: { facts: ResultFacts }) {
 		booking: <BookingMockup />,
 	};
 
+	// Proposals with more than one way to build them get the A/B/C/D switcher instead of one mockup.
+	const proposalVariants: Partial<Record<ProposalId, ShelfVariant[]>> = {
+		'process-walkthrough': [
+			{ id: 'a', label: 'Index', refs: 'FLORA, Fiasco', node: <ProcessWalkthroughMockup /> },
+			{ id: 'b', label: 'Timeline', refs: 'FLORA, Rox', node: <ProcessTimelineMockup /> },
+			{ id: 'c', label: 'Sticky story', refs: 'Fiasco', node: <ProcessStickyMockup /> },
+			{ id: 'd', label: 'Accordion', refs: 'Craft Agency', node: <ProcessAccordionMockup /> },
+		],
+	};
+
 	return (
 		<ShowcaseLayout nav={<ShowcaseNav label="Inspo sections" items={navItems} />}>
 			<header className={styles.intro}>
@@ -76,7 +88,7 @@ export default function InspoShowcase({ facts }: { facts: ResultFacts }) {
 			<CraftIllustrated />
 
 			{PROPOSALS.map((proposal) => (
-				<ProposalSection key={proposal.id} proposal={proposal}>
+				<ProposalSection key={proposal.id} proposal={proposal} variants={proposalVariants[proposal.id]}>
 					{mockups[proposal.id]}
 				</ProposalSection>
 			))}

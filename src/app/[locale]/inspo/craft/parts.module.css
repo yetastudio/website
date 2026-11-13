@@ -160,7 +160,9 @@
 .release[data-latest] .version {
 	background: var(--color-surface-control);
 	color: var(--color-text-strong);
-	box-shadow: var(--shadow-bevel), inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
+	box-shadow:
+		var(--shadow-bevel),
+		inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
 }
 
 .releaseNote {
@@ -283,7 +285,9 @@
 
 .button {
 	background: var(--color-surface-control);
-	box-shadow: var(--shadow-bevel), inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
+	box-shadow:
+		var(--shadow-bevel),
+		inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
 	font-size: var(--text-2xs);
 	font-weight: var(--font-weight-medium);
 	color: var(--color-text-strong);
@@ -323,7 +327,9 @@
 
 .time[data-picked] {
 	background: var(--color-surface-control);
-	box-shadow: var(--shadow-bevel), inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
+	box-shadow:
+		var(--shadow-bevel),
+		inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
 	font-weight: var(--font-weight-medium);
 	color: var(--color-text-strong);
 }

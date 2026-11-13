@@ -6,6 +6,7 @@ import { useRef, useState } from 'react';
 //! Hooks
 import { useTranslations } from 'next-intl';
 import { useAutoplay } from './use-autoplay';
+import { useVariantHidden } from './library/variant-context';
 
 //! Components
 import { Button, PaginationDots, Text } from '@/components/ui';
@@ -30,6 +31,7 @@ export function ProcessWalkthroughMockup() {
 	const [active, setActive] = useState(0);
 	const rootRef = useRef<HTMLDivElement>(null);
 	const autoplay = useAutoplay(rootRef);
+	const hidden = useVariantHidden();
 	const step = PROCESS[active];
 	const next = () => setActive((index) => (index + 1) % PROCESS.length);
 
@@ -67,7 +69,7 @@ export function ProcessWalkthroughMockup() {
 					</Text>
 					{/* The step's own Stageshow scene (the Our Process card's), restarted on every step. */}
 					<div key={step.key} className={cx(styles.walkTile, styles.neutralStage)} data-hue={step.hue}>
-						{isProcessStep(step.key) && <ProcessScene step={step.key} />}
+						{!hidden && isProcessStep(step.key) && <ProcessScene step={step.key} />}
 					</div>
 					{/* Every description sits in one cell; the box holds the longest, so the page below never shifts. */}
 					<div className={styles.walkCopy}>

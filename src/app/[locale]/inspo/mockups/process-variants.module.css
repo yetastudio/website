@@ -1,0 +1,436 @@
+/*
+ * Proposal 02, more ways to walk the process: Timeline, Sticky story and Accordion. Neutral
+ * first: the stage is the shared neutral stage with a faint step tint, and the step's hue shows
+ * only as one mark (a fill, a numeral, a hairline). Each step holds for the time its scene needs.
+ */
+
+/* Hue hooks for the marks. */
+.segmentBar[data-hue='pink'],
+.stickyNumeral[data-hue='pink'],
+.stickyRuleFill[data-hue='pink'],
+.rowRule[data-hue='pink'] {
+	--step-hue: var(--color-accent-pink);
+}
+
+.segmentBar[data-hue='orange'],
+.stickyNumeral[data-hue='orange'],
+.stickyRuleFill[data-hue='orange'],
+.rowRule[data-hue='orange'] {
+	--step-hue: var(--color-accent-orange);
+}
+
+.segmentBar[data-hue='yellow'],
+.stickyNumeral[data-hue='yellow'],
+.stickyRuleFill[data-hue='yellow'],
+.rowRule[data-hue='yellow'] {
+	--step-hue: var(--color-accent-yellow);
+}
+
+.segmentBar[data-hue='green'],
+.stickyNumeral[data-hue='green'],
+.stickyRuleFill[data-hue='green'],
+.rowRule[data-hue='green'] {
+	--step-hue: var(--color-accent-green);
+}
+
+.segmentBar[data-hue='blue'],
+.stickyNumeral[data-hue='blue'],
+.stickyRuleFill[data-hue='blue'],
+.rowRule[data-hue='blue'] {
+	--step-hue: var(--color-accent-blue);
+}
+
+.segmentBar[data-hue='violet'],
+.stickyNumeral[data-hue='violet'],
+.stickyRuleFill[data-hue='violet'],
+.rowRule[data-hue='violet'] {
+	--step-hue: var(--color-accent-violet);
+}
+
+/* The stage every variant shares: the walkthrough tile's own proportions. */
+.stage {
+	--stage-aspect: 342 / 160;
+	width: 100%;
+	aspect-ratio: var(--stage-aspect);
+}
+
+/* ── transitions.dev 04 · Text states swap ── */
+
+.textSwap {
+	--text-swap-dur: 150ms;
+	--text-swap-translate-y: 4px;
+	--text-swap-blur: 2px;
+	--text-swap-ease: ease-in-out;
+	display: inline-block;
+	transform: translateY(0);
+	filter: blur(0);
+	opacity: 1;
+	transition:
+		transform var(--text-swap-dur) var(--text-swap-ease),
+		filter var(--text-swap-dur) var(--text-swap-ease),
+		opacity var(--text-swap-dur) var(--text-swap-ease);
+	will-change: transform, filter, opacity;
+}
+
+.textSwap.isExit {
+	transform: translateY(calc(var(--text-swap-translate-y) * -1));
+	filter: blur(var(--text-swap-blur));
+	opacity: 0;
+}
+
+.textSwap.isEnterStart {
+	transform: translateY(var(--text-swap-translate-y));
+	filter: blur(var(--text-swap-blur));
+	opacity: 0;
+	transition: none;
+}
+
+/* ───────────── B · Timeline ───────────── */
+
+.timeline {
+	--step-hold: 9000ms;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-16);
+	width: 100%;
+}
+
+.timelineHead {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+}
+
+.timelineNumeral {
+	color: var(--color-text-faint);
+	font-style: italic;
+	font-variant-numeric: lining-nums tabular-nums;
+}
+
+.timelineCopy {
+	--timeline-copy-max: 34rem;
+	--timeline-copy-min: calc(var(--leading-relaxed) * 3em);
+	min-height: var(--timeline-copy-min);
+	max-width: var(--timeline-copy-max);
+}
+
+.track {
+	display: grid;
+	grid-template-columns: repeat(6, minmax(0, 1fr));
+	gap: var(--space-4);
+	list-style: none;
+}
+
+.trackItem {
+	min-width: 0;
+}
+
+/* Each segment is a system Button; only its inner layout is set here. */
+.segment {
+	--button-min-height: 2.5rem;
+	flex-direction: column;
+	align-items: stretch;
+	justify-content: flex-start;
+	gap: var(--space-6);
+}
+
+.segmentBar {
+	--segment-bar-height: 2px;
+	position: relative;
+	display: block;
+	height: var(--segment-bar-height);
+	overflow: hidden;
+	border-radius: var(--radius-pill);
+	background: var(--color-divider);
+}
+
+.segmentFill {
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background: var(--step-hue, var(--color-text-strong));
+	transform: scaleX(0);
+	transform-origin: 0 50%;
+}
+
+.segmentFill[data-state='done'] {
+	background: var(--color-text-faint);
+	transform: scaleX(1);
+}
+
+.segmentFill[data-state='playing'] {
+	animation: segment-fill var(--step-hold) linear forwards;
+	animation-play-state: paused;
+}
+
+.segmentFill[data-state='playing'][data-running] {
+	animation-play-state: running;
+}
+
+@keyframes segment-fill {
+	to {
+		transform: scaleX(1);
+	}
+}
+
+.segmentLabel {
+	display: flex;
+	gap: var(--space-6);
+	min-width: 0;
+	text-align: start;
+}
+
+.segmentNumeral {
+	font-variant-numeric: lining-nums tabular-nums;
+}
+
+.segmentTitle {
+	display: none;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+@container (min-width: 520px) {
+	.timelineHead {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+		align-items: start;
+		gap: var(--space-24);
+	}
+
+	.segmentTitle {
+		display: inline;
+	}
+}
+
+/* ───────────── C · Sticky story ───────────── */
+
+.sticky {
+	display: grid;
+	gap: var(--space-16);
+	width: 100%;
+}
+
+.stickyAside {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-10);
+	min-width: 0;
+}
+
+.stickyMeter {
+	display: flex;
+	align-items: center;
+	gap: var(--space-12);
+}
+
+.stickyCount {
+	font-variant-numeric: lining-nums tabular-nums;
+}
+
+.stickyRule {
+	--sticky-rule-height: 2px;
+	position: relative;
+	flex: 1;
+	height: var(--sticky-rule-height);
+	overflow: hidden;
+	border-radius: var(--radius-pill);
+	background: var(--color-divider);
+}
+
+.stickyRuleFill {
+	position: absolute;
+	inset: 0;
+	background: var(--step-hue, var(--color-text-strong));
+	transform-origin: 0 50%;
+	transition:
+		scale var(--duration-enter) var(--ease-smooth),
+		background-color var(--duration-enter) var(--ease-out);
+}
+
+/* The steps scroll inside their own column; the page around them does not move. */
+.stickyList {
+	--sticky-list-height: 17rem;
+	height: var(--sticky-list-height);
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	scrollbar-width: none;
+	mask-image: linear-gradient(180deg, transparent 0%, var(--color-surface) 18%, var(--color-surface) 82%, transparent 100%);
+}
+
+.stickyList::-webkit-scrollbar {
+	display: none;
+}
+
+.stickyList:focus-visible {
+	outline: var(--stroke-hairline) solid var(--color-border-strong);
+	outline-offset: var(--space-4);
+}
+
+.stickyItems {
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+	padding-block: 40% 40%;
+}
+
+.stickyItem {
+	--sticky-item-gap: 3.5rem;
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	column-gap: var(--space-16);
+	row-gap: var(--space-4);
+	padding-block: calc(var(--sticky-item-gap) / 2);
+	opacity: 0.32;
+	transition: opacity var(--duration-enter) var(--ease-out);
+}
+
+.stickyItem[data-on] {
+	opacity: 1;
+}
+
+.stickyItem > :not(.stickyNumeral) {
+	grid-column: 2;
+}
+
+.stickyNumeral {
+	grid-row: 1 / span 2;
+	font-size: var(--text-4xl);
+	color: var(--color-text-faint);
+	font-variant-numeric: lining-nums tabular-nums;
+	transition: color var(--duration-enter) var(--ease-out);
+}
+
+.stickyItem[data-on] .stickyNumeral {
+	color: var(--step-hue);
+}
+
+@container (min-width: 520px) {
+	.sticky {
+		grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.3fr);
+		align-items: center;
+		gap: var(--space-32);
+	}
+
+	.stickyList {
+		--sticky-list-height: 20rem;
+		order: -1;
+	}
+}
+
+/* ───────────── D · Accordion ───────────── */
+
+.accordion {
+	--step-hold: 9000ms;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.row {
+	display: flex;
+	flex-direction: column;
+}
+
+/* The row's head is a system Button; only its height and inner type are set here. */
+.rowHead {
+	--button-min-height: 3.25rem;
+	justify-content: flex-start;
+}
+
+.rowLabel {
+	display: inline-flex;
+	align-items: baseline;
+	gap: var(--space-16);
+}
+
+.rowNumeral {
+	font-size: var(--text-md);
+	font-variant-numeric: lining-nums tabular-nums;
+}
+
+.rowTitle {
+	font-size: clamp(var(--text-xl), 5cqi, var(--text-3xl));
+	transition: color var(--duration-enter) var(--ease-out);
+}
+
+/* The hairline under each row; the open one fills in its step's hue while its scene plays. */
+.rowRule {
+	position: relative;
+	display: block;
+	height: var(--stroke-hairline);
+	background: var(--color-divider);
+}
+
+.rowRuleFill {
+	position: absolute;
+	inset: 0;
+	background: var(--step-hue);
+	transform: scaleX(0);
+	transform-origin: 0 50%;
+	animation: row-fill var(--step-hold) linear forwards;
+	animation-play-state: paused;
+}
+
+.rowRuleFill[data-running] {
+	animation-play-state: running;
+}
+
+@keyframes row-fill {
+	to {
+		transform: scaleX(1);
+	}
+}
+
+/* transitions.dev 01 · Card resize: the open row grows to its content, the closed ones fold away. */
+.rowBody {
+	--resize-dur: 300ms;
+	--resize-ease: cubic-bezier(0.22, 1, 0.36, 1);
+	display: grid;
+	grid-template-rows: 0fr;
+	transition: grid-template-rows var(--resize-dur) var(--resize-ease);
+}
+
+.row[data-open] .rowBody {
+	grid-template-rows: 1fr;
+}
+
+.rowInner {
+	display: grid;
+	gap: var(--space-16);
+	min-height: 0;
+	overflow: hidden;
+}
+
+.row[data-open] .rowInner {
+	padding-block: var(--space-16) var(--space-20);
+}
+
+.rowCopy {
+	--row-copy-max: 34rem;
+	max-width: var(--row-copy-max);
+}
+
+@container (min-width: 520px) {
+	.rowInner {
+		grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+		align-items: start;
+		gap: var(--space-24);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.textSwap,
+	.stickyItem,
+	.stickyRuleFill,
+	.rowBody {
+		transition: none !important;
+	}
+
+	.segmentFill,
+	.rowRuleFill {
+		animation: none !important;
+	}
+}

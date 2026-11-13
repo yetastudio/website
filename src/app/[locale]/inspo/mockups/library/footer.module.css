@@ -52,7 +52,6 @@
 	font-size: 12.5cqi;
 }
 
-
 @container (min-width: 30rem) {
 	.sign {
 		gap: var(--space-24);
