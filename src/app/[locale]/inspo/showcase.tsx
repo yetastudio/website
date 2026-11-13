@@ -12,7 +12,11 @@ import { ClientWallMockup } from './mockups/client-wall';
 import { HeroDemoMockup } from './mockups/hero-demo';
 import { ProcessWalkthroughMockup } from './mockups/process-walkthrough';
 import { ResultsMockup, type ResultFacts } from './mockups/results';
+import { AboutMockup } from './mockups/library/about';
+import { CaseMockup } from './mockups/library/case';
 import { CraftMockup } from './mockups/library/craft';
+import { CtaMockup } from './mockups/library/cta';
+import { FooterMockup } from './mockups/library/footer';
 import { HeroMockup } from './mockups/library/hero';
 import { NavMockup } from './mockups/library/nav';
 import { ProcessMockup } from './mockups/library/process';
@@ -58,7 +62,7 @@ export default function InspoShowcase({ facts }: { facts: ResultFacts }) {
 	};
 
 	// One live mockup per library shelf: the best of its references, rebuilt in the Yeta look.
-	const shelfMockups: Partial<Record<ShelfId, ReactNode>> = {
+	const shelfMockups: Record<ShelfId, ReactNode> = {
 		nav: <NavMockup />,
 		hero: <HeroMockup />,
 		value: <WhyMockup />,
@@ -67,6 +71,10 @@ export default function InspoShowcase({ facts }: { facts: ResultFacts }) {
 		process: <ProcessMockup />,
 		stats: <ResultsLedgerMockup facts={facts} />,
 		testimonials: <TestimonialsMockup />,
+		about: <AboutMockup />,
+		cta: <CtaMockup />,
+		footer: <FooterMockup />,
+		case: <CaseMockup />,
 	};
 
 	return (

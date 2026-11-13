@@ -680,3 +680,255 @@
 		padding: var(--space-64) var(--space-40) var(--space-32);
 	}
 }
+
+/* ───────────── 09 About the studio ───────────── */
+
+.about {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-32);
+	padding: var(--space-32) var(--space-20);
+}
+
+.aboutStatement {
+	max-width: 24ch;
+	font-size: clamp(var(--text-2xl), 6cqi, var(--text-4xl));
+}
+
+/* The statement's last words fade to grey (Analogue Agency). */
+.aboutFade {
+	color: var(--color-text-faint);
+}
+
+.aboutBody {
+	display: grid;
+	gap: var(--space-20);
+}
+
+/* Four one-word values in a hairline grid (Mother Design). */
+.aboutValues {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	list-style: none;
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+	border-left: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.aboutValue {
+	--about-cell-height: 6rem;
+	display: flex;
+	align-items: flex-end;
+	min-height: var(--about-cell-height);
+	padding: var(--space-12);
+	border-right: var(--stroke-hairline) solid var(--color-divider);
+	border-bottom: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.aboutWord {
+	font-size: clamp(var(--text-xl), 4.6cqi, var(--text-3xl));
+	letter-spacing: var(--tracking-tight);
+}
+
+.aboutNote {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-10);
+}
+
+.aboutSignature {
+	align-self: flex-end;
+	padding-top: var(--space-8);
+}
+
+@container (min-width: 30rem) {
+	.about {
+		padding: var(--space-40);
+	}
+
+	.aboutBody {
+		grid-template-columns: 3fr 2fr;
+		align-items: end;
+	}
+}
+
+/* ───────────── 10 Closing call to action ───────────── */
+
+.cta {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-20);
+	padding: var(--space-48) var(--space-20);
+	text-align: center;
+}
+
+.ctaLine {
+	max-width: 14ch;
+	font-size: clamp(var(--text-3xl), 8.4cqi, var(--text-display));
+	letter-spacing: var(--tracking-tight);
+}
+
+@container (min-width: 30rem) {
+	.cta {
+		padding: var(--space-64) var(--space-40);
+	}
+}
+
+/* ───────────── 11 Footer ───────────── */
+
+/* Warm light from two corners (Daylight), built from the accent so it reads on both canvases. */
+.footer {
+	--footer-glow: color-mix(in oklab, var(--color-accent-orange) 34%, transparent);
+	--footer-light:
+		radial-gradient(60% 55% at 0% 100%, var(--footer-glow) 0%, transparent 70%),
+		radial-gradient(50% 45% at 100% 100%, var(--footer-glow) 0%, transparent 70%);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-24);
+	padding: var(--space-32) var(--space-20) var(--space-16);
+	background: var(--footer-light);
+}
+
+.footerTop {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-16);
+}
+
+.footerColumns {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--space-20);
+	padding-top: var(--space-20);
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.footerColumn {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+}
+
+.footerColumn:last-child {
+	grid-column: 1 / -1;
+}
+
+/* The studio's name as the page's last word, edge to edge (Claude Type, Opacity). */
+.footerSign {
+	font-size: 17cqi;
+	letter-spacing: var(--tracking-tight);
+	white-space: nowrap;
+	text-align: center;
+}
+
+.footerBase {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: var(--space-8);
+}
+
+@container (min-width: 30rem) {
+	.footer {
+		padding: var(--space-40) var(--space-40) var(--space-20);
+	}
+
+	.footerColumns {
+		grid-template-columns: 1fr 1fr 2fr;
+	}
+
+	.footerColumn:last-child {
+		grid-column: auto;
+	}
+}
+
+/* ───────────── 12 Case study page ───────────── */
+
+.case {
+	display: flex;
+	flex-direction: column;
+	padding-bottom: var(--space-24);
+}
+
+.caseBand {
+	--case-straddle: 3rem;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+	padding: var(--space-32) var(--space-20) calc(var(--space-24) + var(--case-straddle));
+	background: var(--hue-wash);
+	color: var(--color-text-strong);
+}
+
+.caseTitle {
+	font-size: clamp(var(--text-4xl), 12cqi, var(--text-display));
+	letter-spacing: var(--tracking-tight);
+}
+
+.caseLine {
+	max-width: 44ch;
+}
+
+/* The facts card overlaps the band's lower edge (Deel): one layer, no extra section. */
+.caseFacts {
+	--case-straddle: 3rem;
+	position: relative;
+	margin: calc(-1 * var(--case-straddle)) var(--space-16) 0;
+}
+
+.caseFactList {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--space-12) var(--space-16);
+}
+
+.caseFact {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-2);
+}
+
+/* The shots run off the right edge (COLLINS): a strip, not a framed gallery. */
+.caseStrip {
+	display: flex;
+	gap: var(--space-12);
+	margin-top: var(--space-20);
+	padding-inline-start: var(--space-16);
+}
+
+.caseShot {
+	--case-shot-width: 78%;
+	--case-shot-aspect: 16 / 10;
+	position: relative;
+	flex: none;
+	width: var(--case-shot-width);
+	aspect-ratio: var(--case-shot-aspect);
+	overflow: hidden;
+	border-radius: var(--radius-md);
+	box-shadow: inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
+}
+
+@container (min-width: 30rem) {
+	.caseBand {
+		padding-inline: var(--space-40);
+	}
+
+	.caseFacts {
+		margin-inline: var(--space-40) var(--space-40);
+	}
+
+	.caseFactList {
+		grid-template-columns: repeat(4, auto);
+		justify-content: space-between;
+	}
+
+	.caseStrip {
+		padding-inline-start: var(--space-40);
+	}
+
+	.caseShot {
+		--case-shot-width: 58%;
+	}
+}
