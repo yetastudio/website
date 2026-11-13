@@ -1,73 +1,219 @@
-.header {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.mobile {
-	display: flex;
+.skip {
 	position: fixed;
-	top: 20px;
-	width: 90%;
-	height: 100%;
-	max-height: 60px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: var(--10);
-	border-radius: var(--12);
-	background-color: var(--background-70);
-	box-shadow: var(--border-shadow);
-	-webkit-backdrop-filter: blur(4px);
-	backdrop-filter: blur(4px);
-	z-index: 10;
+	top: var(--space-8);
+	left: var(--space-8);
+	z-index: calc(var(--z-header) + 1);
+	padding: var(--space-8) var(--space-12);
+	border-radius: var(--radius-md);
+	background-color: var(--color-surface-inverse);
+	color: var(--color-text-inverse);
+	font-size: var(--text-sm);
+	translate: 0 -200%;
+	transition: translate var(--duration-micro) var(--ease-out);
+}
 
-	&::before {
-		content: '';
+.skip:focus-visible {
+	translate: 0 0;
+}
+
+/* Figma: fixed on mobile (iPhone frames have it as the fixed child); in flow on desktop (1920 frame). */
+.header {
+	position: fixed;
+	inset: var(--space-20) 0 auto;
+	z-index: var(--z-header);
+	padding-inline: var(--page-gutter);
+	pointer-events: none;
+}
+
+@media (min-width: 1280px) {
+	.header {
 		position: absolute;
-		padding: 1px;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		border-radius: inherit;
-		background: var(--border-gradient);
-		mask: var(--mask-gradient);
-		-webkit-mask-composite: xor;
-		mask-composite: exclude;
-		pointer-events: none;
 	}
 }
 
-.desktop {
-	display: flex;
+.bar {
 	position: relative;
-	width: 100%;
-	height: 100%;
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
-	padding: var(--10);
-	border-radius: var(--12);
-	z-index: 10;
+	justify-content: space-between;
+	gap: var(--space-16);
+	width: 100%;
+	max-width: var(--page-max);
+	height: var(--header-height);
+	margin-inline: auto;
+	pointer-events: auto;
 }
 
-@media ((min-width: 360px) and (max-width: 768px)) {
-	.mobile {
-		display: inherit;
+/* Mobile: the whole bar is a glass pill (Figma iPhone header, 358×60). */
+@media (max-width: 1279px) {
+	.bar {
+		padding-inline: var(--space-10) var(--space-12);
+		border-radius: var(--radius-md);
+		background-color: var(--color-surface-glass);
+		backdrop-filter: blur(var(--blur-glass));
+		-webkit-backdrop-filter: blur(var(--blur-glass));
+		box-shadow:
+			inset 0 0 0 var(--stroke-hairline) var(--color-border-faint),
+			var(--shadow-bevel);
 	}
-	.desktop {
+}
+
+@media (min-width: 1280px) {
+	.bar {
+		padding-inline: var(--space-20);
+	}
+}
+
+.home {
+	display: inline-flex;
+	border-radius: var(--radius-md);
+}
+
+.markDesktop {
+	display: none;
+}
+
+@media (min-width: 1280px) {
+	.markDesktop {
+		display: inline-block;
+	}
+
+	.markMobile {
 		display: none;
 	}
 }
 
-@media (min-width: 769px) {
-	.mobile {
+/* ── Nav pill (desktop) ── */
+.pill {
+	display: none;
+}
+
+@media (min-width: 1280px) {
+	.pill {
+		position: absolute;
+		top: 0;
+		left: 50%;
+		display: flex;
+		align-items: center;
+		height: var(--header-height);
+		padding: var(--space-12) var(--space-24);
+		border-radius: var(--radius-md);
+		background-color: var(--color-surface-glass);
+		backdrop-filter: blur(var(--blur-glass));
+		-webkit-backdrop-filter: blur(var(--blur-glass));
+		translate: -50% 0;
+	}
+}
+
+.navList {
+	display: flex;
+	align-items: center;
+	gap: clamp(var(--space-24), 3.4vw, var(--space-64));
+	list-style: none;
+}
+
+.navLink {
+	position: relative;
+	display: inline-block;
+	padding-block: var(--space-4);
+	font-size: var(--text-md);
+	font-weight: var(--font-weight-regular);
+	letter-spacing: var(--tracking-normal);
+	color: var(--color-text);
+	white-space: nowrap;
+	transition: color var(--duration-micro) var(--ease-out);
+}
+
+.navLink::after {
+	content: '';
+	position: absolute;
+	inset: auto 0 calc(var(--space-2) * -1);
+	height: var(--stroke-hairline);
+	background-color: currentColor;
+	scale: 0 1;
+	transform-origin: left;
+	transition: scale var(--duration-enter) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.navLink:hover {
+		color: var(--color-text-strong);
+	}
+}
+
+.navLink[aria-current='location'] {
+	color: var(--color-text-strong);
+}
+
+.navLink[aria-current='location']::after {
+	scale: 1 1;
+}
+
+/* ── Actions ── */
+.actions {
+	display: flex;
+	align-items: center;
+	gap: var(--space-12);
+}
+
+.themeSwitch,
+.cta {
+	display: none;
+}
+
+@media (min-width: 1280px) {
+	.cta {
+		display: inline-flex;
+	}
+
+	.menuButton {
 		display: none;
 	}
-	.desktop {
-		display: inherit;
+}
+
+@media (min-width: 1440px) {
+	.themeSwitch {
+		display: inline-flex;
 	}
+}
+
+/* ── Sheet (mobile menu) ── */
+.sheet {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: var(--space-32);
+	min-height: 100%;
+}
+
+.sheetList {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-4);
+	list-style: none;
+}
+
+.sheetLink {
+	display: block;
+	padding-block: var(--space-8);
+	font-size: var(--text-2xl);
+	font-weight: var(--font-weight-medium);
+	letter-spacing: var(--tracking-tight);
+	color: var(--color-text);
+}
+
+.sheetLink::after {
+	display: none;
+}
+
+.sheetFooter {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-16);
+}
+
+.sheetSwitches {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-8);
 }

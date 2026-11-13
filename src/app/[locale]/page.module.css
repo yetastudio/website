@@ -1,0 +1,21 @@
+/* Page column: Figma desktop pads 20 and stacks sections 80 apart; mobile pads 16 and stacks 48 apart. */
+.page {
+	display: flex;
+	flex-direction: column;
+	gap: var(--section-gap);
+	width: 100%;
+	max-width: calc(var(--page-max) + var(--page-gutter) * 2);
+	margin-inline: auto;
+	padding: calc(var(--space-20) + var(--header-height) + var(--space-28)) var(--page-gutter) 0;
+}
+
+/* Desktop: the header is in flow, 80 above the hero (Figma: header 20→80, hero at 160). */
+@media (min-width: 1280px) {
+	.page {
+		padding-top: calc(var(--space-20) + var(--header-height) + var(--section-gap));
+	}
+}
+
+.page > section {
+	scroll-margin-top: calc(var(--header-height) + var(--space-32));
+}

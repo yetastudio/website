@@ -1,0 +1,371 @@
+/**
+ * Yeta Studio — design tokens
+ *
+ * Source of truth: Figma "Yeta Studio | Digital Agency" (aVpNRSY3dqDxB5gdErv2xw),
+ * variables used on the Design System (1:4) and Landing Page (1:5) pages.
+ *
+ * Layers
+ *   1. Primitive  `--palette-*`, raw scales. Only semantic tokens read them.
+ *   2. Semantic   `--color-*`, `--space-*`, `--radius-*`, `--text-*`, `--shadow-*`,
+ *                 `--duration-*`, `--ease-*`. Components and pages read these.
+ *
+ * Theming
+ *   Colour roles resolve with `light-dark()`, so they follow the element's
+ *   `color-scheme`. The root follows the OS (`light dark`) unless
+ *   `<html data-theme="light|dark">` pins it. Any subtree can flip itself with
+ *   `.scheme-inverse` (footer band, gradient tiles) or pin a scheme with
+ *   `.scheme-light` / `.scheme-dark` (brand showcases).
+ */
+
+:root {
+	/* ───────────────────────── Primitive: neutrals ───────────────────────── */
+	--palette-neutral-50: #f5f6f4; /* Figma: Neutrals/Light */
+	--palette-neutral-100: #e4e5e0; /* Figma: Neutrals/Light Secondary */
+	--palette-neutral-200: #d8dad3; /* light control, hovered */
+	--palette-neutral-300: #c5c7bc; /* metallic gradient, light stop */
+	--palette-neutral-600: #60615c; /* metallic gradient, dark stop */
+	--palette-neutral-900: #111307; /* ink gradient, top stop */
+	--palette-neutral-925: #0f1108; /* Figma: Neutrals/Dark Secondary */
+	--palette-neutral-950: #0a0b04; /* Figma: Neutrals/Dark */
+	--palette-neutral-975: #060703; /* dark control, pressed */
+
+	/* ───────────────────────── Primitive: colour ───────────────────────── */
+	--palette-pink-300: #ff97b1;
+	--palette-pink-400: #ff5d88;
+	--palette-pink-500: #ff2465;
+	--palette-pink-600: #ff0558;
+	--palette-pink-900: #57001e;
+
+	/* The 700 steps are the light-theme icon fills used on the landing (not Figma variables). */
+	--palette-orange-300: #ffb76f;
+	--palette-orange-400: #ff8d35;
+	--palette-orange-500: #ff6e0e;
+	--palette-orange-600: #fb5607;
+	--palette-orange-700: #c93a05;
+	--palette-orange-900: #80290e;
+
+	--palette-yellow-300: #fff243;
+	--palette-yellow-400: #ffe31c;
+	--palette-yellow-500: #efc803;
+	--palette-yellow-600: #ce9c00;
+	--palette-yellow-700: #a46f04;
+	--palette-yellow-900: #734710;
+
+	--palette-green-300: #79fcaf;
+	--palette-green-400: #38f083;
+	--palette-green-500: #0fe166;
+	--palette-green-700: #088d40;
+
+	--palette-blue-300: #83e0ff;
+	--palette-blue-400: #48ccff;
+	--palette-blue-500: #1eadff;
+	--palette-blue-600: #0690ff;
+	--palette-blue-700: #007cff;
+	--palette-blue-950: #0e325d;
+
+	--palette-violet-200: #dcd8fc;
+	--palette-violet-300: #c2b9f9;
+	--palette-violet-400: #a491f4;
+	--palette-violet-500: #8664ee;
+	--palette-violet-600: #7543e3;
+	--palette-violet-700: #6632cf;
+	--palette-violet-950: #2b1560;
+
+	--palette-red-400: #ff6764;
+	--palette-red-700: #c8110d;
+
+	/* ───────────────────────── Semantic: surfaces ───────────────────────── */
+	/* Page canvas. */
+	--color-surface: light-dark(var(--palette-neutral-100), var(--palette-neutral-950));
+	/* Sits one step above the canvas (card bodies, list rows). */
+	--color-surface-raised: light-dark(var(--palette-neutral-50), var(--palette-neutral-925));
+	/* Controls: buttons, segmented items. */
+	--color-surface-control: light-dark(var(--palette-neutral-100), var(--palette-neutral-950));
+	--color-surface-control-hover: light-dark(var(--palette-neutral-200), var(--palette-neutral-925));
+	--color-surface-control-pressed: light-dark(var(--palette-neutral-50), var(--palette-neutral-975));
+	/* Translucent bar over content (nav pill, sticky header). */
+	--color-surface-glass: light-dark(rgb(228 229 224 / 70%), rgb(10 11 4 / 70%));
+	/* Faint tint for chips and wells. */
+	--color-surface-tint: light-dark(rgb(197 199 188 / 5%), rgb(228 229 224 / 5%));
+	--color-surface-tint-hover: light-dark(rgb(10 11 4 / 5%), rgb(197 199 188 / 10%));
+	/* Solid ink surface, the opposite of the canvas (tooltip, toast). */
+	--color-surface-inverse: light-dark(var(--palette-neutral-950), var(--palette-neutral-100));
+	/* Full-bleed band (footer). Read inside .scheme-inverse: #e4e5e0 on the dark site, #0f1108 on the light one. */
+	--color-surface-band: light-dark(var(--palette-neutral-100), var(--palette-neutral-925));
+
+	/* ───────────────────────── Semantic: text ───────────────────────── */
+	--color-text: light-dark(var(--palette-neutral-925), var(--palette-neutral-100));
+	--color-text-strong: light-dark(var(--palette-neutral-950), var(--palette-neutral-50));
+	/* Figma footer labels use the text colour at 70%. */
+	--color-text-subtle: light-dark(rgb(15 17 8 / 70%), rgb(228 229 224 / 70%));
+	--color-text-faint: light-dark(rgb(15 17 8 / 44%), rgb(228 229 224 / 44%));
+	--color-text-inverse: light-dark(var(--palette-neutral-100), var(--palette-neutral-925));
+	--color-text-link: light-dark(var(--palette-violet-600), var(--palette-violet-400));
+
+	/* ───────────────────────── Semantic: borders ───────────────────────── */
+	--color-border: light-dark(rgb(10 11 4 / 15%), rgb(245 246 244 / 15%));
+	--color-border-faint: light-dark(rgb(10 11 4 / 5%), rgb(245 246 244 / 5%));
+	--color-border-strong: light-dark(rgb(10 11 4 / 32%), rgb(245 246 244 / 32%));
+	/* Figma footer rules: text colour at 10%. */
+	--color-divider: light-dark(rgb(15 17 8 / 10%), rgb(228 229 224 / 10%));
+	--color-focus-ring: light-dark(var(--palette-violet-600), var(--palette-violet-400));
+
+	/* ───────────────────────── Semantic: status + accents ───────────────────────── */
+	/* Status hues come only from the Figma palette. On the light canvas the
+	   400/500 steps fail 4.5:1 for text, so text uses the 900 steps. */
+	--color-danger: light-dark(var(--palette-pink-600), var(--palette-red-400)); /* icons, strokes */
+	--color-danger-text: light-dark(var(--palette-pink-900), var(--palette-red-400));
+	--color-success: light-dark(var(--palette-green-500), var(--palette-green-400)); /* icons only */
+	--color-warning: light-dark(var(--palette-yellow-600), var(--palette-yellow-400)); /* icons only */
+	--color-info: light-dark(var(--palette-blue-600), var(--palette-blue-400)); /* icons only */
+
+	/* Icon accents used by feature chips (Figma "Why Yeta" chips). */
+	--color-accent-pink: light-dark(var(--palette-pink-600), var(--palette-pink-400));
+	--color-accent-orange: light-dark(var(--palette-orange-700), var(--palette-orange-400));
+	--color-accent-yellow: light-dark(var(--palette-yellow-700), var(--palette-yellow-400));
+	--color-accent-green: light-dark(var(--palette-green-700), var(--palette-green-400));
+	--color-accent-blue: light-dark(var(--palette-blue-700), var(--palette-blue-400));
+	--color-accent-violet: light-dark(var(--palette-violet-700), var(--palette-violet-400));
+	--color-accent-red: light-dark(var(--palette-red-700), var(--palette-red-400));
+
+	/* ───────────────────────── Semantic: gradients ───────────────────────── */
+	/* Hairline stroke drawn with a masked pseudo-element (.u-bevel). Figma: linear 180°,
+	   alpha 1 → 0.4, layer opacity 10% on controls and 15% on grouping containers. */
+	--gradient-stroke: linear-gradient(
+		180deg,
+		light-dark(rgb(10 11 4 / 10%), rgb(245 246 244 / 10%)) 0%,
+		light-dark(rgb(10 11 4 / 4%), rgb(245 246 244 / 4%)) 100%
+	);
+	--gradient-stroke-strong: linear-gradient(
+		180deg,
+		light-dark(rgb(10 11 4 / 15%), rgb(245 246 244 / 15%)) 0%,
+		light-dark(rgb(10 11 4 / 6%), rgb(245 246 244 / 6%)) 100%
+	);
+	/* Display type: Figma "Dark Gradient" (ink) on light canvases, "Light Gradient" (metallic) on dark. */
+	--gradient-display: linear-gradient(
+		180deg,
+		light-dark(var(--palette-neutral-900), var(--palette-neutral-300)) 0%,
+		/* #888a82 = the metallic gradient sampled at 60%, so the 2-stop original renders unchanged. */
+		light-dark(var(--palette-neutral-925), #888a82) 60%,
+		light-dark(var(--palette-neutral-950), var(--palette-neutral-600)) 100%
+	);
+
+	/* Card washes (Figma craft / process / testimonial cards). Each is a soft
+	   diagonal mesh made from the 300/400 steps of one hue. */
+	--wash-pink: radial-gradient(120% 90% at 85% 15%, var(--palette-violet-200) 0%, transparent 55%),
+		linear-gradient(135deg, var(--palette-pink-400) 0%, var(--palette-pink-300) 55%, #f3c6d6 100%);
+	--wash-orange: radial-gradient(120% 90% at 85% 85%, #f6e3b4 0%, transparent 55%),
+		linear-gradient(135deg, #d98a5a 0%, var(--palette-orange-300) 55%, #f3d48f 100%);
+	--wash-yellow: radial-gradient(120% 90% at 15% 15%, var(--palette-yellow-500) 0%, transparent 60%),
+		linear-gradient(135deg, #d8cf2c 0%, var(--palette-yellow-300) 60%, #f6f07a 100%);
+	--wash-green: radial-gradient(120% 90% at 85% 85%, #b6f5cf 0%, transparent 55%),
+		linear-gradient(135deg, var(--palette-green-500) 0%, var(--palette-green-300) 60%, #c9f6dc 100%);
+	--wash-blue: radial-gradient(120% 90% at 85% 85%, #d3f2f5 0%, transparent 55%),
+		linear-gradient(135deg, #2a9fbd 0%, var(--palette-blue-300) 55%, #bfeaf2 100%);
+	--wash-violet: radial-gradient(120% 90% at 15% 15%, var(--palette-violet-500) 0%, transparent 55%),
+		linear-gradient(135deg, var(--palette-violet-400) 0%, var(--palette-violet-200) 60%, #ece9f2 100%);
+
+	/* ───────────────────────── Semantic: elevation ───────────────────────── */
+	/* The bevel every control and card carries in Figma. */
+	--shadow-bevel: inset 0 -1px 1px 0.5px light-dark(rgb(15 17 8 / 10%), rgb(0 0 0 / 70%)),
+		inset 0 0 1px 1.5px light-dark(rgb(245 246 244 / 50%), rgb(228 229 224 / 5%));
+	--shadow-overlay: 0 24px 48px -12px light-dark(rgb(10 11 4 / 24%), rgb(0 0 0 / 64%)),
+		0 2px 6px light-dark(rgb(10 11 4 / 8%), rgb(0 0 0 / 40%));
+	--blur-glass: 6px;
+	--blur-tint: 2px;
+
+	/* ───────────────────────── Typography ───────────────────────── */
+	--font-sans: var(--font-funnel-display), ui-sans-serif, system-ui, sans-serif;
+	--font-serif: var(--font-editorial-new), ui-serif, Georgia, serif;
+
+	--font-weight-light: 300;
+	--font-weight-regular: 400;
+	--font-weight-medium: 500;
+	/* Figma: hero wordmark (desktop), footer lettering, craft card subtitles. */
+	--font-weight-semibold: 600;
+	--font-weight-bold: 700;
+	--font-weight-serif-thin: 200;
+
+	--text-2xs: 0.625rem; /* 10 */
+	--text-xs: 0.75rem; /* 12 */
+	--text-sm: 0.875rem; /* 14 */
+	--text-md: 1rem; /* 16 */
+	--text-lg: 1.25rem; /* 20 */
+	--text-xl: 1.5rem; /* 24 */
+	--text-2xl: 2rem; /* 32 */
+	--text-3xl: 2.5rem; /* 40 */
+	--text-4xl: 3rem; /* 48 */
+	--text-5xl: 4rem; /* 64 */
+	--text-feature: 1.2305rem; /* 19.69: Figma feature chip (Large ×1.40625) */
+	--text-display: clamp(3.15rem, 2.525rem + 2.562vw, 5.6rem); /* 50.4 @390 → 89.6 @1920 (hero wordmark) */
+
+	--leading-none: 1;
+	--leading-tight: 1.1;
+	--leading-snug: 1.25;
+	--leading-normal: 1.45;
+	--leading-relaxed: 1.7;
+
+	/* Figma sets -3% tracking on all Funnel Display text. */
+	--tracking-tight: -0.03em;
+	--tracking-normal: 0;
+
+	/* ───────────────────────── Space ───────────────────────── */
+	--space-2: 0.125rem;
+	--space-4: 0.25rem;
+	--space-6: 0.375rem;
+	--space-8: 0.5rem;
+	--space-10: 0.625rem;
+	--space-12: 0.75rem;
+	--space-14: 0.875rem;
+	--space-16: 1rem;
+	--space-20: 1.25rem;
+	--space-24: 1.5rem;
+	--space-28: 1.75rem;
+	--space-32: 2rem;
+	--space-40: 2.5rem;
+	--space-48: 3rem;
+	--space-64: 4rem;
+	--space-80: 5rem;
+	--space-96: 6rem;
+	--space-128: 8rem;
+
+	/* ───────────────────────── Shape ───────────────────────── */
+	--radius-xs: 5px; /* Figma Radius=Default */
+	--radius-sm: 8px;
+	--radius-md: 12px; /* Figma Radius=Rounded, nav pill */
+	--radius-lg: 16px;
+	--radius-xl: 20px;
+	--radius-2xl: 24px;
+	--radius-pill: 999px;
+	--stroke-hairline: 1px;
+	--stroke-focus: 2px;
+
+	/* ───────────────────────── Size ───────────────────────── */
+	--icon-sm: 14px;
+	--icon-md: 18px;
+	--icon-lg: 20px;
+	--icon-xl: 24px;
+	--control-xs: 19px; /* Figma Chip Size=Small */
+	--control-sm: 30px;
+	--control-md: 34px;
+	--control-lg: 36px;
+	--control-xl: 60px;
+
+	/* ───────────────────────── Layout ───────────────────────── */
+	--page-gutter: var(--space-16);
+	--page-max: 1880px;
+	--measure: 36rem;
+	--measure-narrow: 15.625rem; /* 250: Figma narrow paragraphs (Summary card, mobile Why Yeta light) */
+	--section-gap: var(--space-48);
+	--header-height: 60px;
+
+	/* ───────────────────────── Motion ───────────────────────── */
+	--duration-instant: 0ms; /* press */
+	--duration-micro: 150ms; /* hover */
+	--duration-enter: 320ms;
+	--duration-exit: 200ms;
+	--duration-overlay: 420ms; /* drawer, dialog */
+	--duration-collapse: 260ms;
+	--ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+	--ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+	--ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
+
+	/* ───────────────────────── Layers ───────────────────────── */
+	--z-raised: 1;
+	--z-header: 10;
+	--z-overlay: 50;
+	--z-toast: 60;
+	--z-cursor: 100;
+}
+
+@media (min-width: 768px) {
+	:root {
+		--page-gutter: var(--space-20);
+		--section-gap: var(--space-80);
+	}
+}
+
+/* ───────────────────────── Theme selection ───────────────────────── */
+
+/* Non-colour values that differ per theme cannot use light-dark(), so they are
+   set here per resolved theme: the canvas pattern tile
+   (Figma "Pattern" frame: 390×844 tiles, exported @2x). */
+:root {
+	color-scheme: light dark;
+	--pattern-image: url('/landing/pattern/pattern-tile-light.png');
+	--pattern-image-inverse: url('/landing/pattern/pattern-tile-dark.png');
+	--pattern-size: 390px 844px;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--pattern-image: url('/landing/pattern/pattern-tile-dark.png');
+		--pattern-image-inverse: url('/landing/pattern/pattern-tile-light.png');
+	}
+}
+
+:root[data-theme='light'] {
+	color-scheme: light;
+	--pattern-image: url('/landing/pattern/pattern-tile-light.png');
+	--pattern-image-inverse: url('/landing/pattern/pattern-tile-dark.png');
+}
+
+:root[data-theme='dark'] {
+	color-scheme: dark;
+	--pattern-image: url('/landing/pattern/pattern-tile-dark.png');
+	--pattern-image-inverse: url('/landing/pattern/pattern-tile-light.png');
+}
+
+/* Inverse subtree (footer band, gradient tiles). Flipping only works while light-dark() stays
+   native: the semantic tokens are declared on :root, and a lowered light-dark() would resolve
+   there once instead of per element. package.json `browserslist` keeps it native (Chrome/Edge 123,
+   Firefox 120, Safari 17.5). Literal `color-scheme` values keep the rule statically analysable;
+   root rules sit in :where() so a pinned showcase panel (below) always wins. */
+.scheme-inverse {
+	color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+	:where(:root:not([data-theme='light'])) .scheme-inverse {
+		color-scheme: light;
+	}
+}
+
+:where(:root[data-theme='light']) .scheme-inverse {
+	color-scheme: dark;
+}
+
+:where(:root[data-theme='dark']) .scheme-inverse {
+	color-scheme: light;
+}
+
+/* Pinned schemes also re-root everything that depends on the theme (pair with data-scheme for assets). */
+.scheme-light {
+	color-scheme: light;
+	--pattern-image: url('/landing/pattern/pattern-tile-light.png');
+	--pattern-image-inverse: url('/landing/pattern/pattern-tile-dark.png');
+}
+
+.scheme-dark {
+	color-scheme: dark;
+	--pattern-image: url('/landing/pattern/pattern-tile-dark.png');
+	--pattern-image-inverse: url('/landing/pattern/pattern-tile-light.png');
+}
+
+.scheme-light .scheme-inverse {
+	color-scheme: dark;
+}
+
+.scheme-dark .scheme-inverse {
+	color-scheme: light;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	:root {
+		--duration-micro: 0ms;
+		--duration-enter: 0ms;
+		--duration-exit: 0ms;
+		--duration-overlay: 0ms;
+		--duration-collapse: 0ms;
+	}
+}

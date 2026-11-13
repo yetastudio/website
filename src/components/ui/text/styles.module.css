@@ -1,0 +1,84 @@
+.text {
+	font-family: var(--font-sans);
+	letter-spacing: var(--tracking-tight);
+	color: var(--color-text);
+	text-wrap: pretty;
+}
+
+/* Sizes */
+.size-2xs { font-size: var(--text-2xs); }
+.size-xs { font-size: var(--text-xs); }
+.size-sm { font-size: var(--text-sm); }
+.size-md { font-size: var(--text-md); }
+.size-lg { font-size: var(--text-lg); }
+.size-xl { font-size: var(--text-xl); }
+.size-2xl { font-size: var(--text-2xl); }
+.size-3xl { font-size: var(--text-3xl); }
+.size-4xl { font-size: var(--text-4xl); }
+.size-5xl { font-size: var(--text-5xl); }
+.size-display { font-size: var(--text-display); }
+
+/* Weights */
+.weight-thin { font-weight: var(--font-weight-serif-thin); }
+.weight-light { font-weight: var(--font-weight-light); }
+.weight-regular { font-weight: var(--font-weight-regular); }
+.weight-medium { font-weight: var(--font-weight-medium); }
+.weight-semibold { font-weight: var(--font-weight-semibold); }
+.weight-bold { font-weight: var(--font-weight-bold); }
+
+/* Line height */
+.leading-none { line-height: var(--leading-none); }
+.leading-tight { line-height: var(--leading-tight); }
+.leading-snug { line-height: var(--leading-snug); }
+.leading-normal { line-height: var(--leading-normal); }
+.leading-relaxed { line-height: var(--leading-relaxed); }
+
+/* Tones */
+.tone-default { color: var(--color-text); }
+.tone-strong { color: var(--color-text-strong); }
+.tone-subtle { color: var(--color-text-subtle); }
+.tone-faint { color: var(--color-text-faint); }
+.tone-inverse { color: var(--color-text-inverse); }
+.tone-danger { color: var(--color-danger-text); }
+
+.tone-display {
+	color: var(--color-text-strong);
+	background-image: var(--gradient-display);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+/* Family */
+.serif {
+	font-family: var(--font-serif);
+	letter-spacing: var(--tracking-normal);
+}
+
+.italic { font-style: italic; }
+
+/* Alignment */
+.align-start { text-align: start; }
+.align-center { text-align: center; }
+.align-end { text-align: end; }
+
+.balance { text-wrap: balance; }
+
+/* Accent: an editorial word inside sans copy */
+.accent {
+	font-family: var(--font-serif);
+	font-style: italic;
+	font-weight: var(--font-weight-regular);
+	letter-spacing: var(--tracking-normal);
+	color: var(--color-text-strong);
+}
+
+.upright {
+	font-style: normal;
+}
+
+.underline {
+	text-decoration-line: underline;
+	text-decoration-thickness: from-font;
+	text-underline-offset: 0.18em;
+}

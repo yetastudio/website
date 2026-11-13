@@ -1,37 +1,18 @@
-import { ReactNode } from 'react';
-import { LucideIcon } from 'lucide-react';
+import type { ReactNode } from 'react';
 
 export type ThemeProviderProps = {
 	children: ReactNode;
 };
 
+export type ThemePreference = 'system' | 'light' | 'dark';
+export type ResolvedTheme = 'light' | 'dark';
+
 export type ThemeContextType = {
+	/** What the person chose. */
+	preference: ThemePreference;
+	/** What is on screen right now. */
+	resolvedTheme: ResolvedTheme;
+	/** Kept for older call sites; same as `resolvedTheme === 'dark'`. */
 	isDarkMode: boolean;
-};
-
-export type ButtonProps = {
-	title?: string;
-	size?: 'sm' | 'md' | 'lg';
-	variant?: 'solid' | 'outline' | 'ghost' | 'link';
-	radius?: 'squared' | 'rounded';
-	isFullWidth?: boolean;
-	isDisabled?: boolean;
-	isLoading?: boolean;
-	icon?: LucideIcon;
-	iconPosition?: 'left' | 'middle' | 'right';
-	onClick?: () => void;
-};
-
-export type NavItemProps = {
-	href: string;
-	children: ReactNode;
-};
-
-export type ChipProps = {
-	children: ReactNode;
-	size?: 'sm' | 'md' | 'lg';
-	isInverted?: boolean;
-	isFullWidth?: boolean;
-	icon?: LucideIcon;
-	iconPosition?: 'left' | 'middle' | 'right';
+	setPreference: (preference: ThemePreference) => void;
 };

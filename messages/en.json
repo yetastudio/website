@@ -1,0 +1,246 @@
+{
+  "meta": {
+    "title": "Yeta ✹ Studio · Design & Development Agency",
+    "description": "We craft pixel-perfect websites for brands that value visual excellence and meaningful user experiences."
+  },
+  "common": {
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "close": "Close",
+    "dismiss": "Dismiss",
+    "show": "Show",
+    "hide": "Hide",
+    "optional": "optional",
+    "opensNewTab": "opens in a new tab",
+    "pagination": "Pagination",
+    "slide": "slide",
+    "goTo": "Go to {item} {number}",
+    "previous": "Previous",
+    "next": "Next",
+    "notifications": "Notifications",
+    "skipToContent": "Skip to content",
+    "language": "Language",
+    "home": "Yeta Studio home"
+  },
+  "theme": {
+    "label": "Theme",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "nav": {
+    "label": "Main",
+    "whyYeta": "¿Why Yeta Studio?",
+    "whyYetaShort": "Why Yeta",
+    "ourCraft": "Our Craft",
+    "ourWork": "Our Work",
+    "ourProcess": "Our Process",
+    "testimonials": "Testimonials",
+    "getInTouch": "Get in touch"
+  },
+  "hero": {
+    "title": "Yeta Studio",
+    "slogan": "because <great>great</great> brands<br></br>aren’t built on <luck>luck</luck>.",
+    "whyChoose": "Why choose Yeta Studio",
+    "letsBuild": "Let’s build something"
+  },
+  "whyYeta": {
+    "title": "¿Why Yeta Studio?",
+    "chip": "Why brands choose to grow with us",
+    "p1": "We craft experiences that blend <serif>creativity</serif>, <serif>technology</serif>, and <serif>strategy</serif>.",
+    "p2": "Our goal is to build <serif>digital experiences</serif> that make a <serif>difference</serif>.",
+    "p3": "Born to <em>elevate</em> your brand.",
+    "features": {
+      "insight": "From insight to impact",
+      "together": "Made to work together",
+      "luck": "Luck has nothing to do with it",
+      "vision": "Turning vision into product",
+      "pixel": "Purpose in every pixel",
+      "defy": "Building brands that defy luck"
+    },
+    "featuresLabel": "What working with us feels like",
+    "highlights": {
+      "goals": "Your goals are our goals",
+      "ideas": "Ideas that move brands",
+      "collab": "Designed to collaborate"
+    }
+  },
+  "ourCraft": {
+    "title": "Our Craft",
+    "chip": "How we transform ideas into impact",
+    "intro": "We build digital products that combine <serif>performance</serif>, <serif>usability</serif>, and <serif>visual impact</serif>.",
+    "cta": "Get a <em>free consultation</em> and find out the difference.",
+    "button": "Schedule consultation",
+    "cards": {
+      "idea": {
+        "title": "Starts with an idea.",
+        "subtitle": "Every great product begins with a spark.",
+        "description": "We listen deeply, explore ideas, and uncover what really matters—laying the foundation for purposeful creation."
+      },
+      "path": {
+        "title": "Shaping the path.",
+        "subtitle": "We turn complexity into clarity.",
+        "description": "Ideas are refined into structure—flows, wireframes, concepts. Strategy meets creativity, and the vision starts to take shape."
+      },
+      "intention": {
+        "title": "Design with intention.",
+        "subtitle": "Interfaces that feel as good as they look.",
+        "description": "We design experiences that speak to your users—intuitive, elegant, and always aligned with your brand’s voice."
+      },
+      "tech": {
+        "title": "Built on modern tech.",
+        "subtitle": "We choose the right tools for your project.",
+        "description": "We rely on powerful technologies to craft robust solutions that adapt and grow with you, not against you."
+      },
+      "legacy": {
+        "title": "From launch to legacy.",
+        "subtitle": "A product is only the beginning.",
+        "description": "We don’t just ship and disappear. We stay close, monitor performance, and help evolve your digital presence over time."
+      },
+      "impact": {
+        "title": "Crafted to create impact.",
+        "subtitle": "What we build it’s meaningful.",
+        "description": "Every decision is made with intention. Because in the end, design and code are just tools—we’re here to make them work for your vision."
+      }
+    },
+    "intro2": "Our craft adapts to <em>your goals</em> — with a sharp eye on <serif>detail</serif>, <serif>experience</serif>, and <serif>innovation</serif>.",
+    "carousel": "Our craft, card by card",
+    "card": "card"
+  },
+  "ourWork": {
+    "title": "Our Work",
+    "chip": "What we do to help brands evolve",
+    "intro": "This is how our <serif>design</serif> and <serif>development</serif><brmd></brmd> processes come together to create <em>impact</em>.",
+    "caseStudy": "Case Study",
+    "seeMore": "See more",
+    "viewProject": "View project",
+    "facts": {
+      "client": "Client",
+      "year": "Year",
+      "country": "Country",
+      "industry": "Industry",
+      "services": "Services",
+      "url": "Project URL"
+    },
+    "sections": {
+      "about": "About the client",
+      "challenge": "The challenge",
+      "result": "The result"
+    },
+    "team": "The team involved in this project",
+    "tools": "Tools that we used in this project",
+    "projects": {
+      "yeta": {
+        "name": "Yeta Studio",
+        "year": "2025",
+        "country": "Argentina",
+        "industry": "Tech Digital Agency",
+        "services": "Web Design & Web Development",
+        "url": "yeta.studio",
+        "about": "Yeta Studio is a design and development agency that builds digital products for brands that refuse to leave things to luck.",
+        "challenge": "Our own site had to prove the craft: one system for brand, product and marketing, in two themes and three languages.",
+        "result": "A token-driven design system and a landing page where every section reuses the same components, light or dark."
+      }
+    },
+    "carousel": "Case studies",
+    "card": "case study"
+  },
+  "ourProcess": {
+    "title": "Our Process",
+    "chip": "How we work and what to expect",
+    "intro": "Whether it’s a full build or a quick launch,<brmd></brmd> we make the process simple and collaborative.",
+    "kickoff": "Here’s how we <em>kick things off</em>",
+    "cta": "Let’s make something <em>great</em> together.",
+    "button": "Start your project",
+    "steps": {
+      "discover": {
+        "title": "Discover",
+        "description": "We start by understanding your brand, needs, and users. Discovery and research guide our decisions from day one."
+      },
+      "define": {
+        "title": "Define",
+        "description": "We dive into your needs and design a tailored plan—from technical requirements to creative vision—ensuring every detail is purposeful."
+      },
+      "design": {
+        "title": "Design",
+        "description": "We shape ideas into design. Through collaborative sessions, we create intuitive, brand-aligned interfaces that speak to your audience."
+      },
+      "develop": {
+        "title": "Develop",
+        "description": "Using modern frameworks and efficient workflows, we bring the design to life with clean, scalable code built to perform."
+      },
+      "integrate": {
+        "title": "Integrate",
+        "description": "We make sure your new solution fits seamlessly with your existing systems, tools, and processes—no disruptions, only improvements."
+      },
+      "launch": {
+        "title": "Launch",
+        "description": "We launch, test, and support. But more than that, we stay with you, ensuring what we built evolves with your brand and goals."
+      }
+    },
+    "carousel": "Our process, step by step",
+    "card": "step",
+    "step": "Step"
+  },
+  "testimonials": {
+    "title": "Testimonials",
+    "chip": "What our clients have to say",
+    "intro": "Beyond pixels and code, what we build leaves a <em>mark</em>.<br></br><br></br>Here’s what our partners have to say about their <em>journey</em> with Yeta Studio.",
+    "items": {
+      "jorge": {
+        "quote": "“Yeta blended design, strategy, and tech in a way that just made sense. They helped us redefine how we communicate with our audience.”",
+        "name": "Jorge R.",
+        "role": "Founder",
+        "company": "Sintaxis",
+        "quoteMobile": "“Yeta blended design, strategy, and tech in a way that just made sense. They didn’t just build a website — they helped us redefine how we communicate with our audience.”"
+      },
+      "marcelo": {
+        "quote": "“They quickly understood our product and translated our vision into a clean, functional experience that resonates with our users.”",
+        "name": "Marcelo Z.",
+        "role": "Founder",
+        "company": "apx.school"
+      },
+      "lisette": {
+        "quote": "“From kickoff to delivery, Yeta exceeded expectations. Their process is structured but flexible, creative yet data-informed.”",
+        "name": "Lisette T.",
+        "role": "Founder",
+        "company": "NovaTech"
+      }
+    },
+    "carousel": "Client testimonials",
+    "card": "testimonial"
+  },
+  "summary": {
+    "title": "Yeta ✹ Studio",
+    "subtitle": "in a nutshell",
+    "chip": "Working with <em>worldwide visionary</em> brands",
+    "p1": "We craft <serif>pixel-perfect</serif> websites for brands that value <serif>visual excellence</serif> and <serif>meaningful</serif> user experiences.",
+    "motto": "We <serif>design</serif> and <serif>develop</serif> with <em>purpose</em>",
+    "p2": "From user-centered <serif>design</serif> to robust <serif>development</serif>. Every <serif>pixel</serif> and every <serif>line of code</serif> is built with intention."
+  },
+  "footer": {
+    "agency": "You Entered The Agency",
+    "aboutTitle": "About",
+    "about": "We craft pixel-perfect websites for brands that value visual excellence and meaningful user experiences.",
+    "ready": "Ready to get started?",
+    "consultation": "Get a free consultation!",
+    "socials": "Socials",
+    "navigation": "Navigation",
+    "rights": "{year} © All rights reserved",
+    "signature": "✹ Yeta Studio™",
+    "links": {
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram",
+      "threads": "Threads",
+      "twitter": "Twitter"
+    }
+  },
+  "brand": {
+    "title": "Brand guidelines"
+  },
+  "notFound": {
+    "chip": "Page not found",
+    "description": "This page wasn’t built — and <em>luck</em> won’t find it.",
+    "cta": "Back to the studio"
+  }
+}

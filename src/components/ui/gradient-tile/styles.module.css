@@ -1,0 +1,61 @@
+.tile {
+	position: relative;
+	display: grid;
+	place-items: center;
+	overflow: hidden;
+	isolation: isolate;
+	border-radius: var(--radius-2xl);
+	background-color: var(--color-surface-band);
+	color: var(--color-text);
+}
+
+.underlay,
+.content {
+	position: relative;
+	display: grid;
+	place-items: center;
+	grid-area: 1 / 1;
+}
+
+.content {
+	z-index: var(--z-raised);
+	width: 100%;
+	height: 100%;
+	padding: var(--space-24);
+}
+
+.layers {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+/* The Figma group is flipped horizontally; its children keep their native aspect. */
+.layer {
+	position: absolute;
+	transform: scaleX(-1);
+}
+
+.layer img {
+	position: absolute;
+	display: block;
+	max-width: none;
+}
+
+.base img {
+	left: -36.39%;
+	top: -21.24%;
+	width: 172.18%;
+	height: 161.26%;
+}
+
+.overlay {
+	mix-blend-mode: hard-light;
+}
+
+.overlay img {
+	left: -20.59%;
+	top: -23.76%;
+	width: 160.29%;
+	height: 158.79%;
+}

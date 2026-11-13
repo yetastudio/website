@@ -1,163 +1,173 @@
 .button {
-	/* Base */
 	position: relative;
-	width: fit-content;
-	height: fit-content;
-	padding: var(--8) var(--16);
-
-	display: flex;
-	justify-content: center;
+	display: inline-flex;
+	flex-shrink: 0;
 	align-items: center;
-	gap: var(--4);
+	justify-content: center;
+	gap: var(--space-4);
+	width: fit-content;
+	padding: var(--space-8);
+	color: var(--color-text);
+	font-family: var(--font-sans);
+	font-weight: var(--font-weight-light);
+	letter-spacing: var(--tracking-tight);
+	line-height: var(--leading-none);
+	white-space: nowrap;
+	text-decoration: none;
+	user-select: none;
+	transition:
+		background-color var(--duration-micro) var(--ease-out),
+		transform var(--duration-micro) var(--ease-out),
+		opacity var(--duration-micro) var(--ease-out);
+}
 
-	font-family: var(--font-funnel-display);
-	font-weight: 400;
-	text-align: center;
-	vertical-align: middle;
+.label {
+	position: relative;
+}
 
-	border: none;
-	transition: all 200ms ease;
+/* ── Sizes (Figma: Small 30 · Medium 34 · Large 36; landing: Large ×1.2 = 48, CTA 60) ──
+   A layout may restyle a size with --button-min-height / --button-font-size (e.g. the mobile hero group). */
+.sm {
+	min-height: var(--button-min-height, var(--control-sm));
+	font-size: var(--button-font-size, var(--text-2xs));
+}
 
-	/* Sizes */
-	&.sm {
-		font-size: var(--10);
+.md {
+	min-height: var(--button-min-height, var(--control-md));
+	font-size: var(--button-font-size, var(--text-xs));
+}
+
+.lg {
+	min-height: var(--button-min-height, var(--control-lg));
+	font-size: var(--button-font-size, var(--text-sm));
+}
+
+.xl {
+	min-height: var(--button-min-height, calc(var(--control-lg) * 1.2));
+	padding: calc(var(--space-8) * 1.2) var(--space-12) calc(var(--space-8) * 1.2) calc(var(--space-12) * 1.2);
+	gap: calc(var(--space-4) * 1.2);
+	font-size: var(--button-font-size, calc(var(--text-sm) * 1.2));
+}
+
+.xl.rounded {
+	border-radius: calc(var(--radius-md) * 1.2);
+}
+
+.xxl {
+	min-height: var(--button-min-height, var(--control-xl));
+	padding: var(--space-8) var(--space-16);
+	font-size: var(--button-font-size, var(--text-md));
+}
+
+.xxl.hasEnd {
+	padding-inline-end: var(--space-12);
+}
+
+.xxl.hasStart {
+	padding-inline-start: var(--space-12);
+}
+
+.iconOnly {
+	aspect-ratio: 1;
+	padding: var(--space-6);
+}
+
+/* ── Radius ── */
+.default {
+	border-radius: var(--radius-xs);
+}
+
+.rounded {
+	border-radius: var(--radius-md);
+}
+
+/* Landing call-to-action instances (Figma: radius 16, padding 8/14, gap 8). */
+.soft {
+	border-radius: var(--radius-lg);
+}
+
+.xxl.soft,
+.xxl.soft.hasStart,
+.xxl.soft.hasEnd {
+	gap: var(--space-8);
+	padding-inline: var(--space-14);
+}
+
+/* ── Variants ── */
+.solid {
+	background-color: var(--color-surface-control);
+}
+
+.glass {
+	background-color: var(--color-surface-glass);
+	backdrop-filter: blur(var(--blur-glass));
+	-webkit-backdrop-filter: blur(var(--blur-glass));
+}
+
+.ghost {
+	background-color: transparent;
+}
+
+/* ── States: disabled > focus > pressed > hover > rest ── */
+@media (hover: hover) and (pointer: fine) {
+	.solid:hover,
+	.glass:hover,
+	.ghost:hover {
+		background-color: var(--color-surface-control-hover);
 	}
+}
 
-	&.md {
-		height: var(--40);
-		font-size: var(--14);
+.button:active {
+	background-color: var(--color-surface-control-pressed);
+	transform: scale(0.98);
+	transition-duration: var(--duration-instant);
+}
 
-		@media (min-width: 768px) {
-			height: var(--48);
-			font-size: var(--16);
-		}
+.fullWidth {
+	width: 100%;
+}
+
+.disabled,
+.disabled:hover,
+.disabled:active {
+	opacity: 0.45;
+	cursor: not-allowed;
+	background-color: var(--color-surface-control);
+	transform: none;
+}
+
+.ghost.disabled {
+	background-color: transparent;
+}
+
+/* Loading keeps the label and width; the spinner sits on top. */
+.loading {
+	cursor: progress;
+}
+
+.loading > :not(.spinner) {
+	opacity: 0;
+}
+
+.spinner {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-items: center;
+}
+
+.spinner svg {
+	animation: spin 900ms linear infinite;
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
 	}
+}
 
-	&.lg {
-		font-size: var(--14);
-
-		@media (min-width: 768px) {
-			font-size: var(--16);
-			height: var(--60);
-		}
-	}
-
-	/* Radius */
-	&.squared {
-		border-radius: var(--5);
-		box-shadow: var(--border-shadow);
-
-		&::before {
-			content: '';
-			position: absolute;
-			padding: 1px;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			border-radius: inherit;
-			background: var(--border-gradient);
-			mask: var(--mask-gradient);
-			-webkit-mask-composite: xor;
-			mask-composite: exclude;
-			pointer-events: none;
-		}
-	}
-
-	&.rounded {
-		border-radius: var(--12);
-		box-shadow: var(--border-shadow);
-
-		&::before {
-			content: '';
-			position: absolute;
-			padding: 1px;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			border-radius: inherit;
-			background: var(--border-gradient);
-			mask: var(--mask-gradient);
-			-webkit-mask-composite: xor;
-			mask-composite: exclude;
-			pointer-events: none;
-		}
-	}
-
-	/* Variants */
-	&.solid {
-		background-color: var(--background);
-	}
-
-	&.ghost {
-		background: none;
-		box-shadow: none;
-
-		&::before {
-			content: none;
-			background: none;
-			padding: 0;
-		}
-	}
-
-	&.outline {
-		background: none;
-
-		&::before {
-			content: '';
-			position: absolute;
-			padding: 1px;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			border-radius: inherit;
-			background: var(--border-gradient);
-			mask: var(--mask-gradient);
-			-webkit-mask-composite: xor;
-			mask-composite: exclude;
-			pointer-events: none;
-		}
-	}
-
-	/* Icons */
-	&.icon-middle {
-		padding: var(--8) var(--7);
-	}
-
-	&.icon-left {
-		padding-left: var(--12);
-	}
-
-	&.icon-right {
-		padding-right: var(--12);
-	}
-
-	/* Boolean-Based Styles */
-	&.isFull {
-		width: 100%;
-	}
-
-	&.isDisabled {
-		cursor: not-allowed;
-		opacity: 0.5;
-	}
-
-	&.isLoading {
-		cursor: wait;
-	}
-
-	/* Pseudo-Classes */
-	&:hover {
-		cursor: pointer;
-		background-color: var(--background-secondary);
-		transition: all 100ms ease;
-	}
-
-	&:active {
-		cursor: pointer;
-		background-color: var(--background-tertiary);
-		transition: all 0ms;
+@media (prefers-reduced-motion: reduce) {
+	.spinner svg {
+		animation-duration: 2.4s;
 	}
 }

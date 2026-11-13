@@ -1,0 +1,117 @@
+.row {
+	display: inline-flex;
+	align-items: flex-start;
+	gap: var(--space-10);
+	cursor: pointer;
+}
+
+.input {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	opacity: 0;
+	pointer-events: none;
+}
+
+/* ── Checkbox ── */
+.box {
+	display: grid;
+	flex-shrink: 0;
+	place-items: center;
+	width: var(--icon-lg);
+	height: var(--icon-lg);
+	margin-top: var(--space-2);
+	border-radius: var(--radius-xs);
+	background-color: var(--color-surface-control);
+	transition: background-color var(--duration-micro) var(--ease-out);
+}
+
+.check {
+	color: var(--color-text-inverse);
+	opacity: 0;
+	scale: 0.6;
+	transition:
+		opacity var(--duration-micro) var(--ease-out),
+		scale var(--duration-micro) var(--ease-out);
+}
+
+.input:checked + .box {
+	background-color: var(--color-surface-inverse);
+}
+
+.input:checked + .box .check {
+	opacity: 1;
+	scale: 1;
+}
+
+/* ── Switch ── */
+.track {
+	position: relative;
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	width: var(--space-40);
+	height: var(--space-24);
+	padding: var(--space-2);
+	border-radius: var(--radius-pill);
+	background-color: var(--color-surface-control);
+	transition: background-color var(--duration-micro) var(--ease-out);
+}
+
+.thumb {
+	width: var(--space-20);
+	height: var(--space-20);
+	border-radius: var(--radius-pill);
+	background-color: var(--color-text-subtle);
+	box-shadow: var(--shadow-bevel);
+	transition:
+		translate var(--duration-enter) var(--ease-out),
+		background-color var(--duration-micro) var(--ease-out);
+}
+
+.input:checked + .track {
+	background-color: var(--color-surface-inverse);
+}
+
+.input:checked + .track .thumb {
+	translate: var(--space-16) 0;
+	background-color: var(--color-text-inverse);
+}
+
+/* ── Shared states ── */
+.input:focus-visible + .box,
+.input:focus-visible + .track {
+	outline: var(--stroke-focus) solid var(--color-focus-ring);
+	outline-offset: var(--stroke-focus);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.row:hover .input:not(:checked, :disabled) + .box,
+	.row:hover .input:not(:checked, :disabled) + .track {
+		background-color: var(--color-surface-control-hover);
+	}
+}
+
+.text {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-2);
+}
+
+.label {
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-regular);
+	line-height: var(--leading-snug);
+	color: var(--color-text);
+}
+
+.description {
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-light);
+	color: var(--color-text-subtle);
+}
+
+.disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+}

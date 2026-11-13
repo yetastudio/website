@@ -1,0 +1,196 @@
+/* Figma Summary 786:762 — 358 × 603.8, padding 64/20, gap 48, radius 32, 2px hairline. */
+
+.card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-48);
+	width: 100%;
+	max-width: 22.375rem; /* 358 */
+	padding: var(--space-64) var(--space-20);
+	overflow: hidden;
+	isolation: isolate;
+	border-radius: var(--space-32);
+	background-color: var(--color-surface-control);
+	box-shadow:
+		inset 0 0 0 calc(var(--stroke-hairline) * 2) light-dark(rgb(10 11 4 / 12%), rgb(245 246 244 / 12%));
+	color: var(--color-text);
+	text-align: center;
+}
+
+.card:focus-visible {
+	outline-offset: var(--space-4);
+}
+
+/* ── Scribbles (positions from Figma, relative to the outer edge) ── */
+.scribble {
+	position: absolute;
+	z-index: -1;
+	display: grid;
+	place-items: center;
+	pointer-events: none;
+}
+
+.scribbleInner {
+	position: relative;
+	display: block;
+}
+
+.scribbleInner img,
+.spark img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.top-left {
+	left: -21.85px;
+	top: -33.2px;
+}
+
+.top-left .scribbleInner {
+	width: 106.82px;
+	height: 110.69px;
+}
+
+.top-right {
+	left: 241px;
+	top: -43.87px;
+	width: 181.06px;
+	height: 164.45px;
+}
+
+.top-right .scribbleInner {
+	width: 149.88px;
+	height: 109.74px;
+	rotate: 30deg;
+}
+
+.bottom-right {
+	left: 256.35px;
+	top: 506.53px;
+	width: 136.63px;
+	height: 135.02px;
+}
+
+.bottom-right .scribbleInner {
+	width: 89.7px;
+	height: 110.59px;
+	transform: scaleY(-1) rotate(131.55deg);
+}
+
+.bottom-left {
+	left: -63px;
+	top: 495px;
+	width: 189.48px;
+	height: 201.81px;
+}
+
+.bottom-left .scribbleInner {
+	width: 170.47px;
+	height: 185.05px;
+	transform: scaleY(-1) rotate(171.78deg);
+}
+
+/* Idle → Active: cross-fade the strokes on hover / focus. */
+.idle,
+.active {
+	transition: opacity var(--duration-enter) var(--ease-out);
+}
+
+.active {
+	opacity: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.card:hover .active {
+		opacity: 1;
+	}
+
+	.card:hover .idle {
+		opacity: 0;
+	}
+}
+
+.card:focus-within .active {
+	opacity: 1;
+}
+
+.card:focus-within .idle {
+	opacity: 0;
+}
+
+/* ── Content ── */
+.header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-8);
+}
+
+.wordmark {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-4);
+	font: inherit;
+}
+
+.wordmarkText {
+	font-size: var(--text-lg);
+	font-weight: var(--font-weight-bold);
+	line-height: var(--leading-snug);
+	letter-spacing: var(--tracking-tight);
+	background-image: var(--gradient-display);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+	font-family: var(--font-serif);
+	font-size: var(--text-lg);
+	font-weight: var(--font-weight-serif-thin);
+	line-height: 1;
+}
+
+.paragraph {
+	max-width: var(--measure-narrow);
+	font-size: var(--text-md);
+	font-weight: var(--font-weight-light);
+	line-height: 1.875;
+	letter-spacing: var(--tracking-tight);
+	text-box: trim-both cap alphabetic;
+}
+
+.motto {
+	position: relative;
+	max-width: 11.5625rem; /* 185 */
+	font-family: var(--font-serif);
+	font-size: var(--text-lg);
+	font-weight: var(--font-weight-serif-thin);
+	line-height: 1;
+	letter-spacing: var(--tracking-normal);
+	text-wrap: balance;
+}
+
+.mottoStrong {
+	font-weight: var(--font-weight-regular);
+}
+
+.spark {
+	position: absolute;
+	top: 50%;
+	width: 25.7px;
+	height: 36px;
+	translate: 0 -50%;
+}
+
+.spark-left {
+	right: calc(100% + var(--space-12));
+}
+
+.spark-right {
+	left: calc(100% + var(--space-8));
+}

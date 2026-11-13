@@ -1,0 +1,31 @@
+/* Figma "Our Craft": desktop rows of three 470×185 cards (gap 40, row gap 48); mobile carousel of 275×303 cards. */
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 17.1875rem), 1fr));
+	justify-items: center;
+	gap: var(--space-40);
+	width: 100%;
+	max-width: 93.125rem; /* 1490 */
+}
+
+@media (min-width: 1024px) {
+	.grid {
+		grid-template-columns: repeat(2, minmax(0, 29.375rem));
+		justify-content: center;
+		row-gap: var(--space-48);
+	}
+}
+
+@media (min-width: 1440px) {
+	.grid {
+		grid-template-columns: repeat(3, minmax(0, 29.375rem));
+	}
+}
+
+@media (min-width: 768px) {
+	/* Desktop has no lead paragraph under the header. */
+	.header > :last-child {
+		display: none;
+	}
+}

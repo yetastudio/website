@@ -1,0 +1,65 @@
+.region {
+	position: fixed;
+	inset: auto 0 var(--space-16) 0;
+	z-index: var(--z-toast);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-8);
+	padding-inline: var(--page-gutter);
+	list-style: none;
+	pointer-events: none;
+}
+
+.toast {
+	display: flex;
+	align-items: center;
+	gap: var(--space-10);
+	width: min(26rem, 100%);
+	padding: var(--space-10) var(--space-10) var(--space-10) var(--space-14);
+	border-radius: var(--radius-md);
+	background-color: var(--color-surface-glass);
+	backdrop-filter: blur(var(--blur-glass));
+	-webkit-backdrop-filter: blur(var(--blur-glass));
+	box-shadow: var(--shadow-bevel), var(--shadow-overlay);
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-light);
+	pointer-events: auto;
+	animation: toast-in var(--duration-enter) var(--ease-out);
+}
+
+.icon {
+	color: var(--color-text-subtle);
+}
+
+.success .icon { color: var(--color-success); }
+.danger .icon { color: var(--color-danger); }
+
+.message {
+	flex: 1;
+	color: var(--color-text);
+}
+
+.dismiss {
+	display: grid;
+	place-items: center;
+	width: var(--space-24);
+	height: var(--space-24);
+	border-radius: var(--radius-sm);
+	color: var(--color-text-subtle);
+	transition: background-color var(--duration-micro) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.dismiss:hover {
+		background-color: var(--color-surface-tint-hover);
+		color: var(--color-text);
+	}
+}
+
+@keyframes toast-in {
+	from {
+		opacity: 0;
+		translate: 0 var(--space-12);
+	}
+}
