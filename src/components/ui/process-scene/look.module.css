@@ -1,10 +1,11 @@
 /*
  * Process scenes: what the six scenes share on top of the kit's Yeta look.
  *
- * The scene sits inside a GradientTile, which carries `.scheme-inverse`: a light
- * tile on the dark site, a dark one on the light site. The kit's Yeta look reads
- * semantic `light-dark()` tokens, so the product shot follows the tile's scheme
- * with no theme prop. The stage's own ground is transparent: the tile's colour
+ * The scene sits inside a GradientTile, which carries `.scheme-inverse` (a light
+ * tile on the dark site, a dark one on the light site). The scene root adds
+ * `.scheme-site`, so the product shot follows the visitor's theme instead: dark
+ * panels on the dark site, light ones on the light site. The kit's Yeta look reads
+ * semantic `light-dark()` tokens, so no theme prop is needed. The stage's own ground is transparent: the tile's colour
  * wash is the ground.
  *
  * Lengths in custom properties are illustration geometry (where a panel hangs

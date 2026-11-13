@@ -16,7 +16,7 @@ export type SceneViewProps = { step: ProcessStep; copy: SceneCopy; className?: s
  */
 export function SceneView({ step, copy, className }: SceneViewProps) {
 	return (
-		<div className={className ? `${look.root} ${className}` : look.root} data-step={step} aria-hidden="true">
+		<div className={className ? `${look.root} scheme-site ${className}` : `${look.root} scheme-site`} data-step={step} aria-hidden="true">
 			{step === 'discover' && <DiscoverScene copy={copy.discover} />}
 			{step === 'define' && <DefineScene copy={copy.define} />}
 			{step === 'design' && <DesignScene copy={copy.design} />}

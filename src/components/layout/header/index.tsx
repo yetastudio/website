@@ -41,7 +41,7 @@ function useActiveSection(enabled: boolean) {
 }
 
 /**
- * transitions.dev "Tabs sliding", drawn as the nav underline: JS writes the active link's
+ * transitions.dev "Tabs sliding": a white pill behind the active link. JS writes the link's
  * offset and width onto one indicator and CSS tweens it, so it slides from section to
  * section as you scroll. It snaps (no tween) when it first appears and on resize.
  */
@@ -63,10 +63,11 @@ function useNavIndicator(active: SectionId | null) {
 			}
 			const box = nav.getBoundingClientRect();
 			const rect = link.getBoundingClientRect();
+			// The pill pads the link by --nav-pill-pad on each side; top and height come from CSS.
+			const pad = parseFloat(getComputedStyle(nav).getPropertyValue('--nav-pill-pad')) || 0;
 			const write = () => {
-				indicator.style.transform = `translateX(${rect.left - box.left - nav.clientLeft}px)`;
-				indicator.style.width = `${rect.width}px`;
-				indicator.style.top = `${rect.bottom - box.top - nav.clientTop}px`;
+				indicator.style.transform = `translateX(${rect.left - box.left - nav.clientLeft - pad}px)`;
+				indicator.style.width = `${rect.width + pad * 2}px`;
 			};
 			if (!animate) {
 				const prev = indicator.style.transition;
