@@ -1,5 +1,14 @@
 /* Figma "Our Work": three 513-wide Idle Desktop cards, gap 40 (1619 total); mobile stacked deck. */
 
+/* Desktop pager: arrows and dots under the grid, only once there are more than three cases. */
+.pager {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-8);
+	margin-top: var(--space-24);
+}
+
 .grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 32.0625rem));
