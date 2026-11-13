@@ -12,18 +12,21 @@ import { ClientWallMockup } from './mockups/client-wall';
 import { HeroDemoMockup } from './mockups/hero-demo';
 import { ProcessWalkthroughMockup } from './mockups/process-walkthrough';
 import { ResultsMockup, type ResultFacts } from './mockups/results';
-import { AboutMockup } from './mockups/library/about';
-import { CaseMockup } from './mockups/library/case';
-import { CraftMockup } from './mockups/library/craft';
-import { CtaMockup } from './mockups/library/cta';
-import { FooterMockup } from './mockups/library/footer';
-import { HeroMockup } from './mockups/library/hero';
-import { NavMockup } from './mockups/library/nav';
-import { ProcessMockup } from './mockups/library/process';
-import { ResultsLedgerMockup } from './mockups/library/results';
-import { TestimonialsMockup } from './mockups/library/testimonials';
-import { WhyMockup } from './mockups/library/why';
-import { WorkMockup } from './mockups/library/work';
+
+//! Library
+import { ABOUT_VARIANTS } from './mockups/library/about';
+import { CASE_VARIANTS } from './mockups/library/case';
+import { CRAFT_VARIANTS } from './mockups/library/craft';
+import { CTA_VARIANTS } from './mockups/library/cta';
+import { FOOTER_VARIANTS } from './mockups/library/footer';
+import { HERO_VARIANTS } from './mockups/library/hero';
+import { NAV_VARIANTS } from './mockups/library/nav';
+import { PROCESS_VARIANTS } from './mockups/library/process';
+import { RESULTS_VARIANTS } from './mockups/library/results';
+import { TESTIMONIAL_VARIANTS } from './mockups/library/testimonials';
+import type { LibraryVariantDef } from './mockups/library/variant-types';
+import { WHY_VARIANTS } from './mockups/library/why';
+import { WORK_VARIANTS } from './mockups/library/work';
 
 //! Data
 import { LIBRARY, LIBRARY_COLLECTION, MOBBIN_COLLECTION, PROPOSALS, type ProposalId, type ShelfId } from './data';
@@ -61,20 +64,20 @@ export default function InspoShowcase({ facts }: { facts: ResultFacts }) {
 		booking: <BookingMockup />,
 	};
 
-	// One live mockup per library shelf: the best of its references, rebuilt in the Yeta look.
-	const shelfMockups: Record<ShelfId, ReactNode> = {
-		nav: <NavMockup />,
-		hero: <HeroMockup />,
-		value: <WhyMockup />,
-		services: <CraftMockup />,
-		work: <WorkMockup />,
-		process: <ProcessMockup />,
-		stats: <ResultsLedgerMockup facts={facts} />,
-		testimonials: <TestimonialsMockup />,
-		about: <AboutMockup />,
-		cta: <CtaMockup />,
-		footer: <FooterMockup />,
-		case: <CaseMockup />,
+	// Three proposals per library shelf, each following one or two of its references.
+	const shelfVariants: Record<ShelfId, LibraryVariantDef[]> = {
+		nav: NAV_VARIANTS,
+		hero: HERO_VARIANTS,
+		value: WHY_VARIANTS,
+		services: CRAFT_VARIANTS,
+		work: WORK_VARIANTS,
+		process: PROCESS_VARIANTS,
+		stats: RESULTS_VARIANTS,
+		testimonials: TESTIMONIAL_VARIANTS,
+		about: ABOUT_VARIANTS,
+		cta: CTA_VARIANTS,
+		footer: FOOTER_VARIANTS,
+		case: CASE_VARIANTS,
 	};
 
 	return (
@@ -106,7 +109,7 @@ export default function InspoShowcase({ facts }: { facts: ResultFacts }) {
 				id="library"
 				eyebrow="Section library"
 				title="Sections worth borrowing from"
-				description={`${libraryCount} website sections from studios and design-led brands, one shelf per anchor in the order the landing reads. Each card says what to take for Yeta; the images live in the Mobbin collection.`}
+				description={`${libraryCount} website sections from studios and design-led brands, one shelf per anchor in the order the landing reads. Each shelf opens with three proposals, each following one or two of its references, neutral first with colour only as an accent. Each card says what to take for Yeta; the images live in the Mobbin collection.`}
 			>
 				<div>
 					<Button href={LIBRARY_COLLECTION} variant="glass" size="lg" iconStart="book">
@@ -116,9 +119,12 @@ export default function InspoShowcase({ facts }: { facts: ResultFacts }) {
 			</ShowcaseSection>
 
 			{LIBRARY.map((shelf, index) => (
-				<LibraryShelf key={shelf.id} shelf={shelf} number={shelfNumber(index)}>
-					{shelfMockups[shelf.id]}
-				</LibraryShelf>
+				<LibraryShelf
+					key={shelf.id}
+					shelf={shelf}
+					number={shelfNumber(index)}
+					variants={shelfVariants[shelf.id].map(({ Component, ...variant }) => ({ ...variant, node: <Component facts={facts} /> }))}
+				/>
 			))}
 
 			<ShowcaseSection

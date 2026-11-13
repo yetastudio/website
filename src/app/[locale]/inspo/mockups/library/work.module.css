@@ -1,0 +1,251 @@
+/* Section library · 05 Our Work. Neutral first: the sites are the colour; frames, filters and captions stay quiet. */
+
+.centered {
+	object-position: center;
+}
+
+/* ───────────── A · Staggered ───────────── */
+
+.staggered {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-24);
+	padding: var(--space-28) var(--space-20);
+}
+
+.head {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-10);
+}
+
+.eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-8);
+}
+
+.statement {
+	max-width: 26ch;
+	font-size: clamp(var(--text-lg), 4.4cqi, var(--text-2xl));
+}
+
+.staggeredGrid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var(--space-20);
+	list-style: none;
+}
+
+.staggeredItem {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-10);
+	min-width: 0;
+}
+
+/* The finished site in a neutral frame: a frosted mat around the shot, no wash behind it. */
+.framedShot {
+	--framed-shot-aspect: 16 / 10;
+	position: relative;
+	aspect-ratio: var(--framed-shot-aspect);
+	overflow: hidden;
+	border-radius: var(--radius-md);
+}
+
+/* Name and type across a hairline (Unseen Studio). */
+.caption {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: var(--space-2) var(--space-12);
+	padding-top: var(--space-8);
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+}
+
+/* The open tile: dashed, quiet, an invitation instead of an invented client. */
+.open {
+	--work-open-dash: 1.5px;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-12);
+	padding: var(--space-28) var(--space-16);
+	border: var(--work-open-dash) dashed var(--color-border);
+	border-radius: var(--radius-lg);
+	text-align: center;
+}
+
+/* ───────────── B · Intro rail ───────────── */
+
+.rail {
+	display: grid;
+	grid-template-areas:
+		'intro'
+		'bento'
+		'card';
+	gap: var(--space-20);
+	padding: var(--space-28) var(--space-20);
+}
+
+.railIntro {
+	grid-area: intro;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+}
+
+.railStatement {
+	max-width: 16ch;
+	font-size: clamp(var(--text-xl), 4.8cqi, var(--text-2xl));
+}
+
+.filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-6);
+	list-style: none;
+}
+
+/* A tight bento of the finished site (Koto): one large tile over two small ones. */
+.bento {
+	grid-area: bento;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--space-8);
+	list-style: none;
+}
+
+.bentoTile {
+	--bento-tile-aspect: 16 / 10;
+	position: relative;
+	min-height: 0;
+	aspect-ratio: var(--bento-tile-aspect);
+	overflow: hidden;
+	border-radius: var(--radius-md);
+}
+
+.bentoTile:first-child {
+	grid-column: 1 / -1;
+}
+
+/* The featured project card in the rail (Koto). */
+.railCard {
+	grid-area: card;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-4);
+}
+
+.railCardAction {
+	align-self: flex-start;
+	margin-top: var(--space-8);
+}
+
+/* ───────────── C · Peek row ───────────── */
+
+.peek {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-20);
+	padding-bottom: var(--space-24);
+}
+
+/* The pale band (Webflow), neutral first: the raised surface with a faint sky tint. */
+.peekBand {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-16);
+	padding: var(--space-32) var(--space-20) var(--space-8);
+}
+
+.peekTitle {
+	max-width: 24ch;
+	font-size: clamp(var(--text-xl), 5cqi, var(--text-3xl));
+}
+
+/* A peeking row: the middle site centred on the canvas, its neighbours cut by the frame. */
+.peekTrack {
+	--peek-slide: 72cqi;
+	display: flex;
+	gap: var(--space-12);
+	width: max-content;
+	translate: calc(50cqi - 50%) 0;
+}
+
+.peekSlide {
+	--peek-slide-aspect: 16 / 10;
+	--peek-slide-rest: 0.56;
+	position: relative;
+	flex: none;
+	width: var(--peek-slide);
+	aspect-ratio: var(--peek-slide-aspect);
+	overflow: hidden;
+	border-radius: var(--radius-lg);
+	box-shadow: inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
+	opacity: var(--peek-slide-rest);
+}
+
+.peekCurrent {
+	opacity: 1;
+}
+
+/* The frosted pill on the site card (OFF+BRAND). */
+.peekPill {
+	position: absolute;
+	inset-block-end: var(--space-12);
+	inset-inline-start: var(--space-12);
+}
+
+.peekFoot {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-12);
+	padding-inline: var(--space-20);
+}
+
+@container (min-width: 30rem) {
+	.staggered {
+		padding: var(--space-32);
+	}
+
+	/* Staggered pair (Fiasco): the second column starts lower, the open tile fills the first. */
+	.staggeredGrid {
+		grid-template-columns: 1fr 1fr;
+		align-items: start;
+	}
+
+	.staggeredItem:nth-child(2) {
+		grid-row: span 2;
+		margin-top: var(--space-48);
+	}
+
+	.rail {
+		grid-template-columns: 2fr 3fr;
+		grid-template-areas:
+			'intro bento'
+			'card bento';
+		gap: var(--space-16) var(--space-20);
+		padding: var(--space-32);
+	}
+
+	.railCard {
+		align-self: end;
+	}
+
+	.bento {
+		--bento-min-height: 15rem;
+		grid-template-rows: 3fr 2fr;
+		min-height: var(--bento-min-height);
+	}
+
+	.bentoTile {
+		aspect-ratio: auto;
+	}
+
+	.peekBand {
+		padding-top: var(--space-40);
+	}
+}

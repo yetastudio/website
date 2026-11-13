@@ -1,62 +1,71 @@
+//! Next Core
+import Image from 'next/image';
+
 //! Hooks
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Button, Text } from '@/components/ui';
+import { Button, Divider, Link, Text } from '@/components/ui';
 import { BOOKING_URL } from '@/components/layout/sections';
+import { SHOTS } from '@/components/layout/content';
+import { FooterReadout } from './footer-live';
 
 //! Utils
 import { cx } from '@/lib/cx';
 
+//! Types
+import type { LibraryVariantDef } from './variant-types';
+
 //! Styles
-import styles from './library.module.css';
+import shared from './shared.module.css';
+import styles from './footer.module.css';
 
 const NAV = ['ourCraft', 'ourWork', 'ourProcess', 'testimonials'] as const;
 const SOCIALS = ['linkedin', 'instagram', 'threads', 'twitter'] as const;
 
+/** The booking link as people read it, without the scheme. */
+const BOOKING_LABEL = BOOKING_URL.replace(/^https?:\/\//, '');
+
+/** A quiet link column: a faint label over plain items. */
+function FooterColumn({ title, items }: { title: string; items: string[] }) {
+	return (
+		<div className={styles.column}>
+			<Text as="span" size="xs" tone="faint">
+				{title}
+			</Text>
+			{items.map((item) => (
+				<Text key={item} as="span" size="sm" tone="subtle">
+					{item}
+				</Text>
+			))}
+		</div>
+	);
+}
+
 /**
- * Library 11, Footer. A colophon, not a sitemap (Koto): one line and one action, two quiet columns,
- * then the studio's name set as a full-width serif italic sign-off (Claude Type) with warm light
- * bleeding in from the corners (Daylight). The glow is built from the accent token, so it is a
- * soft blush on light and edge lighting on dark.
+ * Footer A, after Claude Type: one line and one action over quiet link columns, then the studio's
+ * name as a full-width serif italic sign-off, the page's last word. The sign-off is set in
+ * the neutral display ink; the accent is the ✹ between the two words, the only glyph in colour.
  */
-export function FooterMockup() {
+function FooterSignOff() {
 	const t = useTranslations('footer');
 	const nav = useTranslations('nav');
-	const project = useTranslations('ourWork.projects.yeta');
+	const year = new Date().getFullYear();
 	return (
-		<div className={styles.container}>
-			<div className={cx(styles.frame, styles.footer)}>
-				<div className={styles.footerTop}>
-					<Text as="h3" size="2xl" weight="regular" leading="snug" tone="strong">
+		<div className={shared.container}>
+			<div className={cx(shared.frame, styles.sign)}>
+				<div className={styles.signLead}>
+					<Text as="h3" size="xl" weight="regular" leading="snug" tone="strong">
 						{t('ready')}
 					</Text>
 					<Button href={BOOKING_URL} variant="glass" size="md" iconStart="calendar">
 						{t('consultation')}
 					</Button>
 				</div>
-				<div className={styles.footerColumns}>
-					<div className={styles.footerColumn}>
-						<Text as="span" size="xs" tone="faint">
-							{t('navigation')}
-						</Text>
-						{NAV.map((key) => (
-							<Text key={key} as="span" size="sm" tone="subtle">
-								{nav(key)}
-							</Text>
-						))}
-					</div>
-					<div className={styles.footerColumn}>
-						<Text as="span" size="xs" tone="faint">
-							{t('socials')}
-						</Text>
-						{SOCIALS.map((key) => (
-							<Text key={key} as="span" size="sm" tone="subtle">
-								{t(`links.${key}`)}
-							</Text>
-						))}
-					</div>
-					<div className={styles.footerColumn}>
+				<div className={styles.signColumns}>
+					<FooterColumn title={t('navigation')} items={NAV.map((key) => nav(key))} />
+					<FooterColumn title={t('socials')} items={SOCIALS.map((key) => t(`links.${key}`))} />
+					<div className={cx(styles.column, styles.signAbout)}>
 						<Text as="span" size="xs" tone="faint">
 							{t('aboutTitle')}
 						</Text>
@@ -65,15 +74,91 @@ export function FooterMockup() {
 						</Text>
 					</div>
 				</div>
-				<Text as="span" family="serif" italic tone="display" leading="none" className={styles.footerSign} aria-hidden="true">
-					Yeta Studio
-				</Text>
-				<div className={styles.footerBase}>
+				<div className={styles.signBase}>
 					<Text as="span" size="xs" tone="faint">
-						{t('rights', { year: 2025 })}
+						{t('rights', { year })}
 					</Text>
 					<Text as="span" size="xs" tone="faint">
-						{`Made in ${project('country')} · ${t('signature')}`}
+						{t('agency')}
+					</Text>
+				</div>
+				{/* The brand lockup "Yeta ✹ Studio", drawn as type: the name is already said in the base line. */}
+				<Text family="serif" italic weight="regular" tone="display" leading="tight" className={styles.signLine} aria-hidden="true">
+					Yeta
+					<span className={cx(styles.signStar, shared.hued)} data-hue="pink">
+						✹
+					</span>
+					Studio
+				</Text>
+			</div>
+		</div>
+	);
+}
+
+/**
+ * Footer B, after Koto: a colophon on the inverse band the site footer already uses (near-black on
+ * the light page, light on the dark one). A two-tone line, a small card with our latest shot, and
+ * contact rows split by hairlines; the way in is the booking row, a plain link as in the site
+ * footer. The accent is the hue dot in the card's caption.
+ */
+function FooterColophon() {
+	const t = useTranslations('footer');
+	const nav = useTranslations('nav');
+	const work = useTranslations('ourWork');
+	const year = new Date().getFullYear();
+	const rows = [
+		{ label: t('socials'), value: SOCIALS.map((key) => t(`links.${key}`)).join(', ') },
+		{ label: t('navigation'), value: NAV.map((key) => nav(key)).join(', ') },
+	];
+	return (
+		<div className={shared.container}>
+			<div className={cx(shared.frame, styles.colophon, 'scheme-inverse')}>
+				<div className={styles.colophonHead}>
+					<Text as="h3" size="3xl" weight="regular" leading="tight" tone="strong" className={styles.colophonTitle}>
+						{t('ready')} <span className={styles.colophonFaint}>{t('consultation')}</span>
+					</Text>
+					<figure className={styles.colophonCard}>
+						<span className={styles.colophonShot}>
+							<Image src={SHOTS[0].light} alt="" fill sizes="(min-width: 1024px) 200px, 40vw" className={cx(shared.image, 'u-only-light')} />
+							<Image src={SHOTS[0].dark} alt="" fill sizes="(min-width: 1024px) 200px, 40vw" className={cx(shared.image, 'u-only-dark')} />
+						</span>
+						<figcaption className={styles.colophonCaption}>
+							<span className={cx(shared.dot, shared.hued)} data-hue="green" aria-hidden="true" />
+							<Text as="span" size="xs" tone="subtle">
+								{`${work('caseStudy')} · ${work('projects.yeta.name')}`}
+							</Text>
+						</figcaption>
+					</figure>
+				</div>
+				<dl className={styles.colophonRows}>
+					<div className={styles.colophonRow}>
+						<Text as="dt" size="xs" tone="faint">
+							Booking
+						</Text>
+						<Text as="dd" size="sm" tone="strong">
+							<Link href={BOOKING_URL} showExternalIcon={false}>
+								{BOOKING_LABEL}
+							</Link>
+						</Text>
+					</div>
+					{rows.map((row) => (
+						<div key={row.label} className={styles.colophonRow}>
+							<Text as="dt" size="xs" tone="faint">
+								{row.label}
+							</Text>
+							<Text as="dd" size="sm" tone="strong">
+								{row.value}
+							</Text>
+						</div>
+					))}
+				</dl>
+				<Divider />
+				<div className={styles.colophonBase}>
+					<Text as="span" size="xs" tone="faint">
+						{t('rights', { year })}
+					</Text>
+					<Text as="span" size="xs" tone="faint">
+						{t('signature')}
 					</Text>
 				</div>
 			</div>
@@ -81,4 +166,9 @@ export function FooterMockup() {
 	);
 }
 
-export default FooterMockup;
+/** The proposals for this shelf, in switcher order. */
+export const FOOTER_VARIANTS: LibraryVariantDef[] = [
+	{ id: 'a', label: 'Sign-off', refs: 'Claude Type', Component: FooterSignOff },
+	{ id: 'b', label: 'Colophon', refs: 'Koto', Component: FooterColophon },
+	{ id: 'c', label: 'Readout', refs: 'Seasats, Legend', Component: FooterReadout },
+];

@@ -1,0 +1,244 @@
+/* Section library · 01 Navigation. Neutral first: colour is a dot, a line or a halo, never the ground. */
+
+/* ───────────── Shared ───────────── */
+
+.links {
+	display: flex;
+	align-items: center;
+	gap: var(--space-16);
+	list-style: none;
+}
+
+.link {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-6);
+	white-space: nowrap;
+}
+
+/* Wrappers that swap a control between the phone column and the desktop row. */
+.narrowOnly {
+	display: contents;
+}
+
+.wideOnly {
+	display: none;
+}
+
+/* The hero under the nav, cropped by the frame: context, not content. */
+.hint {
+	margin-top: auto;
+	translate: 0 34%;
+	text-align: center;
+}
+
+.pillHint {
+	font-size: clamp(var(--text-4xl), 14cqi, var(--text-display));
+	white-space: nowrap;
+}
+
+.capsuleHint {
+	align-self: center;
+	max-width: 14ch;
+	font-size: clamp(var(--text-2xl), 7cqi, var(--text-4xl));
+	translate: 0 40%;
+}
+
+/* ───────────── A · Centred pill ───────────── */
+
+.pill {
+	--pill-stage-height: 14rem;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: var(--pill-stage-height);
+	padding: var(--space-20) var(--space-12) 0;
+	isolation: isolate;
+}
+
+/* The light burst the pill blurs (Analogue Agency), drawn in neutral: the raised surface fading out. */
+.pillBurst {
+	--pill-burst-height: 9rem;
+	--pill-burst: radial-gradient(closest-side, var(--color-surface-raised) 0%, transparent 100%);
+	position: absolute;
+	inset-block-start: 0;
+	inset-inline: 12%;
+	z-index: -1;
+	height: var(--pill-burst-height);
+	background: var(--pill-burst);
+}
+
+.pillTray {
+	display: flex;
+	align-items: center;
+	gap: var(--space-12);
+}
+
+.pillLinks {
+	display: none;
+	padding-inline: var(--space-10);
+}
+
+/* ───────────── B · Edge capsule ───────────── */
+
+.capsule {
+	--capsule-stage-height: 14rem;
+	--capsule-ground: linear-gradient(180deg, var(--color-surface-raised) 0%, var(--color-surface) 100%);
+	display: flex;
+	flex-direction: column;
+	height: var(--capsule-stage-height);
+	padding: var(--space-20) var(--space-16) 0;
+	background: var(--capsule-ground);
+}
+
+.capsuleRow {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-8);
+}
+
+.capsuleTray {
+	display: flex;
+	align-items: center;
+	gap: var(--space-6);
+}
+
+.actionTray {
+	display: flex;
+}
+
+/* The theme switch lives inside the capsule (Fourmula): two glyphs, the current one lifted. */
+.theme {
+	display: inline-flex;
+	gap: var(--space-2);
+	padding: var(--space-2);
+	border-radius: var(--radius-pill);
+	background: var(--color-surface-tint);
+	color: var(--color-text-faint);
+}
+
+.themeGlyph {
+	display: grid;
+	place-items: center;
+	padding: var(--space-6);
+	border-radius: var(--radius-pill);
+}
+
+.themeOn {
+	background: var(--color-surface-raised);
+	color: var(--color-text-strong);
+	box-shadow: var(--shadow-bevel);
+}
+
+.scroll {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-6);
+	padding-inline: var(--space-4) var(--space-12);
+}
+
+.scrollTrack {
+	--scroll-track-width: 1.75rem;
+	--scroll-track-height: 2px;
+	position: relative;
+	width: var(--scroll-track-width);
+	height: var(--scroll-track-height);
+	overflow: hidden;
+	border-radius: var(--radius-pill);
+	background: var(--color-divider);
+}
+
+/* The one accent: the scroll fills a thin line in a hue. */
+.scrollFill {
+	position: absolute;
+	inset-block: 0;
+	inset-inline-start: 0;
+	width: var(--scroll-progress, 0%);
+	background: var(--hue);
+}
+
+/* ───────────── C · Docked ───────────── */
+
+.dock {
+	--dock-stage-height: 16rem;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: var(--dock-stage-height);
+	padding: var(--space-32) var(--space-20) 0;
+	text-align: center;
+}
+
+.dockSlogan {
+	max-width: 16ch;
+	font-size: clamp(var(--text-xl), 6.4cqi, var(--text-4xl));
+}
+
+/* Büro: the nav docks at the foot of the view, so the hero above it stays untouched. */
+.dockBar {
+	position: absolute;
+	inset-inline: 0;
+	inset-block-end: var(--space-16);
+	display: flex;
+	justify-content: center;
+}
+
+.dockCapsule {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+}
+
+.dockMark {
+	display: inline-flex;
+	padding-inline-start: var(--space-4);
+}
+
+/* Cosmos: the anchors sit dim, so the lit action is the only bright thing in the capsule. */
+.dockLinks {
+	display: none;
+	padding-inline: var(--space-8);
+}
+
+.dockLit {
+	position: relative;
+	display: inline-flex;
+	isolation: isolate;
+}
+
+/* The one accent: a faint tinted halo behind the lit action, no wider than the button. */
+.dockHalo {
+	--dock-halo: radial-gradient(closest-side, color-mix(in oklab, var(--hue) 14%, transparent) 0%, transparent 100%);
+	position: absolute;
+	inset: -70% -24%;
+	z-index: -1;
+	background: var(--dock-halo);
+	filter: blur(var(--blur-glass));
+}
+
+/* The action is pinned light inside the dark capsule: the white chip of Cosmos. */
+.dockInk {
+	display: inline-flex;
+}
+
+@container (min-width: 30rem) {
+	.narrowOnly {
+		display: none;
+	}
+
+	.wideOnly {
+		display: contents;
+	}
+
+	.pillLinks,
+	.dockLinks {
+		display: flex;
+	}
+
+	.dock {
+		padding-top: var(--space-40);
+	}
+}

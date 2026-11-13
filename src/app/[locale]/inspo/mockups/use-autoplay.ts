@@ -3,6 +3,9 @@
 //! React Core
 import { useEffect, useState, useSyncExternalStore, type RefObject } from 'react';
 
+//! Context
+import { useVariantHidden } from './library/variant-context';
+
 const REDUCED_MOTION = '(prefers-reduced-motion: reduce)';
 
 function subscribe(onChange: () => void) {
@@ -39,6 +42,8 @@ export function useAutoplay<T extends HTMLElement>(
 	};
 } {
 	const reduceMotion = useReducedMotion();
+	// A library proposal that is not on show holds still.
+	const hidden = useVariantHidden();
 	const [inView, setInView] = useState(false);
 	const [seen, setSeen] = useState(false);
 	const [hovered, setHovered] = useState(false);
@@ -60,7 +65,7 @@ export function useAutoplay<T extends HTMLElement>(
 
 	return {
 		enabled: !reduceMotion,
-		paused: hovered || focused || !inView,
+		paused: hovered || focused || !inView || hidden,
 		seen,
 		handlers: {
 			onPointerEnter: () => setHovered(true),

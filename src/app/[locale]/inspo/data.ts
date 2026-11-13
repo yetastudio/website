@@ -134,7 +134,8 @@ export const PROPOSALS: Proposal[] = [
 			},
 			{ page: 'Case study', where: '“In numbers”', status: 'upgrade' },
 		],
-		mockup: 'Design system: gradient stat tiles with Editorial numerals; each figure is read from the code (locales, themes, registry).',
+		mockup:
+			'Design system: neutral raised tiles with Editorial numerals and one hue dot each; each figure is read from the code (locales, themes, registry).',
 		references: [
 			{
 				app: 'Fiasco',
@@ -279,7 +280,8 @@ export const PROPOSALS: Proposal[] = [
 				status: 'upgrade',
 			},
 		],
-		mockup: 'Stageshow scene in the Yeta look on a gradient wash: the cursor picks a day and a time, and the button confirms on itself.',
+		mockup:
+			'Stageshow scene in the Yeta look on a neutral stage with a faint violet tint: the cursor picks a day and a time, and the button confirms on itself.',
 		references: [
 			{
 				app: 'Calendly',
@@ -422,7 +424,7 @@ export const LIBRARY: Shelf[] = [
 		id: 'hero',
 		title: 'Hero',
 		lands: 'Landing #hero',
-		lookFor: 'One wash or one sky, a headline that pairs sans with a serif italic, and a product framed by atmosphere.',
+		lookFor: 'A neutral ground or a faintly tinted sky, a headline that pairs sans with a serif italic, and the product framed quietly.',
 		references: [
 			{
 				app: 'Craft Agency',
@@ -750,7 +752,7 @@ export const LIBRARY: Shelf[] = [
 		id: 'testimonials',
 		title: 'Testimonials',
 		lands: 'Landing #testimonials',
-		lookFor: 'One voice at a time, on a wash or beside the site we built, with a calm way to move to the next.',
+		lookFor: 'One voice at a time on a quiet ground, with a calm way to move to the next.',
 		references: [
 			{
 				app: 'mymind',
@@ -864,7 +866,7 @@ export const LIBRARY: Shelf[] = [
 		id: 'cta',
 		title: 'Closing call to action',
 		lands: 'End of every page',
-		lookFor: 'A quiet last band: one sky or one glow, one sentence and one way to reach us.',
+		lookFor: 'A quiet last band: one sentence, one way to reach us, and colour only as an accent.',
 		references: [
 			{
 				app: 'Fiasco',
@@ -921,7 +923,7 @@ export const LIBRARY: Shelf[] = [
 		id: 'footer',
 		title: 'Footer',
 		lands: 'Every page',
-		lookFor: 'A colophon, not a sitemap: one wordmark, one wash and a crafted detail that rewards reaching the end.',
+		lookFor: 'A colophon, not a sitemap: one wordmark, one accent and a crafted detail that rewards reaching the end.',
 		references: [
 			{
 				app: 'Opacity',

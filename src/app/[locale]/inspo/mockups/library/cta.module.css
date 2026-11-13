@@ -1,0 +1,201 @@
+/* Section library · 10 Closing call to action. Neutral first: colour is one phrase, one rim or one dot. */
+
+/* ───────────── A · Pure type ───────────── */
+
+/* Fiasco's panel, theme-following: one step above the page, near-black on the dark canvas. */
+.type {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-16);
+	padding: var(--space-40) var(--space-20) var(--space-20);
+	background: var(--color-surface-raised);
+}
+
+/* The one accent: the italic eyebrow in the hue. */
+.typeHue {
+	color: var(--hue);
+}
+
+/* Three light lines, held narrow so the sentence breaks like Fiasco's question. */
+.typeLine {
+	max-width: 13ch;
+	margin-bottom: var(--space-24);
+	font-size: clamp(var(--text-3xl), 9.4cqi, var(--text-5xl));
+	letter-spacing: var(--tracking-tight);
+}
+
+.typeFoot {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-8) var(--space-16);
+	padding-top: var(--space-12);
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+}
+
+@container (min-width: 30rem) {
+	.type {
+		padding: var(--space-64) var(--space-40) var(--space-24);
+	}
+}
+
+/* ───────────── B · Horizon ───────────── */
+
+.horizon {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-28);
+	padding: var(--space-48) var(--space-20) var(--space-96);
+	isolation: isolate;
+}
+
+.horizonLine {
+	font-size: clamp(var(--text-3xl), 13cqi, var(--text-display));
+	letter-spacing: var(--tracking-tight);
+}
+
+/*
+ * The horizon (Ghost): a wide circle whose cap rises from the base, filled one step above the
+ * canvas. Its rim is a hairline in the hue and a faint glow just above it; the rest stays neutral.
+ */
+.horizonArc {
+	--horizon-size: 190%;
+	--horizon-cap: var(--space-48);
+	--horizon-rim: 0 -1px 0 color-mix(in oklab, var(--hue) 55%, transparent);
+	--horizon-glow: 0 -1.25rem 2.5rem -0.75rem color-mix(in oklab, var(--hue) 14%, transparent);
+	position: absolute;
+	top: calc(100% - var(--horizon-cap));
+	left: 50%;
+	z-index: -1;
+	width: var(--horizon-size);
+	aspect-ratio: 1;
+	border-radius: var(--radius-pill);
+	background: var(--color-surface-raised);
+	box-shadow: var(--horizon-rim), var(--horizon-glow);
+	translate: -50% 0;
+}
+
+@container (min-width: 30rem) {
+	.horizon {
+		gap: var(--space-32);
+		padding: var(--space-64) var(--space-40) var(--space-128);
+	}
+
+	.horizonArc {
+		--horizon-cap: var(--space-64);
+	}
+}
+
+/* ───────────── C · Say hello ───────────── */
+
+.hello {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-32);
+	padding: var(--space-40) var(--space-20);
+}
+
+.helloTitle {
+	font-size: clamp(var(--text-4xl), 15cqi, var(--text-display));
+}
+
+/* The one accent: a hue dot as the greeting's full stop, sized by the type. */
+.helloStop {
+	--hello-stop: 0.16em;
+	--hello-stop-gap: 0.04em;
+	display: inline-block;
+	width: var(--hello-stop);
+	height: var(--hello-stop);
+	margin-inline-start: var(--hello-stop-gap);
+	border-radius: var(--radius-pill);
+	background: var(--hue);
+}
+
+.helloRoute {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-10);
+	padding-top: var(--space-16);
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.helloRow {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--space-12);
+}
+
+@container (min-width: 30rem) {
+	.hello {
+		gap: var(--space-40);
+		padding: var(--space-64) var(--space-40) var(--space-40);
+	}
+}
+
+@container (min-width: 44rem) {
+	.hello {
+		flex-direction: row;
+		align-items: flex-end;
+		justify-content: space-between;
+	}
+
+	.helloRoute {
+		padding-top: 0;
+		border-top: 0;
+	}
+}
+
+/* Both labels share one grid cell: the longer one sizes the button, the shown one swaps on top. */
+.swapSlot {
+	display: inline-grid;
+	justify-items: center;
+}
+
+.swapSlot > * {
+	grid-area: 1 / 1;
+}
+
+.swapSizer {
+	visibility: hidden;
+}
+
+/* ── transitions.dev 04 · Text states swap ── */
+
+.textSwap {
+	--text-swap-dur: 150ms;
+	--text-swap-translate-y: 4px;
+	--text-swap-blur: 2px;
+	--text-swap-ease: ease-in-out;
+	display: inline-block;
+	transform: translateY(0);
+	filter: blur(0);
+	opacity: 1;
+	transition:
+		transform var(--text-swap-dur) var(--text-swap-ease),
+		filter var(--text-swap-dur) var(--text-swap-ease),
+		opacity var(--text-swap-dur) var(--text-swap-ease);
+	will-change: transform, filter, opacity;
+}
+
+.textSwap.isExit {
+	transform: translateY(calc(var(--text-swap-translate-y) * -1));
+	filter: blur(var(--text-swap-blur));
+	opacity: 0;
+}
+
+.textSwap.isEnterStart {
+	transform: translateY(var(--text-swap-translate-y));
+	filter: blur(var(--text-swap-blur));
+	opacity: 0;
+	transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.textSwap {
+		transition: none !important;
+	}
+}

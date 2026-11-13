@@ -1,0 +1,264 @@
+/* Section library · 12 Case study page. Neutral grounds and hairlines; colour is one dot, one strip end or one veiled tile. */
+
+/* Shared: a project shot in a hairline frame. */
+.shot {
+	--case-shot-aspect: 16 / 10;
+	position: relative;
+	aspect-ratio: var(--case-shot-aspect);
+	overflow: hidden;
+	border-radius: var(--radius-md);
+	box-shadow: inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
+}
+
+/* ───────────── A · Straddle ───────────── */
+
+.straddle {
+	--case-straddle: 3rem;
+	display: flex;
+	flex-direction: column;
+	padding-bottom: var(--space-24);
+}
+
+/* Deel's dark band, theme-following: the site footer's inverse band, read inside .scheme-inverse. */
+.straddleBand {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+	padding: var(--space-32) var(--space-20) calc(var(--space-24) + var(--case-straddle));
+	background: var(--color-surface-band);
+	color: var(--color-text);
+}
+
+.straddleLabel {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-8);
+}
+
+.straddleTitle {
+	font-size: clamp(var(--text-4xl), 12cqi, var(--text-display));
+	letter-spacing: var(--tracking-tight);
+}
+
+.straddleLine {
+	max-width: 44ch;
+}
+
+/* The facts card overlaps the band's lower edge (Deel): one layer, no extra section. */
+.straddleFacts {
+	position: relative;
+	margin: calc(-1 * var(--case-straddle)) var(--space-16) 0;
+}
+
+.factGrid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--space-12) var(--space-16);
+	margin: 0;
+}
+
+.fact {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-2);
+}
+
+.fact > dd {
+	margin: 0;
+}
+
+/* The shots run off the right edge (COLLINS): a strip, not a framed gallery. */
+.straddleStrip {
+	display: flex;
+	gap: var(--space-12);
+	margin-top: var(--space-20);
+	padding-inline-start: var(--space-16);
+}
+
+.straddleShot {
+	--case-shot-width: 78%;
+	flex: none;
+	width: var(--case-shot-width);
+}
+
+@container (min-width: 30rem) {
+	.straddleBand {
+		padding-inline: var(--space-40);
+	}
+
+	.straddleFacts {
+		margin-inline: var(--space-40);
+	}
+
+	.factGrid {
+		grid-template-columns: repeat(4, auto);
+		justify-content: space-between;
+	}
+
+	.straddleStrip {
+		padding-inline-start: var(--space-40);
+	}
+
+	.straddleShot {
+		--case-shot-width: 58%;
+	}
+}
+
+/* ───────────── B · Facts rail ───────────── */
+
+.rail {
+	display: grid;
+	gap: var(--space-24);
+	padding: var(--space-24) var(--space-20);
+}
+
+.railSheet {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+}
+
+/* basement.studio's compact table: label and value per row, hairlines between. */
+.railFacts {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.railFact {
+	display: grid;
+	grid-template-columns: 2fr 3fr;
+	gap: var(--space-8);
+	padding-block: var(--space-8);
+	border-bottom: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.railFact > dd {
+	margin: 0;
+}
+
+.railGallery {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+}
+
+.railPalette {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+}
+
+/* The palette strip: the neutral roles as equal swatches, outlined so the canvas swatch still reads. */
+.railSwatches {
+	--rail-swatch-height: 2rem;
+	display: flex;
+	height: var(--rail-swatch-height);
+	overflow: hidden;
+	border-radius: var(--radius-sm);
+	outline: var(--stroke-hairline) solid var(--color-border);
+	outline-offset: calc(-1 * var(--stroke-hairline));
+}
+
+.railSwatch {
+	flex: 1;
+	background: var(--swatch);
+}
+
+.railSwatch[data-swatch='raised'] {
+	--swatch: var(--color-surface-raised);
+}
+.railSwatch[data-swatch='canvas'] {
+	--swatch: var(--color-surface);
+}
+.railSwatch[data-swatch='control'] {
+	--swatch: var(--color-surface-control-hover);
+}
+.railSwatch[data-swatch='subtle'] {
+	--swatch: var(--color-text-subtle);
+}
+.railSwatch[data-swatch='ink'] {
+	--swatch: var(--color-text-strong);
+}
+
+/* The one accent: the strip's last swatch, the six brand hues as thin slivers. */
+.railHues {
+	display: flex;
+}
+
+.railSliver {
+	flex: 1;
+	background: var(--hue);
+}
+
+@container (min-width: 30rem) {
+	.rail {
+		grid-template-columns: 2fr 3fr;
+		align-items: start;
+		padding: var(--space-24);
+	}
+}
+
+/* ───────────── C · Soft close ───────────── */
+
+.close {
+	display: grid;
+	gap: var(--space-24);
+	padding: var(--space-24) var(--space-20);
+}
+
+/*
+ * Granola's water tile, neutral first: the raised surface veiled over the blue wash at 90%, so the
+ * hue shows only as a tint behind the stat cards. The tile is the frame's one accent.
+ */
+.closeTile {
+	--tint-strength: 90%;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+	margin: 0;
+	padding: var(--space-12);
+	list-style: none;
+	border-radius: var(--radius-xl);
+	box-shadow: inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
+}
+
+.closeStat {
+	display: flex;
+	align-items: baseline;
+	gap: var(--space-12);
+}
+
+.closeVoice {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--space-20);
+	margin: 0;
+}
+
+.closeQuote {
+	margin: 0;
+}
+
+.closePerson {
+	display: flex;
+	align-items: center;
+	gap: var(--space-10);
+}
+
+.closeName {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-2);
+}
+
+@container (min-width: 30rem) {
+	.close {
+		grid-template-columns: 5fr 6fr;
+		align-items: center;
+		gap: var(--space-28);
+		padding: var(--space-32);
+	}
+}

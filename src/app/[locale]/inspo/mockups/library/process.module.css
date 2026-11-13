@@ -1,0 +1,320 @@
+/* Section library · 06 Our Process. Neutral first: the steps carry their hue as a dot or a line, never a ground. */
+
+/* ───────────── A · Numerals ───────────── */
+
+.numerals {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-24);
+	padding: var(--space-32) var(--space-20) 0;
+}
+
+/* A light serif line over a heavy sans line (Trawelt). */
+.numeralsTitle {
+	font-size: clamp(var(--text-2xl), 7.4cqi, var(--text-4xl));
+}
+
+.numeralsSans {
+	display: block;
+	font-family: var(--font-sans);
+	font-weight: var(--font-weight-bold);
+	letter-spacing: var(--tracking-tight);
+}
+
+/* The list is cropped by a fade at its foot instead of running long. */
+.numeralsRows {
+	--numerals-rows-height: 26rem;
+	--numerals-fade: linear-gradient(180deg, var(--color-surface) 64%, transparent 100%);
+	display: flex;
+	flex-direction: column;
+	height: var(--numerals-rows-height);
+	overflow: hidden;
+	list-style: none;
+	mask-image: var(--numerals-fade);
+}
+
+.numeralsRow {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-template-areas:
+		'figure step'
+		'figure copy';
+	align-items: start;
+	gap: var(--space-4) var(--space-16);
+	padding-block: var(--space-16);
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+}
+
+/* The giant thin numeral carries the hierarchy on its own. */
+.numeralsFigure {
+	--numerals-figure-width: 2.1ch;
+	grid-area: figure;
+	min-width: var(--numerals-figure-width);
+	font-size: clamp(var(--text-4xl), 15cqi, var(--text-5xl));
+	letter-spacing: var(--tracking-tight);
+}
+
+.numeralsStep {
+	display: inline-flex;
+	grid-area: step;
+	align-items: center;
+	gap: var(--space-8);
+}
+
+.numeralsCopy {
+	display: -webkit-box;
+	grid-area: copy;
+	overflow: hidden;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+
+@container (min-width: 30rem) {
+	.numerals {
+		padding: var(--space-40) var(--space-40) 0;
+	}
+
+	.numeralsRows {
+		--numerals-rows-height: 24rem;
+	}
+
+	.numeralsRow {
+		grid-template-columns: auto 11ch 1fr;
+		grid-template-areas: 'figure step copy';
+		align-items: baseline;
+		gap: var(--space-20);
+	}
+
+	.numeralsFigure {
+		font-size: clamp(var(--text-5xl), 14cqi, var(--text-display));
+	}
+}
+
+/* ───────────── B · Step rail ───────────── */
+
+.rail {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--space-20);
+	padding: var(--space-32) var(--space-20);
+}
+
+.railTitle {
+	font-size: clamp(var(--text-2xl), 7cqi, var(--text-4xl));
+	letter-spacing: var(--tracking-tight);
+}
+
+/* The inline chip inside the headline (Oevra): a neutral pill holding the step's glyph. */
+.railChip {
+	display: inline-flex;
+	vertical-align: middle;
+	color: var(--color-text-strong);
+}
+
+/* The framed demo under the rail (Rox): the step's scene at its own proportions. */
+.railStage {
+	--rail-stage-aspect: 342 / 160;
+	width: 100%;
+	aspect-ratio: var(--rail-stage-aspect);
+	overflow: hidden;
+}
+
+.railCaption {
+	display: grid;
+	width: 100%;
+}
+
+.railCaptionItem {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+	grid-area: 1 / 1;
+	visibility: hidden;
+}
+
+.railCaptionItem[data-on] {
+	visibility: visible;
+}
+
+.railCaptionHead {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-8);
+}
+
+@container (min-width: 30rem) {
+	.rail {
+		gap: var(--space-24);
+		padding: var(--space-40);
+	}
+}
+
+/* ── transitions.dev 04 · Text states swap ── */
+
+.textSwap {
+	--text-swap-dur: 150ms;
+	--text-swap-translate-y: 4px;
+	--text-swap-blur: 2px;
+	--text-swap-ease: ease-in-out;
+	transform: translateY(0);
+	filter: blur(0);
+	opacity: 1;
+	transition:
+		transform var(--text-swap-dur) var(--text-swap-ease),
+		filter var(--text-swap-dur) var(--text-swap-ease),
+		opacity var(--text-swap-dur) var(--text-swap-ease);
+	will-change: transform, filter, opacity;
+}
+
+.textSwap.isSwapExit {
+	transform: translateY(calc(var(--text-swap-translate-y) * -1));
+	filter: blur(var(--text-swap-blur));
+	opacity: 0;
+}
+
+.textSwap.isSwapEnter {
+	transform: translateY(var(--text-swap-translate-y));
+	filter: blur(var(--text-swap-blur));
+	opacity: 0;
+	transition: none;
+}
+
+/* ───────────── C · One step ───────────── */
+
+.oneStep {
+	--one-step-height: 30rem;
+	--one-step-cell: 2rem;
+	--one-step-grid:
+		linear-gradient(var(--color-border-faint) 1px, transparent 1px), linear-gradient(90deg, var(--color-border-faint) 1px, transparent 1px);
+	--one-step-fade: radial-gradient(closest-side, var(--color-surface) 40%, transparent 100%);
+	--autoplay-interval: 6000ms;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-24);
+	min-height: var(--one-step-height);
+	padding: var(--space-20);
+	text-align: center;
+	isolation: isolate;
+}
+
+/* The hairline grid (Atlas), neutral and fading out before the frame's edge. */
+.oneStep::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background-image: var(--one-step-grid);
+	background-position: center;
+	background-size: var(--one-step-cell) var(--one-step-cell);
+	mask-image: var(--one-step-fade);
+}
+
+.oneStepHead {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.oneStepMono {
+	--one-step-mono-tracking: 0.08em;
+	font-family: var(--font-mono);
+	letter-spacing: var(--one-step-mono-tracking);
+	text-transform: uppercase;
+}
+
+.oneStepReveal {
+	--one-step-copy-max: 30ch;
+	/* transitions.dev 18 · Texts reveal, the snippet's tunables */
+	--stagger-dur: 500ms;
+	--stagger-distance: 12px;
+	--stagger-stagger: 40ms;
+	--stagger-blur: 3px;
+	--stagger-ease: cubic-bezier(0.22, 1, 0.36, 1);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-16);
+	margin-block: auto;
+}
+
+/* The one accent: the step's glyph as line art, drawn in its hue at a constant hairline stroke. */
+.oneStepGlyph {
+	--icon-xl: 3.5rem;
+	color: var(--hue);
+}
+
+.oneStepGlyph :global(svg *) {
+	vector-effect: non-scaling-stroke;
+}
+
+.oneStepWord {
+	font-size: clamp(var(--text-4xl), 14cqi, var(--text-display));
+	letter-spacing: var(--tracking-tight);
+}
+
+.oneStepCopy {
+	max-width: var(--one-step-copy-max);
+}
+
+@container (min-width: 30rem) {
+	.oneStep {
+		--one-step-height: 28rem;
+		--one-step-cell: 2.5rem;
+		padding: var(--space-24) var(--space-32);
+	}
+}
+
+/* ── transitions.dev 18 · Texts reveal ── */
+
+.revealLine {
+	display: block;
+	opacity: 0;
+	transform: translateY(var(--stagger-distance));
+	filter: blur(var(--stagger-blur));
+	transition:
+		opacity var(--stagger-dur) var(--stagger-ease),
+		transform var(--stagger-dur) var(--stagger-ease),
+		filter var(--stagger-dur) var(--stagger-ease);
+	will-change: transform, opacity, filter;
+}
+
+.revealLine2 {
+	transition-delay: var(--stagger-stagger);
+}
+
+.revealLine3 {
+	transition-delay: calc(var(--stagger-stagger) * 2);
+}
+
+.isRevealShown .revealLine {
+	opacity: 1;
+	transform: translateY(0);
+	filter: blur(0);
+}
+
+/* The exit is decoupled from the stagger: one quiet fade in place, no reverse reveal. */
+.isRevealHiding .revealLine {
+	opacity: 0;
+	transform: translateY(0);
+	filter: blur(0);
+	transition:
+		opacity 200ms ease,
+		transform 0s linear,
+		filter 0s linear;
+	transition-delay: 0s;
+}
+
+/* Adapted: at the swap the lines snap to their start state, so each entrance rises the full distance. */
+.isRevealReset .revealLine {
+	transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.textSwap,
+	.revealLine {
+		transition: none !important;
+	}
+}
