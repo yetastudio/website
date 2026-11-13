@@ -65,6 +65,37 @@
       "goals": "Your goals are our goals",
       "ideas": "Ideas that move brands",
       "collab": "Designed to collaborate"
+    },
+    "tour": {
+      "insight": {
+        "quote": "“The sign-up is too long.”",
+        "metric": "Sign-ups"
+      },
+      "together": {
+        "ask": "Can the hero feel bolder?",
+        "reply": "Done. Take a look.",
+        "resolved": "Resolved"
+      },
+      "luck": {
+        "test": "A/B test",
+        "winner": "Winner"
+      },
+      "defy": {
+        "metric": "Brand reach"
+      },
+      "pixel": {
+        "cta": "Start a project"
+      },
+      "vision": {
+        "title": "Ready to launch",
+        "cta": "Get started",
+        "live": "Live"
+      },
+      "goals": {
+        "label": "Q3 goal",
+        "metric": "Sign-ups",
+        "reached": "Reached"
+      }
     }
   },
   "ourCraft": {

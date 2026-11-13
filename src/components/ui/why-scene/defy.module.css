@@ -1,0 +1,38 @@
+/* Defy: one metric, its multiple as the scene's one big number, and a steady line under it. */
+
+.head {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+	height: var(--space-16);
+}
+
+.value {
+	margin-top: var(--space-4);
+	font-size: var(--text-lg);
+	font-weight: var(--font-weight-medium);
+	font-variant-numeric: tabular-nums;
+	line-height: var(--leading-snug);
+	letter-spacing: var(--tracking-tight);
+	color: var(--color-text-strong);
+}
+
+/* The line and its soft fill in ink; the end dot alone in the chip's hue */
+.chart {
+	--ss-accent: var(--color-text-strong);
+
+	margin-top: var(--space-10);
+}
+
+.chart :global(.ss-chart__line) {
+	stroke-width: 1.5;
+}
+
+/* The soft fill under the line, a touch quieter than the kit's so the ink line leads */
+.chart :global(stop:first-child) {
+	stop-opacity: 0.1;
+}
+
+.chart :global(.ss-chart__dot) {
+	fill: var(--scene-accent);
+}

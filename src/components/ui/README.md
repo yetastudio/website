@@ -74,6 +74,7 @@ Status: **stable** = drawn in Figma; **inspo** = added to fill a gap, same visua
 | `ToastProvider`, `useToast` | inspo | — | tone `neutral·success·danger` | auto-dismiss 4s, pauses on hover/focus | Polite live region; dismiss button. |
 | `Input`, `Textarea` | inspo | — | `hint`, `error`, `optional` | rest, hover, focus, invalid (shake on a new error), disabled | Labelled; `aria-invalid` + `aria-describedby`; no error shown on disabled. |
 | `Checkbox`, `Switch` | inspo | — | `description` | checked, focus, disabled | Real `<input type="checkbox">` (`role="switch"` for Switch). |
+| `WhyScene` | inspo | Why Yeta feature chips (288×148) | `scene` insight·together·luck·defy·pixel·vision·goals; `playing` plays the story once and holds it; copy from `whyYeta.tour.<scene>`; transparent, the host draws the surface | poster on server, while not playing and under reduced motion; plays only while on screen | Stageshow kit (`vendor/stageshow`). Decorative: `aria-hidden`, nothing focusable, no pointer events. Toured on the landing by `layout/why-yeta/tour`. |
 
 ## Fidelity to Figma
 

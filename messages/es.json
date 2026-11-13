@@ -65,6 +65,37 @@
       "goals": "Tus objetivos son los nuestros",
       "ideas": "Ideas que mueven marcas",
       "collab": "Pensados para colaborar"
+    },
+    "tour": {
+      "insight": {
+        "quote": "“El registro es muy largo.”",
+        "metric": "Registros"
+      },
+      "together": {
+        "ask": "¿Le damos más fuerza al hero?",
+        "reply": "Listo, fijate.",
+        "resolved": "Resuelto"
+      },
+      "luck": {
+        "test": "Test A/B",
+        "winner": "Ganadora"
+      },
+      "defy": {
+        "metric": "Alcance de marca"
+      },
+      "pixel": {
+        "cta": "Empezar un proyecto"
+      },
+      "vision": {
+        "title": "Listo para lanzar",
+        "cta": "Empezar",
+        "live": "En vivo"
+      },
+      "goals": {
+        "label": "Meta del trimestre",
+        "metric": "Registros",
+        "reached": "Cumplida"
+      }
     }
   },
   "ourCraft": {

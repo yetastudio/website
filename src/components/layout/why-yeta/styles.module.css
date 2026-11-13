@@ -1,6 +1,7 @@
 /* Figma "¿Why Yeta Studio?" — mobile 584:284, desktop 1487:2370. */
 
 .section {
+	position: relative; /* the tour cursor's ground */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -8,6 +9,7 @@
 }
 
 .column {
+	container-type: inline-size; /* the phone card sizes its scene's room from it */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -30,25 +32,47 @@
 }
 
 /* ── Mobile chip card (Figma 728:665: radius 32, padding 16, gap 12) ── */
+/* Wide enough for the open chip's scene (288 + the card's 16 inset on each side), with that
+   scene's room kept at its foot: 12 above it, its height at its 288 × 148 ratio (./tour). */
 .card {
+	--why-card-width: 20rem; /* 320 */
+	--why-room: calc(var(--space-12) + (min(100cqi, var(--why-card-width)) - 2 * var(--space-16)) * 148 / 288);
+
 	display: flex;
+	width: min(100%, var(--why-card-width));
 	flex-direction: column;
 	align-items: center;
 	gap: var(--space-12);
-	padding: var(--space-16);
+	padding: var(--space-16) var(--space-16) calc(var(--space-16) + var(--why-room));
 	border-radius: var(--space-32);
 	background-color: var(--color-surface-control);
 	list-style: none;
 }
 
-/* ── Wrapped row (768–1439) ── */
-.row {
+/* ── Wrapped row (768–1439), the open chip's scene in a panel under it ── */
+.rowGroup {
 	display: none;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-24);
+	width: 100%;
+}
+
+.row {
+	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 	gap: var(--space-12);
 	list-style: none;
 }
+
+/* The row's open mark takes its chip's hue */
+.tone-orange { --why-tone: var(--color-accent-orange); }
+.tone-yellow { --why-tone: var(--color-accent-yellow); }
+.tone-green { --why-tone: var(--color-accent-green); }
+.tone-blue { --why-tone: var(--color-accent-blue); }
+.tone-violet { --why-tone: var(--color-accent-violet); }
+.tone-red { --why-tone: var(--color-accent-red); }
 
 /* ── Floating clusters (≥ 1440) ── */
 .cluster {
@@ -74,7 +98,7 @@
 		display: none;
 	}
 
-	.row {
+	.rowGroup {
 		display: flex;
 	}
 }
@@ -89,7 +113,7 @@
 		padding-block: var(--space-48);
 	}
 
-	.row {
+	.rowGroup {
 		display: none;
 	}
 
