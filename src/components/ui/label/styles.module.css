@@ -1,0 +1,51 @@
+/* Label: md is the Input / Textarea label (src/components/ui/field), so Field can adopt it as is. */
+.label {
+	font-weight: var(--font-weight-regular);
+	color: var(--color-text);
+}
+
+.sm {
+	font-size: var(--text-xs);
+}
+
+.md {
+	font-size: var(--text-sm);
+}
+
+.lg {
+	font-size: var(--text-md);
+	color: var(--color-text-strong);
+}
+
+.required {
+	color: var(--color-text-subtle);
+}
+
+.optional {
+	font-weight: var(--font-weight-light);
+	color: var(--color-text-faint);
+}
+
+.disabled {
+	color: var(--color-text-subtle);
+}
+
+/* ── FieldMessage: the hint / error line every form control shares ── */
+.hint {
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-light);
+	color: var(--color-text-subtle);
+}
+
+.error {
+	display: flex;
+	align-items: center;
+	gap: var(--space-4);
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-regular);
+	color: var(--color-danger-text);
+}
+
+.error > svg {
+	flex-shrink: 0;
+}

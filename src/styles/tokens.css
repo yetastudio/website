@@ -113,6 +113,8 @@
 	/* Figma footer rules: text colour at 10%. */
 	--color-divider: light-dark(rgb(15 17 8 / 10%), rgb(228 229 224 / 10%));
 	--color-focus-ring: light-dark(var(--palette-violet-600), var(--palette-violet-400));
+	/* Gallery · Feedback: placeholder fills (skeleton bones, progress and step tracks), a step above the tint. */
+	--color-fill-muted: light-dark(rgb(10 11 4 / 8%), rgb(245 246 244 / 10%));
 
 	/* ───────────────────────── Semantic: status + accents ───────────────────────── */
 	/* Status hues come only from the Figma palette. On the light canvas the
@@ -131,6 +133,16 @@
 	--color-accent-blue: light-dark(var(--palette-blue-700), var(--palette-blue-400));
 	--color-accent-violet: light-dark(var(--palette-violet-700), var(--palette-violet-400));
 	--color-accent-red: light-dark(var(--palette-red-700), var(--palette-red-400));
+	/* Gallery · Advanced inputs: ColorPicker brand swatches. A picked colour is a value, not a theme role,
+	   so each holds one hex in both themes (the 500 steps). Ink is the check drawn on a light or a dark swatch. */
+	--color-swatch-pink: var(--palette-pink-500);
+	--color-swatch-orange: var(--palette-orange-500);
+	--color-swatch-yellow: var(--palette-yellow-500);
+	--color-swatch-green: var(--palette-green-500);
+	--color-swatch-blue: var(--palette-blue-500);
+	--color-swatch-violet: var(--palette-violet-500);
+	--color-swatch-ink: var(--palette-neutral-950);
+	--color-swatch-ink-inverse: var(--palette-neutral-50);
 
 	/* ───────────────────────── Semantic: gradients ───────────────────────── */
 	/* Hairline stroke drawn with a masked pseudo-element (.u-bevel). Figma: linear 180°,
@@ -175,6 +187,8 @@
 		inset 0 0 1px 1.5px light-dark(rgb(245 246 244 / 50%), rgb(228 229 224 / 5%));
 	--shadow-overlay: 0 24px 48px -12px light-dark(rgb(10 11 4 / 24%), rgb(0 0 0 / 64%)),
 		0 2px 6px light-dark(rgb(10 11 4 / 8%), rgb(0 0 0 / 40%));
+	/* Gallery · Layout & content: hover lift of a linked Card, a short soft drop well under the overlay's. */
+	--shadow-lift: 0 12px 24px -12px light-dark(rgb(10 11 4 / 22%), rgb(0 0 0 / 60%)), 0 1px 3px light-dark(rgb(10 11 4 / 6%), rgb(0 0 0 / 32%));
 	--blur-glass: 6px;
 	--blur-tint: 2px;
 
@@ -305,6 +319,12 @@
 	--tabs-text-active: var(--color-text-strong);
 	--tabs-bar-bg: var(--color-surface-glass);
 	--tabs-pill-bg: var(--color-surface-control);
+	/* Gallery · Navigation: Menu dropdown (DropdownMenu), origin-aware scale + fade. */
+	--dropdown-open-dur: 250ms;
+	--dropdown-close-dur: 150ms;
+	--dropdown-pre-scale: 0.97;
+	--dropdown-closing-scale: 0.99;
+	--dropdown-ease: var(--ease-smooth);
 	--tt-in-dur: 150ms; /* Tooltip: delayed in, instant out */
 	--tt-out-dur: 50ms;
 	--tt-scale: 0.98;
@@ -327,6 +347,57 @@
 	--stagger-stagger: 40ms;
 	--stagger-blur: 3px;
 	--stagger-ease: var(--ease-smooth);
+	/* Gallery · Feedback: Skeleton loader and reveal (Skeleton, SkeletonReveal). Loads have no known
+	   end, so the pulse loops instead of the snippet's single beat. */
+	--pulse-dur: 1400ms;
+	--pulse-count: infinite;
+	--pulse-min: 0.5;
+	--reveal-dur: 400ms;
+	--reveal-blur: 2px;
+	--reveal-ease: ease-in-out;
+	/* Gallery · Feedback: loop speeds (Spinner ring, indeterminate ProgressBar) and the Popover's width. */
+	--spinner-dur: 800ms;
+	--progress-loop-dur: 1600ms;
+	--popover-width: 20rem;
+	/* Gallery · Advanced inputs: Success check (FileUpload, File done). Distances scaled for an 18px icon;
+	   the bob eases out instead of the snippet's overshoot (springs only follow the hand). */
+	--check-opacity-dur: 500ms;
+	--check-rotate-dur: 500ms;
+	--check-rotate-from: 80deg;
+	--check-bob-dur: 500ms;
+	--check-y-amount: 8px;
+	--check-blur-dur: 500ms;
+	--check-blur-from: 4px;
+	--check-path-dur: 500ms;
+	--check-path-delay: 80ms;
+	--check-ease-out: var(--ease-smooth);
+	--check-ease-opacity: var(--ease-smooth);
+	--check-ease-rotate: var(--ease-smooth);
+	--check-ease-bob: var(--ease-smooth);
+	--check-ease-path: var(--ease-smooth);
+	/* Gallery · Forms: Number pop-in (Stepper value). The digits ease out instead of the snippet's
+	   overshoot; --digit-dir-y is set per change (1 rises on increase, -1 drops on decrease). */
+	--digit-dur: 500ms;
+	--digit-distance: 8px;
+	--digit-stagger: 70ms;
+	--digit-blur: 2px;
+	--digit-ease: var(--ease-smooth);
+	--digit-dir-x: 0;
+	--digit-dir-y: 1;
+	/* Gallery · Forms: Input clear with dissolve (SearchInput clear button). The streak is painted with
+	   the text colour, so it darkens on light canvases and lightens on dark ones. */
+	--clear-dur: 1000ms;
+	--clear-out-dur: 400ms;
+	--clear-in-dur: 400ms;
+	--clear-out-fly: 12px;
+	--clear-in-fly: 12px;
+	--clear-out-ease: var(--ease-smooth);
+	--clear-in-ease: var(--ease-smooth);
+	--clear-blur: 2px;
+	--glow-delay: 50ms;
+	--glow-peak-at: 0.15;
+	--glow-opacity: 0.42;
+	--glow-spread: 1.5;
 
 	/* ───────────────────────── Layers ───────────────────────── */
 	--z-raised: 1;

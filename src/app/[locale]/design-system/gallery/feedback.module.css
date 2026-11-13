@@ -1,0 +1,111 @@
+/* Layout helpers for the Feedback gallery specimens (no component styling lives here). */
+
+.stack {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+	width: 100%;
+	min-width: 0;
+}
+
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--space-12);
+}
+
+.wide {
+	width: 100%;
+	max-width: var(--measure);
+	min-width: 0;
+}
+
+/* A page mock for the banner: the banner runs edge to edge across it. */
+.frame {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	overflow: hidden;
+	border-radius: var(--radius-lg);
+	background-color: var(--color-surface);
+	box-shadow: inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
+}
+
+.frameBody {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-10);
+	padding: var(--space-16);
+}
+
+/* A count badge pinned to an icon button's corner. */
+.corner {
+	position: relative;
+	display: inline-flex;
+}
+
+.cornerBadge {
+	position: absolute;
+	top: calc(var(--space-4) * -1);
+	right: calc(var(--space-4) * -1);
+	pointer-events: none;
+}
+
+.cornerDot {
+	position: absolute;
+	top: var(--space-4);
+	right: var(--space-4);
+	pointer-events: none;
+}
+
+.inlineText {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-6);
+}
+
+/* Skeleton compositions: a card and a list row. */
+.card {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+	width: 100%;
+	padding: var(--space-12);
+	border-radius: var(--radius-lg);
+	background-color: var(--color-surface-raised);
+}
+
+.media {
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	border-radius: var(--radius-md);
+	background: var(--gradient-display);
+}
+
+.listRow {
+	display: flex;
+	align-items: center;
+	gap: var(--space-12);
+	width: 100%;
+}
+
+.listText {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.illustration {
+	display: block;
+	width: var(--space-64);
+	height: var(--space-48);
+}
+
+.usage {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: var(--space-4) var(--space-12);
+	max-width: var(--measure);
+}

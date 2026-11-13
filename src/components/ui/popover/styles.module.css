@@ -1,0 +1,78 @@
+/* Geometry and colour only: open / close motion is the transitions.dev Menu dropdown (.t-dropdown).
+   Keep the panel itself free of `display` so the popover UA rule (and `hidden`) can hide it. */
+
+.anchor {
+	position: relative;
+	display: inline-flex;
+	vertical-align: middle;
+}
+
+/* Reset the popover UA box (inset 0, auto margins, border, padding, Canvas colours) and place it
+   from the trigger's rect (set by the component as --popover-x / --popover-y). */
+.panel {
+	--popover-x: 0;
+	--popover-y: 0;
+	position: fixed;
+	inset: auto;
+	top: var(--popover-y);
+	left: var(--popover-x);
+	z-index: var(--z-overlay);
+	width: min(var(--popover-width), calc(100vw - var(--space-32)));
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: var(--color-text);
+	overflow: visible;
+}
+
+.panel:focus-visible {
+	outline: none;
+}
+
+.surface {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+	padding: var(--space-12) var(--space-16) var(--space-16);
+	border-radius: var(--radius-lg);
+	background-color: var(--color-surface-raised);
+	box-shadow: var(--shadow-bevel), var(--shadow-overlay);
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-light);
+	line-height: var(--leading-normal);
+	letter-spacing: var(--tracking-tight);
+}
+
+/* The panel itself takes focus only when the content has nothing focusable: show it on the surface. */
+.panel:focus-visible .surface {
+	outline: var(--stroke-focus) solid var(--color-focus-ring);
+	outline-offset: var(--stroke-focus);
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-12);
+	min-height: var(--control-sm);
+	margin-block: calc(var(--space-4) * -1) calc(var(--space-2) * -1);
+}
+
+.title {
+	color: var(--color-text-strong);
+	font-weight: var(--font-weight-medium);
+	line-height: var(--leading-snug);
+}
+
+.close {
+	margin-inline: auto calc(var(--space-8) * -1);
+}
+
+.body {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+	min-width: 0;
+	color: var(--color-text);
+}

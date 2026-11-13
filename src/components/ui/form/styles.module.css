@@ -1,0 +1,135 @@
+/* Spacing rhythm: fields 20 apart (compact 12), the action row a step further. */
+.form {
+	--form-gap: var(--space-20);
+	display: flex;
+	flex-direction: column;
+	gap: var(--form-gap);
+	width: 100%;
+	min-width: 0;
+}
+
+.compact {
+	--form-gap: var(--space-12);
+}
+
+/* ── Error summary ── */
+.summary {
+	border-radius: var(--radius-lg);
+	background-color: var(--color-surface-raised);
+	box-shadow:
+		inset 0 0 0 var(--stroke-hairline) var(--color-danger),
+		var(--shadow-bevel);
+	scroll-margin-top: calc(var(--header-height) + var(--space-24));
+}
+
+.summary:focus-visible {
+	outline: var(--stroke-focus) solid var(--color-focus-ring);
+	outline-offset: var(--stroke-focus);
+}
+
+.summaryBody {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+	padding: var(--space-16);
+}
+
+.summaryTitle {
+	display: flex;
+	align-items: center;
+	gap: var(--space-6);
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-medium);
+	line-height: var(--leading-snug);
+	color: var(--color-text-strong);
+}
+
+.summaryIcon {
+	color: var(--color-danger);
+}
+
+.summaryList {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-4);
+	padding-inline-start: calc(var(--icon-md) + var(--space-6));
+	list-style: none;
+}
+
+.summaryLink {
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-light);
+	color: var(--color-danger-text);
+	text-decoration: underline;
+	text-decoration-thickness: var(--stroke-hairline);
+	text-underline-offset: 0.2em;
+	border-radius: var(--radius-xs);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.summaryLink:hover {
+		text-decoration-thickness: var(--stroke-focus);
+	}
+}
+
+/* ── Row: equal columns that wrap once a field would get narrower than --form-field-min ── */
+.row {
+	--form-field-min: 12rem;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--form-field-min)), 1fr));
+	gap: var(--form-gap, var(--space-20));
+	align-items: start;
+	min-width: 0;
+}
+
+/* ── Actions ── */
+.actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--space-12);
+	margin-block-start: var(--space-8);
+}
+
+.buttons {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--space-8);
+}
+
+.note {
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-light);
+	color: var(--color-text-subtle);
+}
+
+.start {
+	justify-content: flex-start;
+}
+
+.end {
+	justify-content: flex-end;
+}
+
+.end .note {
+	margin-inline-end: auto;
+}
+
+.between {
+	justify-content: space-between;
+}
+
+.stretch {
+	flex-direction: column;
+	align-items: stretch;
+}
+
+.stretch .buttons {
+	flex-direction: column-reverse;
+	align-items: stretch;
+}
+
+.stretch .buttons > * {
+	width: 100%;
+}

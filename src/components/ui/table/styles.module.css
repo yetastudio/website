@@ -1,0 +1,229 @@
+/* Table: a raised, outlined frame (like the case-study facts well) around a scroll region. */
+
+.frame {
+	position: relative;
+	min-width: 0;
+	max-width: 100%;
+	border-radius: var(--radius-lg);
+	background-color: var(--color-surface-raised);
+	color: var(--color-text);
+}
+
+/* The scroll area (and its edge shadows) below the caption: square on top, round at the bottom. */
+.viewport {
+	position: relative;
+	border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+.captionHidden .viewport {
+	border-radius: inherit;
+}
+
+.scroller {
+	overflow: auto;
+	border-radius: inherit;
+	overscroll-behavior-x: contain;
+}
+
+.scroller:focus-visible {
+	outline-offset: var(--stroke-hairline);
+}
+
+/* Sticky header: the frame gets a max height, so the body scrolls under the header inside it. */
+.sticky .scroller {
+	max-height: calc(var(--space-64) * 5);
+}
+
+/* ── Scroll affordance: soft shadows on the edge that hides more columns ── */
+.edge {
+	position: absolute;
+	inset-block: 0;
+	z-index: 4;
+	width: var(--space-24);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity var(--duration-micro) var(--ease-out);
+}
+
+.edgeStart {
+	inset-inline-start: 0;
+	border-start-start-radius: inherit;
+	border-end-start-radius: inherit;
+	background: linear-gradient(to right, color-mix(in srgb, var(--color-text-strong) 16%, transparent), transparent);
+}
+
+.edgeEnd {
+	inset-inline-end: 0;
+	border-start-end-radius: inherit;
+	border-end-end-radius: inherit;
+	background: linear-gradient(to left, color-mix(in srgb, var(--color-text-strong) 16%, transparent), transparent);
+}
+
+.frame[data-overflow-start] .edgeStart,
+.frame[data-overflow-end] .edgeEnd {
+	opacity: 1;
+}
+
+/* ── Table ── */
+.table {
+	width: 100%;
+	/* Separate borders so a sticky header keeps its rule while the body scrolls. */
+	border-collapse: separate;
+	border-spacing: 0;
+	font-weight: var(--font-weight-light);
+	letter-spacing: var(--tracking-tight);
+	text-align: start;
+}
+
+.caption {
+	padding: var(--space-14) var(--space-16) var(--space-6);
+	color: var(--color-text-strong);
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-regular);
+	letter-spacing: var(--tracking-tight);
+	line-height: var(--leading-snug);
+}
+
+.headerCell,
+.cell {
+	border-bottom: var(--stroke-hairline) solid var(--color-divider);
+	text-align: start;
+	vertical-align: middle;
+}
+
+.size-md .headerCell,
+.size-md .cell {
+	padding: var(--space-12) var(--space-16);
+}
+
+.size-sm .headerCell,
+.size-sm .cell {
+	padding: var(--space-6) var(--space-12);
+}
+
+.head .headerCell {
+	color: var(--color-text-subtle);
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-regular);
+	line-height: var(--leading-snug);
+	white-space: nowrap;
+}
+
+.sticky .head .headerCell {
+	position: sticky;
+	top: 0;
+	z-index: 3;
+	background-color: var(--color-surface-glass);
+	backdrop-filter: blur(var(--blur-glass));
+	-webkit-backdrop-filter: blur(var(--blur-glass));
+}
+
+.cell {
+	color: var(--color-text);
+	font-size: var(--text-sm);
+	line-height: var(--leading-normal);
+}
+
+.size-sm .cell {
+	font-size: var(--text-xs);
+}
+
+/* Row headers (scope="row") read as the row's name. */
+.rowHeader {
+	color: var(--color-text-strong);
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-regular);
+	line-height: var(--leading-normal);
+}
+
+.size-sm .rowHeader {
+	font-size: var(--text-xs);
+}
+
+.body .row:last-child > * {
+	border-bottom: 0;
+}
+
+.numeric {
+	font-variant-numeric: tabular-nums;
+	text-align: end;
+	white-space: nowrap;
+}
+
+/* ── Row states ── */
+.row > * {
+	transition: background-color var(--duration-micro) var(--ease-out);
+}
+
+.zebra .body .row:nth-child(even) > * {
+	background-color: var(--color-surface-tint-hover);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.hover .body .row:hover > * {
+		background-color: var(--color-fill-muted);
+	}
+}
+
+.row.selected > * {
+	background-color: var(--color-fill-muted);
+}
+
+/* ── Sortable header: the whole label is the button ── */
+.sortable .sortButton {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-4);
+	min-height: var(--space-24);
+	margin: calc(var(--space-4) * -1) calc(var(--space-6) * -1);
+	padding: var(--space-4) var(--space-6);
+	border-radius: var(--radius-sm);
+	color: inherit;
+	font: inherit;
+	letter-spacing: inherit;
+	white-space: nowrap;
+	transition:
+		background-color var(--duration-micro) var(--ease-out),
+		color var(--duration-micro) var(--ease-out);
+}
+
+.numeric .sortButton {
+	flex-direction: row-reverse;
+}
+
+.sortIcon {
+	color: var(--color-text-faint);
+	transition: color var(--duration-micro) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.sortButton:hover {
+		background-color: var(--color-surface-tint-hover);
+		color: var(--color-text);
+	}
+
+	.sortButton:hover .sortIcon {
+		color: var(--color-text-subtle);
+	}
+}
+
+.sortButton:active {
+	background-color: var(--color-fill-muted);
+	transition-duration: var(--duration-instant);
+}
+
+.sorted {
+	color: var(--color-text-strong);
+}
+
+.sorted .sortIcon {
+	color: var(--color-text-strong);
+}
+
+/* ── Empty ── */
+.empty {
+	padding: var(--space-32) var(--space-16);
+	color: var(--color-text-faint);
+	font-size: var(--text-sm);
+	text-align: center;
+}

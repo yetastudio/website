@@ -1,0 +1,101 @@
+/* Geometry, surface, hairline, bevel, focus and error follow Input (src/components/ui/field). */
+.field {
+	--select-height: var(--control-lg);
+	--select-font: var(--text-md);
+	--select-pad: var(--space-12);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+	min-width: 0;
+}
+
+.sm {
+	--select-height: var(--control-sm);
+	--select-font: var(--text-sm);
+	--select-pad: var(--space-10);
+}
+
+.md {
+	--select-height: var(--control-md);
+	--select-font: var(--text-sm);
+	--select-pad: var(--space-12);
+}
+
+.box {
+	position: relative;
+	display: flex;
+	align-items: center;
+	border-radius: var(--radius-md);
+}
+
+.control {
+	width: 100%;
+	min-height: var(--select-height);
+	padding-block: var(--space-4);
+	padding-inline: var(--select-pad) calc(var(--select-pad) + var(--icon-md) + var(--space-4));
+	border: none;
+	border-radius: inherit;
+	background-color: var(--color-surface-control);
+	box-shadow:
+		inset 0 0 0 var(--stroke-hairline) var(--color-border),
+		var(--shadow-bevel);
+	font-size: var(--select-font);
+	font-weight: var(--font-weight-light);
+	line-height: var(--leading-snug);
+	color: var(--color-text-strong);
+	text-overflow: ellipsis;
+	appearance: none;
+	transition: background-color var(--duration-micro) var(--ease-out);
+}
+
+/* The placeholder option reads like Input's placeholder. */
+.control:has(option[value='']:checked) {
+	color: var(--color-text-faint);
+}
+
+.control option {
+	color: var(--color-text-strong);
+}
+
+.chevron {
+	position: absolute;
+	inset-inline-end: var(--select-pad);
+	color: var(--color-text-subtle);
+	pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.control:hover:not(:disabled) {
+		background-color: var(--color-surface-control-hover);
+	}
+
+	.box:hover .control:not(:disabled) + .chevron {
+		color: var(--color-text);
+	}
+}
+
+.control:focus-visible {
+	outline: var(--stroke-focus) solid var(--color-focus-ring);
+	outline-offset: var(--stroke-hairline);
+}
+
+/* Touch keyboards zoom into anything under 16px: keep the value at 16 there. */
+@media (pointer: coarse) {
+	.control {
+		font-size: var(--text-md);
+	}
+}
+
+.invalid .control {
+	box-shadow:
+		inset 0 0 0 var(--stroke-hairline) var(--color-danger),
+		var(--shadow-bevel);
+}
+
+.box:has(.control:disabled) {
+	opacity: 0.5;
+}
+
+.control:disabled {
+	cursor: not-allowed;
+}

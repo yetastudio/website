@@ -1,0 +1,72 @@
+.spinner {
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	gap: var(--space-8);
+	color: inherit;
+	vertical-align: middle;
+}
+
+.ring {
+	flex-shrink: 0;
+	width: var(--spinner-size);
+	height: var(--spinner-size);
+	stroke: currentColor;
+	stroke-width: 1.5;
+}
+
+/* Same 1.5 stroke as the icon set, so a spinner can stand in for an icon without a seam. */
+.track {
+	opacity: 0.18;
+}
+
+.arc {
+	stroke-dasharray: 28 100;
+	stroke-linecap: round;
+	transform-origin: center;
+	transform-box: fill-box;
+	animation: spin var(--spinner-dur) linear infinite;
+}
+
+/* The label takes the surrounding colour too, so the spinner reads as part of the copy it sits in. */
+.label {
+	color: inherit;
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-light);
+	line-height: var(--leading-snug);
+}
+
+/* ── Sizes: the icon scale ── */
+.sm {
+	--spinner-size: var(--icon-sm);
+}
+
+.md {
+	--spinner-size: var(--icon-md);
+}
+
+.lg {
+	--spinner-size: var(--icon-lg);
+}
+
+.xl {
+	--spinner-size: var(--icon-xl);
+}
+
+.sm .label,
+.md .label {
+	font-size: var(--text-xs);
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* Reduced motion: a still ring with its arc. It still reads as "loading", nothing moves. */
+@media (prefers-reduced-motion: reduce) {
+	.arc {
+		animation: none;
+	}
+}

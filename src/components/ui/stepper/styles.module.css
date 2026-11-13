@@ -1,0 +1,153 @@
+/* The box follows Input (surface, hairline, bevel, radius, focus, error); the buttons sit inside it.
+   --stepper-chars (written inline from min / max) sizes the number so the box never jumps. */
+.field {
+	--stepper-height: var(--control-lg);
+	--stepper-font: var(--text-md);
+	--stepper-inset: var(--space-4);
+	--stepper-chars: 3;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--space-6);
+	min-width: 0;
+}
+
+.sm {
+	--stepper-height: var(--control-sm);
+	--stepper-font: var(--text-sm);
+	--stepper-inset: var(--space-2);
+}
+
+.md {
+	--stepper-height: var(--control-md);
+	--stepper-font: var(--text-sm);
+}
+
+/* Touch keyboards zoom into anything under 16px. */
+@media (pointer: coarse) {
+	.field {
+		--stepper-font: var(--text-md);
+	}
+}
+
+.box {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-2);
+	min-height: var(--stepper-height);
+	padding: var(--stepper-inset);
+	border-radius: var(--radius-md);
+	background-color: var(--color-surface-control);
+	box-shadow:
+		inset 0 0 0 var(--stroke-hairline) var(--color-border),
+		var(--shadow-bevel);
+	transition: background-color var(--duration-micro) var(--ease-out);
+}
+
+.box:has(.input:focus-visible) {
+	outline: var(--stroke-focus) solid var(--color-focus-ring);
+	outline-offset: var(--stroke-hairline);
+}
+
+/* ── − / + ── */
+.button {
+	display: grid;
+	flex-shrink: 0;
+	place-items: center;
+	width: calc(var(--stepper-height) - var(--stepper-inset) * 2);
+	height: calc(var(--stepper-height) - var(--stepper-inset) * 2);
+	min-width: var(--space-24);
+	min-height: var(--space-24);
+	border-radius: calc(var(--radius-md) - var(--stepper-inset));
+	color: var(--color-text);
+	touch-action: manipulation;
+	user-select: none;
+	transition:
+		background-color var(--duration-micro) var(--ease-out),
+		transform var(--duration-micro) var(--ease-out),
+		opacity var(--duration-micro) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.button:hover:not(:disabled) {
+		background-color: var(--color-surface-control-hover);
+		color: var(--color-text-strong);
+	}
+}
+
+.button:active:not(:disabled) {
+	background-color: var(--color-surface-control-pressed);
+	transform: scale(0.94);
+	transition-duration: var(--duration-instant);
+}
+
+.button:disabled {
+	cursor: not-allowed;
+	opacity: 0.35;
+}
+
+/* ── The number: the field and its pop-in mirror share one cell ── */
+.value {
+	display: grid;
+	place-items: center;
+}
+
+.input,
+.mirror {
+	grid-area: 1 / 1;
+	font-size: var(--stepper-font);
+	font-weight: var(--font-weight-regular);
+	font-variant-numeric: tabular-nums;
+	line-height: var(--leading-none);
+	letter-spacing: var(--tracking-normal);
+	color: var(--color-text-strong);
+}
+
+.input {
+	position: relative;
+	z-index: 1;
+	width: calc(var(--stepper-chars) * 1ch + var(--space-12));
+	min-height: calc(var(--stepper-height) - var(--stepper-inset) * 2);
+	padding: 0;
+	border: none;
+	background: transparent;
+	text-align: center;
+	caret-color: var(--color-text-strong);
+	outline: none;
+}
+
+.mirror {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	pointer-events: none;
+}
+
+/* At rest the mirror draws the number (so it can pop in); typing hands the glyphs back to the field. */
+.box:not(.editing) .input {
+	color: transparent;
+}
+
+.editing .mirror {
+	visibility: hidden;
+}
+
+/* ── States ── */
+.invalid .box {
+	box-shadow:
+		inset 0 0 0 var(--stroke-hairline) var(--color-danger),
+		var(--shadow-bevel);
+}
+
+/* :has(:disabled) so a disabled Fieldset dims it too. */
+.box:has(.input:disabled) {
+	opacity: 0.5;
+}
+
+.input:disabled {
+	cursor: not-allowed;
+}
+
+.box:has(.input:disabled) .button:disabled {
+	opacity: 1;
+}

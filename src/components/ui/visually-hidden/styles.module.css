@@ -1,0 +1,38 @@
+/* Same technique as the u-visually-hidden utility, lifted while the element (or a child) has focus. */
+.focusable:not(:focus, :focus-within) {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: calc(var(--stroke-hairline) * -1);
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* Shown: the glass nav pill, laid over the content so nothing shifts when it appears. */
+.focusable:is(:focus, :focus-within) {
+	position: absolute;
+	z-index: var(--z-overlay);
+	inset-block-start: var(--space-8);
+	inset-inline-start: var(--space-8);
+	display: inline-flex;
+	align-items: center;
+	min-height: var(--control-md);
+	padding: var(--space-8) var(--space-12);
+	border-radius: var(--radius-md);
+	background-color: var(--color-surface-glass);
+	backdrop-filter: blur(var(--blur-glass));
+	-webkit-backdrop-filter: blur(var(--blur-glass));
+	box-shadow:
+		inset 0 0 0 var(--stroke-hairline) var(--color-border),
+		var(--shadow-bevel),
+		var(--shadow-overlay);
+	color: var(--color-text-strong);
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-regular);
+	line-height: var(--leading-none);
+	white-space: nowrap;
+	text-decoration: none;
+}

@@ -1,0 +1,58 @@
+.stack {
+	display: flex;
+	gap: var(--stack-gap, var(--space-16));
+	min-width: 0;
+	list-style: none;
+}
+
+.vertical,
+.responsive {
+	flex-direction: column;
+}
+
+.horizontal {
+	flex-direction: row;
+}
+
+@media (min-width: 768px) {
+	.responsive {
+		flex-direction: row;
+	}
+}
+
+.wrap {
+	flex-wrap: wrap;
+}
+
+.align-start { align-items: flex-start; }
+.align-center { align-items: center; }
+.align-end { align-items: flex-end; }
+.align-stretch { align-items: stretch; }
+.align-baseline { align-items: baseline; }
+
+.justify-start { justify-content: flex-start; }
+.justify-center { justify-content: center; }
+.justify-end { justify-content: flex-end; }
+.justify-between { justify-content: space-between; }
+
+/* Dividers: each child after the first carries the hairline on its leading edge, padded by the gap,
+   so the rule sits midway between two children. No extra elements, so a ul/ol stays valid. */
+.dividers.vertical > * + *,
+.dividers.responsive > * + * {
+	padding-block-start: var(--stack-gap);
+	border-block-start: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.dividers.horizontal > * + * {
+	padding-inline-start: var(--stack-gap);
+	border-inline-start: var(--stroke-hairline) solid var(--color-divider);
+}
+
+@media (min-width: 768px) {
+	.dividers.responsive > * + * {
+		padding-block-start: 0;
+		border-block-start: 0;
+		padding-inline-start: var(--stack-gap);
+		border-inline-start: var(--stroke-hairline) solid var(--color-divider);
+	}
+}

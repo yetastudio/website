@@ -1,0 +1,152 @@
+.tabs {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-16);
+	min-width: 0;
+	max-width: 100%;
+}
+
+.vertical {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	align-items: start;
+}
+
+/* The glass bar (SegmentedControl's material). Narrow screens scroll it sideways. */
+.list {
+	display: inline-flex;
+	align-self: flex-start;
+	align-items: center;
+	gap: var(--space-2);
+	max-width: 100%;
+	padding: var(--space-4);
+	border-radius: var(--radius-md);
+	background-color: var(--color-surface-glass);
+	backdrop-filter: blur(var(--blur-glass));
+	-webkit-backdrop-filter: blur(var(--blur-glass));
+	overflow-x: auto;
+	scrollbar-width: none;
+}
+
+.fullWidth {
+	display: flex;
+	align-self: stretch;
+}
+
+.fullWidth .tab {
+	flex: 1;
+}
+
+.vertical .list {
+	flex-direction: column;
+	align-items: stretch;
+	overflow: visible;
+}
+
+.vertical .tab {
+	justify-content: flex-start;
+}
+
+/* ── Tab ── */
+.tab {
+	position: relative;
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-6);
+	height: auto; /* the snippet's fixed 30px gives way to the size rules below */
+	border-radius: var(--radius-sm);
+	color: var(--color-text-subtle);
+	font-weight: var(--font-weight-regular);
+	line-height: var(--leading-none);
+	white-space: nowrap;
+}
+
+.md .tab {
+	min-height: var(--control-sm);
+	padding: var(--space-6) var(--space-12);
+	font-size: var(--text-sm);
+}
+
+.sm .tab {
+	min-height: var(--space-24);
+	padding: var(--space-4) var(--space-8);
+	font-size: var(--text-xs);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.tab:not(.disabled):hover {
+		color: var(--color-text);
+	}
+}
+
+.selected,
+.tab.selected:hover {
+	color: var(--color-text-strong);
+}
+
+.disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
+}
+
+.label {
+	min-width: 0;
+}
+
+.badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: var(--space-20);
+	height: var(--space-20);
+	padding-inline: var(--space-6);
+	border-radius: var(--radius-pill);
+	background-color: var(--color-surface-tint-hover);
+	font-size: var(--text-2xs);
+	font-variant-numeric: tabular-nums;
+}
+
+.sm .badge {
+	min-width: var(--space-16);
+	height: var(--space-16);
+	padding-inline: var(--space-4);
+}
+
+/* Tabs sliding pill (.t-tabs-pill): JS writes translate, width and height from the selected tab.
+   Absolute again here: .u-bevel (unlayered) would otherwise make it relative and put it in the flow. */
+.list .pill {
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-radius: var(--radius-sm);
+	background-color: var(--tabs-pill-bg);
+	opacity: 0;
+}
+
+.vertical .list .pill {
+	transition:
+		transform var(--tabs-dur) var(--tabs-ease),
+		height var(--tabs-dur) var(--tabs-ease);
+}
+
+.list[data-pill='ready'] .pill {
+	opacity: 1;
+}
+
+/* Until the pill is measured (server render, first paint), the selected tab draws its own fill. */
+.list:not([data-pill='ready']) .selected {
+	background-color: var(--tabs-pill-bg);
+	box-shadow: var(--shadow-bevel);
+}
+
+/* ── Panel ── */
+.panel {
+	min-width: 0;
+	border-radius: var(--radius-sm);
+}
+
+.panel[hidden] {
+	display: none;
+}

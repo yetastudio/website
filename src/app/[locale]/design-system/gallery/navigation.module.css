@@ -1,0 +1,70 @@
+/* Layout helpers for the Gallery · Navigation specimens only. */
+.stack {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-16);
+	width: 100%;
+	min-width: 0;
+}
+
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-12);
+}
+
+.usage {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-4);
+	max-width: var(--measure);
+}
+
+.usage strong {
+	color: var(--color-text-strong);
+	font-weight: var(--font-weight-regular);
+}
+
+/* A sidebar-width column for vertical navigation and trees. */
+.sidebar {
+	width: min(100%, calc(var(--measure-narrow) + var(--space-16)));
+}
+
+.panelCopy {
+	padding: var(--space-12) var(--space-4) 0;
+}
+
+/* Skip link demo: a framed page whose first tab stop is the skip link. */
+.page {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+	width: 100%;
+	min-height: calc(var(--space-96) + var(--space-16));
+	padding: var(--space-48) var(--space-16) var(--space-16);
+	border-radius: var(--radius-lg);
+	box-shadow:
+		inset 0 0 0 var(--stroke-hairline) var(--color-border-faint),
+		var(--shadow-bevel);
+	overflow: hidden;
+}
+
+/* The revealed state, pinned for the static specimen (what keyboard focus shows). */
+.page .revealed {
+	translate: 0 0;
+}
+
+.filters {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+}
+
+.longCopy {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+}
