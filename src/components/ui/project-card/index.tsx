@@ -27,6 +27,8 @@ import styles from './styles.module.css';
 export type ProjectShot = { light: string; dark: string; alt: string };
 
 export type Project = {
+	/** Detail page slug (`/work/[slug]`). When set, the case-study dialog links to the full page. */
+	slug?: string;
 	name: string;
 	year: string;
 	country: string;
@@ -54,7 +56,8 @@ function Wordmark({ name, active }: { name: string; active?: boolean }) {
 	);
 }
 
-function Shot({ shot, sizes, priority }: { shot: ProjectShot; sizes: string; priority?: boolean }) {
+/** One project screen, light and dark exports stacked. Fills its positioned parent. */
+export function Shot({ shot, sizes, priority }: { shot: ProjectShot; sizes: string; priority?: boolean }) {
 	return (
 		<>
 			<Image src={shot.light} alt={shot.alt} fill sizes={sizes} className={cx(styles.image, 'u-only-light')} priority={priority} />
@@ -78,8 +81,11 @@ function ToolLogo({ tool }: { tool: Project['tools'][number] }) {
 	return <img src={`/landing/our-work/tools/${tool}.svg`} alt="" className={styles.toolLogo} />;
 }
 
-/** Figma Project Overview Card, Status=Active: the expanded case study. */
-export function CaseStudy({ project }: { project: Project }) {
+/**
+ * Figma Project Overview Card, Status=Active: the expanded case study.
+ * `showSections={false}` drops the About / Challenge / Result rows (the detail page tells them in full).
+ */
+export function CaseStudy({ project, showSections = true }: { project: Project; showSections?: boolean }) {
 	const t = useTranslations('ourWork');
 	const facts: Array<[string, ReactNode]> = [
 		[t('facts.client'), project.name],
@@ -106,11 +112,13 @@ export function CaseStudy({ project }: { project: Project }) {
 				))}
 			</dl>
 
-			<Accordion className={styles.disclosures}>
-				<AccordionItem title={t('sections.about')}>{project.about}</AccordionItem>
-				<AccordionItem title={t('sections.challenge')}>{project.challenge}</AccordionItem>
-				<AccordionItem title={t('sections.result')}>{project.result}</AccordionItem>
-			</Accordion>
+			{showSections && (
+				<Accordion className={styles.disclosures}>
+					<AccordionItem title={t('sections.about')}>{project.about}</AccordionItem>
+					<AccordionItem title={t('sections.challenge')}>{project.challenge}</AccordionItem>
+					<AccordionItem title={t('sections.result')}>{project.result}</AccordionItem>
+				</Accordion>
+			)}
 
 			<p className={styles.caption}>{t('team')}</p>
 			<div className={styles.team}>
@@ -164,6 +172,13 @@ export function CaseStudyDialog({ project, onClose }: { project: Project | null;
 					<span className={styles.eyebrow}>{t('caseStudy')}</span>
 					{shown && <Wordmark name={shown.name} active />}
 				</span>
+			}
+			footer={
+				shown?.slug ? (
+					<Button href={`/work/${shown.slug}`} size="md" iconEnd="arrow-right" fullWidth>
+						{t('viewCaseStudy')}
+					</Button>
+				) : undefined
 			}
 		>
 			{shown && <CaseStudy project={shown} />}

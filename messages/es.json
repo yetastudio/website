@@ -113,6 +113,7 @@
     "intro": "Así es como nuestros procesos de <serif>diseño</serif> y <serif>desarrollo</serif><brmd></brmd> se unen para generar <em>impacto</em>.",
     "caseStudy": "Caso de estudio",
     "seeMore": "Ver más",
+    "viewCaseStudy": "Ver el caso completo",
     "viewProject": "Ver proyecto",
     "facts": {
       "client": "Cliente",
@@ -139,11 +140,44 @@
         "url": "yeta.studio",
         "about": "Yeta Studio es una agencia de diseño y desarrollo que construye productos digitales para marcas que no dejan nada librado a la suerte.",
         "challenge": "Nuestro propio sitio tenía que demostrar el oficio: un solo sistema para marca, producto y marketing, en dos temas y tres idiomas.",
-        "result": "Un design system basado en tokens y una landing donde cada sección reutiliza los mismos componentes, en claro u oscuro."
+        "result": "Un design system basado en tokens y una landing donde cada sección reutiliza los mismos componentes, en claro u oscuro.",
+        "tagline": "El sitio de nuestro propio estudio, pensado para demostrar el oficio que vendemos: un solo sistema para marca, producto y marketing.",
+        "details": {
+          "about": {
+            "p1": "Yeta Studio es una agencia de diseño y desarrollo de Argentina. Construimos sitios y productos digitales para marcas que valoran la <serif>excelencia visual</serif> y no dejan nada librado a la suerte.",
+            "p2": "Antes de hacernos cargo de la marca de otros, teníamos que mostrar la nuestra: quiénes somos, cómo trabajamos y el estándar que cada cliente puede esperar de nosotros."
+          },
+          "challenge": {
+            "p1": "El sitio de una agencia es su primera pieza de portfolio. El nuestro tenía que llevar la marca —el ✹, la tipografía metalizada, los acentos editoriales— sin volverse una pieza única que nadie pudiera mantener.",
+            "p2": "Además tenía que funcionar para todas las personas con las que hablamos: en claro y en oscuro, en un celular o en una pantalla de 1920, y en inglés, español y portugués, con el mismo cuidado en cada combinación."
+          },
+          "result": {
+            "p1": "Primero diseñamos el sistema: color, tipografía, espaciado y movimiento como tokens, y cada card, chip y botón dibujado una vez en Figma y construido una vez en código.",
+            "p2": "La landing se arma solo con esas piezas: cambiar de tema o de idioma nunca rompe un layout, y cada página nueva —esta incluida— arranca desde las mismas partes."
+          }
+        },
+        "highlights": {
+          "themes": "temas, claro y oscuro",
+          "languages": "idiomas: inglés, español y portugués",
+          "components": "componentes en el design system",
+          "tokens": "fuente de tokens para cada color, espacio y tipografía"
+        }
       }
     },
     "carousel": "Casos de estudio",
     "card": "caso de estudio"
+  },
+  "caseStudy": {
+    "metaTitle": "Caso de estudio: {name}",
+    "back": "Todos los trabajos",
+    "visit": "Visitar {url}",
+    "gallery": "Pantallas del proyecto",
+    "screen": "pantalla",
+    "shotAlt": "{name}, pantalla {number}",
+    "sheet": "Ficha del proyecto",
+    "highlights": "En números",
+    "cta": "¿Querés resultados así? Hagamos algo <em>grande</em> juntos.",
+    "ctaButton": "Empezá tu proyecto"
   },
   "ourProcess": {
     "title": "Nuestro proceso",
