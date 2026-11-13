@@ -1,3 +1,4 @@
+// Next 16 renamed middleware.ts to proxy.ts; next-intl still ships the handler as createMiddleware.
 import createMiddleware from 'next-intl/middleware';
 import { routing } from './i18n/routing';
 

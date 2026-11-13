@@ -114,15 +114,15 @@
 }
 
 /* ── Exit (shorter than enter) ── */
-.closing::backdrop {
+.dialog[data-closing]::backdrop {
 	animation: fade-out var(--duration-exit) var(--ease-out) forwards;
 }
 
-.closing {
+.dialog[data-closing] {
 	animation: hold var(--duration-exit) linear forwards;
 }
 
-.closing .panel {
+.dialog[data-closing] .panel {
 	animation: fade-out var(--duration-exit) var(--ease-out) forwards !important;
 }
 

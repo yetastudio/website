@@ -156,7 +156,7 @@
 }
 
 .paragraph {
-	max-width: 15.625rem; /* 250 */
+	max-width: var(--measure-narrow);
 	font-size: var(--text-md);
 	font-weight: var(--font-weight-light);
 	line-height: 1.875;

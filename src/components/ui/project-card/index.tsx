@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element -- tool logos are tiny static SVGs. */
 
 //! React Core
-import { useEffect, useState, type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 
 //! Next Core
 import Image from 'next/image';
@@ -141,14 +141,17 @@ export function CaseStudyDialog({ project, onClose }: { project: Project | null;
 	const t = useTranslations('ourWork');
 	const [placement, setPlacement] = useState<'center' | 'bottom'>('center');
 	const [shown, setShown] = useState<Project | null>(project);
+	const [previous, setPrevious] = useState<Project | null>(null);
 
-	// Keep the last project while the exit animation runs; pick the placement at open time.
-	useEffect(() => {
+	// On every open (null → project) keep the project for the exit animation and pick the placement.
+	// Adjusting state during render (not in an effect) avoids an extra committed frame.
+	if (project !== previous) {
+		setPrevious(project);
 		if (project) {
 			setShown(project);
-			setPlacement(window.matchMedia('(min-width: 768px)').matches ? 'center' : 'bottom');
+			if (typeof window !== 'undefined') setPlacement(window.matchMedia('(min-width: 768px)').matches ? 'center' : 'bottom');
 		}
-	}, [project]);
+	}
 
 	return (
 		<Dialog

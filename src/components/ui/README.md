@@ -67,8 +67,14 @@ leading trim (`text-box: trim-both cap alphabetic`) on lead copy, slogan and cal
 
 Section-by-section comparison against native renders of the Figma frames (1920 and 390, dark and
 light), aligned within ±80px: mean absolute RGB difference 1.7–4.9 / 255 on desktop
-(≤ 3.4% of pixels differ by more than 32) and 6.2–16 on mobile (≤ 13.7%), with section heights
-within ±14px on desktop and +0…+33px on mobile.
+(≤ 4.8% of pixels differ by more than 32) and 6.2–16.5 on mobile (≤ 13.7%), with section heights
+within ±14px on desktop and +0…+33px on mobile. The mobile footer starts ~600px earlier than in
+Figma because the Figma frame leaves an empty 652px gap above it.
+
+**Browser support.** Inverse subtrees need `light-dark()` to stay native, so `package.json`
+pins `browserslist` to Chrome/Edge 123, Firefox 120 and Safari/iOS 17.5. With Next 16's default
+targets, Lightning CSS lowers `light-dark()` into values resolved once on `:root`, and the
+footer band and gradient tiles stop inverting.
 
 Inspo additions do not change the drawn layout: carousel dots and card-stack controls sit in the
 gaps Figma already leaves; the footer's theme/language switches float in the bottom bar (phones get

@@ -99,7 +99,7 @@
 	.hero {
 		gap: var(--space-64);
 		/* Figma 115:960 pads 22 left / 40 right, so the hero sits 9px left of centre. */
-		padding: var(--space-128) var(--space-40) var(--space-64) 1.375rem;
+		padding: var(--space-128) var(--space-40) var(--space-64) calc(var(--space-20) + var(--space-2));
 	}
 
 	.title {

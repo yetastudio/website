@@ -13,7 +13,7 @@
  *   Colour roles resolve with `light-dark()`, so they follow the element's
  *   `color-scheme`. The root follows the OS (`light dark`) unless
  *   `<html data-theme="light|dark">` pins it. Any subtree can flip itself with
- *   `.scheme-inverse` (footer, testimonial cards) or pin a scheme with
+ *   `.scheme-inverse` (footer band, gradient tiles) or pin a scheme with
  *   `.scheme-light` / `.scheme-dark` (brand showcases).
  */
 
@@ -255,6 +255,7 @@
 	--page-gutter: var(--space-16);
 	--page-max: 1880px;
 	--measure: 36rem;
+	--measure-narrow: 15.625rem; /* 250: Figma narrow paragraphs (Summary card, mobile Why Yeta light) */
 	--section-gap: var(--space-48);
 	--header-height: 60px;
 
@@ -287,11 +288,10 @@
 /* ───────────────────────── Theme selection ───────────────────────── */
 
 /* Non-colour values that differ per theme cannot use light-dark(), so they are
-   set here per resolved theme: the inverse scheme and the canvas pattern tile
+   set here per resolved theme: the canvas pattern tile
    (Figma "Pattern" frame: 390×844 tiles, exported @2x). */
 :root {
 	color-scheme: light dark;
-	--scheme-inverse: dark;
 	--pattern-image: url('/landing/pattern/pattern-tile-light.png');
 	--pattern-image-inverse: url('/landing/pattern/pattern-tile-dark.png');
 	--pattern-size: 390px 844px;
@@ -299,7 +299,6 @@
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--scheme-inverse: light;
 		--pattern-image: url('/landing/pattern/pattern-tile-dark.png');
 		--pattern-image-inverse: url('/landing/pattern/pattern-tile-light.png');
 	}
@@ -307,35 +306,58 @@
 
 :root[data-theme='light'] {
 	color-scheme: light;
-	--scheme-inverse: dark;
 	--pattern-image: url('/landing/pattern/pattern-tile-light.png');
 	--pattern-image-inverse: url('/landing/pattern/pattern-tile-dark.png');
 }
 
 :root[data-theme='dark'] {
 	color-scheme: dark;
-	--scheme-inverse: light;
 	--pattern-image: url('/landing/pattern/pattern-tile-dark.png');
 	--pattern-image-inverse: url('/landing/pattern/pattern-tile-light.png');
 }
 
+/* Inverse subtree (footer band, gradient tiles). Flipping only works while light-dark() stays
+   native: the semantic tokens are declared on :root, and a lowered light-dark() would resolve
+   there once instead of per element. package.json `browserslist` keeps it native (Chrome/Edge 123,
+   Firefox 120, Safari 17.5). Literal `color-scheme` values keep the rule statically analysable;
+   root rules sit in :where() so a pinned showcase panel (below) always wins. */
 .scheme-inverse {
-	color-scheme: var(--scheme-inverse);
+	color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+	:where(:root:not([data-theme='light'])) .scheme-inverse {
+		color-scheme: light;
+	}
+}
+
+:where(:root[data-theme='light']) .scheme-inverse {
+	color-scheme: dark;
+}
+
+:where(:root[data-theme='dark']) .scheme-inverse {
+	color-scheme: light;
 }
 
 /* Pinned schemes also re-root everything that depends on the theme (pair with data-scheme for assets). */
 .scheme-light {
 	color-scheme: light;
-	--scheme-inverse: dark;
 	--pattern-image: url('/landing/pattern/pattern-tile-light.png');
 	--pattern-image-inverse: url('/landing/pattern/pattern-tile-dark.png');
 }
 
 .scheme-dark {
 	color-scheme: dark;
-	--scheme-inverse: light;
 	--pattern-image: url('/landing/pattern/pattern-tile-dark.png');
 	--pattern-image-inverse: url('/landing/pattern/pattern-tile-light.png');
+}
+
+.scheme-light .scheme-inverse {
+	color-scheme: dark;
+}
+
+.scheme-dark .scheme-inverse {
+	color-scheme: light;
 }
 
 @media (prefers-reduced-motion: reduce) {

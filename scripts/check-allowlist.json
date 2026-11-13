@@ -96,7 +96,7 @@
       "font-size: 0.75em": 1,
       "max-width: 21.375rem": 1,
       "max-width: 54rem": 1,
-      "min-height: 26.125rem": 1
+      "min-height: 29.125rem": 1
     }
   },
   "src/components/layout/hero/styles.module.css": {
@@ -215,7 +215,6 @@
       "left: 241px": 1,
       "left: 256.35px": 1,
       "max-width: 11.5625rem": 1,
-      "max-width: 15.625rem": 1,
       "max-width: 22.375rem": 1,
       "top: -33.2px": 1,
       "top: -43.87px": 1,

@@ -1,12 +1,13 @@
 'use client';
 
 //! React Core
-import { createContext, useCallback, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useMemo, useSyncExternalStore } from 'react';
 
 //! Types
 import type { ResolvedTheme, ThemeContextType, ThemePreference, ThemeProviderProps } from '@/types';
 
 export const THEME_STORAGE_KEY = 'yeta-theme';
+const CHANGE_EVENT = 'yeta-theme-change';
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
@@ -20,6 +21,24 @@ function readStoredPreference(): ThemePreference {
 	return 'system';
 }
 
+/** Stored preference as an external store: same-tab changes fire CHANGE_EVENT, other tabs fire `storage`. */
+function subscribePreference(onChange: () => void) {
+	window.addEventListener(CHANGE_EVENT, onChange);
+	window.addEventListener('storage', onChange);
+	return () => {
+		window.removeEventListener(CHANGE_EVENT, onChange);
+		window.removeEventListener('storage', onChange);
+	};
+}
+
+const darkQuery = () => window.matchMedia('(prefers-color-scheme: dark)');
+
+function subscribeSystem(onChange: () => void) {
+	const media = darkQuery();
+	media.addEventListener('change', onChange);
+	return () => media.removeEventListener('change', onChange);
+}
+
 /**
  * Holds the theme preference (system | light | dark) and the theme it resolves to.
  * The preference is written to `<html data-theme>`; CSS does the rest through
@@ -27,30 +46,23 @@ function readStoredPreference(): ThemePreference {
  * before first paint so there is no flash.
  */
 export function ThemeProvider({ children }: ThemeProviderProps) {
-	const [preference, setPreferenceState] = useState<ThemePreference>('system');
-	const [systemTheme, setSystemTheme] = useState<ResolvedTheme>('light');
-
-	useEffect(() => {
-		setPreferenceState(readStoredPreference());
-
-		const media = window.matchMedia('(prefers-color-scheme: dark)');
-		setSystemTheme(media.matches ? 'dark' : 'light');
-
-		const onChange = (event: MediaQueryListEvent) => setSystemTheme(event.matches ? 'dark' : 'light');
-		media.addEventListener('change', onChange);
-		return () => media.removeEventListener('change', onChange);
-	}, []);
+	const preference = useSyncExternalStore<ThemePreference>(subscribePreference, readStoredPreference, () => 'system');
+	const systemTheme = useSyncExternalStore<ResolvedTheme>(
+		subscribeSystem,
+		() => (darkQuery().matches ? 'dark' : 'light'),
+		() => 'light'
+	);
 
 	const setPreference = useCallback((next: ThemePreference) => {
-		setPreferenceState(next);
 		const root = document.documentElement;
 		if (next === 'system') root.removeAttribute('data-theme');
 		else root.setAttribute('data-theme', next);
 		try {
 			window.localStorage.setItem(THEME_STORAGE_KEY, next);
 		} catch {
-			// Ignore blocked storage; the choice still applies for this visit.
+			// Ignore blocked storage; the attribute still applies for this visit.
 		}
+		window.dispatchEvent(new Event(CHANGE_EVENT));
 	}, []);
 
 	const resolvedTheme: ResolvedTheme = preference === 'system' ? systemTheme : preference;

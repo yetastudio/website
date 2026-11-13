@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { useCallback, useEffect, useId, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useId, useRef, type ReactNode } from 'react';
 
 //! Hooks
 import { useTranslations } from 'next-intl';
@@ -52,13 +52,13 @@ export function Dialog({
 	const opener = useRef<HTMLElement | null>(null);
 	// Backdrop closes only when the press both starts and ends on it (a text drag that ends outside must not close).
 	const pressedBackdrop = useRef(false);
-	const [closing, setClosing] = useState(false);
 	const titleId = useId();
 	const lenis = useLenis();
 
+	// The exit state lives on the element (data-closing), not in React state: it only drives CSS.
 	const finishClose = useCallback(() => {
 		const dialog = ref.current;
-		setClosing(false);
+		if (dialog) delete dialog.dataset.closing;
 		if (dialog?.open) dialog.close();
 		opener.current?.focus?.();
 	}, []);
@@ -77,7 +77,7 @@ export function Dialog({
 				finishClose();
 				return;
 			}
-			setClosing(true);
+			dialog.dataset.closing = 'true';
 			// animationend normally finishes the close; this fallback covers paused or
 			// throttled animations (background tabs, automation) so the dialog never sticks.
 			const exitMs = parseFloat(getComputedStyle(dialog).getPropertyValue('--duration-exit')) || 200;
@@ -91,7 +91,7 @@ export function Dialog({
 	return (
 		<dialog
 			ref={ref}
-			className={cx(styles.dialog, styles[placement], styles[size], closing && styles.closing, className)}
+			className={cx(styles.dialog, styles[placement], styles[size], className)}
 			aria-labelledby={titleId}
 			onCancel={(event) => {
 				event.preventDefault();
@@ -105,7 +105,7 @@ export function Dialog({
 				pressedBackdrop.current = false;
 			}}
 			onAnimationEnd={(event) => {
-				if (closing && event.target === event.currentTarget) finishClose();
+				if (event.currentTarget.dataset.closing && event.target === event.currentTarget) finishClose();
 			}}
 		>
 			<div className={cx(styles.panel, 'u-bevel')}>
