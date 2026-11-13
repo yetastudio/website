@@ -8,6 +8,7 @@ import { LibraryShelf, ProposalSection, StoryMap } from './proposal';
 import { BeforeAfterMockup } from './mockups/before-after';
 import { BookingMockup } from './mockups/booking';
 import { ChapterNavMockup } from './mockups/chapter-nav';
+import CraftIllustrated from './craft';
 import { ClientWallMockup } from './mockups/client-wall';
 import { HeroDemoMockup } from './mockups/hero-demo';
 import { ProcessWalkthroughMockup } from './mockups/process-walkthrough';
@@ -27,6 +28,7 @@ const libraryCount = LIBRARY.reduce((total, shelf) => total + shelf.references.l
 
 const navItems = [
 	{ id: 'story-map', label: 'Story map', group: 'Overview' },
+	{ id: 'craft-illustrated', label: 'Our Craft, illustrated', group: 'Overview' },
 	...PROPOSALS.map((proposal) => ({
 		id: proposal.id,
 		label: `${proposal.number} ${proposal.title}`,
@@ -70,6 +72,8 @@ export default function InspoShowcase({ facts }: { facts: ResultFacts }) {
 			</header>
 
 			<StoryMap />
+
+			<CraftIllustrated />
 
 			{PROPOSALS.map((proposal) => (
 				<ProposalSection key={proposal.id} proposal={proposal}>

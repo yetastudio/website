@@ -1,0 +1,275 @@
+/*
+ * Alternative C: a bento of six tiles on one neutral ground. One lead (a moving scene), four
+ * stills of different kinds, one statement. Copy sits at the top of every tile at page size;
+ * pictures are pinned to the tile's foot and own its bleed. Geometry lives in custom
+ * properties (stage px); spacing, type and colour read tokens.
+ */
+
+.container {
+	container-type: inline-size;
+	width: 100%;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: var(--space-12);
+	list-style: none;
+}
+
+@container (min-width: 30rem) {
+	.grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.tile[data-span] {
+		grid-column: 1 / -1;
+	}
+}
+
+@container (min-width: 47.5rem) {
+	.grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.tile[data-span='lead'] {
+		grid-column: span 2;
+	}
+}
+
+.tile {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	overflow: hidden;
+	border-radius: var(--radius-2xl);
+	background-color: var(--color-surface-raised);
+	box-shadow: var(--shadow-bevel);
+}
+
+.copy {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+	padding: var(--space-20) var(--space-20) 0;
+}
+
+.picture {
+	margin-top: auto;
+	padding-top: var(--space-16);
+}
+
+/* ───────────── Lead ───────────── */
+
+.leadStage {
+	--browser-x: 24px;
+	--browser-y: 24px;
+	--browser-w: 472px;
+	--browser-h: 320px;
+	--rest-x: 452px;
+	--rest-y: 150px;
+	width: 100%;
+	margin-inline: auto;
+}
+
+.leadStage :global(.ss-stage[data-layout='compact']) {
+	--browser-x: 16px;
+	--browser-y: 16px;
+	--browser-w: 294px;
+	--browser-h: 300px;
+	--rest-x: 290px;
+	--rest-y: 176px;
+}
+
+.browser {
+	position: absolute;
+	left: var(--browser-x);
+	top: var(--browser-y);
+	width: var(--browser-w);
+	height: var(--browser-h);
+	/* The window's own shadow: it stays inside the gutter, so the stage never cuts it */
+	box-shadow: var(--ss-shadow-window);
+}
+
+.modes {
+	--modes-w: 156px;
+	width: var(--modes-w);
+}
+
+.rest {
+	position: absolute;
+	left: var(--rest-x);
+	top: var(--rest-y);
+	width: 0;
+	height: 0;
+}
+
+.page {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+}
+
+.hero {
+	--frame-pad: var(--space-24);
+	--heading-size: var(--text-xl);
+}
+
+.leadStage :global(.ss-stage[data-layout='compact']) .hero {
+	--frame-pad: var(--space-16);
+	--heading-size: var(--text-md);
+}
+
+/* Below the hero: the page's next section, placeholder cards off the browser's foot */
+.features {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: var(--space-12);
+	padding: 0 var(--space-24);
+}
+
+.leadStage :global(.ss-stage[data-layout='compact']) .features {
+	padding: 0 var(--space-16);
+}
+
+.feature {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+	padding: var(--space-12);
+	border-radius: var(--radius-md);
+	background: var(--color-surface-raised);
+	box-shadow: var(--ss-shadow-card);
+}
+
+/* ───────────── Stills ───────────── */
+
+.stillStage {
+	width: 100%;
+	margin-inline: auto;
+}
+
+/* Left-led pictures (a diagram, a card) line up with the copy's gutter in a wider tile */
+.onGutter {
+	margin-inline: 0 auto;
+}
+
+/* The idea: a loose pile, the straightest card on top and the only one with words */
+.pile {
+	position: absolute;
+	inset: 0;
+}
+
+.pileBack,
+.pileMid,
+.pileTop {
+	--x: 70px;
+	--y: 34px;
+	--w: 120px;
+	--h: 84px;
+}
+
+.pileBack {
+	rotate: -6deg;
+	translate: calc(var(--space-12) * -1) var(--space-4);
+}
+
+.pileMid {
+	rotate: 4deg;
+	translate: var(--space-12) 0;
+}
+
+.pileTop {
+	rotate: -2deg;
+	padding: var(--space-14) var(--space-12);
+	box-shadow: var(--ss-shadow-satellite);
+}
+
+/* The path, centred on its canvas */
+.sHome {
+	--x: 25px;
+	--y: 26px;
+}
+
+.sServices {
+	--x: 79px;
+	--y: 96px;
+}
+
+.sBook {
+	--x: 137px;
+	--y: 26px;
+}
+
+/* The releases: a card a gutter in from the sides, off the tile's foot */
+.log {
+	--x: 20px;
+	--y: 24px;
+	--w: 220px;
+	--h: 176px;
+	--row-h: 36px;
+}
+
+.rule {
+	box-shadow: inset 0 var(--stroke-hairline) 0 var(--color-divider);
+}
+
+.filler {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+	height: var(--row-h);
+	padding: 0 var(--space-12);
+}
+
+/* The tools: one row of real marks on small tiles, from the copy's gutter off the right */
+.collection {
+	--mark-tile: 4.5rem;
+	display: flex;
+	align-items: center;
+	height: var(--collection-h);
+	--collection-h: 150px;
+	padding-left: var(--space-20);
+	overflow: hidden;
+}
+
+.collectionRow {
+	display: flex;
+	flex: none;
+	gap: var(--space-12);
+}
+
+.markTile {
+	display: grid;
+	flex: none;
+	place-items: center;
+	width: var(--mark-tile);
+	height: var(--mark-tile);
+	border-radius: var(--radius-lg);
+	background: var(--color-surface);
+	box-shadow: var(--ss-shadow-card);
+}
+
+.bigMark {
+	--mark-size: var(--space-28);
+}
+
+/* ───────────── Statement ───────────── */
+
+.tile[data-span='wide'] .copy {
+	gap: var(--space-16);
+	padding: var(--space-28) var(--space-24);
+}
+
+.statementRule {
+	display: block;
+	width: var(--space-24);
+	height: var(--stroke-focus);
+	border-radius: var(--radius-pill);
+	background: var(--scene-hue);
+}
+
+.statementNote {
+	max-width: var(--measure);
+}

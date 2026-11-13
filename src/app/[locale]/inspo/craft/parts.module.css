@@ -1,0 +1,334 @@
+/*
+ * Our Craft scene parts. Sizes come in as custom properties from the scene that places
+ * them (a 240 tile, the walkthrough window, the bento's lead), so one part reads at each
+ * size. Lengths in custom properties are illustration geometry, in stage px.
+ */
+
+/* ───────────── Caret ───────────── */
+
+.caret {
+	--caret-h: 0.95em;
+	display: inline-block;
+	width: var(--stroke-focus);
+	height: var(--caret-h);
+	margin-left: var(--stroke-hairline);
+	vertical-align: text-bottom;
+	background: var(--color-text-strong);
+	opacity: 0;
+}
+
+.caret[data-on] {
+	opacity: 1;
+	animation: craft-caret 1.06s steps(1) infinite;
+}
+
+.caret[data-on][data-typing] {
+	animation: none;
+}
+
+@keyframes craft-caret {
+	50% {
+		opacity: 0;
+	}
+}
+
+/* ───────────── Note ───────────── */
+
+.note {
+	position: absolute;
+	left: var(--x);
+	top: var(--y);
+	overflow: hidden;
+	width: var(--w);
+	height: var(--h);
+	padding: var(--space-10) var(--space-8) var(--space-8);
+	border-radius: var(--radius-xs);
+	background: var(--color-surface-raised);
+	box-shadow: var(--ss-shadow-card);
+}
+
+/* The idea's note: a thin tab of the beat's hue along its top edge */
+.note[data-hued]::before {
+	content: '';
+	position: absolute;
+	inset: 0 0 auto;
+	height: var(--stroke-focus);
+	background: var(--scene-hue);
+}
+
+.noteWords {
+	display: block;
+	text-wrap: balance;
+}
+
+.noteBars {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+}
+
+/* ───────────── Flow node ───────────── */
+
+.node {
+	position: absolute;
+	left: var(--x);
+	top: var(--y);
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-6);
+	height: var(--node-h);
+	padding: 0 var(--space-10);
+	border-radius: var(--radius-sm);
+	background: var(--color-surface-raised);
+	box-shadow: var(--ss-shadow-card);
+	white-space: nowrap;
+}
+
+.goalDot {
+	scale: 0;
+	transition: scale var(--duration-enter) var(--ease-smooth);
+}
+
+.goalDot[data-on] {
+	scale: 1;
+}
+
+/* ───────────── Tools ───────────── */
+
+.mark {
+	display: inline-grid;
+	flex: none;
+	place-items: center;
+	width: var(--mark-size);
+	height: var(--mark-size);
+}
+
+.mark img {
+	grid-area: 1 / 1;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.mark[data-tool='nextjs'] img {
+	border-radius: var(--radius-pill);
+}
+
+.toolRow {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	align-items: center;
+	gap: var(--space-8);
+	height: var(--row-h);
+	padding: 0 var(--space-12);
+}
+
+.toolRow + .toolRow {
+	box-shadow: inset 0 var(--stroke-hairline) 0 var(--color-divider);
+}
+
+.toolCheck {
+	flex: none;
+}
+
+/* ───────────── Release ───────────── */
+
+.release {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	align-items: center;
+	gap: var(--space-8);
+	height: var(--row-h);
+	padding: 0 var(--space-12);
+	white-space: nowrap;
+}
+
+.version {
+	display: inline-flex;
+	align-items: center;
+	height: var(--control-xs);
+	padding: 0 var(--space-6);
+	border-radius: var(--radius-xs);
+	background: var(--ss-ink-2);
+	font-family: var(--font-mono);
+	font-size: var(--text-2xs);
+	letter-spacing: 0;
+	color: var(--color-text-subtle);
+	text-box: trim-both cap alphabetic;
+}
+
+.release[data-latest] .version {
+	background: var(--color-surface-control);
+	color: var(--color-text-strong);
+	box-shadow: var(--shadow-bevel), inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
+}
+
+.releaseNote {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.release:not([data-latest]) .releaseNote {
+	font-weight: var(--font-weight-regular);
+	color: var(--color-text-subtle);
+}
+
+.releaseDate {
+	justify-self: end;
+}
+
+/* ───────────── Design frame ───────────── */
+
+.frame {
+	--frame-pad: var(--space-12);
+	--heading-size: var(--text-md);
+	--fade: var(--duration-enter);
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	align-items: center;
+	gap: var(--space-12);
+	padding: var(--frame-pad);
+}
+
+.frame[data-slots] {
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: var(--space-16);
+}
+
+.frameCopy {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+	min-width: 0;
+}
+
+/* Each slot holds its wire and its design in one cell, so the structure never moves */
+.slot {
+	display: grid;
+	align-items: center;
+	justify-items: start;
+}
+
+.slot > * {
+	grid-area: 1 / 1;
+	transition:
+		opacity var(--fade) ease,
+		translate var(--fade) var(--ease-smooth);
+	transition-delay: var(--slot-delay, 0ms);
+}
+
+.slot[data-slot='line'] {
+	--slot-delay: 70ms;
+}
+
+.slot[data-slot='button'] {
+	--slot-delay: 140ms;
+}
+
+.slot[data-slot='time-0'] {
+	--slot-delay: 120ms;
+}
+
+.slot[data-slot='time-1'] {
+	--slot-delay: 180ms;
+}
+
+.slot[data-slot='time-2'] {
+	--slot-delay: 240ms;
+}
+
+.wire {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+	width: 100%;
+}
+
+.design {
+	opacity: 0;
+	translate: 0 var(--space-2);
+}
+
+.frame[data-mode='design'] .wire {
+	opacity: 0;
+}
+
+.frame[data-mode='design'] .design {
+	opacity: 1;
+	translate: none;
+}
+
+.heading {
+	font-family: var(--font-serif);
+	font-size: var(--heading-size);
+	font-weight: var(--font-weight-regular);
+	line-height: var(--leading-tight);
+	letter-spacing: var(--tracking-tight);
+	color: var(--color-text-strong);
+	text-wrap: balance;
+}
+
+/* The design system's solid button, small: the control surface with the bevel */
+.button,
+.wireButton {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: auto;
+	height: var(--control-xs);
+	padding: 0 var(--space-10);
+	border-radius: var(--radius-pill);
+	white-space: nowrap;
+}
+
+.button {
+	background: var(--color-surface-control);
+	box-shadow: var(--shadow-bevel), inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
+	font-size: var(--text-2xs);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text-strong);
+	text-box: trim-both cap alphabetic;
+}
+
+.wireButton {
+	flex-direction: row;
+	box-shadow: inset 0 0 0 var(--stroke-hairline) var(--ss-ink-5);
+}
+
+.times {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+}
+
+.time,
+.wireTime {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-6);
+	min-width: var(--space-64);
+	height: var(--control-xs);
+	padding: 0 var(--space-10);
+	border-radius: var(--radius-pill);
+}
+
+.time {
+	box-shadow: inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
+	font-size: var(--text-2xs);
+	font-variant-numeric: tabular-nums;
+	color: var(--color-text-subtle);
+	text-box: trim-both cap alphabetic;
+}
+
+.time[data-picked] {
+	background: var(--color-surface-control);
+	box-shadow: var(--shadow-bevel), inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text-strong);
+}
+
+.wireTime {
+	flex-direction: row;
+	box-shadow: inset 0 0 0 var(--stroke-hairline) var(--ss-ink-4);
+}

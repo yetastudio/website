@@ -1,0 +1,383 @@
+/*
+ * Alternative B: one project window stepping through six views, and the page index under it.
+ * Wide design 500 × 320 (a desktop canvas), compact 326 × 340 (a phone column), recomposed
+ * rather than shrunk. Geometry lives in custom properties (stage px); the compact design
+ * overrides them under the stage's data-layout.
+ */
+
+.container {
+	container-type: inline-size;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-20);
+	width: 100%;
+}
+
+.scene {
+	display: flex;
+	justify-content: center;
+}
+
+.stage {
+	--window-x: 20px;
+	--window-y: 20px;
+	--window-w: 460px;
+	--window-h: 340px;
+	--tabs-h: 40px;
+	--rest-x: 430px;
+	--rest-y: 40px;
+	--frame-w: 380px;
+	--card-w: 300px;
+	--metrics-w: 340px;
+	--chart-h: 76px;
+	--note-col: 84px;
+	--note-row: 72px;
+	--board-cols: 6;
+	width: 100%;
+}
+
+.stage :global(.ss-stage[data-layout='compact']) {
+	--window-x: 16px;
+	--window-y: 16px;
+	--window-w: 294px;
+	--window-h: 320px;
+	--rest-x: 270px;
+	--rest-y: 36px;
+	--frame-w: 262px;
+	--card-w: 262px;
+	--metrics-w: 262px;
+	--chart-h: 64px;
+	--note-col: 64px;
+	--note-row: 70px;
+	--board-cols: 5;
+}
+
+.window {
+	position: absolute;
+	left: var(--window-x);
+	top: var(--window-y);
+	width: var(--window-w);
+	height: var(--window-h);
+	/* The window's own shadow: it stays inside the gutter, so the stage never cuts it */
+	box-shadow: var(--ss-shadow-window);
+}
+
+.rest {
+	position: absolute;
+	left: var(--rest-x);
+	top: var(--rest-y);
+	width: 0;
+	height: 0;
+}
+
+/* ───────────── Tabs ───────────── */
+
+.tabsRow {
+	display: flex;
+	align-items: flex-end;
+	gap: var(--space-12);
+	height: var(--tabs-h);
+	padding: 0 var(--space-16);
+	background: var(--color-surface-raised);
+}
+
+.tabs {
+	flex: 1;
+	min-width: 0;
+}
+
+.tabsRow > :last-child:not(.tabs) {
+	padding-bottom: var(--space-10);
+	white-space: nowrap;
+}
+
+/* ───────────── Views ───────────── */
+
+.views {
+	position: relative;
+	height: calc(100% - var(--tabs-h));
+	overflow: hidden;
+}
+
+/* A page swap inside one window: the body crossfades on a short rise, the chrome stays */
+.view {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	translate: 0 var(--space-8);
+	transition:
+		opacity var(--duration-exit) ease,
+		translate var(--duration-exit) var(--ease-smooth);
+}
+
+.view[data-on] {
+	opacity: 1;
+	translate: none;
+}
+
+/* 01 Idea: a board of notes off the window's right and bottom edges */
+.board {
+	position: absolute;
+	top: var(--space-20);
+	left: var(--space-20);
+	display: grid;
+	grid-template-columns: repeat(var(--board-cols), var(--note-col));
+	grid-auto-rows: var(--note-row);
+	grid-auto-flow: dense;
+	gap: var(--space-14);
+}
+
+.board .boardNote {
+	position: relative;
+	width: auto;
+	height: auto;
+}
+
+.board .focus {
+	grid-column: 2 / span 2;
+	grid-row: 1 / span 2;
+	padding: var(--space-16) var(--space-14);
+}
+
+.board .focus > span {
+	font-size: var(--text-md);
+}
+
+/* 02 Path: three pages, placed for each design */
+.home {
+	--x: 40px;
+	--y: 56px;
+}
+
+.services {
+	--x: 156px;
+	--y: 150px;
+}
+
+.book {
+	--x: 286px;
+	--y: 56px;
+}
+
+.stage :global(.ss-stage[data-layout='compact']) .home {
+	--x: 16px;
+	--y: 44px;
+}
+
+.stage :global(.ss-stage[data-layout='compact']) .services {
+	--x: 84px;
+	--y: 148px;
+}
+
+.stage :global(.ss-stage[data-layout='compact']) .book {
+	--x: 164px;
+	--y: 44px;
+}
+
+/* 03 Design: the page being designed, its hero over the next section, off the window's foot */
+.designPage {
+	position: absolute;
+	inset: var(--space-24) var(--space-20) auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-14);
+}
+
+.frame {
+	--frame-pad: var(--space-16);
+	--heading-size: var(--text-lg);
+	width: var(--frame-w);
+	border-radius: var(--radius-lg);
+	background: var(--color-surface-raised);
+	box-shadow: var(--ss-shadow-ground);
+}
+
+.stage :global(.ss-stage[data-layout='compact']) .frame {
+	--heading-size: var(--text-md);
+	--frame-pad: var(--space-14);
+}
+
+.features {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: var(--space-12);
+	width: var(--frame-w);
+}
+
+.stage :global(.ss-stage[data-layout='compact']) .features {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.stage :global(.ss-stage[data-layout='compact']) .feature:last-child {
+	display: none;
+}
+
+.feature {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-10);
+	height: var(--feature-h);
+	--feature-h: 88px;
+	padding: var(--space-12);
+	border-radius: var(--radius-md);
+	background: var(--color-surface-raised);
+	box-shadow: var(--ss-shadow-card);
+}
+
+/* 04 Build, 05 Evolve, 06 Impact: one card on the canvas */
+.card {
+	position: absolute;
+	top: var(--space-24);
+	left: 50%;
+	width: var(--card-w);
+	overflow: hidden;
+	translate: -50% 0;
+	border-radius: var(--radius-lg);
+	background: var(--color-surface-raised);
+	box-shadow: var(--ss-shadow-ground);
+}
+
+.cardHead {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+	height: var(--row-h);
+	padding: 0 var(--space-12);
+	border-bottom: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.rule {
+	box-shadow: inset 0 var(--stroke-hairline) 0 var(--color-divider);
+}
+
+.metrics {
+	width: var(--metrics-w);
+}
+
+.metricsHead {
+	display: flex;
+	align-items: baseline;
+	gap: var(--space-8);
+	padding: var(--space-14) var(--space-20) 0;
+}
+
+.stage :global(.ss-stage[data-layout='compact']) .metricsHead {
+	padding-inline: var(--space-16);
+}
+
+.lift {
+	font-size: var(--text-xl);
+	font-weight: var(--font-weight-medium);
+	line-height: var(--leading-none);
+	letter-spacing: var(--tracking-tight);
+	font-variant-numeric: tabular-nums;
+	color: var(--color-text-strong);
+	opacity: 0;
+	translate: 0 var(--space-4);
+	transition:
+		opacity var(--duration-enter) ease,
+		translate var(--duration-enter) var(--ease-smooth);
+}
+
+.lift[data-on] {
+	opacity: 1;
+	translate: none;
+}
+
+.plot {
+	position: relative;
+	height: calc(var(--chart-h) + var(--space-20));
+	margin: var(--space-12) var(--space-20) var(--space-20);
+}
+
+.stage :global(.ss-stage[data-layout='compact']) .plot {
+	margin-inline: var(--space-16) 0;
+}
+
+.chart {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+}
+
+.launch {
+	position: absolute;
+	left: calc(var(--launch-x) * 1px);
+	top: 0;
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-4);
+	translate: calc(var(--scene-dot) / -2) 0;
+}
+
+.launchRule {
+	position: absolute;
+	left: calc(var(--launch-x) * 1px);
+	top: var(--space-16);
+	bottom: 0;
+	width: 0;
+	border-left: var(--stroke-hairline) dashed var(--ss-ink-5);
+}
+
+/* ───────────── Index (page HTML) ───────────── */
+
+.caption {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+}
+
+.index {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: var(--space-2);
+	list-style: none;
+}
+
+@container (min-width: 30rem) {
+	.index {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		grid-auto-flow: column;
+		grid-template-rows: repeat(3, auto);
+		column-gap: var(--space-16);
+	}
+}
+
+.indexItem {
+	position: relative;
+	display: flex;
+	align-items: baseline;
+	gap: var(--space-12);
+	padding: var(--space-6) var(--space-12);
+	border-radius: var(--radius-sm);
+	transition: background-color var(--duration-micro) var(--ease-out);
+}
+
+/* The beat on screen: a tinted row and a thin rule in its hue, the only colour in the index */
+.indexItem::before {
+	content: '';
+	position: absolute;
+	inset: var(--space-6) auto var(--space-6) 0;
+	width: var(--stroke-focus);
+	border-radius: var(--radius-pill);
+	background: var(--scene-hue);
+	opacity: 0;
+	transition: opacity var(--duration-micro) var(--ease-out);
+}
+
+.indexItem[data-on] {
+	background-color: var(--color-surface-tint);
+}
+
+.indexItem[data-on]::before {
+	opacity: 1;
+}
+
+.numeral {
+	font-variant-numeric: lining-nums tabular-nums;
+}
+
+.subtitle {
+	padding-inline: var(--space-12);
+}

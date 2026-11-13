@@ -1,0 +1,299 @@
+/*
+ * Alternative A: the six tile scenes. Each is drawn at the tile's own size (240 × 160) with
+ * one 16px gutter; panels hang off the tile's top-left corner and run off the right and the
+ * bottom. Geometry is in custom properties (stage px); spacing, type and colour read tokens.
+ */
+
+/* The cursor's resting point, an empty spot near its next move */
+.rest {
+	position: absolute;
+	left: var(--rest-x);
+	top: var(--rest-y);
+	width: 0;
+	height: 0;
+}
+
+/* ───────────── 01 Idea ───────────── */
+
+.idea {
+	--rest-x: 152px;
+	--rest-y: 122px;
+}
+
+.board {
+	--x: 16px;
+	--y: 16px;
+	--w: 248px;
+	--h: 168px;
+}
+
+.n1 {
+	--x: 12px;
+	--y: 12px;
+	--w: 56px;
+	--h: 44px;
+}
+
+.n3 {
+	--x: 192px;
+	--y: 12px;
+	--w: 56px;
+	--h: 44px;
+}
+
+.n4 {
+	--x: 12px;
+	--y: 72px;
+	--w: 56px;
+	--h: 44px;
+}
+
+.n5 {
+	--x: 192px;
+	--y: 72px;
+	--w: 56px;
+	--h: 44px;
+}
+
+/* The idea's note: the subject, a size up from its neighbours */
+.ideaNote {
+	--x: 80px;
+	--y: 12px;
+	--w: 96px;
+	--h: 62px;
+	z-index: 1;
+	opacity: 0;
+	scale: 0.92;
+	transition:
+		opacity var(--duration-exit) ease,
+		scale var(--duration-enter) var(--ease-smooth),
+		box-shadow var(--duration-micro) ease;
+}
+
+.ideaNote[data-shown] {
+	opacity: 1;
+	scale: 1;
+}
+
+/* Being written: the board's selection ring, in neutral ink */
+.ideaNote[data-editing] {
+	box-shadow:
+		var(--ss-shadow-card),
+		0 0 0 var(--stroke-hairline) color-mix(in srgb, var(--color-text-strong) 48%, transparent);
+}
+
+/* Where the double-click lands: the middle of the note's place */
+.spot {
+	position: absolute;
+	left: calc(var(--spot-x) - var(--stroke-hairline));
+	top: var(--spot-y);
+	width: var(--stroke-focus);
+	height: var(--stroke-focus);
+	--spot-x: 128px;
+	--spot-y: 44px;
+}
+
+/* ───────────── 02 Path ───────────── */
+
+.ground {
+	position: absolute;
+	inset: 0;
+}
+
+.home {
+	--x: 16px;
+	--y: 34px;
+}
+
+.services {
+	--x: 70px;
+	--y: 100px;
+}
+
+.book {
+	--x: 124px;
+	--y: 34px;
+}
+
+/* ───────────── 03 Intention ───────────── */
+
+.intention {
+	--rest-x: 206px;
+	--rest-y: 116px;
+}
+
+.tool {
+	--x: 16px;
+	--y: 16px;
+	--w: 248px;
+	--h: 168px;
+}
+
+.toolbar {
+	display: flex;
+	align-items: center;
+	gap: var(--space-12);
+	height: var(--space-40);
+	padding: 0 var(--space-6);
+	border-bottom: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.modes {
+	--modes-w: 156px;
+	width: var(--modes-w);
+}
+
+.toolCanvas {
+	position: absolute;
+	inset: var(--space-40) 0 0;
+}
+
+.frame {
+	--frame-pad: var(--space-10);
+	--heading-size: var(--text-sm);
+	position: absolute;
+	left: var(--space-12);
+	top: var(--space-12);
+	width: var(--frame-w);
+	--frame-w: 168px;
+	border-radius: var(--radius-md);
+	background: var(--color-surface-raised);
+	box-shadow: var(--ss-shadow-card);
+}
+
+/* ───────────── 04 Tech ───────────── */
+
+.stack {
+	--x: 16px;
+	--y: 16px;
+	--w: 248px;
+	--h: 176px;
+}
+
+.stackHead {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+	height: var(--row-h);
+	padding: 0 var(--space-12);
+	border-bottom: var(--stroke-hairline) solid var(--color-divider);
+}
+
+/* Rows end inside the shot so every check stays whole; the panel runs on */
+.stackRows {
+	--rows-w: 208px;
+	width: var(--rows-w);
+}
+
+.stackFiller {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+	height: var(--row-h);
+	padding: 0 var(--space-12);
+	box-shadow: inset 0 var(--stroke-hairline) 0 var(--color-divider);
+}
+
+/* ───────────── 05 Legacy ───────────── */
+
+.log {
+	--x: 16px;
+	--y: 16px;
+	--w: 248px;
+	--h: 176px;
+}
+
+.logHead {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+	height: var(--row-h);
+	padding: 0 var(--space-12);
+	border-bottom: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.logRow {
+	box-shadow: inset 0 var(--stroke-hairline) 0 var(--color-divider);
+}
+
+.logFiller {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+	height: var(--row-h);
+	padding: 0 var(--space-12);
+}
+
+/* ───────────── 06 Impact ───────────── */
+
+.metrics {
+	--x: 16px;
+	--y: 16px;
+	--w: 248px;
+	--h: 168px;
+}
+
+.metricsHead {
+	display: flex;
+	align-items: baseline;
+	gap: var(--space-8);
+	padding: var(--space-12) var(--space-12) 0;
+}
+
+/* The one big number: the lift since launch */
+.lift {
+	font-size: var(--text-lg);
+	font-weight: var(--font-weight-medium);
+	line-height: var(--leading-none);
+	letter-spacing: var(--tracking-tight);
+	font-variant-numeric: tabular-nums;
+	color: var(--color-text-strong);
+	opacity: 0;
+	translate: 0 var(--space-4);
+	transition:
+		opacity var(--duration-enter) ease,
+		translate var(--duration-enter) var(--ease-smooth);
+}
+
+.lift[data-on] {
+	opacity: 1;
+	translate: none;
+}
+
+.plot {
+	--plot-x: 12px;
+	--plot-y: 30px;
+	position: absolute;
+	left: var(--plot-x);
+	top: calc(var(--space-12) + var(--plot-y));
+	width: var(--plot-w);
+	height: var(--plot-h);
+	--plot-w: 196px;
+	--plot-h: 86px;
+}
+
+.chart {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+}
+
+/* The launch: a hairline down the chart and a label above it, the beat's hue on its dot */
+.launch {
+	position: absolute;
+	left: calc(var(--launch-x) * 1px);
+	top: 0;
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-4);
+	translate: calc(var(--scene-dot) / -2) 0;
+}
+
+.launchRule {
+	position: absolute;
+	left: calc(var(--launch-x) * 1px);
+	top: var(--space-16);
+	bottom: 0;
+	width: 0;
+	border-left: var(--stroke-hairline) dashed var(--ss-ink-5);
+}
