@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { Children, useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
+import { Children, useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 
 //! Hooks
 import { useTranslations } from 'next-intl';
@@ -29,15 +29,33 @@ export type CarouselProps = {
 };
 
 /**
- * Inspo component: the horizontal, scroll-snapping track the mobile frames draw
- * (cards overflow to the right, the next one peeks in). Native scrolling, so touch,
- * trackpad and keyboard all work; dots are added because Figma draws none.
+ * Inspo component: the horizontal, scroll-snapping track the mobile frames draw. The card
+ * on show sits centred on the screen, the first one included, and its neighbours peek in
+ * from both sides. Native scrolling, so touch, trackpad and keyboard all work; dots are
+ * added because Figma draws none.
  */
 export function Carousel({ label, itemLabel, children, gap = 'md', showDots = true, className }: CarouselProps) {
 	const t = useTranslations('common');
 	const track = useRef<HTMLUListElement>(null);
 	const [index, setIndex] = useState(0);
 	const items = Children.toArray(children);
+
+	// Centre the first slide: the inline inset is half the track minus half a slide, kept in
+	// step with resizes. Written straight to a custom property, so it never re-renders.
+	useLayoutEffect(() => {
+		const node = track.current;
+		const first = node?.children[0];
+		if (!node || !(first instanceof HTMLElement)) return;
+		const center = () => {
+			const inset = Math.max(0, (node.clientWidth - first.offsetWidth) / 2);
+			node.style.setProperty('--carousel-inset', `${inset}px`);
+		};
+		center();
+		const observer = new ResizeObserver(center);
+		observer.observe(node);
+		observer.observe(first);
+		return () => observer.disconnect();
+	}, [items.length]);
 
 	useEffect(() => {
 		const node = track.current;
@@ -70,7 +88,9 @@ export function Carousel({ label, itemLabel, children, gap = 'md', showDots = tr
 		const slide = node?.children[next] as HTMLElement | undefined;
 		if (!node || !slide) return;
 		const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		node.scrollTo({ left: slide.offsetLeft - node.offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
+		// Scroll so the slide's centre meets the track's centre.
+		const left = slide.offsetLeft - node.offsetLeft - (node.clientWidth - slide.offsetWidth) / 2;
+		node.scrollTo({ left, behavior: reduce ? 'auto' : 'smooth' });
 	}, []);
 
 	return (
