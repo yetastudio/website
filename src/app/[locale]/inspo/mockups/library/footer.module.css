@@ -1,0 +1,255 @@
+/* Section library · 11 Footer. A colophon, not a sitemap: neutral grounds, one glyph, dot or numeral in colour. */
+
+/* Shared: a quiet link column. */
+.column {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+}
+
+/* ───────────── A · Sign-off ───────────── */
+
+.sign {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-20);
+	padding: var(--space-32) var(--space-20) var(--space-12);
+}
+
+/* One line and one action: stacked on a phone, a row from 30rem. */
+.signLead {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--space-14);
+}
+
+.signColumns {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--space-20);
+}
+
+.signAbout {
+	grid-column: 1 / -1;
+}
+
+.signBase {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: var(--space-8);
+	padding-top: var(--space-14);
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+}
+
+/* The real wordmark as the page's last word, edge to edge (Claude Type): the lockup with its mark
+   runs about 7.4em wide, so 12.5cqi fills the frame without clipping. */
+.sign .signLine {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	font-size: 12.5cqi;
+}
+
+
+@container (min-width: 30rem) {
+	.sign {
+		gap: var(--space-24);
+		padding: var(--space-40) var(--space-40) var(--space-16);
+	}
+
+	.signLead {
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.signColumns {
+		grid-template-columns: 1fr 1fr 2fr;
+	}
+
+	.signAbout {
+		grid-column: auto;
+	}
+}
+
+/* ───────────── B · Colophon ───────────── */
+
+/* The site footer's inverse band (Figma), read inside .scheme-inverse: Koto's near-black on the light page. */
+.colophon {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-24);
+	padding: var(--space-32) var(--space-20) var(--space-16);
+	background: var(--color-surface-band);
+	color: var(--color-text);
+}
+
+.colophonHead {
+	display: grid;
+	gap: var(--space-20);
+}
+
+/* Koto's two-tone heading: the question strong, the answer faint. */
+.colophonTitle {
+	font-size: clamp(var(--text-xl), 5.6cqi, var(--text-4xl));
+	letter-spacing: var(--tracking-tight);
+}
+
+.colophonFaint {
+	color: var(--color-text-faint);
+}
+
+/* The small photo card (Koto's studio photo; here the latest shot). */
+.colophonCard {
+	--colophon-card: 14rem;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+	width: min(100%, var(--colophon-card));
+	margin: 0;
+}
+
+.colophonShot {
+	--colophon-shot-aspect: 16 / 10;
+	position: relative;
+	display: block;
+	aspect-ratio: var(--colophon-shot-aspect);
+	overflow: hidden;
+	border-radius: var(--radius-md);
+	box-shadow: inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
+}
+
+.colophonCaption {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-8);
+}
+
+.colophonRows {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+}
+
+/* Contact rows split by hairlines: a faint label, then the value. */
+.colophonRow {
+	display: grid;
+	grid-template-columns: 1fr;
+	align-items: center;
+	gap: var(--space-4);
+	padding-block: var(--space-12);
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.colophonRow > dd {
+	margin: 0;
+}
+
+.colophonBase {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: var(--space-8);
+}
+
+@container (min-width: 30rem) {
+	.colophon {
+		padding: var(--space-40) var(--space-40) var(--space-20);
+	}
+
+	.colophonHead {
+		grid-template-columns: 1fr auto;
+		align-items: start;
+		gap: var(--space-24);
+	}
+
+	.colophonCard {
+		--colophon-card: 11rem;
+	}
+
+	.colophonRow {
+		grid-template-columns: 1fr 3fr;
+		gap: var(--space-16);
+	}
+}
+
+/* ───────────── C · Readout ───────────── */
+
+.readout {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-24);
+	padding: var(--space-12) var(--space-12) 0;
+}
+
+/* Legend: every link pressed into one thin band at the top. */
+.readoutBand {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-10) var(--space-16);
+	padding: var(--space-8) var(--space-8) var(--space-8) var(--space-12);
+	border-bottom: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.readoutLinks {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-4) var(--space-14);
+}
+
+.readoutMeter {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: var(--space-16);
+	padding-inline: var(--space-12);
+}
+
+.readoutFigure {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+}
+
+/* The one accent: the distance scrolled, the only numeral in colour (Seasats). */
+.readoutHue {
+	color: var(--hue);
+}
+
+.readoutLegal {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: var(--space-2);
+	text-align: end;
+}
+
+/* The ✹ rising from the frame's lower edge, cropped at the horizon like Legend's moon. */
+.readoutRise {
+	--readout-rise: 30cqi;
+	display: flex;
+	justify-content: center;
+	height: var(--readout-rise);
+	overflow: hidden;
+}
+
+@container (min-width: 30rem) {
+	.readout {
+		gap: var(--space-32);
+		padding: var(--space-16) var(--space-16) 0;
+	}
+
+	.readoutMeter {
+		padding-inline: var(--space-24);
+	}
+
+	.readoutRise {
+		--readout-rise: 26cqi;
+	}
+}

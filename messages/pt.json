@@ -26,7 +26,9 @@
     "label": "Tema",
     "system": "Sistema",
     "light": "Claro",
-    "dark": "Escuro"
+    "dark": "Escuro",
+    "cycle": "Tema: {current}. Mudar para {next}",
+    "current": "Tema: {current}"
   },
   "nav": {
     "label": "Principal",
@@ -63,6 +65,37 @@
       "goals": "Seus objetivos são os nossos",
       "ideas": "Ideias que movem marcas",
       "collab": "Feitos para colaborar"
+    },
+    "tour": {
+      "insight": {
+        "quote": "“O cadastro é longo demais.”",
+        "metric": "Cadastros"
+      },
+      "together": {
+        "ask": "Dá pra deixar o hero mais forte?",
+        "reply": "Feito. Dá uma olhada.",
+        "resolved": "Resolvido"
+      },
+      "luck": {
+        "test": "Teste A/B",
+        "winner": "Vencedora"
+      },
+      "defy": {
+        "metric": "Alcance da marca"
+      },
+      "pixel": {
+        "cta": "Começar um projeto"
+      },
+      "vision": {
+        "title": "Pronto para lançar",
+        "cta": "Começar",
+        "live": "No ar"
+      },
+      "goals": {
+        "label": "Meta do trimestre",
+        "metric": "Cadastros",
+        "reached": "Batida"
+      }
     }
   },
   "ourCraft": {
@@ -113,6 +146,7 @@
     "intro": "É assim que nossos processos de <serif>design</serif> e <serif>desenvolvimento</serif><brmd></brmd> se unem para gerar <em>impacto</em>.",
     "caseStudy": "Estudo de caso",
     "seeMore": "Ver mais",
+    "viewCaseStudy": "Ver o estudo de caso completo",
     "viewProject": "Ver projeto",
     "facts": {
       "client": "Cliente",
@@ -139,11 +173,44 @@
         "url": "yeta.studio",
         "about": "A Yeta Studio é uma agência de design e desenvolvimento que cria produtos digitais para marcas que não deixam nada ao acaso.",
         "challenge": "Nosso próprio site precisava provar o ofício: um único sistema para marca, produto e marketing, em dois temas e três idiomas.",
-        "result": "Um design system baseado em tokens e uma landing em que cada seção reutiliza os mesmos componentes, no claro ou no escuro."
+        "result": "Um design system baseado em tokens e uma landing em que cada seção reutiliza os mesmos componentes, no claro ou no escuro.",
+        "tagline": "O site do nosso próprio estúdio, pensado para provar o ofício que vendemos: um único sistema para marca, produto e marketing.",
+        "details": {
+          "about": {
+            "p1": "A Yeta Studio é uma agência de design e desenvolvimento da Argentina. Criamos sites e produtos digitais para marcas que valorizam a <serif>excelência visual</serif> e não deixam nada ao acaso.",
+            "p2": "Antes de cuidar da marca de outras pessoas, precisávamos mostrar a nossa: quem somos, como trabalhamos e o padrão que todo cliente pode esperar de nós."
+          },
+          "challenge": {
+            "p1": "O site de uma agência é a primeira peça do portfólio. O nosso precisava carregar a marca — o ✹, a tipografia metalizada, os acentos editoriais — sem virar uma peça única que ninguém conseguisse manter.",
+            "p2": "Também precisava funcionar para todo mundo com quem conversamos: no claro e no escuro, no celular ou numa tela de 1920, e em inglês, espanhol e português, com o mesmo cuidado em cada combinação."
+          },
+          "result": {
+            "p1": "Primeiro desenhamos o sistema: cor, tipografia, espaçamento e movimento como tokens, e cada card, chip e botão desenhado uma vez no Figma e construído uma vez no código.",
+            "p2": "A landing é montada só com essas peças: trocar de tema ou de idioma nunca quebra um layout, e cada página nova — esta incluída — começa das mesmas partes."
+          }
+        },
+        "highlights": {
+          "themes": "temas, claro e escuro",
+          "languages": "idiomas: inglês, espanhol e português",
+          "components": "componentes no design system",
+          "tokens": "fonte de tokens para cada cor, espaço e tipografia"
+        }
       }
     },
     "carousel": "Estudos de caso",
     "card": "estudo de caso"
+  },
+  "caseStudy": {
+    "metaTitle": "Estudo de caso: {name}",
+    "back": "Todos os trabalhos",
+    "visit": "Visitar {url}",
+    "gallery": "Telas do projeto",
+    "screen": "tela",
+    "shotAlt": "{name}, tela {number}",
+    "sheet": "Ficha do projeto",
+    "highlights": "Em números",
+    "cta": "Quer resultados assim? Vamos fazer algo <em>grande</em> juntos.",
+    "ctaButton": "Comece seu projeto"
   },
   "ourProcess": {
     "title": "Nosso processo",
@@ -180,7 +247,40 @@
     },
     "carousel": "Nosso processo, passo a passo",
     "card": "passo",
-    "step": "Passo"
+    "step": "Passo",
+    "scenes": {
+      "discover": {
+        "doc": "Notas da entrevista",
+        "quote": "Nunca sei qual plano escolher.",
+        "tag": "Insight"
+      },
+      "define": {
+        "doc": "Briefing do projeto",
+        "draft": "Rascunho",
+        "approved": "Aprovado"
+      },
+      "design": {
+        "frame": "Início",
+        "radius": "Raio"
+      },
+      "develop": {
+        "file": "page.tsx",
+        "line": "return <Hero />",
+        "command": "npm run build",
+        "building": "Compilando…",
+        "passed": "Compilado"
+      },
+      "integrate": {
+        "connect": "Conectar",
+        "connected": "Conectado"
+      },
+      "launch": {
+        "env": "Produção",
+        "building": "Compilando",
+        "ready": "Pronto",
+        "url": "suamarca.com.br"
+      }
+    }
   },
   "testimonials": {
     "title": "Depoimentos",

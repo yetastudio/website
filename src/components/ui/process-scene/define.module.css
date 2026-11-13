@@ -1,0 +1,58 @@
+/* Define: a project brief hung off the tile's left edge, running off the bottom. */
+
+.stage {
+	/* Illustration geometry, in stage px (the tile is 342 × 160): the brief's
+	   right edge keeps the tile's 24 gutter, its words start on the same gutter */
+	--brief-left: -32px;
+	--brief-top: 24px;
+	--brief-width: 350px;
+	--brief-height: 168px;
+	--brief-inset: 56px;
+}
+
+.brief {
+	left: var(--brief-left);
+	top: var(--brief-top);
+	width: var(--brief-width);
+	height: var(--brief-height);
+	padding: var(--space-14) var(--space-14) 0 var(--brief-inset);
+}
+
+.head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-12);
+	height: var(--space-32);
+	padding-bottom: var(--space-12);
+	border-bottom: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.status {
+	flex: none;
+	transition:
+		background-color var(--duration-enter) ease,
+		color var(--duration-enter) ease;
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+	padding-top: var(--space-4);
+}
+
+.row {
+	display: flex;
+	align-items: center;
+	gap: var(--space-10);
+	height: var(--space-24);
+}
+
+.item {
+	transition: background-color var(--duration-enter) ease;
+}
+
+.owner {
+	flex: none;
+	margin-left: auto;
+}

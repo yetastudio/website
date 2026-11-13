@@ -1,0 +1,113 @@
+/*
+ * Proposal switcher for a library shelf. The motion is transitions.dev: page side-by-side (08)
+ * between proposals and text states swap (04) on the reference line. Their tunables live on the
+ * element that runs them (custom property lines), with the snippet values unchanged.
+ */
+
+.variants {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-16);
+}
+
+.bar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--space-12) var(--space-16);
+}
+
+/* ── transitions.dev 04 · Text states swap ── */
+
+.textSwap {
+	--text-swap-dur: 150ms;
+	--text-swap-translate-y: 4px;
+	--text-swap-blur: 2px;
+	--text-swap-ease: ease-in-out;
+	display: inline-block;
+	color: var(--color-text-strong);
+	transform: translateY(0);
+	filter: blur(0);
+	opacity: 1;
+	transition:
+		transform var(--text-swap-dur) var(--text-swap-ease),
+		filter var(--text-swap-dur) var(--text-swap-ease),
+		opacity var(--text-swap-dur) var(--text-swap-ease);
+	will-change: transform, filter, opacity;
+}
+
+.textSwap.isExit {
+	transform: translateY(calc(var(--text-swap-translate-y) * -1));
+	filter: blur(var(--text-swap-blur));
+	opacity: 0;
+}
+
+.textSwap.isEnterStart {
+	transform: translateY(var(--text-swap-translate-y));
+	filter: blur(var(--text-swap-blur));
+	opacity: 0;
+	transition: none;
+}
+
+/* ── transitions.dev 08 · Page side-by-side ── */
+
+/* Adapted from absolute pages to one shared grid cell, so the shelf keeps the tallest proposal's height. */
+.pageSlide {
+	--page-slide-dur: 250ms;
+	--page-fade-dur: 250ms;
+	--page-slide-distance: 8px;
+	--page-blur: 3px;
+	--page-stagger: 0ms;
+	--page-exit-enabled: 1;
+	--page-slide-ease: cubic-bezier(0.22, 1, 0.36, 1);
+	--page-fade-ease: cubic-bezier(0.22, 1, 0.36, 1);
+	/* transitions.dev 01 · Card resize: the stack takes the height of the proposal on show. */
+	--resize-dur: 300ms;
+	--resize-ease: cubic-bezier(0.22, 1, 0.36, 1);
+	position: relative;
+	display: grid;
+	width: 100%;
+	height: var(--slide-height, auto);
+	overflow: hidden;
+	transition: height var(--resize-dur) var(--resize-ease);
+	will-change: height;
+}
+
+.page[data-side='before'] {
+	--t-page-from-x: calc(var(--page-slide-distance) * -1);
+}
+
+.page[data-side='after'] {
+	--t-page-from-x: var(--page-slide-distance);
+}
+
+.page {
+	grid-area: 1 / 1;
+	align-self: start;
+	min-width: 0;
+	opacity: 0;
+	pointer-events: none;
+	transform: translateX(calc(var(--t-page-from-x, 0px) * var(--page-exit-enabled)));
+	filter: blur(calc(var(--page-blur) * var(--page-exit-enabled)));
+	transition:
+		opacity var(--page-fade-dur) var(--page-fade-ease),
+		transform var(--page-slide-dur) var(--page-slide-ease),
+		filter var(--page-slide-dur) var(--page-slide-ease);
+	will-change: opacity, transform, filter;
+}
+
+.page[data-on] {
+	opacity: 1;
+	pointer-events: auto;
+	transform: translateX(0);
+	filter: blur(0);
+	transition-delay: var(--page-stagger);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.textSwap,
+	.pageSlide,
+	.page {
+		transition: none !important;
+	}
+}

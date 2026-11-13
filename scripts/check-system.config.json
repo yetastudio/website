@@ -3,7 +3,8 @@
     "src"
   ],
   "tokenSources": [
-    "src/styles/tokens.css"
+    "src/styles/tokens.css",
+    "vendor/stageshow/yeta.css"
   ],
   "uiDir": "src/components/ui",
   "registry": "registry.json",

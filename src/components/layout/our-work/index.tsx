@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { SectionHeader, type Project } from '@/components/ui';
 import { WorkGallery } from './gallery';
 import { PROJECT_TOOLS, SHOTS } from '../content';
+import { projectSlug } from './projects';
 
 //! Utils
 import { cx } from '@/lib/cx';
@@ -19,6 +20,7 @@ export function OurWork() {
 	const t = useTranslations('ourWork');
 
 	const base: Omit<Project, 'shots'> = {
+		slug: projectSlug('yeta'),
 		name: t('projects.yeta.name'),
 		year: t('projects.yeta.year'),
 		country: t('projects.yeta.country'),

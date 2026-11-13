@@ -25,6 +25,12 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@stageshow": [
+        "./vendor/stageshow/index.ts"
+      ],
+      "@stageshow/*": [
+        "./vendor/stageshow/*"
       ]
     }
   },

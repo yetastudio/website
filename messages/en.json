@@ -26,7 +26,9 @@
     "label": "Theme",
     "system": "System",
     "light": "Light",
-    "dark": "Dark"
+    "dark": "Dark",
+    "cycle": "Theme: {current}. Switch to {next}",
+    "current": "Theme: {current}"
   },
   "nav": {
     "label": "Main",
@@ -63,6 +65,37 @@
       "goals": "Your goals are our goals",
       "ideas": "Ideas that move brands",
       "collab": "Designed to collaborate"
+    },
+    "tour": {
+      "insight": {
+        "quote": "“The sign-up is too long.”",
+        "metric": "Sign-ups"
+      },
+      "together": {
+        "ask": "Can the hero feel bolder?",
+        "reply": "Done. Take a look.",
+        "resolved": "Resolved"
+      },
+      "luck": {
+        "test": "A/B test",
+        "winner": "Winner"
+      },
+      "defy": {
+        "metric": "Brand reach"
+      },
+      "pixel": {
+        "cta": "Start a project"
+      },
+      "vision": {
+        "title": "Ready to launch",
+        "cta": "Get started",
+        "live": "Live"
+      },
+      "goals": {
+        "label": "Q3 goal",
+        "metric": "Sign-ups",
+        "reached": "Reached"
+      }
     }
   },
   "ourCraft": {
@@ -113,6 +146,7 @@
     "intro": "This is how our <serif>design</serif> and <serif>development</serif><brmd></brmd> processes come together to create <em>impact</em>.",
     "caseStudy": "Case Study",
     "seeMore": "See more",
+    "viewCaseStudy": "View full case study",
     "viewProject": "View project",
     "facts": {
       "client": "Client",
@@ -139,11 +173,44 @@
         "url": "yeta.studio",
         "about": "Yeta Studio is a design and development agency that builds digital products for brands that refuse to leave things to luck.",
         "challenge": "Our own site had to prove the craft: one system for brand, product and marketing, in two themes and three languages.",
-        "result": "A token-driven design system and a landing page where every section reuses the same components, light or dark."
+        "result": "A token-driven design system and a landing page where every section reuses the same components, light or dark.",
+        "tagline": "Our own studio site, built to prove the craft we sell: one system for brand, product and marketing.",
+        "details": {
+          "about": {
+            "p1": "Yeta Studio is a design and development agency from Argentina. We build websites and digital products for brands that value <serif>visual excellence</serif> and refuse to leave things to luck.",
+            "p2": "Before taking on anyone else’s brand, we had to show our own: who we are, how we work and the standard every client can expect from us."
+          },
+          "challenge": {
+            "p1": "An agency site is its first portfolio piece. Ours had to carry the brand — the ✹ mark, the metallic display type, the editorial accents — without becoming a one-off nobody could maintain.",
+            "p2": "It also had to work for everyone we talk to: in light and dark, on a phone or a 1920 screen, and in English, Spanish and Portuguese, with the same care in every combination."
+          },
+          "result": {
+            "p1": "We designed the system first: color, type, space and motion as tokens, and every card, chip and button drawn once in Figma and built once in code.",
+            "p2": "The landing is assembled only from those pieces, so switching theme or language never breaks a layout, and every new page — this one included — starts from the same parts."
+          }
+        },
+        "highlights": {
+          "themes": "themes, light and dark",
+          "languages": "languages: English, Spanish and Portuguese",
+          "components": "components in the design system",
+          "tokens": "token source for every color, space and type step"
+        }
       }
     },
     "carousel": "Case studies",
     "card": "case study"
+  },
+  "caseStudy": {
+    "metaTitle": "Case study: {name}",
+    "back": "All work",
+    "visit": "Visit {url}",
+    "gallery": "Project screens",
+    "screen": "screen",
+    "shotAlt": "{name}, screen {number}",
+    "sheet": "Project sheet",
+    "highlights": "In numbers",
+    "cta": "Want results like these? Let’s make something <em>great</em> together.",
+    "ctaButton": "Start your project"
   },
   "ourProcess": {
     "title": "Our Process",
@@ -180,7 +247,40 @@
     },
     "carousel": "Our process, step by step",
     "card": "step",
-    "step": "Step"
+    "step": "Step",
+    "scenes": {
+      "discover": {
+        "doc": "Interview notes",
+        "quote": "I never know which plan to pick.",
+        "tag": "Insight"
+      },
+      "define": {
+        "doc": "Project brief",
+        "draft": "Draft",
+        "approved": "Approved"
+      },
+      "design": {
+        "frame": "Home",
+        "radius": "Radius"
+      },
+      "develop": {
+        "file": "page.tsx",
+        "line": "return <Hero />",
+        "command": "npm run build",
+        "building": "Building…",
+        "passed": "Compiled"
+      },
+      "integrate": {
+        "connect": "Connect",
+        "connected": "Connected"
+      },
+      "launch": {
+        "env": "Production",
+        "building": "Building",
+        "ready": "Ready",
+        "url": "yourbrand.com"
+      }
+    }
   },
   "testimonials": {
     "title": "Testimonials",

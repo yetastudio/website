@@ -1,0 +1,69 @@
+/* Together: a review thread, the client's question and the studio's reply on one text column. */
+
+.row {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+	height: var(--space-20);
+	white-space: nowrap;
+}
+
+/* Each arrival opens its own room, so the lines under it move with it */
+.next {
+	padding-top: var(--space-10);
+}
+
+/* Resolved sits on the words' column, under the reply */
+.resolved {
+	padding-left: var(--space-28);
+}
+
+.tick {
+	color: var(--scene-accent);
+}
+
+/* Typing: three dots taking turns, in the reply's own slot */
+.typing {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-4);
+	height: var(--space-20);
+}
+
+.typing > span {
+	--dot: 5px;
+
+	width: var(--dot);
+	height: var(--dot);
+	border-radius: var(--radius-pill);
+	background: var(--ss-ink-5);
+	animation: why-typing 1s var(--ease-in-out) infinite;
+}
+
+.typing > span:nth-child(2) {
+	animation-delay: 160ms;
+}
+
+.typing > span:nth-child(3) {
+	animation-delay: 320ms;
+}
+
+.after {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+	margin-top: var(--space-14);
+	padding-left: var(--space-28);
+}
+
+@keyframes why-typing {
+	0%,
+	60%,
+	100% {
+		opacity: 0.35;
+	}
+
+	30% {
+		opacity: 1;
+	}
+}

@@ -1,0 +1,141 @@
+/*
+ * /inspo/playground: the library proposals mounted as a page at real size. The page column and
+ * rhythm match the landing (page-max, gutters, section gap); the only chrome is a floating toolbar
+ * and a per-section switch.
+ */
+
+.root {
+	--pg-toolbar-height: 3.25rem;
+	position: relative;
+	min-height: 100svh;
+	background: var(--color-surface);
+	color: var(--color-text);
+}
+
+/* The chosen navigation proposal is the page header, pinned at the top. */
+.header {
+	position: sticky;
+	inset-block-start: 0;
+	z-index: var(--z-header);
+	padding-inline: var(--page-gutter);
+}
+
+/* Nav C docks at the foot of the viewport (Büro), above the toolbar. */
+.header[data-nav='c'] {
+	position: fixed;
+	inset-block: auto calc(var(--pg-toolbar-height) + var(--space-16) + var(--space-12));
+	inset-inline: 0;
+	pointer-events: none;
+}
+
+.header[data-nav='c'] > * {
+	pointer-events: auto;
+}
+
+/* The landing's own page column and section rhythm. */
+.page {
+	display: flex;
+	flex-direction: column;
+	gap: var(--section-gap);
+	width: 100%;
+	max-width: calc(var(--page-max) + var(--page-gutter) * 2);
+	margin-inline: auto;
+	padding: var(--space-20) var(--page-gutter) var(--section-gap);
+}
+
+.footer {
+	width: 100%;
+	max-width: calc(var(--page-max) + var(--page-gutter) * 2);
+	margin-inline: auto;
+	padding: 0 var(--page-gutter) calc(var(--pg-toolbar-height) + var(--space-32));
+}
+
+.slot {
+	position: relative;
+}
+
+/*
+ * The section's A/B/C switch: transitions.dev 17 (tooltip), delayed fade and scale in on hover or
+ * focus, instant out. Touch screens without hover keep it visible. Hidden in clean mode.
+ */
+.switch {
+	--tt-in-dur: 150ms;
+	--tt-out-dur: 50ms;
+	--tt-scale: 0.98;
+	--tt-delay: 80ms;
+	--tt-in-ease: ease-out;
+	--tt-out-ease: ease-out;
+	position: absolute;
+	inset-block-start: var(--space-12);
+	inset-inline-end: var(--space-12);
+	z-index: var(--z-raised);
+	display: none;
+	align-items: center;
+	gap: var(--space-8);
+	transform-origin: 100% 0;
+	opacity: 0;
+	transform: scale(var(--tt-scale));
+	transition:
+		opacity var(--tt-out-dur) var(--tt-out-ease),
+		transform var(--tt-out-dur) var(--tt-out-ease);
+}
+
+.root[data-controls] .switch {
+	display: inline-flex;
+}
+
+.switch:focus-within {
+	opacity: 1;
+	transform: scale(1);
+	transition-duration: var(--tt-in-dur);
+	transition-timing-function: var(--tt-in-ease);
+	transition-delay: var(--tt-delay);
+}
+
+@media (hover: hover) {
+	.slot:hover > .switch {
+		opacity: 1;
+		transform: scale(1);
+		transition-duration: var(--tt-in-dur);
+		transition-timing-function: var(--tt-in-ease);
+		transition-delay: var(--tt-delay);
+	}
+}
+
+@media (hover: none) {
+	.switch {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+.switchLabel {
+	display: none;
+	padding-inline-start: var(--space-8);
+	white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+	.switchLabel {
+		display: inline;
+	}
+}
+
+/* The floating toolbar: page, theme and the switches toggle. */
+.toolbar {
+	position: fixed;
+	inset-block-end: var(--space-16);
+	inset-inline-start: 50%;
+	z-index: var(--z-overlay);
+	display: flex;
+	align-items: center;
+	gap: var(--space-6);
+	max-width: calc(100% - var(--page-gutter) * 2);
+	translate: -50% 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.switch {
+		transition: none !important;
+	}
+}

@@ -1,0 +1,98 @@
+/*
+ * Why Yeta scenes: what the seven scenes share on top of the kit's Yeta look.
+ *
+ * A scene is a transparent window of 288 × 148: its host (the unfolded chip, the
+ * tablet panel, the phone card) draws the surface it sits on. The kit's Yeta look
+ * reads semantic light-dark() tokens, so the product shot follows the page theme
+ * with no theme prop. Surfaces stay neutral; the chip's hue is a small accent only
+ * (a meter, a dot, an icon), and its washes are 10% of the color.
+ *
+ * Lengths in custom properties are illustration geometry (where a panel hangs in
+ * the window), not UI spacing; UI spacing, radii and type read the scale.
+ */
+
+.root {
+	--scene-width: 288px;
+	--scene-accent: var(--color-text-strong);
+
+	position: relative;
+	width: var(--scene-width);
+	max-width: 100%;
+	aspect-ratio: 288 / 148;
+	overflow: hidden;
+	border-radius: inherit;
+	pointer-events: none;
+	user-select: none;
+}
+
+.root[data-scene='insight'] { --scene-accent: var(--color-accent-orange); }
+.root[data-scene='together'] { --scene-accent: var(--color-accent-yellow); }
+.root[data-scene='luck'] { --scene-accent: var(--color-accent-green); }
+.root[data-scene='defy'] { --scene-accent: var(--color-accent-red); }
+.root[data-scene='pixel'] { --scene-accent: var(--color-accent-violet); }
+.root[data-scene='vision'] { --scene-accent: var(--color-accent-blue); }
+.root[data-scene='goals'] { --scene-accent: var(--color-accent-green); }
+
+/* The kit's Yeta look, with the chip's hue as the one accent. Its soft fills are
+   10% of the hue; the ground is the host's surface. */
+.root :global(.ss-stage) {
+	--ss-accent: var(--scene-accent);
+	--ss-accent-2: var(--scene-accent);
+	--ss-accent-soft: color-mix(in srgb, var(--scene-accent) 10%, transparent);
+	--ss-accent-text: var(--scene-accent);
+	--ss-success-soft: color-mix(in srgb, var(--color-accent-green) 10%, transparent);
+
+	overflow: hidden;
+	background: transparent;
+}
+
+/* The panel each scene hangs from the window's top-left corner, off its right and bottom edges */
+.panel {
+	--panel-inset: 16px;
+	--panel-width: 300px;
+	--panel-height: 150px;
+
+	position: absolute;
+	top: var(--panel-inset);
+	left: var(--panel-inset);
+	width: var(--panel-width);
+	height: var(--panel-height);
+	overflow: hidden;
+	padding: var(--space-14) var(--space-16);
+	border-radius: var(--radius-lg);
+	background: var(--color-surface-raised);
+	box-shadow: var(--ss-shadow-ground);
+}
+
+/* UI type: 14 for the words the story is about, 12 for the words around them */
+.strong {
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-medium);
+	line-height: var(--leading-snug);
+	color: var(--color-text-strong);
+}
+
+.label {
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-regular);
+	line-height: var(--leading-snug);
+	color: var(--color-text-subtle);
+}
+
+/* Arrives whole from just above and lifts off the same way */
+.arrive {
+	opacity: 0;
+	transform: translateY(calc(var(--space-4) * -1));
+	will-change: transform;
+	transition:
+		opacity var(--duration-exit) ease,
+		transform var(--duration-exit) ease;
+}
+
+.arrive[data-on] {
+	opacity: 1;
+	transform: none;
+	transition:
+		opacity var(--duration-enter) var(--ease-out),
+		transform var(--duration-overlay) var(--ease-out);
+}

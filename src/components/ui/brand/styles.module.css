@@ -16,3 +16,24 @@
 	flex-shrink: 0;
 	user-select: none;
 }
+
+/* Wordmark: the hero lockup, scaled by font-size. */
+.wordmark {
+	--wordmark-gap: 0.18em; /* hero: 16px gap on 89.6px type */
+	display: inline-flex;
+	align-items: center;
+	gap: var(--wordmark-gap);
+	font-family: var(--font-sans);
+	font-weight: var(--font-weight-bold);
+	line-height: var(--leading-none);
+	letter-spacing: var(--tracking-tight);
+	white-space: nowrap;
+}
+
+.wordmarkWord {
+	color: var(--color-text-strong);
+	background-image: var(--gradient-display);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}

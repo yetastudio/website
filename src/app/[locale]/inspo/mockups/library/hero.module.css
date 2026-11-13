@@ -1,0 +1,188 @@
+/* Section library · 02 Hero. Neutral first: colour is a tint or one word, never the ground. */
+
+/* ───────────── A · Sky band ───────────── */
+
+.skyBand {
+	--sky-band-height: 9rem;
+	display: grid;
+	place-items: start center;
+	height: var(--sky-band-height);
+	padding-top: var(--space-24);
+}
+
+.skyBody {
+	--sky-curve: 3.5rem;
+	--sky-arc: 50% 50% 0 0 / var(--sky-curve) var(--sky-curve) 0 0;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-32);
+	margin-top: calc(-1 * var(--sky-curve));
+	padding: var(--space-48) var(--space-20) var(--space-40);
+	border-radius: var(--sky-arc);
+	background: var(--color-surface);
+	box-shadow: inset 0 var(--stroke-hairline) 0 var(--color-border-faint);
+}
+
+.skySplit {
+	display: grid;
+	gap: var(--space-4);
+	width: 100%;
+}
+
+.skyLine {
+	font-size: clamp(var(--text-3xl), 7.4cqi, var(--text-display));
+	letter-spacing: var(--tracking-tight);
+}
+
+.skyLine:last-child {
+	justify-self: end;
+	text-align: end;
+}
+
+@container (min-width: 30rem) {
+	.skyBand {
+		--sky-band-height: 11rem;
+	}
+
+	.skyBody {
+		--sky-curve: 4.5rem;
+		padding-inline: var(--space-40);
+	}
+}
+
+/* ───────────── B · Type pairing ───────────── */
+
+.pairing {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-24);
+	padding: var(--space-48) var(--space-20);
+	text-align: center;
+	isolation: isolate;
+}
+
+/* The one accent: a faint glow behind the headline, mixed into the surface (Craft Agency). */
+.pairingGlow {
+	--pairing-glow: radial-gradient(50% 50% at 50% 50%, color-mix(in oklab, var(--hue) 14%, transparent) 0%, transparent 100%);
+	position: absolute;
+	inset: 18% 15%;
+	z-index: -1;
+	background: var(--pairing-glow);
+	filter: blur(var(--blur-glass));
+}
+
+.pairingChip {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-8);
+	padding: var(--space-6) var(--space-12);
+}
+
+.pairingTitle {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-4);
+}
+
+.pairingSerif {
+	font-size: clamp(var(--text-2xl), 6cqi, var(--text-4xl));
+}
+
+.pairingSans {
+	font-size: clamp(var(--text-3xl), 8.6cqi, var(--text-display));
+	font-weight: var(--font-weight-bold);
+	letter-spacing: var(--tracking-tight);
+	color: var(--color-text-strong);
+}
+
+@container (min-width: 30rem) {
+	.pairing {
+		padding: var(--space-64) var(--space-40);
+	}
+}
+
+/* ───────────── C · Framed site ───────────── */
+
+.framed {
+	display: grid;
+	gap: var(--space-24);
+	padding: var(--space-24) var(--space-20);
+}
+
+.framedTitle {
+	font-size: clamp(var(--text-2xl), 5.2cqi, var(--text-4xl));
+}
+
+.framedCopy {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--space-20);
+}
+
+/* A rounded inset frame with the shot cropped at its foot (Daylight). Its backdrop is the accent. */
+.framedStage {
+	--framed-stage-aspect: 5 / 4;
+	--tint-strength: 88%;
+	position: relative;
+	overflow: hidden;
+	aspect-ratio: var(--framed-stage-aspect);
+	padding: var(--space-24) var(--space-24) 0;
+	border-radius: var(--radius-xl);
+}
+
+.framedShot {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	border-radius: var(--radius-md) var(--radius-md) 0 0;
+	box-shadow: var(--shadow-overlay);
+}
+
+.framedNav {
+	position: absolute;
+	inset-block-start: var(--space-12);
+	inset-inline-end: var(--space-12);
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-8);
+}
+
+@container (min-width: 30rem) {
+	.framed {
+		grid-template-columns: 5fr 6fr;
+		align-items: center;
+		gap: var(--space-32);
+		padding: var(--space-32);
+	}
+}
+
+/* ───────────── Playground ───────────── */
+
+/* Mounted, every hero fills the first screen under the header, its content centred in it. */
+:global([data-playground]) .skyBody {
+	--hero-fill: calc(100svh - var(--header-height) - 15rem);
+	justify-content: center;
+	min-height: var(--hero-fill);
+}
+
+:global([data-playground]) .pairing,
+:global([data-playground]) .framed {
+	--hero-fill: calc(100svh - var(--header-height) - 5rem);
+	justify-content: center;
+	align-content: center;
+	min-height: var(--hero-fill);
+}
+
+/* The real wordmark at caption size, then the discipline. */
+.skyMark {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-8);
+	font-size: var(--text-xs);
+}

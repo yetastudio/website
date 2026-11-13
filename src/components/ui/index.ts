@@ -6,7 +6,7 @@ export { Icon, iconNames } from './icon';
 export { Button } from './button';
 export { Chip } from './chip';
 export { Surface } from './surface';
-export { BrandMark, LogoMark, MessyBrandMark } from './brand';
+export { BrandMark, LogoMark, MessyBrandMark, Wordmark } from './brand';
 
 //* Patterns (Figma composites)
 export { SectionHeader } from './section-header';
@@ -29,6 +29,8 @@ export { PaginationDots } from './pagination-dots';
 export { Tooltip } from './tooltip';
 export { Accordion, AccordionItem } from './accordion';
 export { Dialog } from './dialog';
+export { Reveal } from './reveal';
+export { revealLine } from './reveal/line';
 export { LocaleSwitch } from './locale-switch';
 export { ToastProvider, useToast } from './toast';
 export { Input, Textarea } from './field';

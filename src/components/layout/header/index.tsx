@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 //! Hooks
 import { useTranslations } from 'next-intl';
@@ -41,6 +41,57 @@ function useActiveSection(enabled: boolean) {
 }
 
 /**
+ * transitions.dev "Tabs sliding": a white pill behind the active link. JS writes the link's
+ * offset and width onto one indicator and CSS tweens it, so it slides from section to
+ * section as you scroll. It snaps (no tween) when it first appears and on resize.
+ */
+function useNavIndicator(active: SectionId | null) {
+	const navRef = useRef<HTMLElement>(null);
+	const indicatorRef = useRef<HTMLSpanElement>(null);
+	const visible = useRef(false);
+
+	useEffect(() => {
+		const nav = navRef.current;
+		const indicator = indicatorRef.current;
+		if (!nav || !indicator) return;
+
+		const moveTo = (animate: boolean) => {
+			const link = active ? nav.querySelector<HTMLElement>(`a[href="#${active}"]`) : null;
+			if (!link) {
+				delete nav.dataset.pill;
+				return false;
+			}
+			const box = nav.getBoundingClientRect();
+			const rect = link.getBoundingClientRect();
+			// The pill pads the link by --nav-pill-pad on each side; top and height come from CSS.
+			const pad = parseFloat(getComputedStyle(nav).getPropertyValue('--nav-pill-pad')) || 0;
+			const write = () => {
+				indicator.style.transform = `translateX(${rect.left - box.left - nav.clientLeft - pad}px)`;
+				indicator.style.width = `${rect.width + pad * 2}px`;
+			};
+			if (!animate) {
+				const prev = indicator.style.transition;
+				indicator.style.transition = 'none';
+				write();
+				void indicator.offsetWidth;
+				indicator.style.transition = prev;
+			} else {
+				write();
+			}
+			nav.dataset.pill = 'ready';
+			return true;
+		};
+
+		visible.current = moveTo(visible.current);
+		const observer = new ResizeObserver(() => moveTo(false));
+		observer.observe(nav);
+		return () => observer.disconnect();
+	}, [active]);
+
+	return { navRef, indicatorRef };
+}
+
+/**
  * Figma Header: brand mark, a centred glass nav pill and the "Get in touch" CTA
  * on desktop; brand mark + menu icon on mobile, opening a side sheet.
  */
@@ -50,6 +101,7 @@ export function Header() {
 	const pathname = usePathname();
 	const onLanding = pathname === '/';
 	const active = useActiveSection(onLanding);
+	const { navRef, indicatorRef } = useNavIndicator(active);
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	const navLinks = (variant: 'pill' | 'sheet') =>
@@ -82,17 +134,22 @@ export function Header() {
 			</a>
 			<header className={styles.header}>
 				<div className={styles.bar}>
-					<LocaleLink href="/" className={styles.home} aria-label={tc('home')}>
-						<BrandMark size={60} alt="" className={styles.markDesktop} />
-						<BrandMark size={40} alt="" className={styles.markMobile} />
-					</LocaleLink>
+					{/* The theme button sits beside the brand mark so both sides of the centred pill weigh the same. */}
+					<div className={styles.lead}>
+						<LocaleLink href="/" className={styles.home} aria-label={tc('home')}>
+							<BrandMark size={60} alt="" className={styles.markDesktop} />
+							<BrandMark size={40} alt="" className={styles.markMobile} />
+						</LocaleLink>
+						<ThemeSwitch variant="cycle" size="2xl" buttonVariant="glass" className={styles.cycleDesktop} />
+						<ThemeSwitch variant="cycle" size="lg" buttonVariant="ghost" className={styles.cycleMobile} />
+					</div>
 
-					<nav aria-label={t('label')} className={cx(styles.pill, 'u-bevel')}>
+					<nav ref={navRef} aria-label={t('label')} className={cx(styles.pill, 'u-bevel')}>
+						<span ref={indicatorRef} className={cx('t-tabs-pill', styles.indicator)} aria-hidden="true" />
 						<ul className={styles.navList}>{navLinks('pill')}</ul>
 					</nav>
 
 					<div className={styles.actions}>
-						<ThemeSwitch className={styles.themeSwitch} />
 						<Button href={BOOKING_URL} size="2xl" iconEnd="external-link" className={styles.cta}>
 							{t('getInTouch')}
 						</Button>

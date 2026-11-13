@@ -27,8 +27,11 @@
     { "id": "tooltip", "source": "src/components/ui/tooltip/index.tsx", "status": "inspo", "figma": "—", "replaces": [] },
     { "id": "accordion", "source": "src/components/ui/accordion/index.tsx", "status": "inspo", "figma": "case study Show rows", "replaces": [] },
     { "id": "dialog", "source": "src/components/ui/dialog/index.tsx", "status": "inspo", "figma": "—", "replaces": ["src/components/ui/mobile-drawer"] },
+    { "id": "reveal", "source": "src/components/ui/reveal/index.tsx", "status": "inspo", "figma": "—", "replaces": [] },
+    { "id": "process-scene", "source": "src/components/ui/process-scene/index.tsx", "status": "inspo", "figma": "Process Card tile (342×160), Stageshow scenes", "replaces": [] },
     { "id": "toast", "source": "src/components/ui/toast/index.tsx", "status": "inspo", "figma": "—", "replaces": [] },
     { "id": "field", "source": "src/components/ui/field/index.tsx", "status": "inspo", "figma": "—", "replaces": [] },
-    { "id": "checkbox", "source": "src/components/ui/checkbox/index.tsx", "status": "inspo", "figma": "—", "replaces": [] }
+    { "id": "checkbox", "source": "src/components/ui/checkbox/index.tsx", "status": "inspo", "figma": "—", "replaces": [] },
+    { "id": "why-scene", "source": "src/components/ui/why-scene/index.tsx", "status": "inspo", "figma": "Why Yeta feature chips (288×148), Stageshow scenes", "replaces": [] }
   ]
 }

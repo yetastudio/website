@@ -20,9 +20,21 @@
 	font-weight: var(--font-weight-light);
 	line-height: var(--leading-none);
 	white-space: nowrap;
-	transition:
-		background-color var(--duration-micro) var(--ease-out),
-		color var(--duration-micro) var(--ease-out);
+	/* Size comes from min-height below, not from the Tabs sliding snippet's fixed height. */
+	height: auto;
+}
+
+/* Tabs sliding pill (.t-tabs-pill): JS writes its translateX and width; it fills the segment height. */
+.group .pill {
+	position: absolute;
+	top: var(--space-4);
+	height: calc(100% - var(--space-8));
+	border-radius: var(--radius-sm);
+	opacity: 0;
+}
+
+.group[data-pill='ready'] .pill {
+	opacity: 1;
 }
 
 .md .segment {
@@ -46,6 +58,11 @@
 }
 
 .selected {
-	background-color: var(--color-surface-control);
 	color: var(--color-text-strong);
+}
+
+/* Until the pill is measured (server render, first paint), the selected segment draws its own fill. */
+.group:not([data-pill='ready']) .selected {
+	background-color: var(--color-surface-control);
+	box-shadow: var(--shadow-bevel);
 }

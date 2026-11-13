@@ -1,0 +1,63 @@
+/* Goals: a shared goal card, the result past the target mark. */
+
+.head {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+	height: var(--space-20);
+	white-space: nowrap;
+}
+
+/* The client and the studio, side by side on one goal */
+.pair {
+	display: inline-flex;
+	flex: none;
+	gap: var(--space-4);
+}
+
+.result {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+	height: var(--space-20);
+	margin-top: var(--space-12);
+	white-space: nowrap;
+}
+
+.value {
+	min-width: 4ch;
+	font-variant-numeric: tabular-nums;
+}
+
+.tick {
+	color: var(--scene-accent);
+}
+
+.track {
+	--track-width: 228px;
+	--mark-height: 12px;
+
+	position: relative;
+	width: var(--track-width);
+	margin-top: var(--space-12);
+}
+
+/* The target: a hairline across the meter, quiet until the goal is reached */
+.target {
+	position: absolute;
+	top: 50%;
+	width: var(--stroke-hairline);
+	height: var(--mark-height);
+	border-radius: var(--stroke-hairline);
+	background: var(--ss-ink-5);
+	transform: translate(-50%, -50%);
+	transition: background-color var(--duration-micro) ease;
+}
+
+.track[data-done] .target {
+	background: var(--color-text-strong);
+}
+
+.after {
+	margin-top: var(--space-16);
+}

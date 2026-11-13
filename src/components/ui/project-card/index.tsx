@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element -- tool logos are tiny static SVGs. */
 
 //! React Core
-import { useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 
 //! Next Core
 import Image from 'next/image';
@@ -27,6 +27,8 @@ import styles from './styles.module.css';
 export type ProjectShot = { light: string; dark: string; alt: string };
 
 export type Project = {
+	/** Detail page slug (`/work/[slug]`). When set, the case-study dialog links to the full page. */
+	slug?: string;
 	name: string;
 	year: string;
 	country: string;
@@ -54,7 +56,8 @@ function Wordmark({ name, active }: { name: string; active?: boolean }) {
 	);
 }
 
-function Shot({ shot, sizes, priority }: { shot: ProjectShot; sizes: string; priority?: boolean }) {
+/** One project screen, light and dark exports stacked. Fills its positioned parent. */
+export function Shot({ shot, sizes, priority }: { shot: ProjectShot; sizes: string; priority?: boolean }) {
 	return (
 		<>
 			<Image src={shot.light} alt={shot.alt} fill sizes={sizes} className={cx(styles.image, 'u-only-light')} priority={priority} />
@@ -78,8 +81,11 @@ function ToolLogo({ tool }: { tool: Project['tools'][number] }) {
 	return <img src={`/landing/our-work/tools/${tool}.svg`} alt="" className={styles.toolLogo} />;
 }
 
-/** Figma Project Overview Card, Status=Active: the expanded case study. */
-export function CaseStudy({ project }: { project: Project }) {
+/**
+ * Figma Project Overview Card, Status=Active: the expanded case study.
+ * `showSections={false}` drops the About / Challenge / Result rows (the detail page tells them in full).
+ */
+export function CaseStudy({ project, showSections = true }: { project: Project; showSections?: boolean }) {
 	const t = useTranslations('ourWork');
 	const facts: Array<[string, ReactNode]> = [
 		[t('facts.client'), project.name],
@@ -106,11 +112,13 @@ export function CaseStudy({ project }: { project: Project }) {
 				))}
 			</dl>
 
-			<Accordion className={styles.disclosures}>
-				<AccordionItem title={t('sections.about')}>{project.about}</AccordionItem>
-				<AccordionItem title={t('sections.challenge')}>{project.challenge}</AccordionItem>
-				<AccordionItem title={t('sections.result')}>{project.result}</AccordionItem>
-			</Accordion>
+			{showSections && (
+				<Accordion className={styles.disclosures}>
+					<AccordionItem title={t('sections.about')}>{project.about}</AccordionItem>
+					<AccordionItem title={t('sections.challenge')}>{project.challenge}</AccordionItem>
+					<AccordionItem title={t('sections.result')}>{project.result}</AccordionItem>
+				</Accordion>
+			)}
 
 			<p className={styles.caption}>{t('team')}</p>
 			<div className={styles.team}>
@@ -165,6 +173,13 @@ export function CaseStudyDialog({ project, onClose }: { project: Project | null;
 					{shown && <Wordmark name={shown.name} active />}
 				</span>
 			}
+			footer={
+				shown?.slug ? (
+					<Button href={`/work/${shown.slug}`} size="md" iconEnd="arrow-right" fullWidth>
+						{t('viewCaseStudy')}
+					</Button>
+				) : undefined
+			}
 		>
 			{shown && <CaseStudy project={shown} />}
 		</Dialog>
@@ -181,15 +196,60 @@ export type ProjectCardProps = {
 	className?: string;
 };
 
-/** Figma Project Overview Card, Status=Idle. "See more" calls `onOpen` to show the Active state. */
+const REDUCED_MOTION = '(prefers-reduced-motion: reduce)';
+
+function subscribeReducedMotion(onChange: () => void) {
+	const query = window.matchMedia(REDUCED_MOTION);
+	query.addEventListener('change', onChange);
+	return () => query.removeEventListener('change', onChange);
+}
+
+/** Server and first hydration pass assume reduced motion, so autoplay only ever starts on the client. */
+function useReducedMotion() {
+	return useSyncExternalStore(subscribeReducedMotion, () => window.matchMedia(REDUCED_MOTION).matches, () => true);
+}
+
+/**
+ * Figma Project Overview Card, Status=Idle. "See more" calls `onOpen` to show the Active state.
+ * On desktop the shots play on their own: the active dot fills over `--autoplay-interval`, then
+ * the next shot fades in. Autoplay pauses on hover, on keyboard focus and off-screen, and is off
+ * with reduced motion; the dots still pick a shot by hand.
+ */
 export function ProjectCard({ project, size = 'desktop', onOpen, priority, className }: ProjectCardProps) {
 	const t = useTranslations('ourWork');
 	const [shot, setShot] = useState(0);
+	const [hovered, setHovered] = useState(false);
+	const [focused, setFocused] = useState(false);
+	const [inView, setInView] = useState(false);
+	const cardRef = useRef<HTMLElement>(null);
+	const reduceMotion = useReducedMotion();
 	const isDesktop = size === 'desktop';
 	const sizes = isDesktop ? '(min-width: 1024px) 449px, 90vw' : '(min-width: 768px) 334px, 90vw';
+	const shotCount = project.shots.length;
+	const autoplay = isDesktop && shotCount > 1 && !reduceMotion;
+
+	useEffect(() => {
+		const card = cardRef.current;
+		if (!card || !autoplay) return;
+		const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.4 });
+		observer.observe(card);
+		return () => observer.disconnect();
+	}, [autoplay]);
+
+	const advance = useCallback(() => setShot((current) => (current + 1) % shotCount), [shotCount]);
 
 	return (
-		<article className={cx(styles.card, styles[size], 'u-outline')} aria-label={`${t('caseStudy')}: ${project.name}`}>
+		<article
+			ref={cardRef}
+			className={cx(styles.card, styles[size], 'u-outline')}
+			aria-label={`${t('caseStudy')}: ${project.name}`}
+			onPointerEnter={() => setHovered(true)}
+			onPointerLeave={() => setHovered(false)}
+			onFocus={() => setFocused(true)}
+			onBlur={(event) => {
+				if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocused(false);
+			}}
+		>
 			<header className={styles.header}>
 				<p className={styles.eyebrow}>{t('caseStudy')}</p>
 				<h3 className={styles.title}>
@@ -207,7 +267,13 @@ export function ProjectCard({ project, size = 'desktop', onOpen, priority, class
 
 			<footer className={styles.footer}>
 				{isDesktop && project.shots.length > 1 ? (
-					<PaginationDots count={project.shots.length} index={shot} onSelect={setShot} itemLabel="image" />
+					<PaginationDots
+						count={shotCount}
+						index={shot}
+						onSelect={setShot}
+						itemLabel="image"
+						autoplay={autoplay ? { paused: hovered || focused || !inView, onComplete: advance } : undefined}
+					/>
 				) : (
 					<span />
 				)}

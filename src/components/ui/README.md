@@ -1,7 +1,8 @@
 # Yeta Studio design system
 
-Live docs: **`/design-system`** (every token, component and state on a light and a dark canvas) and
-**`/brand`** (brand guidelines with do's & don'ts). Registry: [`/registry.json`](../../../registry.json).
+Live docs: **`/design-system`** (every token, component and state on a light and a dark canvas),
+**`/brand`** (brand guidelines with do's & don'ts) and **`/inspo`** (not indexed: narrative proposals for the
+landing and case study, with live mockups and their Mobbin references). Registry: [`/registry.json`](../../../registry.json).
 Source of truth: Figma `aVpNRSY3dqDxB5gdErv2xw` — pages *Branding*, *Design System*, *Landing Page (Final Design)*.
 
 ## Foundations
@@ -17,6 +18,21 @@ Source of truth: Figma `aVpNRSY3dqDxB5gdErv2xw` — pages *Branding*, *Design Sy
 subtree can flip with `.scheme-inverse` (footer band, gradient tiles) or pin with `.scheme-light/.scheme-dark`
 plus `data-scheme` (showcase panels). Theme-specific raster/vector art uses `.u-only-light/.u-only-dark`.
 
+**Motion.** Interaction motion comes from [transitions.dev](https://transitions.dev) snippets, copied
+verbatim into `vendor/transitions-dev/transitions.css` inside `@layer transitions` (so component CSS always
+wins on geometry and colour), with their tunables in `tokens.css`: Modal and Panel reveal (Dialog), Tabs
+sliding (SegmentedControl, header nav underline), Tooltip, Texts reveal (Reveal: hero and section headers),
+Card resize (Accordion), Icon swap (ThemeSwitch cycle) and Error state shake (Input/Textarea). Every snippet keeps its
+`prefers-reduced-motion` guard.
+
+**Product scenes (Stageshow).** Faux product UI comes from the Stageshow kit vendored in `vendor/stageshow`
+(MIT). Its default theme here is `yeta` (`vendor/stageshow/yeta.css`, registered in `looks.ts`): every `--ss-*`
+token reads a semantic token above, so a scene follows whatever scheme it sits in (page theme, a
+`.scheme-inverse` gradient tile, a pinned showcase panel) with no prop. It also gives the classic arrow cursor
+(black outline, white body), brand-hue avatars, the bevel on controls, inverse ink on filled marks and the
+brand's dark for terminals. A scene only sets what is its own: geometry, and its accent (`--ss-accent`, e.g. the
+tile's hue). `yeta.css` is a `tokenSources` entry of the DS check, so `--ss-*` reads are parity-checked.
+
 **Checks.** `npm run check:ds` (raw values, palette use, overrides, traps; allowlist only shrinks) and
 `npm run typecheck`.
 
@@ -28,33 +44,37 @@ Status: **stable** = drawn in Figma; **inspo** = added to fill a gap, same visua
 |---|---|---|---|---|---|
 | `Text`, `Heading`, `Accent` | stable | type styles | size `2xs…5xl, display`; weight; tone `default·strong·subtle·faint·inverse·danger·display`; family `sans·serif`; `Accent` italic/upright/underline | — | Heading `level` is independent of `size`. |
 | `Icon` | stable | 27 icon sets | `name` (brand glyphs + extra + supplemental Lucide), size `sm 14·md 18·lg 20·xl 24` | — | Decorative unless `label` is given (`role="img"`). |
-| `Button` | stable | 170:199 | size `sm 30·md 34·lg 36·xl 48·2xl 60`; variant `solid·glass·ghost`; radius `default 5·rounded 12`; `iconStart/iconEnd/icon`; `href` | rest, hover, pressed (scale .98), focus ring, `disabled`, `loading` (label kept, spinner on top, `aria-busy`) | Disabled/loading use `aria-disabled` so focus stays. Icon-only needs `label`. External links open in a new tab. |
+| `Button` | stable | 170:199 | size `sm 30·md 34·lg 36·xl 48·2xl 60`; variant `solid·glass·ghost`; radius `default 5·rounded 12`; `iconStart/iconEnd/icon`, `iconNode` (custom icon-only content); `href` | rest, hover, pressed (scale .98), focus ring, `disabled`, `loading` (label kept, spinner on top, `aria-busy`) | Disabled/loading use `aria-disabled` so focus stays. Icon-only needs `label`. External links open in a new tab. |
 | `Chip` | stable | 576:399 | size `xs (Small)·sm (×1.2 eyebrow)·lg (Large)·xl (×1.40625 feature)`; fill `tint·solid`; `icon` + `tone` | hover when `as="button"/"a"` | Static by default. |
 | `Surface` | stable | card shells | tone `canvas·raised·glass·tint·none`; radius; padding; `bevel` | — | — |
-| `BrandMark`, `LogoMark`, `MessyBrandMark` | stable | 110:77 · 110:60 · 110:84 | `canvas auto·light·dark`; `fill filled·transparent`; `size` (px or CSS length) | — | `alt` defaults to "Yeta Studio"; pass `""` when decorative. |
-| `Cursor` | stable | 1059:1339 | — | hides over interactive elements | Mounted only on fine pointers; native cursor shows on controls. |
+| `BrandMark`, `LogoMark`, `MessyBrandMark` | stable | 110:77 · 110:60 · 110:84 | `canvas auto·inverse·light·dark`; `fill filled·transparent`; `size` (px or CSS length) | — | `alt` defaults to "Yeta Studio"; pass `""` when decorative. `inverse` swaps the artwork inside `.scheme-inverse` bands. |
+| `Wordmark` | stable | hero lockup | `canvas`, `alt`; sized by `font-size` | — | "Yeta [logo mark] Studio" as the hero draws it. Use it wherever the name is a logo, never a typed "Yeta ✹ Studio". |
+| `YetaCursor` | stable | 1059:1339 | `className`; `YETA_CURSOR_HOTSPOT` | light / dark inks | Glyph only. Used solely inside Stageshow scenes (the kit's `yeta` cursor style, its default here) and the Why Yeta tour; the site never replaces the visitor's pointer. |
 | `SectionHeader` | stable | section title frames | `title`, `eyebrow`, children (lead) | — | Renders the section `h2`; pass `titleId` for `aria-labelledby`. |
 | `GradientTile` | stable | tile ellipses | `hue` ×6; `shape craft·craft-wide·process·testimonial·testimonial-compact`; `intensity soft·strong`; `underlay`/children | — | Blobs are `aria-hidden`. Inverse surface. |
 | `CraftCard` | stable | 1472:4250 | `layout row·stacked·responsive` | — | `article` + heading level prop. |
 | `ProcessCard` | stable | 1204:1323 | `step` (announced "Step n:") | — | — |
 | `TestimonialCard` | stable | 1213:1430 | `size desktop·mobile` | — | `figure` / `blockquote` / `figcaption`. |
-| `ProjectCard`, `CaseStudy`, `CaseStudyDialog` | stable | 987:1594 | `size desktop·mobile`; `onOpen` → render ONE `CaseStudyDialog` per gallery, outside breakpoint-hidden containers and card stacks | image strip dots, dialog open | "See more" has `aria-haspopup="dialog"`; the dialog can never end up inside a hidden or `inert` subtree. |
+| `ProjectCard`, `CaseStudy`, `CaseStudyDialog` | stable | 987:1594 | `size desktop·mobile`; `onOpen` → render ONE `CaseStudyDialog` per gallery, outside breakpoint-hidden containers and card stacks; `project.slug` adds a "View full case study" footer link to `/work/[slug]`; `CaseStudy showSections={false}` drops the About/Challenge/Result rows (detail page sheet); `Shot` renders one light/dark screen | image strip dots, dialog open | "See more" has `aria-haspopup="dialog"`; the dialog can never end up inside a hidden or `inert` subtree. |
 | `SummaryCard` | stable | 786:762 / 786:805 | — | Idle; Active on hover or focus-within | Focusable so keyboard users see the Active state. |
 | `Carousel` | stable | mobile tracks | `gap sm·md`, `showDots` | position via dots | Native scroll + snap; `aria-roledescription="carousel"`; dots are buttons. |
 | `CardStack` | stable | 1231:1787 · 1010:2036 | `variant fan·deck`, `initialIndex` | swipe, arrows, dots | Back cards are `inert`; position announced politely. |
-| `SegmentedControl` | inspo | — | options with icons, `size sm·md` | selected | `radiogroup`; arrow keys move and select. |
-| `ThemeSwitch` | inspo | — | `withLabels`, `size` | system · light · dark | Labels are translated. |
+| `SegmentedControl` | inspo | — | options with icons, `size sm·md` | selected (Tabs sliding pill) | `radiogroup`; arrow keys move and select. |
+| `ThemeSwitch` | inspo | header (cycle) | `variant segmented·cycle`, `withLabels`, `size`, `buttonVariant` | system · light · dark; cycle: one button, Icon swap | Labels are translated; the cycle button's name says the current mode and the next one. |
 | `LocaleSwitch` | inspo | — | — | en · es · pt | Visible "EN", accessible "English". |
 | `Link` | inspo | footer / CTAs | `variant inline·nav·bullet` | hover underline | External links announce "opens in a new tab". |
 | `Divider` | inspo | footer rules | `orientation`, `semantic` | — | Decorative unless `semantic`. |
 | `Avatar`, `AvatarGroup` | inspo | testimonial author | `size sm·md·lg`, `max` | image / initials | `alt` = name. |
-| `PaginationDots` | inspo | — | `onSelect` makes dots buttons | current | `aria-current`, "Go to {item} n". |
-| `Tooltip` | inspo | — | `side top·bottom` | hover (delayed), focus | `role="tooltip"` + `aria-describedby`; never the only label; not on touch. |
-| `Accordion`, `AccordionItem` | inspo | case-study Show rows | `defaultOpen` | open / closed | Button with `aria-expanded` / `aria-controls`; region labelled by its trigger. |
-| `Dialog` | inspo | — | `placement center·right·bottom`, `size`, `footer` | enter, exit (shorter), reduced motion | Native `<dialog>`: focus trapped, Escape and backdrop close, focus returns to opener, page scroll paused. |
+| `PaginationDots` | inspo | — | `onSelect` makes dots buttons, `autoplay` fills the active dot | current, filling (paused) | `aria-current`, "Go to {item} n". |
+| `Tooltip` | inspo | — | `side top·bottom` | hover (80ms delay, fade + scale in, instant out), focus | `role="tooltip"` + `aria-describedby`; never the only label; not on touch. |
+| `Accordion`, `AccordionItem` | inspo | case-study Show rows | `defaultOpen` | open / closed (Card resize) | Button with `aria-expanded` / `aria-controls`; region labelled by its trigger. |
+| `Dialog` | inspo | — | `placement center·right·bottom`, `size`, `footer` | Modal (center) or Panel reveal (sheets), shorter close, reduced motion | Native `<dialog>`: focus trapped, Escape and backdrop close, focus returns to opener, page scroll paused. |
+| `ProcessScene` | inspo | Process Card tile (342×160) | `step` discover·define·design·develop·integrate·launch; copy from `ourProcess.scenes.<step>`; pass as `ProcessCard scene` | poster on server and under reduced motion; loops only while on screen | Stageshow kit (`vendor/stageshow`). Decorative: `aria-hidden`, nothing focusable, no pointer events. |
+| `Reveal`, `revealLine` | inspo | hero, section headers | `trigger view·mount`, `as` | hidden → shown (once) | Texts reveal; lines visible without JS (`<noscript>`) and without motion under reduced motion. |
 | `ToastProvider`, `useToast` | inspo | — | tone `neutral·success·danger` | auto-dismiss 4s, pauses on hover/focus | Polite live region; dismiss button. |
-| `Input`, `Textarea` | inspo | — | `hint`, `error`, `optional` | rest, hover, focus, invalid, disabled | Labelled; `aria-invalid` + `aria-describedby`; no error shown on disabled. |
+| `Input`, `Textarea` | inspo | — | `hint`, `error`, `optional` | rest, hover, focus, invalid (shake on a new error), disabled | Labelled; `aria-invalid` + `aria-describedby`; no error shown on disabled. |
 | `Checkbox`, `Switch` | inspo | — | `description` | checked, focus, disabled | Real `<input type="checkbox">` (`role="switch"` for Switch). |
+| `WhyScene` | inspo | Why Yeta feature chips (288×148) | `scene` insight·together·luck·defy·pixel·vision·goals; `playing` plays the story once and holds it; copy from `whyYeta.tour.<scene>`; transparent, the host draws the surface | poster on server, while not playing and under reduced motion; plays only while on screen | Stageshow kit (`vendor/stageshow`). Decorative: `aria-hidden`, nothing focusable, no pointer events. Toured on the landing by `layout/why-yeta/tour`. |
 
 ## Fidelity to Figma
 
@@ -82,6 +102,8 @@ them in the menu sheet).
 
 ## Decisions recorded during the build
 
+- One icon per button. When a CTA has an icon chosen for its purpose (calendar, leaf), it keeps that leading icon and drops the generic trailing arrow; a generic arrow alone is fine when nothing more specific fits. The size specimens on `/design-system` still show both icon slots of the Figma Button.
+- The header is fixed at every width (the user's call; Figma draws it in flow on desktop). A single theme button that cycles System → Light → Dark sits beside the brand mark, so both sides of the centred nav pill weigh about the same and longer locales never crowd it. The full theme and language switches stay in the footer and the menu sheet.
 - Light-theme icon accents (`#c93a05`, `#a46f04`, `#088d40`, `#007cff`, `#c8110d`) are used by the Figma landing but are not Figma variables: added as `--palette-*-700`.
 - Funnel Display SemiBold (600), used by Figma for the hero wordmark and craft subtitles, ships as `public/fonts/FunnelDisplay-SemiBold.woff2` (latin subset from `@fontsource/funnel-display`, OFL-1.1).
 - Footer social links have no URLs in Figma: they render as text until `SOCIALS[].href` is filled in `src/components/layout/sections.ts`.

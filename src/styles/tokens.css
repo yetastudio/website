@@ -100,6 +100,9 @@
 	--color-text-subtle: light-dark(rgb(15 17 8 / 70%), rgb(228 229 224 / 70%));
 	--color-text-faint: light-dark(rgb(15 17 8 / 44%), rgb(228 229 224 / 44%));
 	--color-text-inverse: light-dark(var(--palette-neutral-100), var(--palette-neutral-925));
+	/* Header nav: the active section's pill, white with black type in both themes (user's call). */
+	--color-nav-active-surface: var(--palette-neutral-50);
+	--color-nav-active-text: var(--palette-neutral-950);
 	--color-text-link: light-dark(var(--palette-violet-600), var(--palette-violet-400));
 
 	/* ───────────────────────── Semantic: borders ───────────────────────── */
@@ -177,6 +180,8 @@
 	/* ───────────────────────── Typography ───────────────────────── */
 	--font-sans: var(--font-funnel-display), ui-sans-serif, system-ui, sans-serif;
 	--font-serif: var(--font-editorial-new), ui-serif, Georgia, serif;
+	/* No brand mono: code and terminals (design-system docs, Stageshow scenes) use the system's. */
+	--font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
 
 	--font-weight-light: 300;
 	--font-weight-regular: 400;
@@ -269,6 +274,53 @@
 	--ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 	--ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 	--ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
+	--autoplay-interval: 4500ms; /* project-card shots: time on each image before advancing */
+
+	/* Transitions.dev (vendor/transitions-dev/transitions.css): the tunables of the transitions
+	   in use, with the skill's motion vocabulary. Colours map to semantic roles, not to the
+	   snippets' greys. */
+	--ease-smooth: cubic-bezier(0.22, 1, 0.36, 1); /* Smooth ease out: open, close, slide, resize */
+	--resize-dur: 300ms; /* Card resize: accordion panel height */
+	--resize-ease: var(--ease-smooth);
+	--modal-open-dur: 250ms; /* Modal: centred dialog */
+	--modal-close-dur: 150ms;
+	--modal-scale: 0.96;
+	--modal-scale-close: 0.96;
+	--modal-ease: var(--ease-smooth);
+	--panel-open-dur: 400ms; /* Panel reveal: bottom and side sheets */
+	--panel-close-dur: 350ms;
+	--panel-translate-y: 100px;
+	--panel-blur: 2px;
+	--panel-ease: var(--ease-smooth);
+	--shake-distance: 6px; /* Error state shake: invalid field */
+	--shake-overshoot: 4px;
+	--shake-dur-a: 80ms;
+	--shake-dur-b: 60ms;
+	--shake-ease: var(--ease-smooth);
+	--revert-dur: 280ms;
+	--tabs-dur: 250ms; /* Tabs sliding: segmented control, nav pill */
+	--tabs-ease: var(--ease-smooth);
+	--tabs-text-muted: var(--color-text-subtle);
+	--tabs-text-active: var(--color-text-strong);
+	--tabs-bar-bg: var(--color-surface-glass);
+	--tabs-pill-bg: var(--color-surface-control);
+	--tt-in-dur: 150ms; /* Tooltip: delayed in, instant out */
+	--tt-out-dur: 50ms;
+	--tt-scale: 0.98;
+	--tt-delay: 80ms;
+	--tt-in-ease: ease-out;
+	--tt-out-ease: ease-out;
+	--tt-bg: var(--color-surface-inverse);
+	--tt-fg: var(--color-text-inverse);
+	--icon-swap-dur: 250ms; /* Icon swap: theme cycle button */
+	--icon-swap-blur: 2px;
+	--icon-swap-start-scale: 0.25;
+	--icon-swap-ease: ease-in-out;
+	--stagger-dur: 500ms; /* Texts reveal: hero and section headers */
+	--stagger-distance: 12px;
+	--stagger-stagger: 40ms;
+	--stagger-blur: 3px;
+	--stagger-ease: var(--ease-smooth);
 
 	/* ───────────────────────── Layers ───────────────────────── */
 	--z-raised: 1;
@@ -358,6 +410,28 @@
 
 .scheme-dark .scheme-inverse {
 	color-scheme: light;
+}
+
+/* Back to the site's own scheme inside an inverse band: the process scenes follow the visitor's
+   theme (dark scenes on the dark site) while their gradient tile stays inverse. */
+.scheme-site {
+	color-scheme: light dark;
+}
+
+:where(:root[data-theme='light']) .scheme-site {
+	color-scheme: light;
+}
+
+:where(:root[data-theme='dark']) .scheme-site {
+	color-scheme: dark;
+}
+
+.scheme-light .scheme-site {
+	color-scheme: light;
+}
+
+.scheme-dark .scheme-site {
+	color-scheme: dark;
 }
 
 @media (prefers-reduced-motion: reduce) {

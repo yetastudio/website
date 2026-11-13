@@ -1,0 +1,95 @@
+/*
+ * Process scenes: what the six scenes share on top of the kit's Yeta look.
+ *
+ * The scene sits inside a GradientTile, which carries `.scheme-inverse` (a light
+ * tile on the dark site, a dark one on the light site). The scene root adds
+ * `.scheme-site`, so the product shot follows the visitor's theme instead: dark
+ * panels on the dark site, light ones on the light site. The kit's Yeta look reads
+ * semantic `light-dark()` tokens, so no theme prop is needed. The stage's own ground is transparent: the tile's colour
+ * wash is the ground.
+ *
+ * Lengths in custom properties are illustration geometry (where a panel hangs
+ * off the tile), not UI spacing; UI spacing, radii and type read the scale.
+ */
+
+.root {
+	position: absolute;
+	inset: 0;
+	z-index: var(--z-raised);
+	overflow: hidden;
+	border-radius: inherit;
+	pointer-events: none;
+	user-select: none;
+	--scene-accent: var(--color-text-strong);
+	/* The tile's own wash, for the one fill a scene paints (a progress bar) */
+	--scene-wash: var(--color-text-strong);
+}
+
+.root[data-step='discover'] {
+	--scene-accent: var(--color-accent-pink);
+	--scene-wash: var(--wash-pink);
+}
+
+.root[data-step='define'] {
+	--scene-accent: var(--color-accent-orange);
+	--scene-wash: var(--wash-orange);
+}
+
+.root[data-step='design'] {
+	--scene-accent: var(--color-accent-yellow);
+	--scene-wash: var(--wash-yellow);
+}
+
+.root[data-step='develop'] {
+	--scene-accent: var(--color-accent-green);
+	--scene-wash: var(--wash-green);
+}
+
+.root[data-step='integrate'] {
+	--scene-accent: var(--color-accent-blue);
+	--scene-wash: var(--wash-blue);
+}
+
+.root[data-step='launch'] {
+	--scene-accent: var(--color-accent-violet);
+	--scene-wash: var(--wash-violet);
+}
+
+/* Every kit token comes from the kit's Yeta look (vendor/stageshow/yeta.css, the
+   Stage default), which follows the tile's inverse scheme. A scene only swaps the
+   accent for its tile's hue, and lets the wash be its ground. */
+.root :global(.ss-stage) {
+	--ss-accent: var(--scene-accent);
+	--ss-accent-2: var(--scene-accent);
+	--ss-accent-soft: color-mix(in srgb, var(--scene-accent) 16%, transparent);
+	--ss-accent-text: var(--scene-accent);
+	/* Shadow ink for the scenes' own lifted parts: the strong text on a light tile, the inverse text on a dark one */
+	--scene-shadow-ink: light-dark(var(--color-text-strong), var(--color-text-inverse));
+
+	overflow: hidden;
+	background: transparent;
+}
+
+/* The panel every scene hangs off a corner of the tile */
+.panel {
+	position: absolute;
+	overflow: hidden;
+	border-radius: var(--radius-lg);
+	background: var(--color-surface-raised);
+	box-shadow: var(--ss-shadow-ground); /* the kit look's ground shadow carries the bevel */
+}
+
+/* UI type inside the scenes: 12 for words that carry the story, 10 for labels */
+.strong {
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-medium);
+	line-height: var(--leading-snug);
+	color: var(--color-text-strong);
+}
+
+.label {
+	font-size: var(--text-2xs);
+	font-weight: var(--font-weight-regular);
+	line-height: var(--leading-snug);
+	color: var(--color-text-subtle);
+}

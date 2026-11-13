@@ -16,19 +16,14 @@
 	translate: 0 0;
 }
 
-/* Figma: fixed on mobile (iPhone frames have it as the fixed child); in flow on desktop (1920 frame). */
+/* Fixed at every width (the user's call; the Figma 1920 frame draws it in flow). Anchors already
+   land below it: Lenis offsets anchors and html has scroll-padding-top for the header. */
 .header {
 	position: fixed;
 	inset: var(--space-20) 0 auto;
 	z-index: var(--z-header);
 	padding-inline: var(--page-gutter);
 	pointer-events: none;
-}
-
-@media (min-width: 1280px) {
-	.header {
-		position: absolute;
-	}
 }
 
 .bar {
@@ -114,6 +109,7 @@
 
 .navLink {
 	position: relative;
+	z-index: 1; /* above the sliding pill */
 	display: inline-block;
 	padding-block: var(--space-4);
 	font-size: var(--text-md);
@@ -121,18 +117,7 @@
 	letter-spacing: var(--tracking-normal);
 	color: var(--color-text);
 	white-space: nowrap;
-	transition: color var(--duration-micro) var(--ease-out);
-}
-
-.navLink::after {
-	content: '';
-	position: absolute;
-	inset: auto 0 calc(var(--space-2) * -1);
-	height: var(--stroke-hairline);
-	background-color: currentColor;
-	scale: 0 1;
-	transform-origin: left;
-	transition: scale var(--duration-enter) var(--ease-out);
+	transition: color var(--tabs-dur) var(--tabs-ease); /* in step with the pill */
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -145,8 +130,44 @@
 	color: var(--color-text-strong);
 }
 
-.navLink[aria-current='location']::after {
+/* Menu sheet: the active link keeps an underline. */
+.sheetLink::after {
+	content: '';
+	position: absolute;
+	inset: auto 0 calc(var(--space-2) * -1);
+	height: var(--stroke-hairline);
+	background-color: currentColor;
+	scale: 0 1;
+	transform-origin: left;
+	transition: scale var(--duration-enter) var(--ease-out);
+}
+
+.sheetLink[aria-current='location']::after {
 	scale: 1 1;
+}
+
+/* Tabs sliding pill (.t-tabs-pill) behind the active link: white with black type in both themes.
+   It keeps the nav's inset on every side (the first link's pill sits as far from the edge as from
+   the top), and its radius is the nav's radius minus that inset. JS writes translateX and width. */
+.pill {
+	--nav-pill-inset: var(--space-8);
+	--nav-pill-pad: var(--space-16); /* nav padding-inline (24) minus the inset */
+}
+
+.pill .indicator {
+	top: var(--nav-pill-inset);
+	height: calc(100% - 2 * var(--nav-pill-inset));
+	border-radius: calc(var(--radius-md) - var(--nav-pill-inset));
+	background-color: var(--color-nav-active-surface);
+	opacity: 0;
+}
+
+.pill[data-pill='ready'] .indicator {
+	opacity: 1;
+}
+
+.pill[data-pill='ready'] .navLink[aria-current='location'] {
+	color: var(--color-nav-active-text);
 }
 
 /* ── Actions ── */
@@ -156,24 +177,33 @@
 	gap: var(--space-12);
 }
 
-.themeSwitch,
-.cta {
+/* Brand mark + theme cycle button. `.lead` / `.actions` raise specificity over the Tooltip wrapper's display. */
+.lead {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+}
+
+@media (min-width: 1280px) {
+	.lead {
+		gap: var(--space-12);
+	}
+}
+
+.actions .cta,
+.lead .cycleDesktop {
 	display: none;
 }
 
 @media (min-width: 1280px) {
-	.cta {
+	.actions .cta,
+	.lead .cycleDesktop {
 		display: inline-flex;
 	}
 
-	.menuButton {
+	.actions .menuButton,
+	.lead .cycleMobile {
 		display: none;
-	}
-}
-
-@media (min-width: 1440px) {
-	.themeSwitch {
-		display: inline-flex;
 	}
 }
 

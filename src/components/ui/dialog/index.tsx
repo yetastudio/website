@@ -55,9 +55,15 @@ export function Dialog({
 	const titleId = useId();
 	const lenis = useLenis();
 
-	// The exit state lives on the element (data-closing), not in React state: it only drives CSS.
+	const panelRef = useRef<HTMLDivElement>(null);
+	const isSheet = placement !== 'center';
+
+	// Motion is transitions.dev: a centred dialog is a Modal (.t-modal + is-open / is-closing),
+	// sheets are a Panel reveal (.t-panel-slide + data-open). The states live on the elements,
+	// not in React state: they only drive CSS.
 	const finishClose = useCallback(() => {
 		const dialog = ref.current;
+		panelRef.current?.classList.remove('is-closing');
 		if (dialog) delete dialog.dataset.closing;
 		if (dialog?.open) dialog.close();
 		opener.current?.focus?.();
@@ -65,26 +71,38 @@ export function Dialog({
 
 	useEffect(() => {
 		const dialog = ref.current;
-		if (!dialog) return;
+		const panel = panelRef.current;
+		if (!dialog || !panel) return;
 		if (open && !dialog.open) {
 			opener.current = document.activeElement as HTMLElement | null;
+			panel.classList.remove('is-closing');
 			dialog.showModal();
 			lenis?.stop();
+			// The dialog was display:none; reflow so the panel transitions from its resting pre-open state.
+			void panel.offsetWidth;
+			if (isSheet) panel.dataset.open = 'true';
+			else panel.classList.add('is-open');
 		} else if (!open && dialog.open) {
 			lenis?.start();
-			const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-			if (reduce) {
+			if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+				if (isSheet) panel.dataset.open = 'false';
+				else panel.classList.remove('is-open');
 				finishClose();
 				return;
 			}
 			dialog.dataset.closing = 'true';
-			// animationend normally finishes the close; this fallback covers paused or
-			// throttled animations (background tabs, automation) so the dialog never sticks.
-			const exitMs = parseFloat(getComputedStyle(dialog).getPropertyValue('--duration-exit')) || 200;
-			const timer = window.setTimeout(finishClose, exitMs + 80);
+			if (isSheet) {
+				panel.dataset.open = 'false';
+			} else {
+				panel.classList.remove('is-open');
+				panel.classList.add('is-closing');
+			}
+			// Same close-then-cleanup timing as the snippet: read the close duration from CSS.
+			const closeMs = parseFloat(getComputedStyle(dialog).getPropertyValue('--dialog-exit')) || 150;
+			const timer = window.setTimeout(finishClose, closeMs);
 			return () => window.clearTimeout(timer);
 		}
-	}, [open, lenis, finishClose]);
+	}, [open, lenis, finishClose, isSheet]);
 
 	useEffect(() => () => lenis?.start(), [lenis]);
 
@@ -104,11 +122,8 @@ export function Dialog({
 				if (pressedBackdrop.current && event.target === event.currentTarget) onClose();
 				pressedBackdrop.current = false;
 			}}
-			onAnimationEnd={(event) => {
-				if (event.currentTarget.dataset.closing && event.target === event.currentTarget) finishClose();
-			}}
 		>
-			<div className={cx(styles.panel, 'u-bevel')}>
+			<div ref={panelRef} className={cx(styles.panel, 'u-bevel', isSheet ? 't-panel-slide' : 't-modal')}>
 				<header className={styles.header}>
 					<h2 id={titleId} className={cx(styles.title, hideTitle && 'u-visually-hidden')}>
 						{title}

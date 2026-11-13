@@ -1,0 +1,302 @@
+/* Section library · 07 Results and clients. Neutral first: the figures are type, colour is a dot, a glow or one name. */
+
+/* Small mono labels (Giga), shared by the three proposals. */
+.mono {
+	--mono-tracking: 0.08em;
+	font-family: var(--font-mono);
+	letter-spacing: var(--mono-tracking);
+	text-transform: uppercase;
+}
+
+/* ───────────── A · Impact ───────────── */
+
+.impact {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-32);
+	padding: var(--space-32) var(--space-20);
+}
+
+.impactHead {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+}
+
+.impactLabel {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-8);
+}
+
+.impactBelief {
+	max-width: 30ch;
+}
+
+/* Three thin oversized figures between hairlines, each with its source (Fiasco). */
+.impactFigures {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	list-style: none;
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.impactFigure {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+	padding: var(--space-16) var(--space-12) 0 0;
+}
+
+.impactFigure + .impactFigure {
+	padding-inline-start: var(--space-12);
+	border-inline-start: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.impactValue {
+	margin-block-end: var(--space-8);
+	font-size: clamp(var(--text-4xl), 15cqi, var(--text-display));
+	letter-spacing: var(--tracking-tight);
+}
+
+@container (min-width: 30rem) {
+	.impact {
+		gap: var(--space-40);
+		padding: var(--space-40);
+	}
+
+	.impactHead {
+		display: grid;
+		grid-template-columns: 1fr 2fr;
+		align-items: baseline;
+		gap: var(--space-20);
+	}
+
+	.impactFigure + .impactFigure {
+		padding-inline-start: var(--space-20);
+	}
+}
+
+/* ───────────── B · One figure ───────────── */
+
+.single {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-24);
+	padding: var(--space-24) var(--space-20);
+}
+
+/* The glow and the card share one cell, so the glow is never larger than the card it sits behind. */
+.singleStage {
+	--single-card-width: 17rem;
+	display: grid;
+	place-items: center;
+	width: 100%;
+	padding-block: var(--space-16);
+	isolation: isolate;
+}
+
+/* The one accent: a faint peach glow behind the card, mixed into nothing (Craft Agency's wash, quieted). */
+.singleGlow {
+	--single-glow: radial-gradient(50% 50% at 50% 50%, color-mix(in oklab, var(--hue) 14%, transparent) 0%, transparent 100%);
+	grid-area: 1 / 1;
+	align-self: stretch;
+	width: min(100%, calc(var(--single-card-width) + var(--space-64)));
+	z-index: -1;
+	background: var(--single-glow);
+	filter: blur(var(--blur-glass));
+}
+
+.singleCard {
+	display: flex;
+	grid-area: 1 / 1;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-12);
+	width: min(100%, var(--single-card-width));
+	text-align: center;
+}
+
+.singleValue {
+	font-size: clamp(var(--text-5xl), 24cqi, var(--text-display));
+	letter-spacing: var(--tracking-tight);
+}
+
+.singleCaption {
+	display: grid;
+}
+
+.singlePager {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-12);
+}
+
+@container (min-width: 30rem) {
+	.single {
+		gap: var(--space-28);
+		padding: var(--space-32) var(--space-40);
+	}
+
+	.singleStage {
+		--single-card-width: 19rem;
+	}
+}
+
+/* ── transitions.dev 02 · Number pop-in ── */
+
+/* The snippet's values, except the ease: its overshooting spring is swapped for the system's smooth ease (trap/motion-overshoot). */
+.digits {
+	--digit-dur: 500ms;
+	--digit-distance: 8px;
+	--digit-stagger: 70ms;
+	--digit-blur: 2px;
+	--digit-ease: var(--ease-smooth);
+	--digit-dir-x: 0;
+	--digit-dir-y: 1;
+	display: inline-flex;
+	align-items: baseline;
+}
+
+.digit {
+	display: inline-block;
+	will-change: transform, opacity, filter;
+}
+
+.digits.isDigitsAnimating .digit {
+	animation: digit-pop-in var(--digit-dur) var(--digit-ease) both;
+}
+
+.digits.isDigitsAnimating .digit[data-stagger='1'] {
+	animation-delay: var(--digit-stagger);
+}
+
+.digits.isDigitsAnimating .digit[data-stagger='2'] {
+	animation-delay: calc(var(--digit-stagger) * 2);
+}
+
+@keyframes digit-pop-in {
+	0% {
+		transform: translate(calc(var(--digit-distance) * var(--digit-dir-x)), calc(var(--digit-distance) * var(--digit-dir-y)));
+		opacity: 0;
+		filter: blur(var(--digit-blur));
+	}
+	100% {
+		transform: translate(0, 0);
+		opacity: 1;
+		filter: blur(0);
+	}
+}
+
+/* ── transitions.dev 04 · Text states swap ── */
+
+.textSwap {
+	--text-swap-dur: 150ms;
+	--text-swap-translate-y: 4px;
+	--text-swap-blur: 2px;
+	--text-swap-ease: ease-in-out;
+	transform: translateY(0);
+	filter: blur(0);
+	opacity: 1;
+	transition:
+		transform var(--text-swap-dur) var(--text-swap-ease),
+		filter var(--text-swap-dur) var(--text-swap-ease),
+		opacity var(--text-swap-dur) var(--text-swap-ease);
+	will-change: transform, filter, opacity;
+}
+
+.textSwap.isSwapExit {
+	transform: translateY(calc(var(--text-swap-translate-y) * -1));
+	filter: blur(var(--text-swap-blur));
+	opacity: 0;
+}
+
+.textSwap.isSwapEnter {
+	transform: translateY(var(--text-swap-translate-y));
+	filter: blur(var(--text-swap-blur));
+	opacity: 0;
+	transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.digits .digit {
+		animation: none !important;
+	}
+
+	.textSwap {
+		transition: none !important;
+	}
+}
+
+/* ───────────── C · Sky ledger ───────────── */
+
+.sky {
+	display: flex;
+	flex-direction: column;
+}
+
+/* Three short metrics under mono labels in the sky band (Giga). */
+.skyBand {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-24);
+	padding: var(--space-32) var(--space-20) var(--space-28);
+	text-align: center;
+}
+
+.skyStats {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	width: 100%;
+	list-style: none;
+}
+
+.skyStat {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-10);
+}
+
+.skyStat + .skyStat {
+	border-inline-start: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.skyValue {
+	font-size: clamp(var(--text-3xl), 11cqi, var(--text-5xl));
+	letter-spacing: var(--tracking-tight);
+}
+
+/* Clients as serif wordmarks running edge to edge, one lit in its hue (Craft Agency). */
+.skyClients {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: var(--space-8) var(--space-16);
+	padding: var(--space-20);
+	list-style: none;
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.skyWordmark {
+	font-size: clamp(var(--text-xl), 6cqi, var(--text-3xl));
+	letter-spacing: var(--tracking-tight);
+}
+
+.skyLit {
+	color: var(--hue);
+	font-style: italic;
+}
+
+@container (min-width: 30rem) {
+	.skyBand {
+		padding: var(--space-40) var(--space-40) var(--space-32);
+	}
+
+	.skyClients {
+		padding-inline: var(--space-40);
+	}
+}

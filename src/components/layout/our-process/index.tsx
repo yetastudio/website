@@ -3,6 +3,8 @@ import { useTranslations } from 'next-intl';
 
 //! Components
 import { Button, Carousel, ProcessCard, SectionHeader } from '@/components/ui';
+import { ProcessScene } from '@/components/ui/process-scene';
+import { isProcessStep } from '@/components/ui/process-scene/shared';
 import { PROCESS } from '../content';
 import { BOOKING_URL } from '../sections';
 
@@ -25,6 +27,7 @@ export function OurProcess() {
 			stepLabel={t('step')}
 			icon={item.icon}
 			hue={item.hue}
+			scene={isProcessStep(item.key) ? <ProcessScene step={item.key} /> : undefined}
 			title={t(`steps.${item.key}.title`)}
 			description={t(`steps.${item.key}.description`)}
 			className={styles.card}
@@ -53,7 +56,7 @@ export function OurProcess() {
 
 			<div className={section.cta}>
 				<p className={section.ctaText}>{t.rich('cta', richTags)}</p>
-				<Button href={BOOKING_URL} size="2xl" radius="soft" iconStart="leaf" iconEnd="external-link">
+				<Button href={BOOKING_URL} size="2xl" radius="soft" iconStart="leaf">
 					{t('button')}
 				</Button>
 			</div>

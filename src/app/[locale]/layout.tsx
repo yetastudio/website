@@ -12,11 +12,11 @@ import { ThemeProvider, themeScript } from '@/context/ThemeContext';
 import { editorialNew, funnelDisplay } from '../fonts';
 
 //! UI Core
-import Cursor from '@/components/ui/cursor';
 import { SmoothScroll } from '@/components/layout/smooth-scroll';
 
 //! Styles
 import '@/styles/tokens.css';
+import '../../../vendor/transitions-dev/transitions.css';
 import '../globals.css';
 
 export function generateStaticParams() {
@@ -69,12 +69,15 @@ export default async function LocaleLayout({
 			<head>
 				{/* Applies the stored theme before first paint. */}
 				<script dangerouslySetInnerHTML={{ __html: themeScript }} />
+				{/* Texts reveal starts hidden and waits for JS; without JS, show everything at rest. */}
+				<noscript>
+					<style>{'.t-stagger-line{opacity:1!important;transform:none!important;filter:none!important}'}</style>
+				</noscript>
 			</head>
 			<body>
 				<NextIntlClientProvider messages={messages}>
 					<ThemeProvider>
 						<SmoothScroll>
-							<Cursor />
 							{children}
 						</SmoothScroll>
 					</ThemeProvider>
