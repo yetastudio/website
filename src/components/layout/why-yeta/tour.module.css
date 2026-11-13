@@ -1,0 +1,234 @@
+/*
+ * The Why Yeta tour: the tour cursor, the chips it visits and where their scenes open.
+ * A scene window is one surface everywhere: the chips' own control surface with their
+ * bevel, its radius the scene panel's plus the panel's inset.
+ */
+
+.node {
+	--why-scene-w: 288px;
+	--why-window-radius: calc(var(--radius-lg) + var(--space-16));
+
+	display: flex;
+	border-radius: var(--radius-pill);
+	list-style: none;
+}
+
+/* ── Floating chips (≥ 1440): the scene opens above or below the chip ── */
+
+/* A chip under a neighbour's open scene steps back while it is open, and returns once it folds */
+.float {
+	transition: opacity var(--duration-enter) var(--ease-out) var(--duration-exit);
+}
+
+.float[data-covered] {
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity var(--duration-exit) ease;
+}
+
+.float[data-open] {
+	z-index: var(--z-raised);
+}
+
+/* Moving from the chip into its open scene keeps it open */
+.float[data-open] .card {
+	pointer-events: auto;
+}
+
+/* The open card hangs from the chip's start or end edge. It keeps a readable size when
+   the cluster is scaled down (0.9 at its smallest), and never takes the pointer. */
+.card {
+	--why-card-gap: var(--space-8);
+	--why-card-scale: max(1, calc(0.9 / var(--feature-scale, 1)));
+
+	position: absolute;
+	width: var(--why-scene-w);
+	border-radius: var(--why-window-radius);
+	box-shadow: var(--shadow-overlay);
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	scale: var(--why-card-scale);
+	transform: translateY(var(--why-card-from, 0)) scale(0.96);
+	transition:
+		opacity var(--duration-exit) ease,
+		transform var(--duration-exit) ease,
+		visibility 0s linear var(--duration-exit);
+}
+
+.float[data-dir='down'] .card {
+	--why-card-from: calc(var(--space-4) * -1);
+
+	top: calc(100% + var(--why-card-gap));
+}
+
+.float[data-dir='up'] .card {
+	--why-card-from: var(--space-4);
+
+	bottom: calc(100% + var(--why-card-gap));
+}
+
+.float[data-anchor='start'] .card {
+	left: 0;
+}
+
+.float[data-anchor='end'] .card {
+	right: 0;
+}
+
+.float[data-dir='down'][data-anchor='start'] .card { transform-origin: top left; }
+.float[data-dir='down'][data-anchor='end'] .card { transform-origin: top right; }
+.float[data-dir='up'][data-anchor='start'] .card { transform-origin: bottom left; }
+.float[data-dir='up'][data-anchor='end'] .card { transform-origin: bottom right; }
+
+.float[data-open] .card {
+	opacity: 1;
+	visibility: visible;
+	transform: none;
+	transition:
+		opacity var(--duration-enter) var(--ease-out),
+		transform var(--duration-overlay) var(--ease-smooth),
+		visibility 0s;
+}
+
+/* The scene window: the chip's control surface and bevel */
+.window {
+	display: block;
+	overflow: hidden;
+	border-radius: inherit;
+	background-color: var(--color-surface-control);
+}
+
+/* ── Chip row (768–1439): the open chip carries a short mark in its hue ── */
+
+.tab {
+	position: relative;
+}
+
+.tab::after {
+	content: '';
+	position: absolute;
+	bottom: calc(var(--space-6) * -1);
+	left: 50%;
+	width: var(--space-16);
+	height: var(--stroke-focus);
+	border-radius: var(--radius-pill);
+	background-color: var(--why-tone, var(--color-text-strong));
+	opacity: 0;
+	translate: -50% 0;
+	transition: opacity var(--duration-micro) var(--ease-out);
+}
+
+.tab[data-open]::after {
+	opacity: 1;
+}
+
+/* The panel under the row: the open chip's scene, crossfading in one cell */
+.panel {
+	--why-scene-w: 288px;
+
+	display: grid;
+	width: min(100%, var(--why-scene-w));
+	overflow: hidden;
+	border-radius: calc(var(--radius-lg) + var(--space-16));
+	background-color: var(--color-surface-control);
+}
+
+.slide {
+	grid-area: 1 / 1;
+	opacity: 0;
+	transition: opacity var(--duration-exit) ease;
+}
+
+.slide[data-open] {
+	opacity: 1;
+	transition: opacity var(--duration-enter) var(--ease-out) var(--duration-micro);
+}
+
+/* ── Phone card (< 768): one chip always open, its scene under it ── */
+
+/* The card keeps one scene's room at its foot (styles.module.css, --why-room). The chips after
+   the open one slide down into it and the open chip's scene fades in under it. Everything
+   moves by transform: the card's size and the page never change. */
+.fold {
+	--why-fold-lead: 120ms;
+
+	position: relative;
+	flex-direction: column;
+	align-items: center;
+	transform: translateY(0);
+	/* A beat after the closing scene starts to fade, so a chip never slides over it */
+	transition: transform var(--duration-overlay) var(--ease-smooth) var(--why-fold-lead);
+}
+
+.fold[data-below] {
+	transform: translateY(var(--why-room));
+}
+
+/* The chip keeps its own width (and focus ring); its scene spans the card's inner width under it */
+.well {
+	position: absolute;
+	top: calc(100% + var(--space-12));
+	left: 50%;
+	display: block;
+	width: calc(min(100cqi, var(--why-card-width)) - 2 * var(--space-16));
+	translate: -50% 0;
+	overflow: hidden;
+	border-radius: var(--radius-lg);
+	background-color: var(--color-surface-control);
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transition:
+		opacity var(--why-fold-lead) ease,
+		visibility 0s linear var(--why-fold-lead);
+}
+
+.fold[data-open] .well {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto; /* the open scene is part of its chip: a pointer resting on it keeps it open */
+	/* It arrives once its chip has slid most of the way into place, so it never crosses the chip below */
+	transition:
+		opacity var(--duration-enter) var(--ease-out) calc(var(--why-fold-lead) + var(--duration-collapse)),
+		visibility 0s;
+}
+
+/* ── The tour cursor: the site cursor (ui/cursor), Yeta's mark riding beside it ── */
+
+.cursor {
+	--tag-x: 13px;
+	--tag-y: 17px;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: var(--z-raised);
+	width: var(--icon-lg);
+	height: var(--icon-lg);
+	pointer-events: none;
+	opacity: 0;
+	will-change: transform;
+	transition: opacity var(--duration-enter) var(--ease-out);
+}
+
+.cursor[data-visible='true'] {
+	opacity: 1;
+}
+
+/* `.cursor .arrow` sizes the shared YetaCursor glyph to the tour cursor box. */
+.cursor .arrow {
+	display: block;
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+
+.tag {
+	position: absolute;
+	top: var(--tag-y);
+	left: var(--tag-x);
+	display: block;
+	line-height: 0;
+}

@@ -65,6 +65,37 @@
       "goals": "Seus objetivos são os nossos",
       "ideas": "Ideias que movem marcas",
       "collab": "Feitos para colaborar"
+    },
+    "tour": {
+      "insight": {
+        "quote": "“O cadastro é longo demais.”",
+        "metric": "Cadastros"
+      },
+      "together": {
+        "ask": "Dá pra deixar o hero mais forte?",
+        "reply": "Feito. Dá uma olhada.",
+        "resolved": "Resolvido"
+      },
+      "luck": {
+        "test": "Teste A/B",
+        "winner": "Vencedora"
+      },
+      "defy": {
+        "metric": "Alcance da marca"
+      },
+      "pixel": {
+        "cta": "Começar um projeto"
+      },
+      "vision": {
+        "title": "Pronto para lançar",
+        "cta": "Começar",
+        "live": "No ar"
+      },
+      "goals": {
+        "label": "Meta do trimestre",
+        "metric": "Cadastros",
+        "reached": "Batida"
+      }
     }
   },
   "ourCraft": {

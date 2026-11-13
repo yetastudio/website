@@ -96,10 +96,14 @@
 	/* ───────────────────────── Semantic: text ───────────────────────── */
 	--color-text: light-dark(var(--palette-neutral-925), var(--palette-neutral-100));
 	--color-text-strong: light-dark(var(--palette-neutral-950), var(--palette-neutral-50));
+	--color-sheen: light-dark(var(--palette-neutral-600), var(--palette-neutral-50)); /* the band that crosses a highlighted word */
 	/* Figma footer labels use the text colour at 70%. */
 	--color-text-subtle: light-dark(rgb(15 17 8 / 70%), rgb(228 229 224 / 70%));
 	--color-text-faint: light-dark(rgb(15 17 8 / 44%), rgb(228 229 224 / 44%));
 	--color-text-inverse: light-dark(var(--palette-neutral-100), var(--palette-neutral-925));
+	/* Header nav: the active section's pill, white with black type in both themes (user's call). */
+	--color-nav-active-surface: var(--palette-neutral-50);
+	--color-nav-active-text: var(--palette-neutral-950);
 	--color-text-link: light-dark(var(--palette-violet-600), var(--palette-violet-400));
 
 	/* ───────────────────────── Semantic: borders ───────────────────────── */
@@ -259,7 +263,7 @@
 	--measure: 36rem;
 	--measure-narrow: 15.625rem; /* 250: Figma narrow paragraphs (Summary card, mobile Why Yeta light) */
 	--section-gap: var(--space-48);
-	--header-height: 60px;
+	--header-height: 48px; /* slimmer than the Figma 60: the user asked for less vertical padding */
 
 	/* ───────────────────────── Motion ───────────────────────── */
 	--duration-instant: 0ms; /* press */
@@ -309,6 +313,11 @@
 	--tt-out-ease: ease-out;
 	--tt-bg: var(--color-surface-inverse);
 	--tt-fg: var(--color-text-inverse);
+	--doodle-delay: 600ms; /* Hero doodles: the sparkle starts as the slogan lands */
+	--doodle-draw: 500ms;
+	--doodle-shine-period: 6s;
+	--strike-delay: 1100ms;
+	--strike-draw: 700ms;
 	--icon-swap-dur: 250ms; /* Icon swap: theme cycle button */
 	--icon-swap-blur: 2px;
 	--icon-swap-start-scale: 0.25;
@@ -407,6 +416,28 @@
 
 .scheme-dark .scheme-inverse {
 	color-scheme: light;
+}
+
+/* Back to the site's own scheme inside an inverse band: the process scenes follow the visitor's
+   theme (dark scenes on the dark site) while their gradient tile stays inverse. */
+.scheme-site {
+	color-scheme: light dark;
+}
+
+:where(:root[data-theme='light']) .scheme-site {
+	color-scheme: light;
+}
+
+:where(:root[data-theme='dark']) .scheme-site {
+	color-scheme: dark;
+}
+
+.scheme-light .scheme-site {
+	color-scheme: light;
+}
+
+.scheme-dark .scheme-site {
+	color-scheme: dark;
 }
 
 @media (prefers-reduced-motion: reduce) {

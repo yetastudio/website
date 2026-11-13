@@ -1,0 +1,63 @@
+/* Luck: an A/B test, two variants on one grid of fixed tracks, the winner marked on its own row. */
+
+.variants {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-10);
+	margin-top: var(--space-12);
+}
+
+.variant {
+	--meter-width: 84px;
+
+	display: grid;
+	grid-template-columns: var(--space-20) var(--meter-width) 4ch auto;
+	align-items: center;
+	column-gap: var(--space-8);
+	height: var(--space-20);
+	white-space: nowrap;
+}
+
+/* The variant's letter in a quiet tile */
+.letter {
+	display: inline-grid;
+	place-items: center;
+	width: var(--space-20);
+	height: var(--space-20);
+	border-radius: var(--radius-xs);
+	background: var(--ss-ink-2);
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text-strong);
+}
+
+.meter {
+	width: 100%;
+}
+
+/* A, the variant that lost, fills in quiet ink; only B takes the chip's hue */
+.quiet {
+	--ss-accent: var(--color-text-faint);
+	--ss-accent-2: var(--color-text-faint);
+}
+
+/* B reads a beat after A */
+.late :global(.ss-meter__fill) {
+	transition-delay: 140ms;
+}
+
+.rate {
+	font-variant-numeric: tabular-nums;
+}
+
+/* The winner's dot is the one mark in the chip's hue */
+.winner :global(.ss-badge__dot) {
+	background: var(--scene-accent);
+}
+
+.after {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+	margin-top: var(--space-16);
+}

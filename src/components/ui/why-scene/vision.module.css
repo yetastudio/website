@@ -1,0 +1,98 @@
+/* Vision: a wireframe resolving into the page. Each part keeps its sketch and its face in one cell. */
+
+.head {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+	height: var(--space-20);
+	white-space: nowrap;
+}
+
+.part {
+	--stagger: 80ms;
+
+	display: grid;
+	align-items: center;
+	justify-items: start;
+}
+
+.part > * {
+	grid-area: 1 / 1;
+}
+
+.sketch {
+	transition: opacity var(--duration-exit) ease calc(var(--i) * var(--stagger));
+}
+
+.product {
+	opacity: 0;
+	transition: opacity var(--duration-exit) ease;
+}
+
+[data-built] .sketch {
+	opacity: 0;
+}
+
+[data-built] .product {
+	opacity: 1;
+	transition: opacity var(--duration-enter) var(--ease-out) calc(var(--i) * var(--stagger) + var(--stagger));
+}
+
+/* The image: crossed box in the sketch, a soft wash of the chip's hue when built */
+.media {
+	--media-width: 228px;
+	--media-height: 36px;
+
+	grid-template-rows: var(--media-height);
+	align-items: stretch;
+	justify-items: stretch;
+	width: var(--media-width);
+	margin-top: var(--space-10);
+}
+
+.media .sketch {
+	border-radius: var(--radius-sm);
+	outline: var(--stroke-hairline) dashed var(--ss-ink-5);
+	outline-offset: calc(var(--stroke-hairline) * -1);
+}
+
+.cross {
+	display: block;
+	width: 100%;
+	height: 100%;
+	stroke: var(--ss-ink-4);
+	stroke-width: 1;
+}
+
+.image {
+	display: block;
+	height: 100%;
+	border-radius: var(--radius-sm);
+	background: linear-gradient(
+		120deg,
+		color-mix(in srgb, var(--scene-accent) 14%, transparent),
+		color-mix(in srgb, var(--scene-accent) 6%, transparent)
+	);
+}
+
+.cta {
+	margin-top: var(--space-10);
+}
+
+/* The sketched button: a dashed pill at the button's height, a bar for its label */
+.pill {
+	--pill-width: 96px;
+
+	display: inline-grid;
+	place-items: center;
+	width: var(--pill-width);
+	height: var(--space-28);
+	border-radius: var(--ss-radius-md);
+	outline: var(--stroke-hairline) dashed var(--ss-ink-5);
+	outline-offset: calc(var(--stroke-hairline) * -1);
+}
+
+/* Live is a status: its dot is the one green mark */
+.live :global(.ss-badge__dot) {
+	background: var(--color-accent-green);
+}

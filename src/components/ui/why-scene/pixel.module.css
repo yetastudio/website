@@ -1,0 +1,133 @@
+/* Pixel: a selected button inside its frame, its spacing measured on both sides, the gaps evened out. */
+
+.path {
+	display: block;
+}
+
+/* The frame hugs the gaps and the button. The gaps trade width, so it never resizes. */
+.frame {
+	--gap-start: 44px;
+	--gap-end: 32px;
+	--frame-height: 52px;
+
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	height: var(--frame-height);
+	margin-top: var(--space-12);
+	border-radius: var(--radius-sm);
+	box-shadow: inset 0 0 0 var(--stroke-hairline) var(--ss-line);
+}
+
+.frame[data-fixed] {
+	--gap-start: 38px;
+	--gap-end: 38px;
+}
+
+/* One measured gap: a rule with end ticks, its size in a small accent pill above it */
+.gap {
+	position: relative;
+	flex: none;
+	align-self: stretch;
+	width: var(--gap-start);
+	transition: width var(--duration-overlay) var(--ease-smooth);
+}
+
+.gap[data-side='end'] {
+	width: var(--gap-end);
+}
+
+.rule {
+	--tick: 7px;
+	--rule-inset: 3px;
+
+	position: absolute;
+	top: 50%;
+	right: var(--rule-inset);
+	left: var(--rule-inset);
+	height: var(--stroke-hairline);
+	background: var(--scene-accent);
+}
+
+.rule::before,
+.rule::after {
+	content: '';
+	position: absolute;
+	top: calc(var(--tick) / -2);
+	width: var(--stroke-hairline);
+	height: var(--tick);
+	background: var(--scene-accent);
+}
+
+.rule::before {
+	left: 0;
+}
+
+.rule::after {
+	right: 0;
+}
+
+.size {
+	--size-lift: 14px;
+
+	position: absolute;
+	top: calc(50% - var(--size-lift));
+	left: 50%;
+	padding: 0 var(--space-4);
+	border-radius: var(--radius-xs);
+	background: var(--ss-accent-soft);
+	font-size: var(--text-2xs);
+	font-weight: var(--font-weight-medium);
+	line-height: var(--leading-snug);
+	color: var(--scene-accent);
+	transform: translateX(-50%);
+}
+
+/* The selection: an accent hairline round the button, a handle on each corner */
+.selected {
+	position: relative;
+	display: inline-flex;
+	flex: none;
+	border-radius: var(--ss-radius-md);
+	box-shadow: 0 0 0 var(--stroke-hairline) var(--scene-accent);
+}
+
+.handle {
+	--handle: 5px;
+
+	position: absolute;
+	width: var(--handle);
+	height: var(--handle);
+	border-radius: var(--stroke-hairline);
+	background: var(--color-surface-raised);
+	box-shadow: inset 0 0 0 var(--stroke-hairline) var(--scene-accent);
+}
+
+.handle[data-corner='tl'] { top: calc(var(--handle) / -2); left: calc(var(--handle) / -2); }
+.handle[data-corner='tr'] { top: calc(var(--handle) / -2); right: calc(var(--handle) / -2); }
+.handle[data-corner='bl'] { bottom: calc(var(--handle) / -2); left: calc(var(--handle) / -2); }
+.handle[data-corner='br'] { right: calc(var(--handle) / -2); bottom: calc(var(--handle) / -2); }
+
+/* The check lands centred on the frame's top-right corner */
+.check {
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: inline-grid;
+	transform: translate(50%, -50%);
+}
+
+.check :global(.ss-check__fill) {
+	fill: var(--scene-accent);
+}
+
+.check :global(.ss-check__ring) {
+	opacity: 0;
+}
+
+.after {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+	margin-top: var(--space-16);
+}

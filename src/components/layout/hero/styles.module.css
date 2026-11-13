@@ -59,9 +59,11 @@
 	translate: -50% 0;
 }
 
-.doodle img {
+.doodleSvg {
+	display: block;
 	width: 100%;
 	height: auto;
+	overflow: visible;
 }
 
 /* Sparkle sits on the cap line above "great" (Figma 72 × 24 over a ~75px word). */
@@ -77,9 +79,89 @@
 	translate: -50% -48%;
 }
 
-.strike img {
+.strike .doodleSvg {
 	height: 0.65em;
-	object-fit: fill;
+}
+
+/* ── Doodle motion ──
+   Paths use pathLength=1, so a dash of 1 is the whole stroke. Hidden until the hero's Reveal adds
+   .is-shown, then drawn; without motion they simply appear drawn, and a <noscript> rule in the
+   root layout shows them without JS. */
+.ray,
+.scribble {
+	stroke: var(--color-text);
+	stroke-dasharray: 1;
+	stroke-dashoffset: 1;
+}
+
+:global(.is-shown) .ray,
+:global(.is-shown) .scribble {
+	stroke-dashoffset: 0;
+}
+
+/* The word under the sparkle carries a sheen band that crosses it as the sparkle shines. */
+.shine {
+	background-image: linear-gradient(100deg, var(--color-text) 42%, var(--color-sheen) 50%, var(--color-text) 58%);
+	background-position: 100% 0;
+	background-size: 300% 100%;
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
+	-webkit-text-fill-color: transparent;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	/* Rays burst out from the centre, one after another. */
+	:global(.is-shown) .ray {
+		animation: doodle-draw var(--doodle-draw) var(--ease-smooth) both;
+		animation-delay: calc(var(--doodle-delay) + var(--ray) * var(--stagger-stagger));
+	}
+
+	/* Then the sparkle shines now and again, growing out of the word. */
+	:global(.is-shown) .sparkle .doodleSvg {
+		transform-origin: 50% 100%;
+		animation: sparkle-shine var(--doodle-shine-period) var(--ease-in-out) var(--doodle-delay) infinite;
+	}
+
+	:global(.is-shown) .shine {
+		animation: word-sheen var(--doodle-shine-period) var(--ease-in-out) var(--doodle-delay) infinite;
+	}
+
+	/* The strike crosses "luck" out once, like a pen. */
+	:global(.is-shown) .scribble {
+		animation: doodle-draw var(--strike-draw) var(--ease-in-out) var(--strike-delay) both;
+	}
+}
+
+@keyframes doodle-draw {
+	from {
+		stroke-dashoffset: 1;
+	}
+}
+
+@keyframes sparkle-shine {
+	0%,
+	12%,
+	100% {
+		scale: 1;
+		opacity: 1;
+	}
+
+	6% {
+		scale: 1.12;
+		opacity: 0.7;
+	}
+}
+
+@keyframes word-sheen {
+	0% {
+		background-position: 100% 0;
+	}
+
+	14%,
+	100% {
+		background-position: 0 0;
+	}
 }
 
 /* ── Button group ── */
