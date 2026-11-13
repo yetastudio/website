@@ -1,38 +1,46 @@
-import { Avatar, Bar, Badge, Collapse, Stage, States, Text, type Act } from '@stageshow';
-import { Check } from 'lucide-react';
+import { useMemo } from 'react';
+import { Avatar, Badge, Button, Collapse, Stage, Text, type Act } from '@stageshow';
+import { Check, SendHorizontal } from 'lucide-react';
 
 import { LogoMark } from '@/components/ui/brand';
 
-import { SCENE_HEIGHT, SCENE_WIDTH, type WhyTourCopy } from './shared';
+import { sceneCursor } from './cursor';
+import { ENTRY_MS, SCENE_HEIGHT, SCENE_WIDTH, type WhyTourCopy } from './shared';
 import look from './look.module.css';
 import styles from './together.module.css';
 
 // Made to work together: a review thread between the client and the studio.
-// The client's question is there; the studio's reply opens under it (typing,
-// then the words), and the thread is marked Resolved. Yeta answers with its
-// own mark. The poster is the answered, resolved thread.
+// The client's question is there. Yeta's cursor (the tour's, handed over) steps
+// into the reply field, types the answer and sends it; the reply lands in the
+// thread under the question and the thread is marked Resolved. The poster is
+// the answered, resolved thread with an empty field.
 //
 // Real strings: the question, the reply, Resolved.
 
-type S = { reply: boolean; typed: boolean; resolved: boolean };
+type S = { focus: boolean; draft: string; reply: boolean; resolved: boolean };
 
-const INITIAL: S = { reply: false, typed: false, resolved: false };
-const POSTER: S = { reply: true, typed: true, resolved: true };
+const INITIAL: S = { focus: false, draft: '', reply: false, resolved: false };
+const POSTER: S = { focus: false, draft: '', reply: true, resolved: true };
 
-async function script(a: Act<S>) {
-	await a.wait(350);
-	a.mark('typing');
-	await a.set({ reply: true });
-	await a.wait(650);
-	a.mark('reply');
-	await a.set({ typed: true });
-	await a.wait(450);
-	a.mark('resolved');
-	await a.set({ resolved: true });
-	await a.wait(450);
-}
+const scriptFor = (reply: string) =>
+	async function script(a: Act<S>) {
+		await a.wait(ENTRY_MS);
+		a.mark('field');
+		await a.click('field');
+		await a.set({ focus: true });
+		await a.type('draft', reply, { interval: 34 });
+		await a.wait(180);
+		a.mark('send');
+		await a.click('send');
+		await a.set({ reply: true, draft: '', focus: false });
+		await a.wait(480);
+		a.mark('resolved');
+		await a.set({ resolved: true });
+		await a.wait(300);
+	};
 
 export function TogetherScene({ copy, playing }: { copy: WhyTourCopy['together']; playing: boolean }) {
+	const script = useMemo(() => scriptFor(copy.reply), [copy.reply]);
 	return (
 		<Stage<S>
 			width={SCENE_WIDTH}
@@ -40,6 +48,7 @@ export function TogetherScene({ copy, playing }: { copy: WhyTourCopy['together']
 			initial={INITIAL}
 			poster={POSTER}
 			script={playing ? script : undefined}
+			cursor={playing ? sceneCursor : undefined}
 			play="once"
 		>
 			{(s) => (
@@ -52,20 +61,7 @@ export function TogetherScene({ copy, playing }: { copy: WhyTourCopy['together']
 						<div className={styles.next}>
 							<div className={styles.row}>
 								<LogoMark size={20} alt="" />
-								<States
-									value={s.typed ? 'text' : 'typing'}
-									align="start"
-									states={{
-										typing: (
-											<span className={styles.typing}>
-												<span />
-												<span />
-												<span />
-											</span>
-										),
-										text: <Text className={look.strong}>{copy.reply}</Text>,
-									}}
-								/>
+								<Text className={look.strong}>{copy.reply}</Text>
 							</div>
 						</div>
 					</Collapse>
@@ -74,9 +70,14 @@ export function TogetherScene({ copy, playing }: { copy: WhyTourCopy['together']
 							<Badge icon={<Check size={10} strokeWidth={2.5} aria-hidden className={styles.tick} />}>{copy.resolved}</Badge>
 						</div>
 					</Collapse>
-					<div className={styles.after}>
-						<Bar w={188} h={5} tone={2} />
-						<Bar w={132} h={5} tone={2} />
+					<div className={styles.composer}>
+						<div className={styles.field} data-target="field" data-focus={s.focus || undefined}>
+							{s.draft ? <span className={styles.draft}>{s.draft}</span> : <span className={styles.placeholder} />}
+							{s.focus && <span className={styles.caret} />}
+						</div>
+						<span data-target="send">
+							<Button size="small" variant="primary" icon={<SendHorizontal size={12} strokeWidth={2} aria-hidden />} />
+						</span>
 					</div>
 				</div>
 			)}

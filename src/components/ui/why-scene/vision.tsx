@@ -1,7 +1,8 @@
 import { Badge, Bar, Button, Stage, Text, type Act } from '@stageshow';
 import type { CSSProperties, ReactNode } from 'react';
 
-import { SCENE_HEIGHT, SCENE_WIDTH, type WhyTourCopy } from './shared';
+import { sceneCursor } from './cursor';
+import { ENTRY_MS, SCENE_HEIGHT, SCENE_WIDTH, type WhyTourCopy } from './shared';
 import look from './look.module.css';
 import styles from './vision.module.css';
 
@@ -9,7 +10,8 @@ import styles from './vision.module.css';
 // drawn at the page's own geometry (a title bar, a crossed image box, a
 // dashed button); each part resolves in reading order into the real thing,
 // and the page is marked Live. Dashed edges never resize, they only fade.
-// The poster is the live page.
+// Yeta's cursor presses the sketched button and the page builds; it presses
+// the real one and the page goes Live. The poster is the live page.
 //
 // Real strings: the page title, the button, Live.
 
@@ -19,19 +21,21 @@ const INITIAL: S = { built: false, live: false };
 const POSTER: S = { built: true, live: true };
 
 async function script(a: Act<S>) {
-	await a.wait(350);
+	await a.wait(ENTRY_MS);
 	a.mark('build');
+	await a.click('cta');
 	await a.set({ built: true });
-	await a.wait(900);
+	await a.wait(820);
 	a.mark('live');
+	await a.click('cta');
 	await a.set({ live: true });
-	await a.wait(450);
+	await a.wait(400);
 }
 
 /** One part of the page: its sketch and its finished face in one cell, crossfaded in reading order. */
-function Part({ i, sketch, product, className }: { i: number; sketch: ReactNode; product: ReactNode; className?: string }) {
+function Part({ i, sketch, product, className, target }: { i: number; sketch: ReactNode; product: ReactNode; className?: string; target?: string }) {
 	return (
-		<div className={className ? `${styles.part} ${className}` : styles.part} style={{ '--i': i } as CSSProperties}>
+		<div className={className ? `${styles.part} ${className}` : styles.part} style={{ '--i': i } as CSSProperties} data-target={target}>
 			<div className={styles.sketch}>{sketch}</div>
 			<div className={styles.product}>{product}</div>
 		</div>
@@ -46,6 +50,7 @@ export function VisionScene({ copy, playing }: { copy: WhyTourCopy['vision']; pl
 			initial={INITIAL}
 			poster={POSTER}
 			script={playing ? script : undefined}
+			cursor={playing ? sceneCursor : undefined}
 			play="once"
 		>
 			{(s) => (
@@ -72,6 +77,7 @@ export function VisionScene({ copy, playing }: { copy: WhyTourCopy['vision']; pl
 					<Part
 						i={2}
 						className={styles.cta}
+						target="cta"
 						sketch={
 							<span className={styles.pill}>
 								<Bar w={56} h={5} tone={3} />

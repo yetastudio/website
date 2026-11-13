@@ -1,6 +1,7 @@
 import { Bar, Button, Check, Count, Stage, type Act } from '@stageshow';
 
-import { SCENE_HEIGHT, SCENE_WIDTH, type WhyTourCopy } from './shared';
+import { sceneCursor } from './cursor';
+import { ENTRY_MS, SCENE_HEIGHT, SCENE_WIDTH, type WhyTourCopy } from './shared';
 import look from './look.module.css';
 import styles from './pixel.module.css';
 
@@ -8,7 +9,8 @@ import styles from './pixel.module.css';
 // measured on both sides. The two gaps disagree (20 and 12); the button is
 // nudged until both read 16, and a check lands on the frame's corner. The
 // frame never changes width: one gap gives what the other takes. The poster
-// is the balanced button with its check.
+// is the balanced button with its check. Yeta's cursor grabs the button and
+// nudges it into place.
 //
 // Real strings: the button's label (the gaps are numbers).
 
@@ -18,10 +20,15 @@ const INITIAL: S = { fixed: false, ok: false };
 const POSTER: S = { fixed: true, ok: true };
 
 async function script(a: Act<S>) {
-	await a.wait(500);
+	await a.wait(ENTRY_MS);
+	await a.move({ at: 'button', x: 0.55, y: 0.6 });
 	a.mark('nudge');
+	const from = a.center('button');
+	await a.drag({ x: from.x - 4, y: from.y + 1 }, (_at, _from, t) => {
+		if (t > 0.5) a.put({ fixed: true });
+	}, { duration: 520 });
 	await a.set({ fixed: true });
-	await a.wait(600);
+	await a.wait(360);
 	a.mark('check');
 	await a.set({ ok: true });
 	await a.wait(400);
@@ -46,6 +53,7 @@ export function PixelScene({ copy, playing }: { copy: WhyTourCopy['pixel']; play
 			initial={INITIAL}
 			poster={POSTER}
 			script={playing ? script : undefined}
+			cursor={playing ? sceneCursor : undefined}
 			play="once"
 		>
 			{(s) => (
@@ -53,7 +61,7 @@ export function PixelScene({ copy, playing }: { copy: WhyTourCopy['pixel']; play
 					<Bar w={72} h={5} tone={3} className={styles.path} />
 					<div className={styles.frame} data-fixed={s.fixed || undefined}>
 						<Gap side="start" value={s.fixed ? 16 : 20} />
-						<span className={styles.selected}>
+						<span className={styles.selected} data-target="button">
 							<Button variant="primary">{copy.cta}</Button>
 							<span className={styles.handle} data-corner="tl" />
 							<span className={styles.handle} data-corner="tr" />

@@ -64,3 +64,14 @@
 	min-width: 4ch;
 	font-variant-numeric: tabular-nums;
 }
+
+/* The quote the cursor picked out: a soft mark in the scene's hue behind the words. */
+.quote [data-marked] {
+	--mark-ink: color-mix(in oklab, var(--scene-accent) 18%, transparent);
+	border-radius: var(--radius-xs);
+	background: var(--mark-ink);
+	box-shadow: 0 0 0 var(--space-2) var(--mark-ink);
+	transition:
+		background-color var(--duration-enter) var(--ease-out),
+		box-shadow var(--duration-enter) var(--ease-out);
+}

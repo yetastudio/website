@@ -96,3 +96,8 @@
 		opacity var(--duration-enter) var(--ease-out),
 		transform var(--duration-overlay) var(--ease-out);
 }
+
+/* The scene's own cursor is never drawn: the tour cursor follows it (see cursor.ts). Its click ripples stay. */
+.root :global(.ss-cursor) {
+	visibility: hidden;
+}

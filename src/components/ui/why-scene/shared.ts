@@ -7,17 +7,27 @@ export const SCENE_WIDTH = 288;
 export const SCENE_HEIGHT = 148;
 
 /**
+ * How long a scene waits before its cursor first moves (ms): the tour glides its own cursor onto
+ * the scene cursor's resting point in that time and hands over.
+ */
+export const ENTRY_MS = 900;
+
+/** How long the scene cursor rests after its last beat before it steps out of shot (ms). */
+export const CURSOR_IDLE_MS = 1100;
+
+/**
  * How long each scene takes from its first frame to its payoff (ms), so a host
- * that opens it (the Why Yeta tour) knows when the result is on screen.
+ * that opens it (the Why Yeta tour) knows when the result is on screen. The cursor's
+ * work (moves, clicks, typing) is counted in.
  */
 export const SCENE_PAYOFF_MS: Record<WhySceneName, number> = {
-	insight: 1900,
-	together: 1900,
-	luck: 1800,
-	defy: 1700,
-	pixel: 1500,
-	vision: 1700,
-	goals: 1800,
+	insight: 3200,
+	together: 3600,
+	luck: 2900,
+	defy: 2700,
+	pixel: 2400,
+	vision: 3100,
+	goals: 2600,
 };
 
 /** The words each scene shows, from messages `whyYeta.tour.<scene>`. */

@@ -8,7 +8,7 @@ import { bezier } from '@stageshow';
 
 //! Components
 import { LogoMark } from '@/components/ui/brand';
-import { YetaCursor } from '@/components/ui/cursor';
+import { YetaCursor, YETA_CURSOR_HOTSPOT } from '@/components/ui/cursor';
 import { WhyScene } from '@/components/ui/why-scene';
 import { SCENE_PAYOFF_MS, type WhySceneName } from '@/components/ui/why-scene/shared';
 
@@ -22,7 +22,9 @@ import styles from './tour.module.css';
  * The Why Yeta tour. Yeta's own cursor (the site cursor, with the logo mark
  * riding beside it) visits the feature chips one by one; each chip it hovers
  * unfolds into a small scene that shows what that promise means, then folds
- * back as the cursor moves on. A visitor hovering or focusing a chip opens
+ * back as the cursor moves on. Inside the scene it is still the same cursor: the
+ * scene drives an unseen cursor through its story (click the field, type, send…)
+ * and this one rides it frame by frame, presses included. A visitor hovering or focusing a chip opens
  * that one and pauses the tour; it picks up again a moment after they leave.
  *
  * One provider holds the state and runs the tour for whichever layout is
@@ -47,6 +49,8 @@ const HOVER_MS = 140;
 const SETTLE_MS = 380;
 /** How long after a visitor leaves before the tour picks up again. */
 const RESUME_MS = 1400;
+/** A beat after a scene starts, before its cursor is measured: it has mounted at its resting point by then. */
+const ENTRY_SETTLE_MS = 60;
 /** The cursor's fade in and out (tour.module.css). */
 const SHOW_MS = 320;
 /** The kit's travel curve: a soft departure, a long, soft arrival. */
@@ -252,6 +256,46 @@ export function WhyTour({ children }: { children: ReactNode }) {
 				);
 			});
 
+		// Where a scene's own cursor is, in this cursor's frame (its box sits a hotspot up and left of the point)
+		const scenePoint = (layout: Layout, scene: WhySceneName): (Point & { pressed: boolean }) | null => {
+			const el = Array.from(section.querySelectorAll<HTMLElement>(`[data-why-layout="${layout}"] [data-scene="${scene}"] .ss-cursor`)).find(
+				(node) => node.getClientRects().length > 0
+			);
+			if (!el) return null;
+			const r = el.getBoundingClientRect();
+			const s = section.getBoundingClientRect();
+			return { x: r.left - s.left - YETA_CURSOR_HOTSPOT.x, y: r.top - s.top - YETA_CURSOR_HOTSPOT.y, pressed: el.dataset.pressed === 'true' };
+		};
+
+		// Ride the scene's cursor until the story holds: one hand from the chip to the last beat
+		const ride = (layout: Layout, scene: WhySceneName, ms: number, signal: AbortSignal) =>
+			new Promise<void>((resolve, reject) => {
+				const end = performance.now() + ms;
+				let frame = 0;
+				const step = (now: number) => {
+					const at = scenePoint(layout, scene);
+					if (at) {
+						place(at);
+						cursor.toggleAttribute('data-pressed', at.pressed);
+					}
+					if (now < end) frame = requestAnimationFrame(step);
+					else {
+						cursor.removeAttribute('data-pressed');
+						resolve();
+					}
+				};
+				frame = requestAnimationFrame(step);
+				signal.addEventListener(
+					'abort',
+					() => {
+						cancelAnimationFrame(frame);
+						cursor.removeAttribute('data-pressed');
+						reject(new Stopped());
+					},
+					{ once: true }
+				);
+			});
+
 		const loop = async (signal: AbortSignal, resume: boolean) => {
 			const layout = layoutOf(section);
 			if (!layout) return;
@@ -305,7 +349,17 @@ export function WhyTour({ children }: { children: ReactNode }) {
 				if (!withCursor) await wait(SETTLE_MS, signal);
 				setPlaying(keys[i]);
 				const scene = node.dataset.whyScene as WhySceneName;
-				await wait((SCENE_PAYOFF_MS[scene] ?? 1800) + HOLD_MS, signal);
+				const story = (SCENE_PAYOFF_MS[scene] ?? 1800) + HOLD_MS;
+				if (withCursor) {
+					// Into the scene: glide onto its cursor's resting point, then ride it through the story
+					const t0 = performance.now();
+					await wait(ENTRY_SETTLE_MS, signal);
+					const entry = scenePoint(layout, scene);
+					if (entry) await glide(entry, signal);
+					await ride(layout, scene, story - (performance.now() - t0), signal);
+				} else {
+					await wait(story, signal);
+				}
 			}
 		};
 
