@@ -15,7 +15,11 @@ import { ResultsMockup, type ResultFacts } from './mockups/results';
 import { CraftMockup } from './mockups/library/craft';
 import { HeroMockup } from './mockups/library/hero';
 import { NavMockup } from './mockups/library/nav';
+import { ProcessMockup } from './mockups/library/process';
+import { ResultsLedgerMockup } from './mockups/library/results';
+import { TestimonialsMockup } from './mockups/library/testimonials';
 import { WhyMockup } from './mockups/library/why';
+import { WorkMockup } from './mockups/library/work';
 
 //! Data
 import { LIBRARY, LIBRARY_COLLECTION, MOBBIN_COLLECTION, PROPOSALS, type ProposalId, type ShelfId } from './data';
@@ -59,6 +63,10 @@ export default function InspoShowcase({ facts }: { facts: ResultFacts }) {
 		hero: <HeroMockup />,
 		value: <WhyMockup />,
 		services: <CraftMockup />,
+		work: <WorkMockup />,
+		process: <ProcessMockup />,
+		stats: <ResultsLedgerMockup facts={facts} />,
+		testimonials: <TestimonialsMockup />,
 	};
 
 	return (

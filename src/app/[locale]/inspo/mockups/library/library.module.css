@@ -366,3 +366,317 @@
 		--button-min-height: 3.25rem;
 	}
 }
+
+/* ───────────── 05 Our Work ───────────── */
+
+.work {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-24);
+	padding: var(--space-24) var(--space-16);
+}
+
+.workHead {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+}
+
+.workStatement {
+	max-width: 30ch;
+}
+
+.workFilters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-6);
+	list-style: none;
+}
+
+.workGrid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var(--space-16);
+	list-style: none;
+}
+
+.workItem {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-10);
+	min-width: 0;
+}
+
+/* The finished site, framed on a wash that bleeds past the shot (OFF+BRAND, Webflow). */
+.workWash {
+	--work-shot-inset: 12%;
+	display: grid;
+	padding: var(--space-24) 0 0 var(--work-shot-inset);
+	overflow: hidden;
+	border-radius: var(--radius-lg);
+	background: var(--hue-wash);
+}
+
+.workShot {
+	--work-shot-aspect: 16 / 10;
+	position: relative;
+	aspect-ratio: var(--work-shot-aspect);
+	overflow: hidden;
+	border-radius: var(--radius-md) 0 0 0;
+	box-shadow: var(--shadow-overlay);
+}
+
+.workImage {
+	object-fit: cover;
+	object-position: top left;
+}
+
+.workCaption {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-12);
+}
+
+/* The open tile: dashed, quiet, an invitation instead of an invented client. */
+.workOpen {
+	--work-open-dash: 1.5px;
+	align-items: center;
+	justify-content: center;
+	padding: var(--space-32) var(--space-16);
+	border: var(--work-open-dash) dashed var(--color-border);
+	border-radius: var(--radius-lg);
+	text-align: center;
+}
+
+@container (min-width: 30rem) {
+	.work {
+		padding: var(--space-32);
+	}
+
+	.workGrid {
+		grid-template-columns: 1fr 1fr;
+		align-items: start;
+	}
+
+	/* Staggered pair (Fiasco): the second column starts lower. */
+	.workItem:nth-child(2) {
+		margin-top: var(--space-48);
+	}
+
+	.workOpen {
+		grid-column: 1 / -1;
+	}
+}
+
+/* ───────────── 06 Our Process ───────────── */
+
+.process {
+	--process-height: 34rem;
+	--process-fade: linear-gradient(180deg, var(--color-surface) 72%, transparent 100%);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-24);
+	height: var(--process-height);
+	padding: var(--space-32) var(--space-20) 0;
+	background: var(--hue-wash);
+	color: var(--color-text-strong);
+	mask-image: var(--process-fade);
+}
+
+.processClaim {
+	max-width: 16ch;
+}
+
+.processRows {
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+}
+
+.processRow {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: start;
+	gap: var(--space-16);
+	padding-block: var(--space-16);
+	border-top: var(--stroke-hairline) solid color-mix(in oklab, var(--color-text-strong) 22%, transparent);
+}
+
+.processNumeral {
+	font-size: clamp(var(--text-3xl), 9cqi, var(--text-5xl));
+	letter-spacing: var(--tracking-tight);
+}
+
+.processText {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-4);
+	min-width: 0;
+}
+
+.processTitle {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-8);
+}
+
+.processCopy {
+	display: -webkit-box;
+	overflow: hidden;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+
+@container (min-width: 30rem) {
+	.process {
+		--process-height: 30rem;
+		padding: var(--space-40) var(--space-40) 0;
+	}
+
+	.processRow {
+		grid-template-columns: 5ch 12ch 1fr;
+		align-items: baseline;
+		gap: var(--space-20);
+	}
+
+	.processText {
+		display: contents;
+	}
+}
+
+/* ───────────── 07 Results and clients ───────────── */
+
+.ledger {
+	display: flex;
+	flex-direction: column;
+}
+
+.ledgerSky {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-20);
+	padding: var(--space-32) var(--space-20) var(--space-24);
+}
+
+.ledgerRows {
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+}
+
+.ledgerRow {
+	display: flex;
+	align-items: center;
+	gap: var(--space-20);
+	padding-block: var(--space-12);
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.ledgerFigure {
+	--ledger-figure-width: 2.6ch;
+	min-width: var(--ledger-figure-width);
+	font-size: clamp(var(--text-4xl), 11cqi, var(--text-display));
+	letter-spacing: var(--tracking-tight);
+}
+
+.ledgerCaption {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-2);
+}
+
+/* Clients as serif wordmarks, edge to edge, one lit in its hue (Craft Agency). */
+.ledgerClients {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: var(--space-8) var(--space-20);
+	padding: var(--space-20);
+	list-style: none;
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.ledgerWordmark {
+	font-size: clamp(var(--text-xl), 5.4cqi, var(--text-3xl));
+	letter-spacing: var(--tracking-tight);
+}
+
+.ledgerLit {
+	color: var(--color-accent-violet);
+	font-style: italic;
+}
+
+@container (min-width: 30rem) {
+	.ledgerSky {
+		padding: var(--space-40) var(--space-40) var(--space-32);
+	}
+
+	.ledgerClients {
+		padding-inline: var(--space-40);
+	}
+}
+
+/* ───────────── 08 Testimonials ───────────── */
+
+.quote {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-24);
+	padding: var(--space-40) var(--space-20) var(--space-24);
+	background: var(--hue-wash);
+	color: var(--color-text-strong);
+	transition: background var(--duration-enter) var(--ease-out);
+}
+
+/* Every quote sits in the same cell; the tallest sets the height. */
+.quoteStack {
+	display: grid;
+	width: 100%;
+}
+
+.quoteItem {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-20);
+	grid-area: 1 / 1;
+	text-align: center;
+	opacity: 0;
+	visibility: hidden;
+	transition:
+		opacity var(--duration-enter) var(--ease-out),
+		visibility var(--duration-enter);
+}
+
+.quoteItem[data-on] {
+	opacity: 1;
+	visibility: visible;
+}
+
+.quoteText {
+	max-width: 26ch;
+	font-size: clamp(var(--text-xl), 5.6cqi, var(--text-4xl));
+}
+
+.quoteBy {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-10);
+}
+
+.quoteAvatar {
+	--quote-avatar: 2rem;
+	width: var(--quote-avatar);
+	height: var(--quote-avatar);
+	border-radius: var(--radius-pill);
+	object-fit: cover;
+}
+
+@container (min-width: 30rem) {
+	.quote {
+		padding: var(--space-64) var(--space-40) var(--space-32);
+	}
+}
