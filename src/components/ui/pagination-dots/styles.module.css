@@ -26,3 +26,33 @@ button.dot::after {
 	width: var(--space-20);
 	background-color: var(--color-text);
 }
+
+/* Autoplay: the active pill becomes a track and fills left to right, then the page advances. */
+.autoplay .active {
+	background-color: var(--color-border-strong);
+}
+
+.fill {
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background-color: var(--color-text);
+	clip-path: inset(0 0 0 0 round var(--radius-pill));
+	animation: dot-fill var(--autoplay-interval) linear forwards;
+}
+
+.fill[data-paused] {
+	animation-play-state: paused;
+}
+
+@keyframes dot-fill {
+	from {
+		clip-path: inset(0 100% 0 0 round var(--radius-pill));
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.fill {
+		animation: none;
+	}
+}
