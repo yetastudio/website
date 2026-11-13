@@ -83,7 +83,7 @@
 	font-size: var(--text-xs);
 	letter-spacing: 0;
 	white-space: pre;
-	color: var(--color-text-strong);
+	color: var(--color-text-subtle);
 	transition: opacity var(--duration-exit) ease;
 }
 
@@ -91,8 +91,10 @@
 	opacity: 0;
 }
 
+/* Code in ink: the keyword in the strong ink at a heavier weight, the rest a step quieter */
 .keyword {
-	color: var(--ss-accent);
+	color: var(--color-text-strong);
+	font-weight: var(--font-weight-medium);
 }
 
 .caret {
@@ -101,7 +103,7 @@
 	height: var(--caret-height);
 	margin-left: var(--stroke-hairline);
 	vertical-align: text-bottom;
-	background: var(--ss-accent);
+	background: var(--color-text-strong);
 	opacity: 0;
 }
 
@@ -142,8 +144,6 @@
 	line-height: 1.6;
 	letter-spacing: 0;
 	color: var(--color-text-subtle);
-	--ss-term-sigil: var(--color-accent-green);
-	--ss-term-ok: var(--color-accent-green);
 	--ss-term-dim: var(--color-text-faint);
 }
 

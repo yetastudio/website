@@ -62,7 +62,8 @@
 	inset: 0 auto 0 0;
 	width: 0;
 	border-radius: inherit;
-	background: var(--ss-accent);
+	/* The tile's wash, not a flat accent: the one hue in the panel is the brand's gradient */
+	background: var(--scene-wash);
 }
 
 .progress[data-run] .fill {

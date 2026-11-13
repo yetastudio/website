@@ -20,30 +20,38 @@
 	pointer-events: none;
 	user-select: none;
 	--scene-accent: var(--color-text-strong);
+	/* The tile's own wash, for the one fill a scene paints (a progress bar) */
+	--scene-wash: var(--color-text-strong);
 }
 
 .root[data-step='discover'] {
 	--scene-accent: var(--color-accent-pink);
+	--scene-wash: var(--wash-pink);
 }
 
 .root[data-step='define'] {
 	--scene-accent: var(--color-accent-orange);
+	--scene-wash: var(--wash-orange);
 }
 
 .root[data-step='design'] {
 	--scene-accent: var(--color-accent-yellow);
+	--scene-wash: var(--wash-yellow);
 }
 
 .root[data-step='develop'] {
 	--scene-accent: var(--color-accent-green);
+	--scene-wash: var(--wash-green);
 }
 
 .root[data-step='integrate'] {
 	--scene-accent: var(--color-accent-blue);
+	--scene-wash: var(--wash-blue);
 }
 
 .root[data-step='launch'] {
 	--scene-accent: var(--color-accent-violet);
+	--scene-wash: var(--wash-violet);
 }
 
 /* Every kit token comes from the kit's Yeta look (vendor/stageshow/yeta.css, the

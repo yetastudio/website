@@ -130,31 +130,36 @@
     border-width: 1px;
   }
 
-  /* Buttons: the bevel the design system draws on every control; text on the accent
-     is the inverse ink, so it reads on the deep (light scheme) and pastel (dark) steps */
+  /* Buttons are the design system's: neutral control surfaces with the bevel, never a
+     coloured fill. Primary is the solid Button (the control surface, strong ink),
+     secondary sits on the panel with a hairline; hue stays in washes and small marks. */
   .ss-stage[data-theme="yeta"] .ss-button {
-    box-shadow:
-      var(--shadow-bevel),
-      inset 0 0 0 1px var(--ss-ink-3);
+    box-shadow: var(--shadow-bevel), inset 0 0 0 1px var(--ss-ink-3);
     font-weight: var(--font-weight-medium);
     letter-spacing: var(--tracking-tight);
   }
 
   .ss-stage[data-theme="yeta"] .ss-button[data-variant="primary"] {
-    color: var(--color-text-inverse);
-    box-shadow: var(--shadow-bevel);
+    background: var(--color-surface-control);
+    color: var(--color-text-strong);
+    box-shadow: var(--shadow-bevel), inset 0 0 0 1px var(--color-border-faint);
+  }
+
+  .ss-stage[data-theme="yeta"] .ss-button[data-variant="primary"][data-hover] {
+    background: var(--color-surface-control-hover);
   }
 
   .ss-stage[data-theme="yeta"] .ss-button:is([data-variant="ghost"], [data-variant="tertiary"]) {
     box-shadow: none;
   }
 
-  /* Code: the palette's accent steps (700 on light, 400 on dark) */
+  /* Code reads in ink, as the design system has no syntax palette: keywords and names in
+     the strong ink, strings a step quieter */
   .ss-stage[data-theme="yeta"] .ss-code {
-    --ss-code-key: var(--color-accent-violet);
-    --ss-code-str: var(--color-accent-green);
-    --ss-code-num: var(--color-accent-orange);
-    --ss-code-fn: var(--color-accent-blue);
+    --ss-code-key: var(--color-text-strong);
+    --ss-code-str: var(--color-text-subtle);
+    --ss-code-num: var(--color-text-strong);
+    --ss-code-fn: var(--color-text-strong);
   }
 
   /* A floating sidebar is a raised, bevelled panel on either scheme */
@@ -212,8 +217,8 @@
     box-shadow: var(--shadow-bevel), 0 0 0 1px var(--color-border-faint);
   }
 
-  /* Code and terminals: the system mono and the palette's accents. A terminal is always a
-     dark surface: the brand's dark, not a stock gray. */
+  /* Code and terminals: the system mono, in ink. A terminal is always a dark surface: the
+     brand's dark, not a stock gray. Only a status mark (the tick on a passing run) takes a hue. */
   .ss-stage[data-theme="yeta"] .ss-code {
     font-family: var(--ss-mono);
   }
@@ -225,12 +230,16 @@
   }
 
   .ss-stage[data-theme="yeta"] .ss-term {
-    --ss-term-path: var(--color-accent-blue);
-    --ss-term-sigil: var(--color-accent-green);
-    --ss-term-ok: var(--color-accent-green);
-    --ss-term-err: var(--color-danger);
+    --ss-term-path: var(--color-text-subtle);
+    --ss-term-sigil: var(--color-text-faint);
+    --ss-term-ok: var(--color-text-strong);
+    --ss-term-err: var(--color-danger-text);
     --ss-term-dim: var(--color-text-faint);
     color: var(--color-text-subtle);
+  }
+
+  .ss-stage[data-theme="yeta"] .ss-term .ok svg {
+    color: var(--color-success);
   }
 
   .ss-stage[data-theme="yeta"] .ss-term__title {
