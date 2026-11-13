@@ -12,7 +12,7 @@
 }
 
 .code {
-	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+	font-family: var(--font-mono);
 	letter-spacing: var(--tracking-normal);
 }
 

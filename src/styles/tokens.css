@@ -177,6 +177,8 @@
 	/* ───────────────────────── Typography ───────────────────────── */
 	--font-sans: var(--font-funnel-display), ui-sans-serif, system-ui, sans-serif;
 	--font-serif: var(--font-editorial-new), ui-serif, Georgia, serif;
+	/* No brand mono: code and terminals (design-system docs, Stageshow scenes) use the system's. */
+	--font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
 
 	--font-weight-light: 300;
 	--font-weight-regular: 400;

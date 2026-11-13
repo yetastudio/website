@@ -12,7 +12,6 @@
 	--gutter-width: 24px;
 	--code-line: 17px;
 	--caret-height: 13px;
-	--mono: 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
 }
 
 .editor {
@@ -61,7 +60,7 @@
 	flex: none;
 	width: var(--gutter-width);
 	padding-right: var(--space-8);
-	font-family: var(--mono);
+	font-family: var(--font-mono);
 	font-size: var(--text-2xs);
 	letter-spacing: 0;
 	text-align: right;
@@ -80,7 +79,7 @@
 
 .typed {
 	display: block;
-	font-family: var(--mono);
+	font-family: var(--font-mono);
 	font-size: var(--text-xs);
 	letter-spacing: 0;
 	white-space: pre;
@@ -138,7 +137,7 @@
 .termBody {
 	gap: var(--space-2);
 	padding: var(--space-10) var(--space-12);
-	font-family: var(--mono);
+	font-family: var(--font-mono);
 	font-size: var(--text-2xs);
 	line-height: 1.6;
 	letter-spacing: 0;
