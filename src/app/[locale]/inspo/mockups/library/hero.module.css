@@ -161,3 +161,20 @@
 		padding: var(--space-32);
 	}
 }
+
+/* ───────────── Playground ───────────── */
+
+/* Mounted, every hero fills the first screen under the header, its content centred in it. */
+:global([data-playground]) .skyBody {
+	--hero-fill: calc(100svh - var(--header-height) - 15rem);
+	justify-content: center;
+	min-height: var(--hero-fill);
+}
+
+:global([data-playground]) .pairing,
+:global([data-playground]) .framed {
+	--hero-fill: calc(100svh - var(--header-height) - 5rem);
+	justify-content: center;
+	align-content: center;
+	min-height: var(--hero-fill);
+}

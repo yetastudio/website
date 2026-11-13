@@ -75,7 +75,7 @@ export function ShelfVariants({ title, variants }: { title: string; variants: Sh
  * them (transitions.dev card resize); the height is written straight to a custom property, so a
  * resize never re-renders the mockups.
  */
-function PageSlide({ variants, activeIndex }: { variants: ShelfVariant[]; activeIndex: number }) {
+export function PageSlide({ variants, activeIndex }: { variants: ShelfVariant[]; activeIndex: number }) {
 	const rootRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {

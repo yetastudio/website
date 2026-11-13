@@ -363,3 +363,13 @@
 		transform: none !important;
 	}
 }
+
+/* Full size (a real section): the portrait keeps a print size beside a wider quote. */
+@container (min-width: 64rem) {
+	.portrait {
+		--portrait-photo-max: 22rem;
+		grid-template-columns: minmax(0, var(--portrait-photo-max)) minmax(0, 1fr);
+		gap: var(--space-24) var(--space-64);
+		padding: var(--space-64);
+	}
+}

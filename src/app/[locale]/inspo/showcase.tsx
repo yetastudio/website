@@ -14,22 +14,10 @@ import { ProcessWalkthroughMockup } from './mockups/process-walkthrough';
 import { ResultsMockup, type ResultFacts } from './mockups/results';
 
 //! Library
-import { ABOUT_VARIANTS } from './mockups/library/about';
-import { CASE_VARIANTS } from './mockups/library/case';
-import { CRAFT_VARIANTS } from './mockups/library/craft';
-import { CTA_VARIANTS } from './mockups/library/cta';
-import { FOOTER_VARIANTS } from './mockups/library/footer';
-import { HERO_VARIANTS } from './mockups/library/hero';
-import { NAV_VARIANTS } from './mockups/library/nav';
-import { PROCESS_VARIANTS } from './mockups/library/process';
-import { RESULTS_VARIANTS } from './mockups/library/results';
-import { TESTIMONIAL_VARIANTS } from './mockups/library/testimonials';
-import type { LibraryVariantDef } from './mockups/library/variant-types';
-import { WHY_VARIANTS } from './mockups/library/why';
-import { WORK_VARIANTS } from './mockups/library/work';
+import { SHELF_VARIANTS } from './mockups/library/registry';
 
 //! Data
-import { LIBRARY, LIBRARY_COLLECTION, MOBBIN_COLLECTION, PROPOSALS, type ProposalId, type ShelfId } from './data';
+import { LIBRARY, LIBRARY_COLLECTION, MOBBIN_COLLECTION, PROPOSALS, type ProposalId } from './data';
 
 //! Styles
 import styles from './styles.module.css';
@@ -64,22 +52,6 @@ export default function InspoShowcase({ facts }: { facts: ResultFacts }) {
 		booking: <BookingMockup />,
 	};
 
-	// Three proposals per library shelf, each following one or two of its references.
-	const shelfVariants: Record<ShelfId, LibraryVariantDef[]> = {
-		nav: NAV_VARIANTS,
-		hero: HERO_VARIANTS,
-		value: WHY_VARIANTS,
-		services: CRAFT_VARIANTS,
-		work: WORK_VARIANTS,
-		process: PROCESS_VARIANTS,
-		stats: RESULTS_VARIANTS,
-		testimonials: TESTIMONIAL_VARIANTS,
-		about: ABOUT_VARIANTS,
-		cta: CTA_VARIANTS,
-		footer: FOOTER_VARIANTS,
-		case: CASE_VARIANTS,
-	};
-
 	return (
 		<ShowcaseLayout nav={<ShowcaseNav label="Inspo sections" items={navItems} />}>
 			<header className={styles.intro}>
@@ -111,7 +83,10 @@ export default function InspoShowcase({ facts }: { facts: ResultFacts }) {
 				title="Sections worth borrowing from"
 				description={`${libraryCount} website sections from studios and design-led brands, one shelf per anchor in the order the landing reads. Each shelf opens with three proposals, each following one or two of its references, neutral first with colour only as an accent. Each card says what to take for Yeta; the images live in the Mobbin collection.`}
 			>
-				<div>
+				<div className={styles.collections}>
+					<Button href="/inspo/playground" variant="solid" size="lg" iconStart="monitor">
+						Open the playground
+					</Button>
 					<Button href={LIBRARY_COLLECTION} variant="glass" size="lg" iconStart="book">
 						Open “Yeta Studio · Section library”
 					</Button>
@@ -123,7 +98,7 @@ export default function InspoShowcase({ facts }: { facts: ResultFacts }) {
 					key={shelf.id}
 					shelf={shelf}
 					number={shelfNumber(index)}
-					variants={shelfVariants[shelf.id].map(({ Component, ...variant }) => ({ ...variant, node: <Component facts={facts} /> }))}
+					variants={SHELF_VARIANTS[shelf.id].map(({ Component, ...variant }) => ({ ...variant, node: <Component facts={facts} /> }))}
 				/>
 			))}
 

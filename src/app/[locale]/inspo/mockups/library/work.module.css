@@ -249,3 +249,10 @@
 		padding-top: var(--space-40);
 	}
 }
+
+/* Full size (a real section): the peeking sites stay at a reading size instead of filling the screen. */
+@container (min-width: 64rem) {
+	.peekTrack {
+		--peek-slide: 50cqi;
+	}
+}

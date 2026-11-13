@@ -318,3 +318,18 @@
 		transition: none !important;
 	}
 }
+
+/* Playground: mounted at full size, the list runs whole instead of fading at its foot. */
+:global([data-playground]) .numeralsRows {
+	height: auto;
+	mask-image: none;
+}
+
+/* Full size (a real section): the scene's stage keeps the size its Stageshow scene is drawn for. */
+@container (min-width: 64rem) {
+	.railStage {
+		--rail-stage-max: 46rem;
+		max-width: var(--rail-stage-max);
+		margin-inline: auto;
+	}
+}

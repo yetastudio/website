@@ -83,3 +83,12 @@
 	object-fit: cover;
 	object-position: top left;
 }
+
+/*
+ * Playground (/inspo/playground): mounted at full size, a proposal reads as an open section of the
+ * page, not a framed card. Its own grounds and inner bands stay.
+ */
+:global([data-playground]) .frame {
+	border-radius: 0;
+	box-shadow: none;
+}

@@ -242,3 +242,25 @@
 		padding-top: var(--space-40);
 	}
 }
+
+/*
+ * Playground: the proposal is the page header. Only the bar shows: no stage height, no hero hint,
+ * no ground of its own; Nav C's bar sits in a header the playground docks at the foot.
+ */
+:global([data-playground]) .hint,
+:global([data-playground]) .pillBurst,
+:global([data-playground]) .dockSlogan {
+	display: none;
+}
+
+:global([data-playground]) .pill,
+:global([data-playground]) .capsule,
+:global([data-playground]) .dock {
+	height: auto;
+	padding-block: var(--space-16);
+	background: none;
+}
+
+:global([data-playground]) .dockBar {
+	position: static;
+}

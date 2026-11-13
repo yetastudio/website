@@ -295,3 +295,10 @@
 		display: block;
 	}
 }
+
+/* Full size (a real section): the square relaxes to a landscape block, so it never outgrows the statement. */
+@container (min-width: 64rem) {
+	.voicesSquare {
+		--voices-square-aspect: 4 / 3;
+	}
+}

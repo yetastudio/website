@@ -199,3 +199,10 @@
 		transition: none !important;
 	}
 }
+
+/* Full size (a real section): the greeting gets the room of a closing band. */
+@container (min-width: 64rem) {
+	.hello {
+		padding-block: var(--space-96) var(--space-64);
+	}
+}
