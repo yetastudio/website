@@ -17,6 +17,13 @@ Source of truth: Figma `aVpNRSY3dqDxB5gdErv2xw` — pages *Branding*, *Design Sy
 subtree can flip with `.scheme-inverse` (footer band, gradient tiles) or pin with `.scheme-light/.scheme-dark`
 plus `data-scheme` (showcase panels). Theme-specific raster/vector art uses `.u-only-light/.u-only-dark`.
 
+**Motion.** Interaction motion comes from [transitions.dev](https://transitions.dev) snippets, copied
+verbatim into `vendor/transitions-dev/transitions.css` inside `@layer transitions` (so component CSS always
+wins on geometry and colour), with their tunables in `tokens.css`: Modal and Panel reveal (Dialog), Tabs
+sliding (SegmentedControl, header nav underline), Tooltip, Texts reveal (Reveal: hero and section headers),
+Card resize (Accordion) and Error state shake (Input/Textarea). Every snippet keeps its
+`prefers-reduced-motion` guard.
+
 **Checks.** `npm run check:ds` (raw values, palette use, overrides, traps; allowlist only shrinks) and
 `npm run typecheck`.
 
@@ -42,18 +49,19 @@ Status: **stable** = drawn in Figma; **inspo** = added to fill a gap, same visua
 | `SummaryCard` | stable | 786:762 / 786:805 | — | Idle; Active on hover or focus-within | Focusable so keyboard users see the Active state. |
 | `Carousel` | stable | mobile tracks | `gap sm·md`, `showDots` | position via dots | Native scroll + snap; `aria-roledescription="carousel"`; dots are buttons. |
 | `CardStack` | stable | 1231:1787 · 1010:2036 | `variant fan·deck`, `initialIndex` | swipe, arrows, dots | Back cards are `inert`; position announced politely. |
-| `SegmentedControl` | inspo | — | options with icons, `size sm·md` | selected | `radiogroup`; arrow keys move and select. |
+| `SegmentedControl` | inspo | — | options with icons, `size sm·md` | selected (Tabs sliding pill) | `radiogroup`; arrow keys move and select. |
 | `ThemeSwitch` | inspo | — | `withLabels`, `size` | system · light · dark | Labels are translated. |
 | `LocaleSwitch` | inspo | — | — | en · es · pt | Visible "EN", accessible "English". |
 | `Link` | inspo | footer / CTAs | `variant inline·nav·bullet` | hover underline | External links announce "opens in a new tab". |
 | `Divider` | inspo | footer rules | `orientation`, `semantic` | — | Decorative unless `semantic`. |
 | `Avatar`, `AvatarGroup` | inspo | testimonial author | `size sm·md·lg`, `max` | image / initials | `alt` = name. |
 | `PaginationDots` | inspo | — | `onSelect` makes dots buttons | current | `aria-current`, "Go to {item} n". |
-| `Tooltip` | inspo | — | `side top·bottom` | hover (delayed), focus | `role="tooltip"` + `aria-describedby`; never the only label; not on touch. |
-| `Accordion`, `AccordionItem` | inspo | case-study Show rows | `defaultOpen` | open / closed | Button with `aria-expanded` / `aria-controls`; region labelled by its trigger. |
-| `Dialog` | inspo | — | `placement center·right·bottom`, `size`, `footer` | enter, exit (shorter), reduced motion | Native `<dialog>`: focus trapped, Escape and backdrop close, focus returns to opener, page scroll paused. |
+| `Tooltip` | inspo | — | `side top·bottom` | hover (80ms delay, fade + scale in, instant out), focus | `role="tooltip"` + `aria-describedby`; never the only label; not on touch. |
+| `Accordion`, `AccordionItem` | inspo | case-study Show rows | `defaultOpen` | open / closed (Card resize) | Button with `aria-expanded` / `aria-controls`; region labelled by its trigger. |
+| `Dialog` | inspo | — | `placement center·right·bottom`, `size`, `footer` | Modal (center) or Panel reveal (sheets), shorter close, reduced motion | Native `<dialog>`: focus trapped, Escape and backdrop close, focus returns to opener, page scroll paused. |
+| `Reveal`, `revealLine` | inspo | hero, section headers | `trigger view·mount`, `as` | hidden → shown (once) | Texts reveal; lines visible without JS (`<noscript>`) and without motion under reduced motion. |
 | `ToastProvider`, `useToast` | inspo | — | tone `neutral·success·danger` | auto-dismiss 4s, pauses on hover/focus | Polite live region; dismiss button. |
-| `Input`, `Textarea` | inspo | — | `hint`, `error`, `optional` | rest, hover, focus, invalid, disabled | Labelled; `aria-invalid` + `aria-describedby`; no error shown on disabled. |
+| `Input`, `Textarea` | inspo | — | `hint`, `error`, `optional` | rest, hover, focus, invalid (shake on a new error), disabled | Labelled; `aria-invalid` + `aria-describedby`; no error shown on disabled. |
 | `Checkbox`, `Switch` | inspo | — | `description` | checked, focus, disabled | Real `<input type="checkbox">` (`role="switch"` for Switch). |
 
 ## Fidelity to Figma

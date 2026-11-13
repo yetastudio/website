@@ -8,11 +8,18 @@
 	overflow: visible;
 }
 
+/* The panel's motion comes from transitions.dev (.t-modal / .t-panel-slide, see Dialog);
+   the backdrop fades on the same open and close durations. */
+.dialog {
+	--dialog-enter: var(--modal-open-dur);
+	--dialog-exit: var(--modal-close-dur);
+}
+
 .dialog::backdrop {
 	background-color: light-dark(rgb(10 11 4 / 32%), rgb(0 0 0 / 56%));
 	backdrop-filter: blur(var(--blur-tint));
 	-webkit-backdrop-filter: blur(var(--blur-tint));
-	animation: fade-in var(--duration-overlay) var(--ease-out);
+	animation: fade-in var(--dialog-enter) var(--ease-smooth);
 }
 
 .dialog[open] {
@@ -77,11 +84,15 @@
 .center.md .panel { max-width: 36rem; }
 .center.lg .panel { max-width: 56rem; }
 
-.center[open] .panel {
-	animation: pop-in var(--duration-overlay) var(--ease-out);
+/* Sheets: Panel reveal. The side sheet travels a shorter distance than the bottom sheet. */
+.right,
+.bottom {
+	--dialog-enter: var(--panel-open-dur);
+	--dialog-exit: var(--panel-close-dur);
 }
 
 .right {
+	--panel-translate-y: var(--space-24);
 	inset: 0 0 0 auto;
 	height: 100dvh;
 	margin: 0;
@@ -92,10 +103,6 @@
 	width: min(24rem, calc(100vw - var(--space-16)));
 	max-height: none;
 	height: 100%;
-}
-
-.right[open] .panel {
-	animation: slide-in-right var(--duration-overlay) var(--ease-sheet);
 }
 
 .bottom {
@@ -109,21 +116,9 @@
 	max-height: 88dvh;
 }
 
-.bottom[open] .panel {
-	animation: slide-in-bottom var(--duration-overlay) var(--ease-sheet);
-}
-
 /* ── Exit (shorter than enter) ── */
 .dialog[data-closing]::backdrop {
-	animation: fade-out var(--duration-exit) var(--ease-out) forwards;
-}
-
-.dialog[data-closing] {
-	animation: hold var(--duration-exit) linear forwards;
-}
-
-.dialog[data-closing] .panel {
-	animation: fade-out var(--duration-exit) var(--ease-out) forwards !important;
+	animation: fade-out var(--dialog-exit) var(--ease-smooth) forwards;
 }
 
 @keyframes fade-in {
@@ -132,23 +127,4 @@
 
 @keyframes fade-out {
 	to { opacity: 0; }
-}
-
-@keyframes hold {
-	to { opacity: 1; }
-}
-
-@keyframes pop-in {
-	from {
-		opacity: 0;
-		scale: 0.96;
-	}
-}
-
-@keyframes slide-in-right {
-	from { translate: 100% 0; }
-}
-
-@keyframes slide-in-bottom {
-	from { translate: 0 100%; }
 }

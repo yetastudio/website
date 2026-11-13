@@ -149,6 +149,24 @@
 	scale: 1 1;
 }
 
+/* Tabs sliding indicator (.t-tabs-pill) drawn as the active underline. JS writes its
+   translateX, width and top; until it is placed, each link draws its own underline. */
+.pill .indicator {
+	height: var(--stroke-hairline);
+	margin-top: var(--space-2);
+	border-radius: 0;
+	background-color: var(--color-text-strong);
+	opacity: 0;
+}
+
+.pill[data-pill='ready'] .indicator {
+	opacity: 1;
+}
+
+.pill[data-pill='ready'] .navLink::after {
+	display: none;
+}
+
 /* ── Actions ── */
 .actions {
 	display: flex;

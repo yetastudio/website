@@ -270,6 +270,48 @@
 	--ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 	--ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
 
+	/* Transitions.dev (vendor/transitions-dev/transitions.css): the tunables of the transitions
+	   in use, with the skill's motion vocabulary. Colours map to semantic roles, not to the
+	   snippets' greys. */
+	--ease-smooth: cubic-bezier(0.22, 1, 0.36, 1); /* Smooth ease out: open, close, slide, resize */
+	--resize-dur: 300ms; /* Card resize: accordion panel height */
+	--resize-ease: var(--ease-smooth);
+	--modal-open-dur: 250ms; /* Modal: centred dialog */
+	--modal-close-dur: 150ms;
+	--modal-scale: 0.96;
+	--modal-scale-close: 0.96;
+	--modal-ease: var(--ease-smooth);
+	--panel-open-dur: 400ms; /* Panel reveal: bottom and side sheets */
+	--panel-close-dur: 350ms;
+	--panel-translate-y: 100px;
+	--panel-blur: 2px;
+	--panel-ease: var(--ease-smooth);
+	--shake-distance: 6px; /* Error state shake: invalid field */
+	--shake-overshoot: 4px;
+	--shake-dur-a: 80ms;
+	--shake-dur-b: 60ms;
+	--shake-ease: var(--ease-smooth);
+	--revert-dur: 280ms;
+	--tabs-dur: 250ms; /* Tabs sliding: segmented control, nav pill */
+	--tabs-ease: var(--ease-smooth);
+	--tabs-text-muted: var(--color-text-subtle);
+	--tabs-text-active: var(--color-text-strong);
+	--tabs-bar-bg: var(--color-surface-glass);
+	--tabs-pill-bg: var(--color-surface-control);
+	--tt-in-dur: 150ms; /* Tooltip: delayed in, instant out */
+	--tt-out-dur: 50ms;
+	--tt-scale: 0.98;
+	--tt-delay: 80ms;
+	--tt-in-ease: ease-out;
+	--tt-out-ease: ease-out;
+	--tt-bg: var(--color-surface-inverse);
+	--tt-fg: var(--color-text-inverse);
+	--stagger-dur: 500ms; /* Texts reveal: hero and section headers */
+	--stagger-distance: 12px;
+	--stagger-stagger: 40ms;
+	--stagger-blur: 3px;
+	--stagger-ease: var(--ease-smooth);
+
 	/* ───────────────────────── Layers ───────────────────────── */
 	--z-raised: 1;
 	--z-header: 10;

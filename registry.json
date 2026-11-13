@@ -1,34 +1,237 @@
 {
   "$comment": "Canonical design-system components. Read by scripts/check-system.mjs (rule/unregistered-ui, rule/deprecated-import). Docs: src/components/ui/README.md. Showcase: /design-system.",
   "components": [
-    { "id": "text", "source": "src/components/ui/text/index.tsx", "status": "stable", "figma": "type styles", "replaces": [] },
-    { "id": "icon", "source": "src/components/ui/icon/index.tsx", "status": "stable", "figma": "170:446 … 1502:5362 (27 icon sets)", "replaces": ["src/components/ui/svgs"] },
-    { "id": "button", "source": "src/components/ui/button/index.tsx", "status": "stable", "figma": "170:199", "replaces": [] },
-    { "id": "chip", "source": "src/components/ui/chip/index.tsx", "status": "stable", "figma": "576:399", "replaces": [] },
-    { "id": "surface", "source": "src/components/ui/surface/index.tsx", "status": "stable", "figma": "card shells", "replaces": ["src/components/ui/section-wrapper"] },
-    { "id": "brand", "source": "src/components/ui/brand/index.tsx", "status": "stable", "figma": "110:60 · 110:77 · 110:84", "replaces": ["src/components/ui/theme-logo"] },
-    { "id": "cursor", "source": "src/components/ui/cursor/index.tsx", "status": "stable", "figma": "1059:1339", "replaces": [] },
-    { "id": "section-header", "source": "src/components/ui/section-header/index.tsx", "status": "stable", "figma": "section title frames", "replaces": ["src/components/ui/section-title"] },
-    { "id": "gradient-tile", "source": "src/components/ui/gradient-tile/index.tsx", "status": "stable", "figma": "tile ellipses", "replaces": ["src/components/ui/gradient-card"] },
-    { "id": "craft-card", "source": "src/components/ui/craft-card/index.tsx", "status": "stable", "figma": "1472:4250", "replaces": [] },
-    { "id": "process-card", "source": "src/components/ui/process-card/index.tsx", "status": "stable", "figma": "1204:1323", "replaces": ["src/components/ui/process-card (WIP)"] },
-    { "id": "testimonial-card", "source": "src/components/ui/testimonial-card/index.tsx", "status": "stable", "figma": "1213:1430", "replaces": ["src/components/ui/testimonial-card (WIP)"] },
-    { "id": "project-card", "source": "src/components/ui/project-card/index.tsx", "status": "stable", "figma": "987:1594", "replaces": ["src/components/ui/project-showcase"] },
-    { "id": "summary-card", "source": "src/components/ui/summary-card/index.tsx", "status": "stable", "figma": "786:762 · 786:805", "replaces": ["src/components/layout/summary"] },
-    { "id": "carousel", "source": "src/components/ui/carousel/index.tsx", "status": "stable", "figma": "mobile tracks (inspo: dots)", "replaces": ["src/components/ui/carousel (Swiper WIP)"] },
-    { "id": "card-stack", "source": "src/components/ui/card-stack/index.tsx", "status": "stable", "figma": "1231:1787 · 1010:2036", "replaces": [] },
-    { "id": "segmented-control", "source": "src/components/ui/segmented-control/index.tsx", "status": "inspo", "figma": "—", "replaces": [] },
-    { "id": "theme-switch", "source": "src/components/ui/theme-switch/index.tsx", "status": "inspo", "figma": "—", "replaces": [] },
-    { "id": "locale-switch", "source": "src/components/ui/locale-switch/index.tsx", "status": "inspo", "figma": "—", "replaces": [] },
-    { "id": "link", "source": "src/components/ui/link/index.tsx", "status": "inspo", "figma": "footer / CTA links", "replaces": [] },
-    { "id": "divider", "source": "src/components/ui/divider/index.tsx", "status": "inspo", "figma": "footer rules", "replaces": [] },
-    { "id": "avatar", "source": "src/components/ui/avatar/index.tsx", "status": "inspo", "figma": "testimonial author", "replaces": [] },
-    { "id": "pagination-dots", "source": "src/components/ui/pagination-dots/index.tsx", "status": "inspo", "figma": "—", "replaces": [] },
-    { "id": "tooltip", "source": "src/components/ui/tooltip/index.tsx", "status": "inspo", "figma": "—", "replaces": [] },
-    { "id": "accordion", "source": "src/components/ui/accordion/index.tsx", "status": "inspo", "figma": "case study Show rows", "replaces": [] },
-    { "id": "dialog", "source": "src/components/ui/dialog/index.tsx", "status": "inspo", "figma": "—", "replaces": ["src/components/ui/mobile-drawer"] },
-    { "id": "toast", "source": "src/components/ui/toast/index.tsx", "status": "inspo", "figma": "—", "replaces": [] },
-    { "id": "field", "source": "src/components/ui/field/index.tsx", "status": "inspo", "figma": "—", "replaces": [] },
-    { "id": "checkbox", "source": "src/components/ui/checkbox/index.tsx", "status": "inspo", "figma": "—", "replaces": [] }
+    {
+      "id": "text",
+      "source": "src/components/ui/text/index.tsx",
+      "status": "stable",
+      "figma": "type styles",
+      "replaces": []
+    },
+    {
+      "id": "icon",
+      "source": "src/components/ui/icon/index.tsx",
+      "status": "stable",
+      "figma": "170:446 … 1502:5362 (27 icon sets)",
+      "replaces": [
+        "src/components/ui/svgs"
+      ]
+    },
+    {
+      "id": "button",
+      "source": "src/components/ui/button/index.tsx",
+      "status": "stable",
+      "figma": "170:199",
+      "replaces": []
+    },
+    {
+      "id": "chip",
+      "source": "src/components/ui/chip/index.tsx",
+      "status": "stable",
+      "figma": "576:399",
+      "replaces": []
+    },
+    {
+      "id": "surface",
+      "source": "src/components/ui/surface/index.tsx",
+      "status": "stable",
+      "figma": "card shells",
+      "replaces": [
+        "src/components/ui/section-wrapper"
+      ]
+    },
+    {
+      "id": "brand",
+      "source": "src/components/ui/brand/index.tsx",
+      "status": "stable",
+      "figma": "110:60 · 110:77 · 110:84",
+      "replaces": [
+        "src/components/ui/theme-logo"
+      ]
+    },
+    {
+      "id": "cursor",
+      "source": "src/components/ui/cursor/index.tsx",
+      "status": "stable",
+      "figma": "1059:1339",
+      "replaces": []
+    },
+    {
+      "id": "section-header",
+      "source": "src/components/ui/section-header/index.tsx",
+      "status": "stable",
+      "figma": "section title frames",
+      "replaces": [
+        "src/components/ui/section-title"
+      ]
+    },
+    {
+      "id": "gradient-tile",
+      "source": "src/components/ui/gradient-tile/index.tsx",
+      "status": "stable",
+      "figma": "tile ellipses",
+      "replaces": [
+        "src/components/ui/gradient-card"
+      ]
+    },
+    {
+      "id": "craft-card",
+      "source": "src/components/ui/craft-card/index.tsx",
+      "status": "stable",
+      "figma": "1472:4250",
+      "replaces": []
+    },
+    {
+      "id": "process-card",
+      "source": "src/components/ui/process-card/index.tsx",
+      "status": "stable",
+      "figma": "1204:1323",
+      "replaces": [
+        "src/components/ui/process-card (WIP)"
+      ]
+    },
+    {
+      "id": "testimonial-card",
+      "source": "src/components/ui/testimonial-card/index.tsx",
+      "status": "stable",
+      "figma": "1213:1430",
+      "replaces": [
+        "src/components/ui/testimonial-card (WIP)"
+      ]
+    },
+    {
+      "id": "project-card",
+      "source": "src/components/ui/project-card/index.tsx",
+      "status": "stable",
+      "figma": "987:1594",
+      "replaces": [
+        "src/components/ui/project-showcase"
+      ]
+    },
+    {
+      "id": "summary-card",
+      "source": "src/components/ui/summary-card/index.tsx",
+      "status": "stable",
+      "figma": "786:762 · 786:805",
+      "replaces": [
+        "src/components/layout/summary"
+      ]
+    },
+    {
+      "id": "carousel",
+      "source": "src/components/ui/carousel/index.tsx",
+      "status": "stable",
+      "figma": "mobile tracks (inspo: dots)",
+      "replaces": [
+        "src/components/ui/carousel (Swiper WIP)"
+      ]
+    },
+    {
+      "id": "card-stack",
+      "source": "src/components/ui/card-stack/index.tsx",
+      "status": "stable",
+      "figma": "1231:1787 · 1010:2036",
+      "replaces": []
+    },
+    {
+      "id": "segmented-control",
+      "source": "src/components/ui/segmented-control/index.tsx",
+      "status": "inspo",
+      "figma": "—",
+      "replaces": []
+    },
+    {
+      "id": "theme-switch",
+      "source": "src/components/ui/theme-switch/index.tsx",
+      "status": "inspo",
+      "figma": "—",
+      "replaces": []
+    },
+    {
+      "id": "locale-switch",
+      "source": "src/components/ui/locale-switch/index.tsx",
+      "status": "inspo",
+      "figma": "—",
+      "replaces": []
+    },
+    {
+      "id": "link",
+      "source": "src/components/ui/link/index.tsx",
+      "status": "inspo",
+      "figma": "footer / CTA links",
+      "replaces": []
+    },
+    {
+      "id": "divider",
+      "source": "src/components/ui/divider/index.tsx",
+      "status": "inspo",
+      "figma": "footer rules",
+      "replaces": []
+    },
+    {
+      "id": "avatar",
+      "source": "src/components/ui/avatar/index.tsx",
+      "status": "inspo",
+      "figma": "testimonial author",
+      "replaces": []
+    },
+    {
+      "id": "pagination-dots",
+      "source": "src/components/ui/pagination-dots/index.tsx",
+      "status": "inspo",
+      "figma": "—",
+      "replaces": []
+    },
+    {
+      "id": "tooltip",
+      "source": "src/components/ui/tooltip/index.tsx",
+      "status": "inspo",
+      "figma": "—",
+      "replaces": []
+    },
+    {
+      "id": "accordion",
+      "source": "src/components/ui/accordion/index.tsx",
+      "status": "inspo",
+      "figma": "case study Show rows",
+      "replaces": []
+    },
+    {
+      "id": "dialog",
+      "source": "src/components/ui/dialog/index.tsx",
+      "status": "inspo",
+      "figma": "—",
+      "replaces": [
+        "src/components/ui/mobile-drawer"
+      ]
+    },
+    {
+      "id": "reveal",
+      "source": "src/components/ui/reveal/index.tsx",
+      "status": "inspo",
+      "figma": "—",
+      "replaces": []
+    },
+    {
+      "id": "toast",
+      "source": "src/components/ui/toast/index.tsx",
+      "status": "inspo",
+      "figma": "—",
+      "replaces": []
+    },
+    {
+      "id": "field",
+      "source": "src/components/ui/field/index.tsx",
+      "status": "inspo",
+      "figma": "—",
+      "replaces": []
+    },
+    {
+      "id": "checkbox",
+      "source": "src/components/ui/checkbox/index.tsx",
+      "status": "inspo",
+      "figma": "—",
+      "replaces": []
+    }
   ]
 }
