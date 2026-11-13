@@ -6,7 +6,7 @@ import { ShowcaseSection, ThemePair } from '@/components/showcase';
 import { Chip, Link, Surface, Text } from '@/components/ui';
 
 //! Data
-import { PROPOSALS, STORY_MAP, mobbinUrl, type Proposal, type Reference } from './data';
+import { PROPOSALS, STORY_MAP, mobbinUrl, type Proposal, type Reference, type Shelf } from './data';
 
 //! Utils
 import { cx } from '@/lib/cx';
@@ -15,14 +15,14 @@ import { cx } from '@/lib/cx';
 import styles from './styles.module.css';
 
 /** One Mobbin reference: app, pattern, why it fits and the link. No image: the visuals on the page are our own. */
-export function ReferenceCard({ reference }: { reference: Reference }) {
+export function ReferenceCard({ reference, showKind = true }: { reference: Reference; showKind?: boolean }) {
 	return (
 		<Surface as="li" tone="tint" radius="xl" padding="md" bevel className={styles.reference}>
 			<div className={styles.referenceHead}>
 				<Text as="span" size="md" weight="medium" tone="strong">
 					{reference.app}
 				</Text>
-				<Chip size="xs">{reference.kind === 'section' ? 'Web section' : 'Web screen'}</Chip>
+				{showKind && <Chip size="xs">{reference.kind === 'section' ? 'Web section' : 'Web screen'}</Chip>}
 			</div>
 			<Text size="sm" family="serif" italic tone="strong" leading="snug">
 				{reference.pattern}
@@ -91,6 +91,25 @@ export function ProposalSection({ proposal, children }: { proposal: Proposal; ch
 					))}
 				</ul>
 			</div>
+		</ShowcaseSection>
+	);
+}
+
+/** One shelf of the section library: where it lands, what to look for, and its references. */
+export function LibraryShelf({ shelf, number }: { shelf: Shelf; number: string }) {
+	return (
+		<ShowcaseSection id={`library-${shelf.id}`} eyebrow={`Section library · ${number}`} title={shelf.title} description={shelf.lookFor}>
+			<div className={styles.introMeta}>
+				<Chip size="xs" icon="pin">
+					{shelf.lands}
+				</Chip>
+				<Chip size="xs">{`${shelf.references.length} references`}</Chip>
+			</div>
+			<ul className={styles.referenceGrid}>
+				{shelf.references.map((reference) => (
+					<ReferenceCard key={reference.id} reference={reference} showKind={false} />
+				))}
+			</ul>
 		</ShowcaseSection>
 	);
 }

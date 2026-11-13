@@ -173,3 +173,11 @@
 	margin-top: var(--space-4);
 	font-size: var(--text-sm);
 }
+
+/* ───────────── Collections ───────────── */
+
+.collections {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-12);
+}
