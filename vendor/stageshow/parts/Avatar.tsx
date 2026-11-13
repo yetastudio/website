@@ -23,12 +23,13 @@ export interface AvatarProps extends HTMLAttributes<HTMLSpanElement> {
 /** A round avatar with an initial, or an image from src. In minimal fidelity, or with `plain`, it is a plain disc. */
 // Six muted, opaque fills that read on light and dark grounds, one per person
 const PEOPLE = ['#c98f6e', '#6f9b7d', '#7b86c7', '#c47a9e', '#8c9ab0', '#c2a35a']
-const hue = (name: string) => { let h = 0; for (const c of name) h = (h * 31 + c.charCodeAt(0)) % 9973; return PEOPLE[h % PEOPLE.length] }
+// A look can recolor them with --ss-person-1 to -6 and --ss-person-text (yeta.css does)
+const hue = (name: string) => { let h = 0; for (const c of name) h = (h * 31 + c.charCodeAt(0)) % 9973; const i = h % PEOPLE.length; return `var(--ss-person-${i + 1}, ${PEOPLE[i]})` }
 
 export function Avatar({ name = '', plain = false, size = 24, tone = name ? 'person' : 'ink', src, ring, className, style, ...rest }: AvatarProps) {
   const { fidelity } = useLook()
   const disc = plain || fidelity === 'minimal'
-  const person = tone === 'person' && !disc ? { background: hue(name), color: '#fff' } : undefined
+  const person = tone === 'person' && !disc ? { background: hue(name), color: 'var(--ss-person-text, #fff)' } : undefined
   // iOS monograms carry two initials, first and last name
   const words = name.trim().split(/\s+/).filter(Boolean)
   const initials = tone === 'ios' ? (words[0]?.[0] ?? '') + (words.length > 1 ? words[words.length - 1]![0] : '') : name.trim()[0] ?? ''

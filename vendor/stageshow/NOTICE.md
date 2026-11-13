@@ -24,3 +24,12 @@ The local brand registry in `kit/brands/` includes SVG artwork from SVGL (MIT), 
 `--ss-phone-photo-light: url(...)` and optionally `--ss-phone-photo-dark`.
 Without it, the kit uses its CSS-drawn `pro` frame. No bezel photographs are
 bundled.
+
+## Local changes (yeta.studio)
+
+This vendored copy adds `yeta.css`, a look mapped to the Yeta Studio design
+system's semantic tokens (`src/styles/tokens.css`), registers it as the
+`yeta` theme in `looks.ts` and makes it the default theme of `Stage`
+(`stage.tsx`, `stageshow.css`), and lets a look recolor named avatars
+(`parts/Avatar.tsx` reads `--ss-person-1` to `-6` and `--ss-person-text`,
+falling back to the upstream colors). Nothing else differs from upstream.

@@ -56,11 +56,6 @@
 	left: 0;
 }
 
-/* The accent is bright on the dark tile: the primary label takes the panel's own tone */
-.connect[data-variant='primary'] {
-	color: var(--color-surface-raised);
-}
-
 .connect[data-done] {
 	color: var(--ss-success-text);
 }

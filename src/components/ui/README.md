@@ -1,7 +1,8 @@
 # Yeta Studio design system
 
-Live docs: **`/design-system`** (every token, component and state on a light and a dark canvas) and
-**`/brand`** (brand guidelines with do's & don'ts). Registry: [`/registry.json`](../../../registry.json).
+Live docs: **`/design-system`** (every token, component and state on a light and a dark canvas),
+**`/brand`** (brand guidelines with do's & don'ts) and **`/inspo`** (not indexed: narrative proposals for the
+landing and case study, with live mockups and their Mobbin references). Registry: [`/registry.json`](../../../registry.json).
 Source of truth: Figma `aVpNRSY3dqDxB5gdErv2xw` — pages *Branding*, *Design System*, *Landing Page (Final Design)*.
 
 ## Foundations
@@ -23,6 +24,14 @@ wins on geometry and colour), with their tunables in `tokens.css`: Modal and Pan
 sliding (SegmentedControl, header nav underline), Tooltip, Texts reveal (Reveal: hero and section headers),
 Card resize (Accordion), Icon swap (ThemeSwitch cycle) and Error state shake (Input/Textarea). Every snippet keeps its
 `prefers-reduced-motion` guard.
+
+**Product scenes (Stageshow).** Faux product UI comes from the Stageshow kit vendored in `vendor/stageshow`
+(MIT). Its default theme here is `yeta` (`vendor/stageshow/yeta.css`, registered in `looks.ts`): every `--ss-*`
+token reads a semantic token above, so a scene follows whatever scheme it sits in (page theme, a
+`.scheme-inverse` gradient tile, a pinned showcase panel) with no prop. It also gives the classic arrow cursor
+(black outline, white body), brand-hue avatars, the bevel on controls, inverse ink on filled marks and the
+brand's dark for terminals. A scene only sets what is its own: geometry, and its accent (`--ss-accent`, e.g. the
+tile's hue). `yeta.css` is a `tokenSources` entry of the DS check, so `--ss-*` reads are parity-checked.
 
 **Checks.** `npm run check:ds` (raw values, palette use, overrides, traps; allowlist only shrinks) and
 `npm run typecheck`.

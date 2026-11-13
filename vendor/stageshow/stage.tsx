@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import './stage.css'
+// The Yeta Studio look (theme="yeta", the default below). Added for yeta.studio.
+import './yeta.css'
 import { checkSeam, createAct, Stopped, type Script } from './act'
 import { Cursor, ripple as spawnRipple, type CursorKind, type CursorStyle } from './cursor'
 import { Keycaps, type Keys, type KeysAt } from './keys'
@@ -56,6 +58,8 @@ export interface StageProps<S> {
   keys?: KeysAt | { wide: KeysAt; compact: KeysAt }
   /** Targets shown hovered in a still, since no script is there to hover them. */
   hover?: string[]
+  /** The look's base. Defaults to 'yeta' in this copy (yeta.css): the host design
+   * system's tokens, following the color-scheme around the stage. */
   theme?: Theme
   palette?: Palette
   fidelity?: Fidelity
@@ -109,7 +113,7 @@ export function Stage<S extends object>({
   tokens,
   ground,
   fill: fillProp = false,
-  theme: themeProp = 'light',
+  theme: themeProp = 'yeta',
   className,
   children,
 }: StageProps<S>) {

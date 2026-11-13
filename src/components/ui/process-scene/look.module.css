@@ -1,11 +1,11 @@
 /*
- * Process scenes: the Stageshow kit's look, mapped onto Yeta's semantic tokens.
+ * Process scenes: what the six scenes share on top of the kit's Yeta look.
  *
  * The scene sits inside a GradientTile, which carries `.scheme-inverse`: a light
- * tile on the dark site, a dark one on the light site. Every kit token below
- * reads a semantic token (most of them `light-dark()` pairs), so the product
- * shot follows the tile's scheme with no theme prop. The stage's own ground is
- * transparent: the tile's colour wash is the ground.
+ * tile on the dark site, a dark one on the light site. The kit's Yeta look reads
+ * semantic `light-dark()` tokens, so the product shot follows the tile's scheme
+ * with no theme prop. The stage's own ground is transparent: the tile's colour
+ * wash is the ground.
  *
  * Lengths in custom properties are illustration geometry (where a panel hangs
  * off the tile), not UI spacing; UI spacing, radii and type read the scale.
@@ -20,102 +20,53 @@
 	pointer-events: none;
 	user-select: none;
 	--scene-accent: var(--color-text-strong);
+	/* The tile's own wash, for the one fill a scene paints (a progress bar) */
+	--scene-wash: var(--color-text-strong);
 }
 
 .root[data-step='discover'] {
 	--scene-accent: var(--color-accent-pink);
+	--scene-wash: var(--wash-pink);
 }
 
 .root[data-step='define'] {
 	--scene-accent: var(--color-accent-orange);
+	--scene-wash: var(--wash-orange);
 }
 
 .root[data-step='design'] {
 	--scene-accent: var(--color-accent-yellow);
+	--scene-wash: var(--wash-yellow);
 }
 
 .root[data-step='develop'] {
 	--scene-accent: var(--color-accent-green);
+	--scene-wash: var(--wash-green);
 }
 
 .root[data-step='integrate'] {
 	--scene-accent: var(--color-accent-blue);
+	--scene-wash: var(--wash-blue);
 }
 
 .root[data-step='launch'] {
 	--scene-accent: var(--color-accent-violet);
+	--scene-wash: var(--wash-violet);
 }
 
+/* Every kit token comes from the kit's Yeta look (vendor/stageshow/yeta.css, the
+   Stage default), which follows the tile's inverse scheme. A scene only swaps the
+   accent for its tile's hue, and lets the wash be its ground. */
 .root :global(.ss-stage) {
-	/* Surfaces: the panel is the raised surface, the product's canvas the page tone */
-	--ss-canvas: var(--color-surface);
-	--ss-surface: var(--color-surface-raised);
-	--ss-chrome: var(--color-surface-raised);
-	--ss-raised: var(--color-surface-raised);
-	--ss-well: transparent;
-
-	/* Placeholder ink: the text colour at five quiet steps */
-	--ss-ink-1: color-mix(in srgb, var(--color-text-strong) 5%, transparent);
-	--ss-ink-2: color-mix(in srgb, var(--color-text-strong) 7%, transparent);
-	--ss-ink-3: color-mix(in srgb, var(--color-text-strong) 10%, transparent);
-	--ss-ink-4: color-mix(in srgb, var(--color-text-strong) 14%, transparent);
-	--ss-ink-5: color-mix(in srgb, var(--color-text-strong) 20%, transparent);
-	--ss-fill: color-mix(in srgb, var(--color-text-strong) 10%, var(--color-surface-raised));
-
-	/* Lines and text */
-	--ss-line: var(--color-divider);
-	--ss-line-faint: var(--color-border-faint);
-	--ss-text: var(--color-text-subtle);
-	--ss-text-strong: var(--color-text-strong);
-	--ss-text-faint: var(--color-text-faint);
-	--ss-icon: color-mix(in srgb, var(--color-text) 64%, var(--color-surface-raised));
-	--ss-icon-faint: color-mix(in srgb, var(--color-text) 32%, var(--color-surface-raised));
-
-	/* One accent per scene: the tile's own hue, at the step that reads on the panel */
 	--ss-accent: var(--scene-accent);
 	--ss-accent-2: var(--scene-accent);
 	--ss-accent-soft: color-mix(in srgb, var(--scene-accent) 16%, transparent);
 	--ss-accent-text: var(--scene-accent);
-
-	/* Status */
-	--ss-success: var(--color-accent-green);
-	--ss-success-soft: color-mix(in srgb, var(--color-success) 18%, transparent);
-	--ss-success-text: var(--color-accent-green);
-	--ss-warning: var(--color-warning);
-	--ss-warning-soft: color-mix(in srgb, var(--color-warning) 20%, transparent);
-	--ss-warning-text: var(--color-accent-yellow);
-	--ss-danger: var(--color-danger);
-	--ss-danger-soft: color-mix(in srgb, var(--color-danger) 14%, transparent);
-	--ss-danger-text: var(--color-danger-text);
-
-	/* Type and shape */
-	--ss-font: var(--font-sans);
-	--ss-radius-sm: var(--radius-xs);
-	--ss-radius-md: var(--radius-sm);
-	--ss-radius-lg: var(--radius-md);
-	--ss-radius-window: var(--radius-lg);
-	--ss-radius-pill: var(--radius-pill);
-
-	/* Depth: a hairline on every edge and a soft fall. Shadows are ink on either
-	   tile: the strong text on the light one, the inverse text on the dark one. */
+	/* Shadow ink for the scenes' own lifted parts: the strong text on a light tile, the inverse text on a dark one */
 	--scene-shadow-ink: light-dark(var(--color-text-strong), var(--color-text-inverse));
-	--ss-shadow-ground: 0 0 0 1px light-dark(var(--color-border-faint), var(--color-border)),
-		0 18px 36px -18px color-mix(in srgb, var(--scene-shadow-ink) 42%, transparent);
-	--ss-shadow-satellite: 0 0 0 1px light-dark(var(--color-border), var(--color-border-strong)),
-		0 14px 28px -10px color-mix(in srgb, var(--scene-shadow-ink) 46%, transparent),
-		0 4px 10px -4px color-mix(in srgb, var(--scene-shadow-ink) 24%, transparent);
-	--ss-shadow-card: 0 0 0 1px var(--color-border-faint);
-	--ss-shadow-float: var(--shadow-overlay);
-
-	/* The cursor: the classic arrow, white with a dark edge, on either tile */
-	--ss-cursor-line: var(--color-text-strong);
-	--ss-cursor-edge: var(--color-surface-raised);
 
 	overflow: hidden;
 	background: transparent;
-	color: var(--color-text);
-	font-family: var(--font-sans);
-	letter-spacing: var(--tracking-tight);
 }
 
 /* The panel every scene hangs off a corner of the tile */
@@ -124,7 +75,7 @@
 	overflow: hidden;
 	border-radius: var(--radius-lg);
 	background: var(--color-surface-raised);
-	box-shadow: var(--shadow-bevel), var(--ss-shadow-ground);
+	box-shadow: var(--ss-shadow-ground); /* the kit look's ground shadow carries the bevel */
 }
 
 /* UI type inside the scenes: 12 for words that carry the story, 10 for labels */
@@ -140,18 +91,4 @@
 	font-weight: var(--font-weight-regular);
 	line-height: var(--leading-snug);
 	color: var(--color-text-subtle);
-}
-
-/* Classic arrow: the macOS pointer's two paths with their fills swapped, so the
-   arrow is white with a dark outline. Pinned light so it stays white on the dark tile. */
-.root :global(.ss-cursor) {
-	color-scheme: light;
-}
-
-.root :global(.ss-cursor__glyph[data-glyph='pointer'] path:first-child) {
-	fill: var(--color-text-strong);
-}
-
-.root :global(.ss-cursor__glyph[data-glyph='pointer'] path:last-child) {
-	fill: var(--color-surface-raised);
 }

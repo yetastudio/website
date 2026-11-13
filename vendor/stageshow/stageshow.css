@@ -4,6 +4,7 @@
    the components load them in. */
 
 @import './stage.css';
+@import './yeta.css';
 @import './keys.css';
 @import './cursor.css';
 @import './window.css';

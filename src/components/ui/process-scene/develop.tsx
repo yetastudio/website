@@ -37,8 +37,8 @@ const CODE: ReadonlyArray<ReadonlyArray<{ w: number; kw?: boolean }>> = [
 	[{ w: 20, kw: true }, { w: 92 }],
 ];
 const TYPED_ROW = 1;
-/** Keyword bars take the tile's hue, quietly. */
-const KEYWORD = { background: 'color-mix(in srgb, var(--ss-accent) 55%, transparent)' };
+/** Keyword bars read a step stronger than the rest of the code, in the same ink. */
+const KEYWORD = { background: 'var(--ss-ink-5)' };
 
 const posterFor = (copy: SceneCopy['develop']): S => ({ typed: copy.line, cmd: copy.command, status: 'passed', focus: 'editor', typing: false, clearing: 'none' });
 
