@@ -1,4 +1,4 @@
-import { Badge, Bar, Button, Count, Meter, Stage, type Act } from '@stageshow';
+import { Badge, Button, Count, Meter, Stage, Text, type Act } from '@stageshow';
 import { Play } from 'lucide-react';
 
 import { sceneCursor } from './cursor';
@@ -8,8 +8,9 @@ import styles from './luck.module.css';
 
 // Luck has nothing to do with it: the call is made by a test, not a hunch.
 // An A/B test reads both variants; their bars fill and their rates roll up,
-// and B is marked the winner. Yeta's cursor presses Run and, once the rates
-// are in, settles on B. The poster is the finished test with B ahead.
+// and B is marked the winner with what it won by. Yeta's cursor presses Run
+// test and, once the rates are in, reads the result. The poster is the
+// finished test with B ahead.
 //
 // Real strings: the test's name, Winner (A and B are the variants' letters).
 
@@ -27,9 +28,9 @@ async function script(a: Act<S>) {
 	await a.click('run');
 	await a.set({ run: true });
 	await a.wait(700);
-	await a.move({ at: 'b', x: 0.2, y: 0.6 });
 	a.mark('winner');
 	await a.set({ win: true });
+	await a.move({ at: 'result', x: 0.85, y: 0.9 });
 	await a.wait(400);
 }
 
@@ -51,7 +52,9 @@ export function LuckScene({ copy, playing }: { copy: WhyTourCopy['luck']; playin
 					<div className={styles.head}>
 						<span className={look.label}>{copy.test}</span>
 						<span data-target="run">
-							<Button size="small" variant="secondary" icon={<Play size={10} strokeWidth={2.25} aria-hidden />} />
+							<Button size="small" variant="secondary" icon={<Play size={10} strokeWidth={2.25} aria-hidden />}>
+								{copy.run}
+							</Button>
 						</span>
 					</div>
 					<div className={styles.variants}>
@@ -71,9 +74,8 @@ export function LuckScene({ copy, playing }: { copy: WhyTourCopy['luck']; playin
 							</span>
 						</div>
 					</div>
-					<div className={styles.after}>
-						<Bar w={196} h={5} tone={2} />
-						<Bar w={120} h={5} tone={2} />
+					<div className={`${look.arrive} ${styles.result}`} data-on={s.win || undefined} data-target="result">
+						<Text className={look.strong}>{copy.result}</Text>
 					</div>
 				</div>
 			)}

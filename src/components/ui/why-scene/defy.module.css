@@ -4,7 +4,14 @@
 	display: flex;
 	align-items: center;
 	gap: var(--space-8);
-	height: var(--space-16);
+	width: var(--head-width);
+	height: var(--space-24);
+	--head-width: 240px;
+}
+
+/* The press that makes the line rise, on the head's far end. */
+.boost {
+	margin-inline-start: auto;
 }
 
 .value {

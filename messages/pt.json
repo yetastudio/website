@@ -69,7 +69,8 @@
     "tour": {
       "insight": {
         "quote": "“O cadastro é longo demais.”",
-        "metric": "Cadastros"
+        "metric": "Cadastros",
+        "action": "Encurtar cadastro"
       },
       "together": {
         "ask": "Dá pra deixar o hero mais forte?",
@@ -78,10 +79,13 @@
       },
       "luck": {
         "test": "Teste A/B",
-        "winner": "Vencedora"
+        "winner": "Vencedora",
+        "run": "Rodar teste",
+        "result": "B: +48% conversão"
       },
       "defy": {
-        "metric": "Alcance da marca"
+        "metric": "Alcance da marca",
+        "boost": "Ver crescimento"
       },
       "pixel": {
         "cta": "Começar um projeto"
@@ -89,7 +93,9 @@
       "vision": {
         "title": "Pronto para lançar",
         "cta": "Começar",
-        "live": "No ar"
+        "live": "No ar",
+        "deploy": "Lançar",
+        "deploying": "Lançando…"
       },
       "goals": {
         "label": "Meta do trimestre",

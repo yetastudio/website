@@ -1,4 +1,4 @@
-/* Insight: interview notes, the quote at the top, its result arriving under the person who said it. */
+/* Insight: the user's quote over the form it is about; the change beside the form, and its impact under the change. */
 
 .quote {
 	display: flex;
@@ -8,42 +8,54 @@
 	white-space: nowrap;
 }
 
-/* Filler lines hang under the words, on the text's column */
-.notes {
+.body {
+	--body-width: 252px;
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	align-items: start;
+	gap: var(--space-16);
+	width: var(--body-width);
+	margin-top: var(--space-10);
+}
+
+/* The sign-up form: a small card of field lines and its submit pill, folding to the fields it keeps. */
+.form {
 	display: flex;
 	flex-direction: column;
-	gap: var(--space-6);
-	margin-top: var(--space-8);
-	padding-left: var(--space-28);
+	padding: var(--space-8);
+	border-radius: var(--radius-sm);
+	background: var(--color-surface-raised);
+	box-shadow: inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
 }
 
-/* The line from the person down to the result, on the avatar's centre */
-.line {
-	--line-top: 38px;
-	--line-height: 25px;
-
-	position: absolute;
-	top: var(--line-top);
-	left: calc(var(--space-16) + var(--space-10));
-	width: var(--stroke-hairline);
-	height: var(--line-height);
-	background: var(--ss-ink-5);
-	transform: scaleY(0);
-	transform-origin: top;
-	transition: transform var(--duration-exit) ease;
+.field {
+	display: block;
+	padding-block: var(--space-2) var(--space-4);
 }
 
-.line[data-on] {
-	transform: none;
-	transition: transform var(--duration-overlay) var(--ease-smooth);
+.submit {
+	--submit-width: 40px;
+	display: block;
+	width: var(--submit-width);
+	height: var(--space-8);
+	margin-top: var(--space-4);
+	border-radius: var(--radius-pill);
+	background: var(--color-text-strong);
+}
+
+.side {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--space-12);
+	min-width: 0;
 }
 
 .impact {
 	display: flex;
 	align-items: center;
-	gap: var(--space-8);
+	gap: var(--space-6);
 	height: var(--space-20);
-	margin-top: var(--space-20);
 	white-space: nowrap;
 }
 
@@ -63,15 +75,4 @@
 .value {
 	min-width: 4ch;
 	font-variant-numeric: tabular-nums;
-}
-
-/* The quote the cursor picked out: a soft mark in the scene's hue behind the words. */
-.quote [data-marked] {
-	--mark-ink: color-mix(in oklab, var(--scene-accent) 18%, transparent);
-	border-radius: var(--radius-xs);
-	background: var(--mark-ink);
-	box-shadow: 0 0 0 var(--space-2) var(--mark-ink);
-	transition:
-		background-color var(--duration-enter) var(--ease-out),
-		box-shadow var(--duration-enter) var(--ease-out);
 }

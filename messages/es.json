@@ -69,7 +69,8 @@
     "tour": {
       "insight": {
         "quote": "“El registro es muy largo.”",
-        "metric": "Registros"
+        "metric": "Registros",
+        "action": "Acortar registro"
       },
       "together": {
         "ask": "¿Le damos más fuerza al hero?",
@@ -78,10 +79,13 @@
       },
       "luck": {
         "test": "Test A/B",
-        "winner": "Ganadora"
+        "winner": "Ganadora",
+        "run": "Correr test",
+        "result": "B: +48% conversión"
       },
       "defy": {
-        "metric": "Alcance de marca"
+        "metric": "Alcance de marca",
+        "boost": "Ver crecimiento"
       },
       "pixel": {
         "cta": "Empezar un proyecto"
@@ -89,7 +93,9 @@
       "vision": {
         "title": "Listo para lanzar",
         "cta": "Empezar",
-        "live": "En vivo"
+        "live": "En vivo",
+        "deploy": "Lanzar",
+        "deploying": "Lanzando…"
       },
       "goals": {
         "label": "Meta del trimestre",

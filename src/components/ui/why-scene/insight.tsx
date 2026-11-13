@@ -1,39 +1,39 @@
-import { Avatar, Bar, Count, Stage, Text, type Act } from '@stageshow';
-import { TrendingUp } from 'lucide-react';
+import { Avatar, Bar, Button, Collapse, Count, Stage, Text, type Act } from '@stageshow';
+import { Scissors, TrendingUp } from 'lucide-react';
 
 import { sceneCursor } from './cursor';
 import { ENTRY_MS, SCENE_HEIGHT, SCENE_WIDTH, type WhyTourCopy } from './shared';
 import look from './look.module.css';
 import styles from './insight.module.css';
 
-// From insight to impact: what a user said becomes what the brand gains. An
-// interview quote sits at the top of the notes; a line draws down from the
-// person to a result row, which arrives under it, and its figure rolls up.
-// Yeta's cursor picks the quote out of the notes (a double click marks it),
-// then rests on the result it brought. The poster is the quote with its result.
+// From insight to impact: what a user said becomes what the brand gains, in
+// three readable beats. The insight: a user's quote, "the sign-up is too long",
+// over the sign-up form it is about (five fields). The change: Yeta's cursor
+// presses Shorten sign-up and the form folds to the two fields it needs. The
+// impact: sign-ups arrive beside it and roll up. The poster is the short form
+// with its result.
 //
-// Real strings: the quote, the metric.
+// Real strings: the quote, Shorten sign-up, the metric.
 
-type S = { marked: boolean; line: boolean; impact: boolean; value: number };
+type S = { short: boolean; value: number };
 
-const INITIAL: S = { marked: false, line: false, impact: false, value: 0 };
-const POSTER: S = { marked: true, line: true, impact: true, value: 24 };
+const INITIAL: S = { short: false, value: 0 };
+const POSTER: S = { short: true, value: 24 };
+
+/** The sign-up form's fields as filler widths; the first two are the ones that stay. */
+const FIELDS = [92, 92, 92, 92, 92];
+const KEPT = 2;
 
 async function script(a: Act<S>) {
 	await a.wait(ENTRY_MS);
-	a.mark('select');
-	await a.click({ at: 'quote', x: 0.5, y: 0.55 }, { double: true });
-	await a.set({ marked: true });
-	await a.wait(260);
-	a.mark('line');
-	await a.set({ line: true });
-	await a.wait(320);
+	a.mark('shorten');
+	await a.click('shorten');
+	await a.set({ short: true });
+	await a.wait(420);
 	a.mark('impact');
-	await a.set({ impact: true });
-	await a.wait(200);
 	await a.set({ value: 24 });
 	await a.move({ at: 'value', x: 0.6, y: 0.9 });
-	await a.wait(500);
+	await a.wait(600);
 }
 
 const percent = (n: number) => `+${Math.round(n)}%`;
@@ -53,24 +53,33 @@ export function InsightScene({ copy, playing }: { copy: WhyTourCopy['insight']; 
 				<div className={look.panel}>
 					<div className={styles.quote}>
 						<Avatar name="Lucía" size={20} />
-						<Text className={look.strong} data-target="quote" data-marked={s.marked || undefined}>
-							{copy.quote}
-						</Text>
+						<Text className={look.strong}>{copy.quote}</Text>
 					</div>
-					<div className={styles.notes}>
-						<Bar w={172} h={5} tone={2} />
-					</div>
-					<span className={styles.line} data-on={s.line || undefined} />
-					<div className={`${look.arrive} ${styles.impact}`} data-on={s.impact || undefined}>
-						<span className={styles.tile}>
-							<TrendingUp size={12} strokeWidth={2} aria-hidden />
-						</span>
-						<Text className={look.label}>{copy.metric}</Text>
-						<Count value={s.value} format={percent} className={`${look.strong} ${styles.value}`} data-target="value" />
-					</div>
-					<div className={styles.notes}>
-						<Bar w={204} h={5} tone={2} />
-						<Bar w={148} h={5} tone={2} />
+					<div className={styles.body}>
+						<div className={styles.form} aria-hidden>
+							{FIELDS.map((w, i) => (
+								<Collapse key={i} open={!s.short || i < KEPT}>
+									<span className={styles.field}>
+										<Bar w={w} h={4} tone={2} />
+									</span>
+								</Collapse>
+							))}
+							<span className={styles.submit} />
+						</div>
+						<div className={styles.side}>
+							<span data-target="shorten">
+								<Button size="small" variant="secondary" icon={<Scissors size={12} strokeWidth={2} aria-hidden />}>
+									{copy.action}
+								</Button>
+							</span>
+							<div className={`${look.arrive} ${styles.impact}`} data-on={s.short || undefined}>
+								<span className={styles.tile}>
+									<TrendingUp size={12} strokeWidth={2} aria-hidden />
+								</span>
+								<Text className={look.label}>{copy.metric}</Text>
+								<Count value={s.value} format={percent} className={`${look.strong} ${styles.value}`} data-target="value" />
+							</div>
+						</div>
 					</div>
 				</div>
 			)}

@@ -4,8 +4,15 @@
 	display: flex;
 	align-items: center;
 	gap: var(--space-8);
-	height: var(--space-20);
+	width: var(--head-width);
+	height: var(--space-24);
 	white-space: nowrap;
+	--head-width: 240px;
+}
+
+/* Launch, Launching…, Live: one control on the head's far end, each state replacing the last. */
+.status {
+	margin-inline-start: auto;
 }
 
 .part {
