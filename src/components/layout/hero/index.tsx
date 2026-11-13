@@ -1,7 +1,5 @@
-/* eslint-disable @next/next/no-img-element -- decorative inline SVG artwork, no optimisation needed. */
-
 //! React Core
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 //! Hooks
 import { useTranslations } from 'next-intl';
@@ -18,12 +16,42 @@ import { cx } from '@/lib/cx';
 //! Styles
 import styles from './styles.module.css';
 
-/** A hand-drawn mark from Figma, themed by swapping the light/dark export. */
-function Doodle({ name, className }: { name: 'great-sparkle' | 'luck-strike'; className: string }) {
+/** The sparkle's five rays from Figma, centre ray first so they burst out from the middle. Each runs from the word outward. */
+const RAYS = [
+	'M37.9187 21.3677L33.9842 0.304628',
+	'M51.9842 21.3677L58.476 9.253',
+	'M22.9678 22.7444L15.4924 11.0427',
+	'M66.5416 24.3046L73.1318 16.6411',
+	'M8.01702 24.3046L1.13177 17.8802',
+];
+
+/** The strike-through scribble over "luck", drawn left to right. */
+const SCRIBBLE =
+	'M0.286011 9.26897L19.6689 16.6899L8.63649 9.26897L27.227 16.3887L7.17363 4.64436L46.8536 21.5296L10.2822 0.72957L45.7565 16.6899L28.6898 4.64436L52.4003 14.4313L37.7108 5.35418L64.286 11.2049';
+
+/**
+ * The Figma sparkle over "great", inline so it can move: the rays draw out from the word one after
+ * another once the hero has revealed, then shine now and again while a sheen crosses the word.
+ */
+function Sparkle() {
 	return (
-		<span className={cx(styles.doodle, className)} aria-hidden="true">
-			<img src={`/landing/hero/${name}-light.svg`} alt="" className="u-only-light" draggable={false} />
-			<img src={`/landing/hero/${name}-dark.svg`} alt="" className="u-only-dark" draggable={false} />
+		<span className={cx(styles.doodle, styles.sparkle)} aria-hidden="true" data-doodle>
+			<svg viewBox="0 0 75 26" fill="none" className={styles.doodleSvg}>
+				{RAYS.map((d, index) => (
+					<path key={d} d={d} pathLength={1} strokeWidth={3.31797} className={styles.ray} style={{ '--ray': index } as CSSProperties} />
+				))}
+			</svg>
+		</span>
+	);
+}
+
+/** The Figma strike over "luck", inline so it can be drawn like a pen crossing the word out. */
+function Strike() {
+	return (
+		<span className={cx(styles.doodle, styles.strike)} aria-hidden="true" data-doodle>
+			<svg viewBox="0 0 65 23" fill="none" preserveAspectRatio="none" className={styles.doodleSvg}>
+				<path d={SCRIBBLE} pathLength={1} strokeWidth={1.6} vectorEffect="non-scaling-stroke" className={styles.scribble} />
+			</svg>
 		</span>
 	);
 }
@@ -31,7 +59,8 @@ function Doodle({ name, className }: { name: 'great-sparkle' | 'luck-strike'; cl
 /**
  * Figma Hero: "Yeta [logo tile] Studio" wordmark, the slogan with its sparkle and
  * strike-through doodles, and the two-button group. The three enter with the
- * transitions.dev Texts reveal right after hydration.
+ * transitions.dev Texts reveal right after hydration; then the sparkle bursts and the
+ * strike draws itself.
  */
 export function Hero() {
 	const t = useTranslations('hero');
@@ -50,14 +79,14 @@ export function Hero() {
 					br: () => <br />,
 					great: (chunks: ReactNode) => (
 						<span className={styles.editorial}>
-							<Doodle name="great-sparkle" className={styles.sparkle} />
-							{chunks}
+							<Sparkle />
+							<span className={styles.shine}>{chunks}</span>
 						</span>
 					),
 					luck: (chunks: ReactNode) => (
 						<span className={cx(styles.editorial, styles.struck)}>
 							{chunks}
-							<Doodle name="luck-strike" className={styles.strike} />
+							<Strike />
 						</span>
 					),
 				})}
