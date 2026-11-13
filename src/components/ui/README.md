@@ -54,7 +54,7 @@ Status: **stable** = drawn in Figma; **inspo** = added to fill a gap, same visua
 | `CraftCard` | stable | 1472:4250 | `layout row·stacked·responsive` | — | `article` + heading level prop. |
 | `ProcessCard` | stable | 1204:1323 | `step` (announced "Step n:") | — | — |
 | `TestimonialCard` | stable | 1213:1430 | `size desktop·mobile` | — | `figure` / `blockquote` / `figcaption`. |
-| `ProjectCard`, `CaseStudy`, `CaseStudyDialog` | stable | 987:1594 | `size desktop·mobile`; `onOpen` → render ONE `CaseStudyDialog` per gallery, outside breakpoint-hidden containers and card stacks | image strip dots, dialog open | "See more" has `aria-haspopup="dialog"`; the dialog can never end up inside a hidden or `inert` subtree. |
+| `ProjectCard`, `CaseStudy`, `CaseStudyDialog` | stable | 987:1594 | `size desktop·mobile`; `onOpen` → render ONE `CaseStudyDialog` per gallery, outside breakpoint-hidden containers and card stacks; `project.slug` adds a "View full case study" footer link to `/work/[slug]`; `CaseStudy showSections={false}` drops the About/Challenge/Result rows (detail page sheet); `Shot` renders one light/dark screen | image strip dots, dialog open | "See more" has `aria-haspopup="dialog"`; the dialog can never end up inside a hidden or `inert` subtree. |
 | `SummaryCard` | stable | 786:762 / 786:805 | — | Idle; Active on hover or focus-within | Focusable so keyboard users see the Active state. |
 | `Carousel` | stable | mobile tracks | `gap sm·md`, `showDots` | position via dots | Native scroll + snap; `aria-roledescription="carousel"`; dots are buttons. |
 | `CardStack` | stable | 1231:1787 · 1010:2036 | `variant fan·deck`, `initialIndex` | swipe, arrows, dots | Back cards are `inert`; position announced politely. |
