@@ -2,68 +2,65 @@
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Text } from '@/components/ui';
-
-//! Types
-import type { ResultFacts } from '../results';
+import { Accent, Text } from '@/components/ui';
+import { TESTIMONIALS } from '@/components/layout/content';
+import { ResultsOneFigure } from './results-live';
 
 //! Utils
 import { cx } from '@/lib/cx';
 
-//! Styles
-import styles from './library.module.css';
+//! Types
+import type { ResultFacts } from '../results';
+import type { LibraryVariantDef } from './variant-types';
 
-/** The clients from the testimonials, plus us; one is lit in its brand hue (Craft Agency). */
-const CLIENTS = ['jorge', 'marcelo', 'lisette'] as const;
+//! Styles
+import shared from './shared.module.css';
+import styles from './results.module.css';
+
+/** The three figures, read from the code (locales, themes, registry), so none is made up. */
+const figuresOf = (facts: ResultFacts) => [
+	{ key: 'locales', value: facts.locales, label: 'languages, one codebase', short: 'Languages' },
+	{ key: 'themes', value: facts.themes, label: 'themes from one set of tokens', short: 'Themes' },
+	{ key: 'components', value: facts.components, label: 'components in the registry', short: 'Components' },
+];
+
+/** The client lit in its own hue in the wordmark band (Craft Agency lights one name). */
+const LIT_CLIENT = 1;
 
 /**
- * Library 07, Results and clients. Three figures as a ledger in the sky band (Metalab, Giga): a
- * large serif numeral, one caption and its source, between hairlines. Under it the clients set as
- * serif wordmarks running edge to edge, one lit (Craft Agency). Figures are read from the code, so
- * nothing here is made up.
+ * Results A, after Fiasco: an italic serif “Impact” label, the studio's one-line belief, then three
+ * thin oversized figures, each tied to the project it comes from. Neutral throughout; the one
+ * accent is the hue dot before the label.
  */
-export function ResultsLedgerMockup({ facts }: { facts: ResultFacts }) {
-	const t = useTranslations('testimonials');
-	const figures = [
-		{ value: facts.locales, label: 'languages, one codebase' },
-		{ value: facts.themes, label: 'themes from one set of tokens' },
-		{ value: facts.components, label: 'components in the registry' },
-	];
+function ResultsImpact({ facts }: { facts: ResultFacts }) {
+	const why = useTranslations('whyYeta');
+	const work = useTranslations('ourWork');
+	const source = `${work('projects.yeta.name')}, ${work('projects.yeta.year')}`;
 	return (
-		<div className={styles.container}>
-			<div className={cx(styles.frame, styles.ledger)}>
-				<div className={cx(styles.sky, styles.ledgerSky)}>
-					<Text as="span" size="lg" family="serif" italic tone="strong">
-						Impact
+		<div className={shared.container}>
+			<div className={cx(shared.frame, styles.impact)}>
+				<div className={styles.impactHead}>
+					<span className={styles.impactLabel}>
+						<span className={cx(shared.dot, shared.hued)} data-hue="green" aria-hidden="true" />
+						<Text as="span" size="2xl" family="serif" italic tone="strong" leading="none">
+							Impact
+						</Text>
+					</span>
+					<Text size="lg" tone="subtle" leading="snug" className={styles.impactBelief}>
+						{why.rich('p2', { serif: (chunks) => <Accent>{chunks}</Accent> })}
 					</Text>
-					<ol className={styles.ledgerRows}>
-						{figures.map((figure) => (
-							<li key={figure.label} className={styles.ledgerRow}>
-								<Text as="span" family="serif" weight="light" tone="strong" leading="none" className={cx(styles.ledgerFigure, styles.numeral)}>
-									{figure.value}
-								</Text>
-								<span className={styles.ledgerCaption}>
-									<Text as="span" size="sm" tone="strong">
-										{figure.label}
-									</Text>
-									<Text as="span" size="xs" tone="subtle">
-										Yeta Studio, 2025
-									</Text>
-								</span>
-							</li>
-						))}
-					</ol>
 				</div>
-				<ul className={styles.ledgerClients} aria-label="Clients">
-					{CLIENTS.map((client, index) => (
-						<li key={client}>
-							<Text
-								as="span"
-								family="serif"
-								tone={index === 1 ? 'strong' : 'faint'}
-								className={cx(styles.ledgerWordmark, index === 1 && styles.ledgerLit)}
-							>
-								{t(`items.${client}.company`)}
+				<ul className={styles.impactFigures}>
+					{figuresOf(facts).map((figure) => (
+						<li key={figure.key} className={styles.impactFigure}>
+							<Text as="span" family="serif" weight="thin" tone="strong" leading="none" className={cx(styles.impactValue, shared.numeral)}>
+								{figure.value}
+							</Text>
+							<Text as="span" size="sm" tone="strong" leading="snug">
+								{figure.label}
+							</Text>
+							<Text as="span" size="xs" tone="faint">
+								{source}
 							</Text>
 						</li>
 					))}
@@ -73,4 +70,56 @@ export function ResultsLedgerMockup({ facts }: { facts: ResultFacts }) {
 	);
 }
 
-export default ResultsLedgerMockup;
+/**
+ * Results C, after Giga and Craft Agency: three short metrics under mono labels in the sky band, a
+ * neutral raised surface with a faint blue tint (Giga), then the clients as serif wordmarks running
+ * edge to edge (Craft Agency). The colour is the band's tint and the one client lit in its hue.
+ */
+function ResultsSky({ facts }: { facts: ResultFacts }) {
+	const t = useTranslations('testimonials');
+	return (
+		<div className={shared.container}>
+			<div className={cx(shared.frame, styles.sky)}>
+				<div className={cx(shared.sky, styles.skyBand)}>
+					<Text as="span" size="xs" tone="subtle" className={styles.mono}>
+						Yeta Studio · in numbers
+					</Text>
+					<ul className={styles.skyStats}>
+						{figuresOf(facts).map((figure) => (
+							<li key={figure.key} className={styles.skyStat}>
+								<Text as="span" size="2xs" tone="subtle" className={styles.mono}>
+									{figure.short}
+								</Text>
+								<Text as="span" weight="medium" tone="strong" leading="none" className={cx(styles.skyValue, shared.numeral)}>
+									{figure.value}
+								</Text>
+							</li>
+						))}
+					</ul>
+				</div>
+				<ul className={styles.skyClients} aria-label="Clients">
+					{TESTIMONIALS.map((item, index) => (
+						<li key={item.key}>
+							<Text as="span" family="serif" tone={index === LIT_CLIENT ? 'strong' : 'faint'} className={styles.skyWordmark}>
+								{index === LIT_CLIENT ? (
+									<span className={cx(styles.skyLit, shared.hued)} data-hue={item.hue}>
+										{t(`items.${item.key}.company`)}
+									</span>
+								) : (
+									t(`items.${item.key}.company`)
+								)}
+							</Text>
+						</li>
+					))}
+				</ul>
+			</div>
+		</div>
+	);
+}
+
+/** The proposals for this shelf, in switcher order. */
+export const RESULTS_VARIANTS: LibraryVariantDef[] = [
+	{ id: 'a', label: 'Impact', refs: 'Fiasco', Component: ResultsImpact },
+	{ id: 'b', label: 'One figure', refs: 'Craft Agency', Component: ResultsOneFigure },
+	{ id: 'c', label: 'Sky ledger', refs: 'Giga, Craft Agency', Component: ResultsSky },
+];

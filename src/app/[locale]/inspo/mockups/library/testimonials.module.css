@@ -1,0 +1,375 @@
+/* Section library · 08 Testimonials. Neutral first: one voice at a time, colour only as a dot, a line or a glow. */
+
+/* Every voice sits in one cell; the tallest sets the height, so the frame never jumps between them. */
+.stack {
+	display: grid;
+}
+
+.stack > * {
+	grid-area: 1 / 1;
+	visibility: hidden;
+}
+
+.stack > [data-on] {
+	visibility: visible;
+}
+
+/* ───────────── A · Portrait ───────────── */
+
+.portrait {
+	--portrait-photo-width: 5.5rem;
+	--autoplay-interval: 7000ms;
+	display: grid;
+	grid-template-columns: var(--portrait-photo-width) minmax(0, 1fr);
+	grid-template-areas:
+		'photo by'
+		'quote quote'
+		'dots dots';
+	align-items: center;
+	gap: var(--space-20) var(--space-16);
+	padding: var(--space-28) var(--space-20);
+}
+
+/* The voice is the reveal group (transitions.dev 18 tunables); its lines sit straight on the frame's grid. */
+.portraitVoice {
+	--stagger-dur: 500ms;
+	--stagger-distance: 12px;
+	--stagger-stagger: 40ms;
+	--stagger-blur: 3px;
+	--stagger-ease: cubic-bezier(0.22, 1, 0.36, 1);
+	display: contents;
+}
+
+.portraitPhoto {
+	--portrait-photo-aspect: 4 / 5;
+	position: relative;
+	grid-area: photo;
+	align-self: start;
+	aspect-ratio: var(--portrait-photo-aspect);
+	overflow: hidden;
+	border-radius: var(--radius-lg);
+	background: var(--color-surface-raised);
+}
+
+.portraitPhoto::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	box-shadow: inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
+}
+
+.portraitImage {
+	object-fit: cover;
+	object-position: center top;
+	opacity: 0;
+}
+
+.portraitImage[data-on] {
+	opacity: 1;
+}
+
+.portraitQuote {
+	grid-area: quote;
+}
+
+.portraitQuoteText {
+	font-size: clamp(var(--text-lg), 4.4cqi, var(--text-xl));
+}
+
+.portraitBy {
+	grid-area: by;
+}
+
+.portraitByItem {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+}
+
+/* The client's name as a wordmark, with the one accent: its hue dot. */
+.portraitWordmark {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-8);
+}
+
+.portraitDots {
+	grid-area: dots;
+}
+
+@container (min-width: 30rem) {
+	.portrait {
+		grid-template-columns: 2fr 3fr;
+		grid-template-areas:
+			'photo quote'
+			'photo by'
+			'photo dots';
+		align-items: start;
+		gap: var(--space-20) var(--space-32);
+		padding: var(--space-40);
+	}
+}
+
+/* ── transitions.dev 18 · Texts reveal ── */
+
+/* Adapted: the lines keep their own display (a photo frame, two stacks) instead of block. */
+.revealLine {
+	opacity: 0;
+	transform: translateY(var(--stagger-distance));
+	filter: blur(var(--stagger-blur));
+	transition:
+		opacity var(--stagger-dur) var(--stagger-ease),
+		transform var(--stagger-dur) var(--stagger-ease),
+		filter var(--stagger-dur) var(--stagger-ease);
+	will-change: transform, opacity, filter;
+}
+
+.revealLine2 {
+	transition-delay: var(--stagger-stagger);
+}
+
+.revealLine3 {
+	transition-delay: calc(var(--stagger-stagger) * 2);
+}
+
+.isRevealShown .revealLine {
+	opacity: 1;
+	transform: translateY(0);
+	filter: blur(0);
+}
+
+/* The exit is decoupled from the stagger: one quiet fade in place, no reverse reveal. */
+.isRevealHiding .revealLine {
+	opacity: 0;
+	transform: translateY(0);
+	filter: blur(0);
+	transition:
+		opacity 200ms ease,
+		transform 0s linear,
+		filter 0s linear;
+	transition-delay: 0s;
+}
+
+/* Adapted: at the swap the lines snap to their start state, so each entrance rises the full distance. */
+.isRevealReset .revealLine {
+	transition: none;
+}
+
+/* ───────────── B · Name tabs ───────────── */
+
+.tabs {
+	display: flex;
+	flex-direction: column;
+	padding-bottom: var(--space-16);
+}
+
+.tabsBand {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-20);
+	padding: var(--space-32) var(--space-20) var(--space-28);
+}
+
+.tabsTitle {
+	max-width: 18ch;
+	font-size: clamp(var(--text-xl), 6cqi, var(--text-3xl));
+}
+
+.tabsVoice {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+}
+
+/* The clients as tabs along one hairline (Paraform). */
+.tabsRow {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	margin-inline: var(--space-12);
+	border-bottom: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.tab {
+	--tab-line: 2px;
+	position: relative;
+	display: block;
+}
+
+/* The accent: a thin underline in the picked client's hue, sitting on the hairline. */
+.tab::after {
+	content: '';
+	position: absolute;
+	inset-inline: var(--space-12);
+	bottom: calc(var(--stroke-hairline) * -1);
+	height: var(--tab-line);
+	border-radius: var(--radius-pill);
+	background: var(--hue);
+	opacity: 0;
+}
+
+.tab[data-on]::after {
+	opacity: 1;
+}
+
+.tabName {
+	font-size: clamp(var(--text-md), 4.4cqi, var(--text-xl));
+	letter-spacing: var(--tracking-tight);
+}
+
+@container (min-width: 30rem) {
+	.tabs {
+		padding-bottom: var(--space-24);
+	}
+
+	.tabsBand {
+		padding: var(--space-48) var(--space-40) var(--space-32);
+	}
+
+	.tabsRow {
+		margin-inline: var(--space-28);
+	}
+}
+
+/* ───────────── C · Glass ───────────── */
+
+.glass {
+	position: relative;
+	display: grid;
+	padding: var(--space-20);
+	isolation: isolate;
+}
+
+/* The one accent: a faint glow in the client's hue behind the glass, so the frost has something to blur. */
+.glassGlow {
+	--glass-glow-size: 11rem;
+	--glass-glow: radial-gradient(50% 50% at 50% 50%, color-mix(in oklab, var(--hue) 14%, transparent) 0%, transparent 100%);
+	position: absolute;
+	inset-block-start: var(--space-8);
+	inset-inline-start: var(--space-8);
+	z-index: -1;
+	width: var(--glass-glow-size);
+	aspect-ratio: 1;
+	background: var(--glass-glow);
+	filter: blur(var(--blur-glass));
+}
+
+.glassPanel {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-24);
+}
+
+.glassVoice {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-16);
+}
+
+.glassWordmark {
+	font-size: clamp(var(--text-2xl), 7cqi, var(--text-3xl));
+	letter-spacing: var(--tracking-tight);
+}
+
+.glassWords {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-10);
+}
+
+@container (min-width: 30rem) {
+	.glass {
+		padding: var(--space-32);
+	}
+
+	.glassVoice {
+		display: grid;
+		grid-template-columns: 1fr 2fr;
+		align-items: start;
+		gap: var(--space-24);
+	}
+}
+
+/* ── transitions.dev 11 · Avatar group hover ── */
+
+/* The snippet's values, except the return: its overshooting spring is swapped for the system's ease out (trap/motion-overshoot). */
+.avatarGroup {
+	--avatar-lift: -4px;
+	--avatar-dur: 320ms;
+	--avatar-scale: 1.05;
+	--avatar-falloff: 0.45;
+	--avatar-ease-in: cubic-bezier(0.22, 1, 0.36, 1);
+	--avatar-ease-out: var(--ease-out);
+	display: flex;
+	align-items: center;
+	gap: var(--space-2);
+	margin-inline-start: calc(var(--space-8) * -1);
+	list-style: none;
+}
+
+.avatarItem {
+	--avatar-shift: 0px;
+	--avatar-scale-active: 1;
+	opacity: 0.5;
+	transform-origin: center;
+	/* translateY before scale, so the scale does not amplify the lift. */
+	transform: translateY(var(--avatar-shift)) scale(var(--avatar-scale-active));
+	transition: transform var(--avatar-dur) var(--avatar-ease-in);
+	will-change: transform;
+}
+
+.avatarItem[data-on] {
+	opacity: 1;
+}
+
+/* ── transitions.dev 04 · Text states swap ── */
+
+.textSwap {
+	--text-swap-dur: 150ms;
+	--text-swap-translate-y: 4px;
+	--text-swap-blur: 2px;
+	--text-swap-ease: ease-in-out;
+	transform: translateY(0);
+	filter: blur(0);
+	opacity: 1;
+	transition:
+		transform var(--text-swap-dur) var(--text-swap-ease),
+		filter var(--text-swap-dur) var(--text-swap-ease),
+		opacity var(--text-swap-dur) var(--text-swap-ease);
+	will-change: transform, filter, opacity;
+}
+
+.textSwap.isSwapExit {
+	transform: translateY(calc(var(--text-swap-translate-y) * -1));
+	filter: blur(var(--text-swap-blur));
+	opacity: 0;
+}
+
+.textSwap.isSwapEnter {
+	transform: translateY(var(--text-swap-translate-y));
+	filter: blur(var(--text-swap-blur));
+	opacity: 0;
+	transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.revealLine,
+	.textSwap {
+		transition: none !important;
+	}
+
+	.avatarItem {
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
+/* Full size (a real section): the portrait keeps a print size beside a wider quote. */
+@container (min-width: 64rem) {
+	.portrait {
+		--portrait-photo-max: 22rem;
+		grid-template-columns: minmax(0, var(--portrait-photo-max)) minmax(0, 1fr);
+		gap: var(--space-24) var(--space-64);
+		padding: var(--space-64);
+	}
+}

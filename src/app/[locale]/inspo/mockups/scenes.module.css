@@ -175,22 +175,25 @@
 	margin-top: var(--space-4);
 }
 
+/* Neutral tiles with the faintest tint of a brand wash under a veil: accents, not colour fields. */
 .heroTile {
+	--hero-tile-veil: color-mix(in oklab, var(--color-surface-raised) 86%, transparent);
 	height: var(--hero-tile-height);
 	border-radius: var(--radius-lg);
+	background: linear-gradient(var(--hero-tile-veil), var(--hero-tile-veil)), var(--hero-tile-wash, var(--color-surface-tint));
 	box-shadow: var(--shadow-bevel);
 }
 
 .heroTile[data-hue='pink'] {
-	background-image: var(--wash-pink);
+	--hero-tile-wash: var(--wash-pink);
 }
 
 .heroTile[data-hue='yellow'] {
-	background-image: var(--wash-yellow);
+	--hero-tile-wash: var(--wash-yellow);
 }
 
 .heroTile[data-hue='blue'] {
-	background-image: var(--wash-blue);
+	--hero-tile-wash: var(--wash-blue);
 }
 
 .heroRest {
@@ -329,9 +332,10 @@
 }
 
 .baAfterTile {
+	--ba-after-veil: color-mix(in oklab, var(--color-surface-raised) 84%, transparent);
 	height: var(--ba-image-height);
 	border-radius: var(--radius-lg);
-	background-image: var(--wash-violet);
+	background: linear-gradient(var(--ba-after-veil), var(--ba-after-veil)), var(--wash-violet);
 	box-shadow: var(--shadow-bevel);
 }
 

@@ -1,0 +1,94 @@
+/*
+ * Section library, shared pieces: containers, frames, the tinted-neutral grounds and hue hooks.
+ * Every mockup is an inline-size container, so it lays out by the canvas it sits on (a 358 phone
+ * column or a desktop row), not by the viewport. Lengths in custom properties are mockup geometry;
+ * spacing, radii, type and color read the scale.
+ */
+
+.container {
+	container-type: inline-size;
+	width: 100%;
+}
+
+/* A section frame: the slice of page the mockup stands for, cropped like a product shot. */
+.frame {
+	position: relative;
+	overflow: hidden;
+	border-radius: var(--radius-xl);
+	box-shadow: inset 0 0 0 var(--stroke-hairline) var(--color-border-faint);
+}
+
+/*
+ * Sky band (Altitude, Air, Atlas), neutral first: the raised surface with a faint blue tint at
+ * the top, fading into the page. Day on the light canvas, dusk on the dark one, never a colour field.
+ */
+.sky {
+	--sky-tint: color-mix(in oklab, var(--color-accent-blue) 10%, var(--color-surface-raised));
+	--sky: linear-gradient(180deg, var(--sky-tint) 0%, var(--color-surface) 100%);
+	background: var(--sky);
+}
+
+/* Hue hooks: `--hue` is the accent colour, `--hue-wash` the brand wash. Accents only (about 10% of a frame). */
+.hued[data-hue='pink'] {
+	--hue: var(--color-accent-pink);
+	--hue-wash: var(--wash-pink);
+}
+.hued[data-hue='orange'] {
+	--hue: var(--color-accent-orange);
+	--hue-wash: var(--wash-orange);
+}
+.hued[data-hue='yellow'] {
+	--hue: var(--color-accent-yellow);
+	--hue-wash: var(--wash-yellow);
+}
+.hued[data-hue='green'] {
+	--hue: var(--color-accent-green);
+	--hue-wash: var(--wash-green);
+}
+.hued[data-hue='blue'] {
+	--hue: var(--color-accent-blue);
+	--hue-wash: var(--wash-blue);
+}
+.hued[data-hue='violet'] {
+	--hue: var(--color-accent-violet);
+	--hue-wash: var(--wash-violet);
+}
+
+.numeral {
+	font-variant-numeric: lining-nums tabular-nums;
+}
+
+/*
+ * Tinted neutral: a neutral surface veiled over one brand wash, so the wash's own gradient shows
+ * through at low strength. For one small accent per frame (a card, a band edge), never a section.
+ */
+.tint {
+	--tint-strength: 84%;
+	--tint-veil: color-mix(in oklab, var(--color-surface-raised) var(--tint-strength), transparent);
+	background: linear-gradient(var(--tint-veil), var(--tint-veil)), var(--hue-wash, var(--wash-blue));
+}
+
+/* A small hue dot: the most common accent. */
+.dot {
+	--dot-size: 0.375rem;
+	flex: none;
+	width: var(--dot-size);
+	height: var(--dot-size);
+	border-radius: var(--radius-pill);
+	background: var(--hue);
+}
+
+/* Images that fill their frame (project shots). */
+.image {
+	object-fit: cover;
+	object-position: top left;
+}
+
+/*
+ * Playground (/inspo/playground): mounted at full size, a proposal reads as an open section of the
+ * page, not a framed card. Its own grounds and inner bands stay.
+ */
+:global([data-playground]) .frame {
+	border-radius: 0;
+	box-shadow: none;
+}

@@ -3,7 +3,7 @@
 //! Components
 import { Button as KitButton, Segmented, Stage, Text, type Act } from '@stageshow';
 import { Check } from 'lucide-react';
-import { Accent, Button, GradientTile, Icon, Text as DsText } from '@/components/ui';
+import { Accent, Button, Icon, Text as DsText } from '@/components/ui';
 import { BOOKING_URL } from '@/components/layout/sections';
 
 //! Utils
@@ -14,7 +14,7 @@ import styles from './scenes.module.css';
 import mockups from './mockups.module.css';
 
 // Proposal 07, booking preview. The intro-call card hangs off the top-left
-// corner of a violet wash tile and runs off its right and bottom edges.
+// corner of a violet-tinted neutral stage and runs off its right and bottom edges.
 // Beats: the arrow picks Tuesday, then 11:30, then Confirm; the same button
 // turns into Booked with a tick (label and icon change, the colour stays). The poster is that booked call. Loop: the
 // arrow presses Reschedule, the picks clear (the last change first) and the
@@ -136,7 +136,7 @@ function BookingScene() {
 	);
 }
 
-/** The closing call to action with the booking shown in place, on a violet wash. */
+/** The closing call to action with the booking shown in place, on a neutral stage tinted violet. */
 export function BookingMockup() {
 	return (
 		<div className={mockups.container}>
@@ -152,7 +152,7 @@ export function BookingMockup() {
 						Book a call
 					</Button>
 				</div>
-				<GradientTile hue="violet" shape="craft" className={mockups.bookingTile}>
+				<div className={cx(mockups.bookingTile, mockups.neutralStage)} data-hue="violet">
 					<div
 						className={cx(styles.frame, styles.bookFrame)}
 						role="img"
@@ -160,7 +160,7 @@ export function BookingMockup() {
 					>
 						<BookingScene />
 					</div>
-				</GradientTile>
+				</div>
 			</div>
 		</div>
 	);

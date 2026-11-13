@@ -12,21 +12,12 @@ import { ClientWallMockup } from './mockups/client-wall';
 import { HeroDemoMockup } from './mockups/hero-demo';
 import { ProcessWalkthroughMockup } from './mockups/process-walkthrough';
 import { ResultsMockup, type ResultFacts } from './mockups/results';
-import { AboutMockup } from './mockups/library/about';
-import { CaseMockup } from './mockups/library/case';
-import { CraftMockup } from './mockups/library/craft';
-import { CtaMockup } from './mockups/library/cta';
-import { FooterMockup } from './mockups/library/footer';
-import { HeroMockup } from './mockups/library/hero';
-import { NavMockup } from './mockups/library/nav';
-import { ProcessMockup } from './mockups/library/process';
-import { ResultsLedgerMockup } from './mockups/library/results';
-import { TestimonialsMockup } from './mockups/library/testimonials';
-import { WhyMockup } from './mockups/library/why';
-import { WorkMockup } from './mockups/library/work';
+
+//! Library
+import { SHELF_VARIANTS } from './mockups/library/registry';
 
 //! Data
-import { LIBRARY, LIBRARY_COLLECTION, MOBBIN_COLLECTION, PROPOSALS, type ProposalId, type ShelfId } from './data';
+import { LIBRARY, LIBRARY_COLLECTION, MOBBIN_COLLECTION, PROPOSALS, type ProposalId } from './data';
 
 //! Styles
 import styles from './styles.module.css';
@@ -61,22 +52,6 @@ export default function InspoShowcase({ facts }: { facts: ResultFacts }) {
 		booking: <BookingMockup />,
 	};
 
-	// One live mockup per library shelf: the best of its references, rebuilt in the Yeta look.
-	const shelfMockups: Record<ShelfId, ReactNode> = {
-		nav: <NavMockup />,
-		hero: <HeroMockup />,
-		value: <WhyMockup />,
-		services: <CraftMockup />,
-		work: <WorkMockup />,
-		process: <ProcessMockup />,
-		stats: <ResultsLedgerMockup facts={facts} />,
-		testimonials: <TestimonialsMockup />,
-		about: <AboutMockup />,
-		cta: <CtaMockup />,
-		footer: <FooterMockup />,
-		case: <CaseMockup />,
-	};
-
 	return (
 		<ShowcaseLayout nav={<ShowcaseNav label="Inspo sections" items={navItems} />}>
 			<header className={styles.intro}>
@@ -106,9 +81,12 @@ export default function InspoShowcase({ facts }: { facts: ResultFacts }) {
 				id="library"
 				eyebrow="Section library"
 				title="Sections worth borrowing from"
-				description={`${libraryCount} website sections from studios and design-led brands, one shelf per anchor in the order the landing reads. Each card says what to take for Yeta; the images live in the Mobbin collection.`}
+				description={`${libraryCount} website sections from studios and design-led brands, one shelf per anchor in the order the landing reads. Each shelf opens with three proposals, each following one or two of its references, neutral first with colour only as an accent. Each card says what to take for Yeta; the images live in the Mobbin collection.`}
 			>
-				<div>
+				<div className={styles.collections}>
+					<Button href="/inspo/playground" variant="solid" size="lg" iconStart="monitor">
+						Open the playground
+					</Button>
 					<Button href={LIBRARY_COLLECTION} variant="glass" size="lg" iconStart="book">
 						Open “Yeta Studio · Section library”
 					</Button>
@@ -116,9 +94,12 @@ export default function InspoShowcase({ facts }: { facts: ResultFacts }) {
 			</ShowcaseSection>
 
 			{LIBRARY.map((shelf, index) => (
-				<LibraryShelf key={shelf.id} shelf={shelf} number={shelfNumber(index)}>
-					{shelfMockups[shelf.id]}
-				</LibraryShelf>
+				<LibraryShelf
+					key={shelf.id}
+					shelf={shelf}
+					number={shelfNumber(index)}
+					variants={SHELF_VARIANTS[shelf.id].map(({ Component, ...variant }) => ({ ...variant, node: <Component facts={facts} /> }))}
+				/>
 			))}
 
 			<ShowcaseSection

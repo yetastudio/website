@@ -1,0 +1,304 @@
+/* Section library · 04 Our Craft. Neutral first: the beats are type and hairlines, colour is one numeral, dot or line. */
+
+.centered {
+	object-position: center;
+}
+
+/* ───────────── A · Active list ───────────── */
+
+.list {
+	display: grid;
+	gap: var(--space-20);
+	padding: var(--space-24) var(--space-12);
+}
+
+.listItems {
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+}
+
+/* The list items are system Buttons; only their height and inner type are tuned here. */
+.listItem {
+	--button-min-height: 2.75rem;
+	justify-content: flex-start;
+	text-align: start;
+}
+
+.listLabel {
+	display: inline-flex;
+	align-items: baseline;
+	gap: var(--space-12);
+	transition: color var(--duration-enter) var(--ease-out);
+}
+
+/* The one accent: the current line's numeral, in that beat's hue. */
+[aria-pressed='true'] .listNumber {
+	color: var(--hue);
+}
+
+/* Scales with the canvas so every line stays on one row, from a phone column up. */
+.listTitle {
+	font-size: clamp(var(--text-lg), 5.4cqi, var(--text-2xl));
+	white-space: nowrap;
+}
+
+/* A neutral well with the framed card centred in it (Fiasco): the beat's promise, not an icon. */
+.listStage {
+	--list-stage-height: 13rem;
+	display: grid;
+	place-items: center;
+	min-height: var(--list-stage-height);
+}
+
+.listCardFrame {
+	--list-card-width: 32ch;
+	width: min(100%, var(--list-card-width));
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-overlay);
+}
+
+.listCardHead {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+}
+
+.listCardNote {
+	display: block;
+}
+
+/* ── transitions.dev 04 · Text states swap (the card's copy) ── */
+
+.textSwap {
+	--text-swap-dur: 150ms;
+	--text-swap-translate-y: 4px;
+	--text-swap-blur: 2px;
+	--text-swap-ease: ease-in-out;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+	transform: translateY(0);
+	filter: blur(0);
+	opacity: 1;
+	transition:
+		transform var(--text-swap-dur) var(--text-swap-ease),
+		filter var(--text-swap-dur) var(--text-swap-ease),
+		opacity var(--text-swap-dur) var(--text-swap-ease);
+	will-change: transform, filter, opacity;
+}
+
+.textSwap.isExit {
+	transform: translateY(calc(var(--text-swap-translate-y) * -1));
+	filter: blur(var(--text-swap-blur));
+	opacity: 0;
+}
+
+.textSwap.isEnterStart {
+	transform: translateY(var(--text-swap-translate-y));
+	filter: blur(var(--text-swap-blur));
+	opacity: 0;
+	transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.textSwap {
+		transition: none !important;
+	}
+}
+
+/* ───────────── B · Capability rows ───────────── */
+
+.rows {
+	display: grid;
+	grid-template-areas:
+		'head'
+		'list'
+		'case';
+	gap: var(--space-24);
+	padding: var(--space-32) var(--space-20);
+}
+
+.rowsHead {
+	grid-area: head;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+}
+
+.rowsPromise {
+	max-width: 20ch;
+	font-size: clamp(var(--text-xl), 5cqi, var(--text-3xl));
+}
+
+/* The case tile pinned in the corner (Koto): proof, kept small. */
+.rowsCase {
+	--rows-case-width: 9.5rem;
+	grid-area: case;
+	justify-self: end;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+	width: var(--rows-case-width);
+}
+
+.rowsShot {
+	--rows-shot-aspect: 16 / 10;
+	position: relative;
+	aspect-ratio: var(--rows-shot-aspect);
+	overflow: hidden;
+	border-radius: var(--radius-md);
+}
+
+.rowsCaption {
+	display: flex;
+	align-items: center;
+	gap: var(--space-6);
+	padding: var(--space-2) var(--space-4) var(--space-4);
+}
+
+/* A ruled list of what we deliver: hairlines, a numeral, the beat and its one line. */
+.rowsList {
+	grid-area: list;
+	list-style: none;
+	border-bottom: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.row {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: baseline;
+	column-gap: var(--space-12);
+	row-gap: var(--space-2);
+	padding-block: var(--space-12);
+	border-top: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.rowNote {
+	grid-column: 2;
+}
+
+/* ───────────── C · Two voices ───────────── */
+
+.voices {
+	display: grid;
+	gap: var(--space-28);
+	padding: var(--space-32) var(--space-20);
+}
+
+.voicesStatement {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--space-24);
+}
+
+.voicesTitle {
+	max-width: 11ch;
+	font-size: clamp(var(--text-2xl), 7.2cqi, var(--text-4xl));
+}
+
+/* The second voice (Taxi Studio): a solid square inverse to the canvas, the beats set in serif. */
+.voicesSquare {
+	--voices-square-aspect: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: var(--space-20);
+	aspect-ratio: var(--voices-square-aspect);
+	padding: var(--space-20);
+	border-radius: var(--radius-lg);
+	background: var(--color-surface);
+}
+
+/* The one accent: a thin hue line that opens the square. */
+.voicesRule {
+	--voices-rule-width: 2.5rem;
+	--voices-rule-height: 2px;
+	width: var(--voices-rule-width);
+	height: var(--voices-rule-height);
+	border-radius: var(--radius-pill);
+	background: var(--hue);
+}
+
+.voicesList {
+	display: grid;
+	gap: var(--space-4);
+	list-style: none;
+}
+
+.voicesLine {
+	font-size: clamp(var(--text-md), 3cqi, var(--text-xl));
+}
+
+@container (min-width: 30rem) {
+	.list {
+		grid-template-columns: 3fr 2fr;
+		align-items: center;
+		gap: var(--space-16);
+		padding: var(--space-32) var(--space-20);
+	}
+
+	.listTitle {
+		font-size: clamp(var(--text-md), 3.2cqi, var(--text-2xl));
+	}
+
+	.listStage {
+		align-self: stretch;
+	}
+
+	/* Beside the list the card is narrow: it keeps the promise and drops the long note until 44rem. */
+	.listCardNote {
+		display: none;
+	}
+
+	.rows {
+		grid-template-columns: 1fr auto;
+		grid-template-areas:
+			'head case'
+			'list list';
+		column-gap: var(--space-24);
+		padding: var(--space-40);
+	}
+
+	.rowsCase {
+		align-self: start;
+	}
+
+	.row {
+		grid-template-columns: auto 1fr 1fr;
+	}
+
+	.rowNote {
+		grid-column: auto;
+	}
+
+	.voices {
+		grid-template-columns: 1fr 1fr;
+		align-items: center;
+		gap: var(--space-24);
+		padding: var(--space-40);
+	}
+}
+
+@container (min-width: 44rem) {
+	.list {
+		gap: var(--space-40);
+		padding: var(--space-40);
+	}
+
+	.listItem {
+		--button-min-height: 3.25rem;
+	}
+
+	.listCardNote {
+		display: block;
+	}
+}
+
+/* Full size (a real section): the square relaxes to a landscape block, so it never outgrows the statement. */
+@container (min-width: 64rem) {
+	.voicesSquare {
+		--voices-square-aspect: 4 / 3;
+	}
+}

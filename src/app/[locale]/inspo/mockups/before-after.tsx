@@ -77,7 +77,7 @@ function Before() {
 	);
 }
 
-/** The page as shipped, mirrored: a wash on the left, display type with an Editorial accent and a bevelled call to action on the right. */
+/** The page as shipped, mirrored: a violet-tinted neutral panel on the left, display type with an Editorial accent and a bevelled call to action on the right. */
 function After() {
 	return (
 		<div className={styles.baAfter}>
