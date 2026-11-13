@@ -1,0 +1,175 @@
+/* /inspo: proposals page. Reads only semantic tokens; lengths that are layout geometry live in custom properties. */
+
+.intro {
+	--intro-max: 44rem;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-16);
+	max-width: var(--intro-max);
+}
+
+.introMeta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-8);
+}
+
+/* ───────────── Story map ───────────── */
+
+.map {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: var(--space-12);
+}
+
+@media (min-width: 768px) {
+	.map {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+.mapColumn {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-16);
+}
+
+.beats {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-4);
+	list-style: none;
+	counter-reset: beat;
+}
+
+.beat {
+	position: relative;
+	border-radius: var(--radius-md);
+}
+
+/* A hairline ring for every beat; dashed where the beat does not exist yet. */
+.beat::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border: var(--stroke-hairline) solid var(--color-border-faint);
+	border-radius: inherit;
+	pointer-events: none;
+}
+
+.beatNew::before {
+	border-style: dashed;
+	border-color: var(--color-border-strong);
+}
+
+.beatProposal {
+	background-color: var(--color-surface-tint);
+}
+
+.beatLink {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-12);
+	min-height: var(--control-md);
+	padding: var(--space-6) var(--space-12);
+	border-radius: inherit;
+	transition: background-color var(--duration-micro) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	a.beatLink:hover {
+		background-color: var(--color-surface-tint-hover);
+	}
+}
+
+.beatNumber {
+	display: inline-flex;
+	flex: none;
+	align-items: center;
+	gap: var(--space-4);
+}
+
+/* ───────────── Proposal brief ───────────── */
+
+.brief {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: var(--space-24);
+}
+
+@media (min-width: 1024px) {
+	.brief {
+		grid-template-columns: 1.2fr 1fr 1fr;
+		gap: var(--space-32);
+	}
+}
+
+.briefItem {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+	min-width: 0;
+}
+
+.placements {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+	list-style: none;
+}
+
+.placement {
+	display: flex;
+	align-items: baseline;
+	gap: var(--space-8);
+}
+
+.placement > :first-child {
+	transform: translateY(calc(var(--space-2) * -1));
+}
+
+.placementPage {
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text-strong);
+}
+
+/* ───────────── References ───────────── */
+
+.references {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-12);
+}
+
+.referenceGrid {
+	--reference-min: 15rem;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--reference-min)), 1fr));
+	gap: var(--space-12);
+	list-style: none;
+}
+
+.reference {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+	min-width: 0;
+}
+
+.referenceHead {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-8);
+}
+
+.referenceWhy {
+	flex: 1;
+}
+
+.referenceLink {
+	align-self: flex-start;
+	margin-top: var(--space-4);
+	font-size: var(--text-sm);
+}

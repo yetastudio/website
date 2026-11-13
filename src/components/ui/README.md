@@ -1,7 +1,8 @@
 # Yeta Studio design system
 
-Live docs: **`/design-system`** (every token, component and state on a light and a dark canvas) and
-**`/brand`** (brand guidelines with do's & don'ts). Registry: [`/registry.json`](../../../registry.json).
+Live docs: **`/design-system`** (every token, component and state on a light and a dark canvas),
+**`/brand`** (brand guidelines with do's & don'ts) and **`/inspo`** (not indexed: narrative proposals for the
+landing and case study, with live mockups and their Mobbin references). Registry: [`/registry.json`](../../../registry.json).
 Source of truth: Figma `aVpNRSY3dqDxB5gdErv2xw` — pages *Branding*, *Design System*, *Landing Page (Final Design)*.
 
 ## Foundations

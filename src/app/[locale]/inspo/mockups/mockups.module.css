@@ -1,0 +1,317 @@
+/*
+ * /inspo mockups: miniatures of the proposed sections, built from the design system.
+ * Each mockup is its own inline-size container, so it lays out by the canvas it sits on
+ * (a 358 phone column or half a 1440 desktop), not by the viewport. Lengths in custom
+ * properties are mockup geometry; UI spacing, radii and type read the scale.
+ */
+
+/* A mockup's outer box: the container its layout queries (a container never queries itself). */
+.container {
+	container-type: inline-size;
+	width: 100%;
+}
+
+/* ───────────── 02 Process walkthrough ───────────── */
+
+.walkthrough {
+	/* Each step holds long enough for its scene to play its story once (the longest runs ~8.5s). */
+	--autoplay-interval: 9000ms;
+	width: 100%;
+}
+
+.walkIndex {
+	display: none;
+	list-style: none;
+}
+
+.walkStep {
+	justify-content: flex-start;
+}
+
+.walkStep > span {
+	display: inline-flex;
+	align-items: baseline;
+	gap: var(--space-12);
+}
+
+.walkNumeral {
+	font-variant-numeric: lining-nums tabular-nums;
+}
+
+.walkStage {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-16);
+	min-width: 0;
+	text-align: center;
+}
+
+.walkTitleNumeral {
+	color: var(--color-text-faint);
+	font-style: italic;
+}
+
+.walkTile {
+	--walk-tile-aspect: 342 / 160;
+	width: 100%;
+	aspect-ratio: var(--walk-tile-aspect);
+}
+
+.walkCopy {
+	--walk-copy-max: 22rem;
+	display: grid;
+	max-width: var(--walk-copy-max);
+}
+
+.walkCopy > * {
+	grid-area: 1 / 1;
+	visibility: hidden;
+}
+
+.walkCopy > [data-on] {
+	visibility: visible;
+}
+
+@container (min-width: 520px) {
+	.walkthrough {
+		display: grid;
+		grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+		align-items: start;
+		gap: var(--space-24);
+	}
+
+	.walkIndex {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+	}
+
+	.walkTitle {
+		display: none;
+	}
+
+	.walkStage {
+		align-items: flex-start;
+		text-align: start;
+	}
+}
+
+/* ───────────── 03 Results ───────────── */
+
+.results {
+	container-type: inline-size;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-20);
+	width: 100%;
+}
+
+.resultsHead {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+}
+
+.resultsHead em {
+	font-style: italic;
+}
+
+.stats {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: var(--space-8);
+	list-style: none;
+}
+
+.statItem {
+	min-width: 0;
+}
+
+.statTile {
+	--stat-tile-aspect: 3 / 4;
+	width: 100%;
+	aspect-ratio: var(--stat-tile-aspect);
+}
+
+.stat {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-8);
+	padding-inline: var(--space-4);
+	color: var(--color-text-strong);
+}
+
+.statValue {
+	font-size: var(--text-4xl);
+	font-variant-numeric: lining-nums;
+}
+
+@container (min-width: 480px) {
+	.stats {
+		gap: var(--space-12);
+	}
+
+	.statTile {
+		--stat-tile-aspect: 1 / 1;
+	}
+
+	.statValue {
+		font-size: var(--text-5xl);
+	}
+}
+
+/* ───────────── 05 Client wall ───────────── */
+
+.wall {
+	container-type: inline-size;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-16);
+	width: 100%;
+}
+
+.wallGrid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: var(--space-8);
+	list-style: none;
+}
+
+@container (min-width: 520px) {
+	.wallGrid {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+}
+
+.wallTile {
+	--wall-tile-aspect: 16 / 9;
+	display: grid;
+	place-items: center;
+	aspect-ratio: var(--wall-tile-aspect);
+	color: var(--color-text-strong);
+}
+
+/* Each client name in its own register, all from the brand's two families. */
+.wordmark-serif {
+	font-family: var(--font-serif);
+	font-size: var(--text-xl);
+	font-weight: var(--font-weight-regular);
+	letter-spacing: var(--tracking-tight);
+}
+
+.wordmark-lower {
+	font-size: var(--text-lg);
+	font-weight: var(--font-weight-medium);
+	letter-spacing: var(--tracking-tight);
+	text-transform: lowercase;
+}
+
+.wordmark-caps {
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-semibold);
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
+/* ───────────── 06 Chapter nav ───────────── */
+
+.chapterFrame {
+	--chapter-frame-height: 20rem;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: var(--chapter-frame-height);
+	overflow: hidden;
+}
+
+.chapterBar {
+	position: absolute;
+	inset: 0 0 auto;
+	z-index: var(--z-raised);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-8);
+	padding: var(--space-12) var(--space-12) 0;
+	background-image: linear-gradient(180deg, var(--color-surface-raised) 55%, transparent);
+}
+
+.chapterProgress {
+	position: relative;
+	width: 100%;
+	height: var(--stroke-hairline);
+	overflow: hidden;
+	background-color: var(--color-divider);
+}
+
+.chapterProgressFill {
+	position: absolute;
+	inset: 0;
+	background-color: var(--color-text-strong);
+	transform-origin: left center;
+}
+
+.chapterScroll {
+	--chapter-bar-height: 4.5rem;
+	flex: 1;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	padding: var(--chapter-bar-height) var(--space-20) var(--space-64);
+	/* The progress hairline is the position indicator; the native bar would sit beside it. */
+	scrollbar-width: none;
+}
+
+.chapterScroll::-webkit-scrollbar {
+	display: none;
+}
+
+.chapterScroll:focus-visible {
+	outline-offset: calc(var(--stroke-focus) * -1);
+}
+
+.chapter {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+	padding-block: var(--space-16) var(--space-24);
+}
+
+.chapterRule {
+	display: block;
+	height: var(--stroke-hairline);
+	margin-top: var(--space-16);
+	background-color: var(--color-divider);
+}
+
+/* ───────────── 07 Booking ───────────── */
+
+.booking {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: var(--space-20);
+	width: 100%;
+}
+
+.bookingCopy {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--space-12);
+}
+
+.bookingTile {
+	--booking-tile-aspect: 340 / 210;
+	width: 100%;
+	aspect-ratio: var(--booking-tile-aspect);
+}
+
+@container (min-width: 520px) {
+	.booking {
+		grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+		align-items: center;
+		gap: var(--space-24);
+	}
+}
