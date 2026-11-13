@@ -53,7 +53,7 @@ export function OurProcess() {
 
 			<div className={section.cta}>
 				<p className={section.ctaText}>{t.rich('cta', richTags)}</p>
-				<Button href={BOOKING_URL} size="2xl" radius="soft" iconStart="leaf" iconEnd="external-link">
+				<Button href={BOOKING_URL} size="2xl" radius="soft" iconStart="leaf">
 					{t('button')}
 				</Button>
 			</div>

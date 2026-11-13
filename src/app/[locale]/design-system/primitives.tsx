@@ -75,7 +75,7 @@ export function Primitives() {
 							</Button>
 						</Cell>
 						<Cell label="glass">
-							<Button size="2xl" variant="glass" iconStart="calendar" iconEnd="external-link">
+							<Button size="2xl" variant="glass" iconStart="calendar">
 								Schedule consultation
 							</Button>
 						</Cell>

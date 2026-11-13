@@ -90,6 +90,8 @@ them in the menu sheet).
 
 ## Decisions recorded during the build
 
+- One icon per button. When a CTA has an icon chosen for its purpose (calendar, leaf), it keeps that leading icon and drops the generic trailing arrow; a generic arrow alone is fine when nothing more specific fits. The size specimens on `/design-system` still show both icon slots of the Figma Button.
+- The desktop header follows Figma (brand mark, centred nav pill, CTA). The theme and language switches live in the footer and the menu sheet, so the centred pill never crowds the right side in longer locales.
 - Light-theme icon accents (`#c93a05`, `#a46f04`, `#088d40`, `#007cff`, `#c8110d`) are used by the Figma landing but are not Figma variables: added as `--palette-*-700`.
 - Funnel Display SemiBold (600), used by Figma for the hero wordmark and craft subtitles, ships as `public/fonts/FunnelDisplay-SemiBold.woff2` (latin subset from `@fontsource/funnel-display`, OFL-1.1).
 - Footer social links have no URLs in Figma: they render as text until `SOCIALS[].href` is filled in `src/components/layout/sections.ts`.

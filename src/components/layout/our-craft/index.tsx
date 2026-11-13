@@ -51,7 +51,7 @@ export function OurCraft() {
 
 			<div className={section.cta}>
 				<p className={section.ctaText}>{t.rich('cta', richTags)}</p>
-				<Button href={BOOKING_URL} size="2xl" radius="soft" iconStart="calendar" iconEnd="external-link">
+				<Button href={BOOKING_URL} size="2xl" radius="soft" iconStart="calendar">
 					{t('button')}
 				</Button>
 			</div>

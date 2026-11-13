@@ -143,8 +143,8 @@ export function Header() {
 						<ul className={styles.navList}>{navLinks('pill')}</ul>
 					</nav>
 
+					{/* Figma header: brand mark, centred nav pill, CTA. The theme and language switches live in the footer and the menu sheet. */}
 					<div className={styles.actions}>
-						<ThemeSwitch className={styles.themeSwitch} />
 						<Button href={BOOKING_URL} size="2xl" iconEnd="external-link" className={styles.cta}>
 							{t('getInTouch')}
 						</Button>
