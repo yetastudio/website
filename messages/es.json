@@ -290,20 +290,20 @@
       "jorge": {
         "quote": "“Yeta combinó diseño, estrategia y tecnología de una forma que simplemente tenía sentido. Nos ayudaron a redefinir cómo nos comunicamos con nuestra audiencia.”",
         "name": "Jorge R.",
-        "role": "Fundador",
+        "role": "Cofundador y CEO",
         "company": "Sintaxis",
         "quoteMobile": "“Yeta combinó diseño, estrategia y tecnología de una forma que simplemente tenía sentido. No solo construyeron un sitio web: nos ayudaron a redefinir cómo nos comunicamos con nuestra audiencia.”"
       },
       "marcelo": {
         "quote": "“Entendieron nuestro producto enseguida y tradujeron nuestra visión en una experiencia limpia y funcional que conecta con nuestros usuarios.”",
         "name": "Marcelo Z.",
-        "role": "Fundador",
+        "role": "CTO",
         "company": "apx.school"
       },
       "lisette": {
         "quote": "“Del kickoff a la entrega, Yeta superó las expectativas. Su proceso es estructurado pero flexible, creativo y a la vez guiado por datos.”",
         "name": "Lisette T.",
-        "role": "Fundadora",
+        "role": "Head of Product",
         "company": "NovaTech"
       }
     },
