@@ -34,6 +34,8 @@ type BaseProps = {
 	 * without it the icon name is used.
 	 */
 	icon?: IconName;
+	/** Icon-only button with custom icon content (an animated icon swap); takes precedence over `icon`. */
+	iconNode?: ReactNode;
 	/** Accessible name override (also the name for icon-only buttons). */
 	label?: string;
 	fullWidth?: boolean;
@@ -76,6 +78,7 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
 		iconStart,
 		iconEnd,
 		icon,
+		iconNode,
 		label,
 		fullWidth,
 		loading,
@@ -85,7 +88,7 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
 	} = props;
 
 	const iconSize = iconSizeFor[size];
-	const isIconOnly = Boolean(icon) && !children;
+	const isIconOnly = Boolean(icon || iconNode) && !children;
 	const accessibleName = label ?? (isIconOnly ? icon : undefined);
 
 	const classes = cx(
@@ -106,7 +109,7 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
 	const content = (
 		<>
 			{iconStart && <Icon name={iconStart} size={iconSize} />}
-			{isIconOnly && icon && <Icon name={icon} size={iconSize} />}
+			{isIconOnly && (iconNode ?? (icon && <Icon name={icon} size={iconSize} />))}
 			{children !== undefined && <span className={styles.label}>{children}</span>}
 			{iconEnd && <Icon name={iconEnd} size={iconSize} />}
 			{loading && (

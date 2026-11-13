@@ -16,19 +16,14 @@
 	translate: 0 0;
 }
 
-/* Figma: fixed on mobile (iPhone frames have it as the fixed child); in flow on desktop (1920 frame). */
+/* Fixed at every width (the user's call; the Figma 1920 frame draws it in flow). Anchors already
+   land below it: Lenis offsets anchors and html has scroll-padding-top for the header. */
 .header {
 	position: fixed;
 	inset: var(--space-20) 0 auto;
 	z-index: var(--z-header);
 	padding-inline: var(--page-gutter);
 	pointer-events: none;
-}
-
-@media (min-width: 1280px) {
-	.header {
-		position: absolute;
-	}
 }
 
 .bar {
@@ -174,16 +169,32 @@
 	gap: var(--space-12);
 }
 
-.cta {
+/* Brand mark + theme cycle button. `.lead` / `.actions` raise specificity over the Tooltip wrapper's display. */
+.lead {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+}
+
+@media (min-width: 1280px) {
+	.lead {
+		gap: var(--space-12);
+	}
+}
+
+.actions .cta,
+.lead .cycleDesktop {
 	display: none;
 }
 
 @media (min-width: 1280px) {
-	.cta {
+	.actions .cta,
+	.lead .cycleDesktop {
 		display: inline-flex;
 	}
 
-	.menuButton {
+	.actions .menuButton,
+	.lead .cycleMobile {
 		display: none;
 	}
 }

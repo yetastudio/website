@@ -133,17 +133,21 @@ export function Header() {
 			</a>
 			<header className={styles.header}>
 				<div className={styles.bar}>
-					<LocaleLink href="/" className={styles.home} aria-label={tc('home')}>
-						<BrandMark size={60} alt="" className={styles.markDesktop} />
-						<BrandMark size={40} alt="" className={styles.markMobile} />
-					</LocaleLink>
+					{/* The theme button sits beside the brand mark so both sides of the centred pill weigh the same. */}
+					<div className={styles.lead}>
+						<LocaleLink href="/" className={styles.home} aria-label={tc('home')}>
+							<BrandMark size={60} alt="" className={styles.markDesktop} />
+							<BrandMark size={40} alt="" className={styles.markMobile} />
+						</LocaleLink>
+						<ThemeSwitch variant="cycle" size="2xl" buttonVariant="glass" className={styles.cycleDesktop} />
+						<ThemeSwitch variant="cycle" size="lg" buttonVariant="ghost" className={styles.cycleMobile} />
+					</div>
 
 					<nav ref={navRef} aria-label={t('label')} className={cx(styles.pill, 'u-bevel')}>
 						<span ref={indicatorRef} className={cx('t-tabs-pill', styles.indicator)} aria-hidden="true" />
 						<ul className={styles.navList}>{navLinks('pill')}</ul>
 					</nav>
 
-					{/* Figma header: brand mark, centred nav pill, CTA. The theme and language switches live in the footer and the menu sheet. */}
 					<div className={styles.actions}>
 						<Button href={BOOKING_URL} size="2xl" iconEnd="external-link" className={styles.cta}>
 							{t('getInTouch')}

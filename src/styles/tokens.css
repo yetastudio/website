@@ -307,6 +307,10 @@
 	--tt-out-ease: ease-out;
 	--tt-bg: var(--color-surface-inverse);
 	--tt-fg: var(--color-text-inverse);
+	--icon-swap-dur: 250ms; /* Icon swap: theme cycle button */
+	--icon-swap-blur: 2px;
+	--icon-swap-start-scale: 0.25;
+	--icon-swap-ease: ease-in-out;
 	--stagger-dur: 500ms; /* Texts reveal: hero and section headers */
 	--stagger-distance: 12px;
 	--stagger-stagger: 40ms;

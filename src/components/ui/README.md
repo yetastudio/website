@@ -21,7 +21,7 @@ plus `data-scheme` (showcase panels). Theme-specific raster/vector art uses `.u-
 verbatim into `vendor/transitions-dev/transitions.css` inside `@layer transitions` (so component CSS always
 wins on geometry and colour), with their tunables in `tokens.css`: Modal and Panel reveal (Dialog), Tabs
 sliding (SegmentedControl, header nav underline), Tooltip, Texts reveal (Reveal: hero and section headers),
-Card resize (Accordion) and Error state shake (Input/Textarea). Every snippet keeps its
+Card resize (Accordion), Icon swap (ThemeSwitch cycle) and Error state shake (Input/Textarea). Every snippet keeps its
 `prefers-reduced-motion` guard.
 
 **Checks.** `npm run check:ds` (raw values, palette use, overrides, traps; allowlist only shrinks) and
@@ -35,7 +35,7 @@ Status: **stable** = drawn in Figma; **inspo** = added to fill a gap, same visua
 |---|---|---|---|---|---|
 | `Text`, `Heading`, `Accent` | stable | type styles | size `2xs…5xl, display`; weight; tone `default·strong·subtle·faint·inverse·danger·display`; family `sans·serif`; `Accent` italic/upright/underline | — | Heading `level` is independent of `size`. |
 | `Icon` | stable | 27 icon sets | `name` (brand glyphs + extra + supplemental Lucide), size `sm 14·md 18·lg 20·xl 24` | — | Decorative unless `label` is given (`role="img"`). |
-| `Button` | stable | 170:199 | size `sm 30·md 34·lg 36·xl 48·2xl 60`; variant `solid·glass·ghost`; radius `default 5·rounded 12`; `iconStart/iconEnd/icon`; `href` | rest, hover, pressed (scale .98), focus ring, `disabled`, `loading` (label kept, spinner on top, `aria-busy`) | Disabled/loading use `aria-disabled` so focus stays. Icon-only needs `label`. External links open in a new tab. |
+| `Button` | stable | 170:199 | size `sm 30·md 34·lg 36·xl 48·2xl 60`; variant `solid·glass·ghost`; radius `default 5·rounded 12`; `iconStart/iconEnd/icon`, `iconNode` (custom icon-only content); `href` | rest, hover, pressed (scale .98), focus ring, `disabled`, `loading` (label kept, spinner on top, `aria-busy`) | Disabled/loading use `aria-disabled` so focus stays. Icon-only needs `label`. External links open in a new tab. |
 | `Chip` | stable | 576:399 | size `xs (Small)·sm (×1.2 eyebrow)·lg (Large)·xl (×1.40625 feature)`; fill `tint·solid`; `icon` + `tone` | hover when `as="button"/"a"` | Static by default. |
 | `Surface` | stable | card shells | tone `canvas·raised·glass·tint·none`; radius; padding; `bevel` | — | — |
 | `BrandMark`, `LogoMark`, `MessyBrandMark` | stable | 110:77 · 110:60 · 110:84 | `canvas auto·light·dark`; `fill filled·transparent`; `size` (px or CSS length) | — | `alt` defaults to "Yeta Studio"; pass `""` when decorative. |
@@ -50,7 +50,7 @@ Status: **stable** = drawn in Figma; **inspo** = added to fill a gap, same visua
 | `Carousel` | stable | mobile tracks | `gap sm·md`, `showDots` | position via dots | Native scroll + snap; `aria-roledescription="carousel"`; dots are buttons. |
 | `CardStack` | stable | 1231:1787 · 1010:2036 | `variant fan·deck`, `initialIndex` | swipe, arrows, dots | Back cards are `inert`; position announced politely. |
 | `SegmentedControl` | inspo | — | options with icons, `size sm·md` | selected (Tabs sliding pill) | `radiogroup`; arrow keys move and select. |
-| `ThemeSwitch` | inspo | — | `withLabels`, `size` | system · light · dark | Labels are translated. |
+| `ThemeSwitch` | inspo | header (cycle) | `variant segmented·cycle`, `withLabels`, `size`, `buttonVariant` | system · light · dark; cycle: one button, Icon swap | Labels are translated; the cycle button's name says the current mode and the next one. |
 | `LocaleSwitch` | inspo | — | — | en · es · pt | Visible "EN", accessible "English". |
 | `Link` | inspo | footer / CTAs | `variant inline·nav·bullet` | hover underline | External links announce "opens in a new tab". |
 | `Divider` | inspo | footer rules | `orientation`, `semantic` | — | Decorative unless `semantic`. |
@@ -92,7 +92,7 @@ them in the menu sheet).
 ## Decisions recorded during the build
 
 - One icon per button. When a CTA has an icon chosen for its purpose (calendar, leaf), it keeps that leading icon and drops the generic trailing arrow; a generic arrow alone is fine when nothing more specific fits. The size specimens on `/design-system` still show both icon slots of the Figma Button.
-- The desktop header follows Figma (brand mark, centred nav pill, CTA). The theme and language switches live in the footer and the menu sheet, so the centred pill never crowds the right side in longer locales.
+- The header is fixed at every width (the user's call; Figma draws it in flow on desktop). A single theme button that cycles System → Light → Dark sits beside the brand mark, so both sides of the centred nav pill weigh about the same and longer locales never crowd it. The full theme and language switches stay in the footer and the menu sheet.
 - Light-theme icon accents (`#c93a05`, `#a46f04`, `#088d40`, `#007cff`, `#c8110d`) are used by the Figma landing but are not Figma variables: added as `--palette-*-700`.
 - Funnel Display SemiBold (600), used by Figma for the hero wordmark and craft subtitles, ships as `public/fonts/FunnelDisplay-SemiBold.woff2` (latin subset from `@fontsource/funnel-display`, OFL-1.1).
 - Footer social links have no URLs in Figma: they render as text until `SOCIALS[].href` is filled in `src/components/layout/sections.ts`.
