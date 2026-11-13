@@ -1,0 +1,216 @@
+/* Design: a design tool hung from the tile's top-left corner, off the right and bottom edges. */
+
+.stage {
+	/* Illustration geometry, in stage px (the tile is 342 × 160) */
+	--win-left: 24px;
+	--win-top: 24px;
+	--win-width: 350px;
+	--win-height: 168px;
+	--canvas-width: 196px;
+	--frame-width: 148px;
+	--frame-height: 58px;
+	--frame-left: 16px;
+	--frame-top: 26px;
+	--handle: 5px;
+	/* The inspector runs off the tile with the window; its controls stop a gutter short of the cut */
+	--inspector-end: 56px;
+	--thumb: 12px;
+	--rest-x: 306px;
+	--rest-y: 128px;
+}
+
+.win {
+	left: var(--win-left);
+	top: var(--win-top);
+	display: flex;
+	flex-direction: column;
+	width: var(--win-width);
+	height: var(--win-height);
+}
+
+.bar {
+	display: flex;
+	flex: none;
+	align-items: center;
+	gap: var(--space-4);
+	height: var(--space-32);
+	padding: 0 var(--space-8);
+	border-bottom: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.tool {
+	display: grid;
+	flex: none;
+	place-items: center;
+	width: var(--space-20);
+	height: var(--space-20);
+	border-radius: var(--radius-xs);
+	color: var(--ss-icon);
+}
+
+.tool[data-active] {
+	background: var(--ss-accent-soft);
+	color: var(--ss-accent);
+}
+
+.file {
+	margin-left: var(--space-12);
+}
+
+.body {
+	display: grid;
+	flex: 1;
+	grid-template-columns: var(--canvas-width) minmax(0, 1fr);
+}
+
+.canvas {
+	position: relative;
+	background: var(--ss-canvas);
+	border-right: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.frameName {
+	position: absolute;
+	left: var(--frame-left);
+	top: var(--space-8);
+}
+
+/* The frame being edited: the client's design, a light artboard on either
+   canvas, its corners reading the live radius */
+.frame {
+	color-scheme: light;
+	position: absolute;
+	left: var(--frame-left);
+	top: var(--frame-top);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+	width: var(--frame-width);
+	height: var(--frame-height);
+	padding: var(--space-12);
+	border-radius: calc(var(--frame-r) * 1px);
+	background: var(--color-surface-raised);
+	box-shadow: var(--ss-shadow-card);
+}
+
+.cta {
+	width: var(--space-40);
+	height: var(--space-12);
+	margin-top: var(--space-2);
+	border-radius: var(--radius-pill);
+	background: var(--ss-accent);
+}
+
+/* Selection: the bounding box stays square while the corners round inside it */
+.selection {
+	position: absolute;
+	left: var(--frame-left);
+	top: var(--frame-top);
+	width: var(--frame-width);
+	height: var(--frame-height);
+	box-shadow: 0 0 0 1.5px var(--ss-accent);
+}
+
+.selection i {
+	position: absolute;
+	width: var(--handle);
+	height: var(--handle);
+	border: var(--stroke-hairline) solid var(--ss-accent);
+	background: var(--color-surface-raised);
+	translate: -50% -50%;
+}
+
+.selection i:nth-child(1) {
+	left: 0;
+	top: 0;
+}
+
+.selection i:nth-child(2) {
+	left: 100%;
+	top: 0;
+}
+
+.selection i:nth-child(3) {
+	left: 0;
+	top: 100%;
+}
+
+.selection i:nth-child(4) {
+	left: 100%;
+	top: 100%;
+}
+
+.inspector {
+	display: flex;
+	flex-direction: column;
+	padding: var(--space-12) var(--inspector-end) var(--space-12) var(--space-14);
+}
+
+.prop {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-8);
+}
+
+.value {
+	font-variant-numeric: tabular-nums;
+}
+
+.slider {
+	position: relative;
+	height: var(--space-4);
+	margin-top: var(--space-12);
+	border-radius: var(--radius-pill);
+	background: var(--ss-ink-3);
+}
+
+.fill {
+	position: absolute;
+	inset: 0 auto 0 0;
+	width: calc(var(--slider-t) * 100%);
+	border-radius: inherit;
+	background: var(--ss-accent);
+}
+
+/* A light knob on either tile */
+.thumb {
+	color-scheme: light;
+	position: absolute;
+	left: calc(var(--slider-t) * 100%);
+	top: 50%;
+	width: var(--thumb);
+	height: var(--thumb);
+	border-radius: var(--radius-pill);
+	background: var(--color-surface-raised);
+	box-shadow:
+		0 0 0 1px var(--color-border),
+		0 1px 3px color-mix(in srgb, var(--scene-shadow-ink) 30%, transparent);
+	translate: -50% -50%;
+}
+
+.filler {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+	margin-top: var(--space-20);
+}
+
+.swatchRow {
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+}
+
+.swatch {
+	width: var(--space-12);
+	height: var(--space-12);
+	border-radius: var(--radius-xs);
+	background: var(--ss-ink-4);
+}
+
+.rest {
+	position: absolute;
+	left: var(--rest-x);
+	top: var(--rest-y);
+}

@@ -1,0 +1,185 @@
+/* Develop: an editor on the tile's left gutter, off the bottom, with a terminal straddling its right edge. */
+
+.stage {
+	/* Illustration geometry, in stage px (the tile is 342 × 160) */
+	--editor-left: 24px;
+	--editor-top: 24px;
+	--editor-width: 232px;
+	--editor-height: 168px;
+	--term-left: 186px;
+	--term-top: 82px;
+	--term-width: 132px;
+	--gutter-width: 24px;
+	--code-line: 17px;
+	--caret-height: 13px;
+	--mono: 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
+}
+
+.editor {
+	left: var(--editor-left);
+	top: var(--editor-top);
+	width: var(--editor-width);
+	height: var(--editor-height);
+}
+
+.tabs {
+	display: flex;
+	height: var(--space-28);
+	background: var(--ss-canvas);
+	border-bottom: var(--stroke-hairline) solid var(--color-divider);
+}
+
+.tab {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-6);
+	/* The file name starts on the code column (gutter 8 + numbers 24) */
+	padding: 0 var(--space-12) 0 var(--space-20);
+	background: var(--color-surface-raised);
+	border-right: var(--stroke-hairline) solid var(--color-divider);
+	box-shadow: inset 0 -1px 0 var(--color-surface-raised);
+}
+
+.dot {
+	width: var(--space-6);
+	height: var(--space-6);
+	border-radius: var(--radius-pill);
+	background: var(--ss-accent);
+}
+
+.code {
+	padding: var(--space-8) 0 var(--space-8) var(--space-8);
+}
+
+.line {
+	display: flex;
+	align-items: center;
+	height: var(--code-line);
+}
+
+.number {
+	flex: none;
+	width: var(--gutter-width);
+	padding-right: var(--space-8);
+	font-family: var(--mono);
+	font-size: var(--text-2xs);
+	letter-spacing: 0;
+	text-align: right;
+	color: var(--color-text-faint);
+}
+
+.tokens {
+	display: flex;
+	gap: var(--space-6);
+}
+
+.tokens[data-indent],
+.typed {
+	padding-left: var(--space-12);
+}
+
+.typed {
+	display: block;
+	font-family: var(--mono);
+	font-size: var(--text-xs);
+	letter-spacing: 0;
+	white-space: pre;
+	color: var(--color-text-strong);
+	transition: opacity var(--duration-exit) ease;
+}
+
+.typed[data-clearing] {
+	opacity: 0;
+}
+
+.keyword {
+	color: var(--ss-accent);
+}
+
+.caret {
+	display: inline-block;
+	width: var(--stroke-focus);
+	height: var(--caret-height);
+	margin-left: var(--stroke-hairline);
+	vertical-align: text-bottom;
+	background: var(--ss-accent);
+	opacity: 0;
+}
+
+/* Only where the keys go: blinking at rest, solid while typing */
+.caret[data-on] {
+	opacity: 1;
+	animation: develop-caret 1.06s steps(1) infinite;
+}
+
+.caret[data-on][data-typing] {
+	animation: none;
+}
+
+@keyframes develop-caret {
+	50% {
+		opacity: 0;
+	}
+}
+
+/* The terminal is always a dark surface, a step lighter than a dark editor */
+.term {
+	position: absolute;
+	left: var(--term-left);
+	top: var(--term-top);
+	width: var(--term-width);
+	overflow: hidden;
+	color-scheme: dark;
+	border-radius: var(--radius-md);
+	background: color-mix(in srgb, var(--color-text-strong) 8%, var(--color-surface));
+	box-shadow: var(--ss-shadow-satellite);
+}
+
+.termBody {
+	gap: var(--space-2);
+	padding: var(--space-10) var(--space-12);
+	font-family: var(--mono);
+	font-size: var(--text-2xs);
+	line-height: 1.6;
+	letter-spacing: 0;
+	color: var(--color-text-subtle);
+	--ss-term-sigil: var(--color-accent-green);
+	--ss-term-ok: var(--color-accent-green);
+	--ss-term-dim: var(--color-text-faint);
+}
+
+.termBody > * {
+	transition: opacity var(--duration-exit) ease;
+}
+
+/* The last run clears before the next one is typed */
+.termBody[data-clearing] > * {
+	opacity: 0;
+}
+
+.termBody :global(.ss-term__caret) {
+	background: var(--color-text-strong);
+}
+
+.termBody :global(.ss-term__path:empty) {
+	display: none;
+}
+
+.termBody :global(.ss-term__sigil) {
+	margin: 0 var(--space-6) 0 0;
+}
+
+.termBody :global(.ss-term__cmd) {
+	color: var(--color-text-strong);
+}
+
+.status {
+	white-space: nowrap;
+}
+
+.statusLine {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-6);
+	min-height: var(--space-16);
+}

@@ -1,0 +1,76 @@
+/* Integrate: a workflow canvas hung from the tile's top-left corner, two app nodes on it. */
+
+.stage {
+	/* Illustration geometry, in stage px (the tile is 342 × 160), the
+	   nodes placed inside the canvas */
+	--canvas-left: 24px;
+	--canvas-top: 24px;
+	--canvas-width: 350px;
+	--canvas-height: 168px;
+	--node-top: 32px;
+	--node-a: 28px;
+	--node-b: 180px;
+	--grid: 12px;
+	--rest-x: 316px;
+	--rest-y: 128px;
+}
+
+.canvas {
+	left: var(--canvas-left);
+	top: var(--canvas-top);
+	width: var(--canvas-width);
+	height: var(--canvas-height);
+	background-color: var(--color-surface-raised);
+	background-image: radial-gradient(circle, var(--ss-ink-4) 0.75px, transparent 1.25px);
+	background-size: var(--grid) var(--grid);
+	background-position: calc(var(--grid) / 2) calc(var(--grid) / 2);
+}
+
+.node {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-8);
+	padding: var(--space-10) var(--space-12) var(--space-10) var(--space-10);
+	border-radius: var(--radius-md);
+	background: var(--color-surface-raised);
+	box-shadow: var(--ss-shadow-satellite);
+}
+
+.a {
+	position: absolute;
+	top: var(--node-top);
+	left: var(--node-a);
+}
+
+/* Notion and its button: the button hangs under the node on its left edge,
+   so its width can ease without moving the node or its own label */
+.b {
+	position: absolute;
+	top: var(--node-top);
+	left: var(--node-b);
+}
+
+.connect {
+	position: absolute;
+	top: calc(100% + var(--space-12));
+	left: 0;
+}
+
+/* The accent is bright on the dark tile: the primary label takes the panel's own tone */
+.connect[data-variant='primary'] {
+	color: var(--color-surface-raised);
+}
+
+.connect[data-done] {
+	color: var(--ss-success-text);
+}
+
+.line {
+	--ss-accent: var(--scene-accent);
+}
+
+.rest {
+	position: absolute;
+	left: var(--rest-x);
+	top: var(--rest-y);
+}

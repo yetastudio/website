@@ -12,6 +12,8 @@ export default defineConfig([
 		// Vendored from the build-design-system skill.
 		'scripts/check-system.mjs',
 		'scripts/oklch.mjs',
+		// Vendored third-party code: the Stageshow kit (MIT, see vendor/stageshow/LICENSE) and transitions.dev CSS.
+		'vendor/**',
 		// Pre-existing personal backup, not imported by the app.
 		'src/app/[[]locale]/layout-backup.tsx',
 	]),

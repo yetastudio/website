@@ -55,10 +55,11 @@ Status: **stable** = drawn in Figma; **inspo** = added to fill a gap, same visua
 | `Link` | inspo | footer / CTAs | `variant inline·nav·bullet` | hover underline | External links announce "opens in a new tab". |
 | `Divider` | inspo | footer rules | `orientation`, `semantic` | — | Decorative unless `semantic`. |
 | `Avatar`, `AvatarGroup` | inspo | testimonial author | `size sm·md·lg`, `max` | image / initials | `alt` = name. |
-| `PaginationDots` | inspo | — | `onSelect` makes dots buttons | current | `aria-current`, "Go to {item} n". |
+| `PaginationDots` | inspo | — | `onSelect` makes dots buttons, `autoplay` fills the active dot | current, filling (paused) | `aria-current`, "Go to {item} n". |
 | `Tooltip` | inspo | — | `side top·bottom` | hover (80ms delay, fade + scale in, instant out), focus | `role="tooltip"` + `aria-describedby`; never the only label; not on touch. |
 | `Accordion`, `AccordionItem` | inspo | case-study Show rows | `defaultOpen` | open / closed (Card resize) | Button with `aria-expanded` / `aria-controls`; region labelled by its trigger. |
 | `Dialog` | inspo | — | `placement center·right·bottom`, `size`, `footer` | Modal (center) or Panel reveal (sheets), shorter close, reduced motion | Native `<dialog>`: focus trapped, Escape and backdrop close, focus returns to opener, page scroll paused. |
+| `ProcessScene` | inspo | Process Card tile (342×160) | `step` discover·define·design·develop·integrate·launch; copy from `ourProcess.scenes.<step>`; pass as `ProcessCard scene` | poster on server and under reduced motion; loops only while on screen | Stageshow kit (`vendor/stageshow`). Decorative: `aria-hidden`, nothing focusable, no pointer events. |
 | `Reveal`, `revealLine` | inspo | hero, section headers | `trigger view·mount`, `as` | hidden → shown (once) | Texts reveal; lines visible without JS (`<noscript>`) and without motion under reduced motion. |
 | `ToastProvider`, `useToast` | inspo | — | tone `neutral·success·danger` | auto-dismiss 4s, pauses on hover/focus | Polite live region; dismiss button. |
 | `Input`, `Textarea` | inspo | — | `hint`, `error`, `optional` | rest, hover, focus, invalid (shake on a new error), disabled | Labelled; `aria-invalid` + `aria-describedby`; no error shown on disabled. |
