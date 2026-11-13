@@ -7,11 +7,16 @@
 }
 
 .stage {
+	/* Live drag, written by the stack while a finger moves: offset, tilt and progress (0 to 1). */
+	--drag-x: 0px;
+	--drag-tilt: 0deg;
+	--drag-p: 0;
 	position: relative;
 	display: grid;
 	justify-items: center;
 	width: 100%;
 	touch-action: pan-y pinch-zoom;
+	user-select: none;
 }
 
 .card {
@@ -20,13 +25,25 @@
 	justify-items: center;
 	justify-self: stretch;
 	transition:
-		transform var(--duration-enter) var(--ease-out),
+		transform var(--duration-overlay) var(--ease-smooth),
 		opacity var(--duration-enter) var(--ease-out);
 	will-change: transform;
 }
 
+/* While a finger drags, the cards follow it 1:1; the transitions only run on release. */
+.stage[data-dragging] .card {
+	transition: none;
+}
+
+/* The front card rides the finger and tilts with it. */
 .front {
 	z-index: 3;
+	transform: translateX(var(--drag-x)) rotate(var(--drag-tilt));
+	cursor: grab;
+}
+
+.stage[data-dragging] .front {
+	cursor: grabbing;
 }
 
 .next,
@@ -46,12 +63,13 @@
 	transform-origin: center;
 }
 
+/* The cards behind come forward in step with the drag (--drag-p 0 at rest, 1 at the commit point). */
 .fan .next {
-	transform: translate(var(--space-32), 2.8%) scale(0.95);
+	transform: translate(calc(var(--space-32) * (1 - var(--drag-p))), calc(2.8% * (1 - var(--drag-p)))) scale(calc(0.95 + 0.05 * var(--drag-p)));
 }
 
 .fan .previous {
-	transform: translate(calc(var(--space-32) * -1), 2.8%) scale(0.95);
+	transform: translate(calc(var(--space-32) * -1 * (1 - var(--drag-p))), calc(2.8% * (1 - var(--drag-p)))) scale(calc(0.95 + 0.05 * var(--drag-p)));
 }
 
 .fan .hidden {
@@ -68,7 +86,7 @@
 }
 
 .deck .next {
-	transform: translateY(calc(var(--space-6) * -1)) scale(0.95);
+	transform: translateY(calc(var(--space-6) * -1 * (1 - var(--drag-p)))) scale(calc(0.95 + 0.05 * var(--drag-p)));
 }
 
 .deck .previous {
@@ -88,4 +106,10 @@
 	align-items: center;
 	gap: var(--space-8);
 	translate: -50% 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.card {
+		transition: opacity var(--duration-enter) var(--ease-out);
+	}
 }
