@@ -47,7 +47,6 @@ function CraftRows() {
 						<Image src={SHOTS[1].dark} alt="" fill sizes="160px" className={cx(shared.image, styles.centered, 'u-only-dark')} />
 					</div>
 					<span className={styles.rowsCaption}>
-						<span className={cx(shared.dot, shared.hued)} data-hue="orange" aria-hidden="true" />
 						<Text as="span" size="2xs" tone="strong">
 							{work('projects.yeta.name')}
 						</Text>

@@ -45,12 +45,6 @@ function AboutStatement() {
 	return (
 		<div className={shared.container}>
 			<div className={cx(shared.frame, styles.statement)}>
-				<span className={styles.statementLabel}>
-					<span className={cx(shared.dot, shared.hued)} data-hue="blue" aria-hidden="true" />
-					<Text as="span" size="xs" tone="subtle" className={styles.mono}>
-						{footer('aboutTitle')}
-					</Text>
-				</span>
 				<Text as="h3" size="3xl" weight="regular" leading="snug" tone="strong" className={styles.statementText}>
 					{lead} <span className={styles.statementFade}>{tail}</span>
 				</Text>

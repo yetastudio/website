@@ -55,12 +55,6 @@ function WorkStaggered() {
 		<div className={shared.container}>
 			<div className={cx(shared.frame, styles.staggered)}>
 				<header className={styles.head}>
-					<span className={styles.eyebrow}>
-						<span className={cx(shared.dot, shared.hued)} data-hue="yellow" aria-hidden="true" />
-						<Text as="span" size="lg" family="serif" italic tone="strong">
-							Selected works
-						</Text>
-					</span>
 					<Heading level={3} size="2xl" weight="regular" leading="snug" tone="strong" className={styles.statement}>
 						{statement}
 					</Heading>

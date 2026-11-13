@@ -6,7 +6,7 @@ export { Icon, iconNames } from './icon';
 export { Button } from './button';
 export { Chip } from './chip';
 export { Surface } from './surface';
-export { BrandMark, LogoMark, MessyBrandMark } from './brand';
+export { BrandMark, LogoMark, MessyBrandMark, Wordmark } from './brand';
 
 //* Patterns (Figma composites)
 export { SectionHeader } from './section-header';

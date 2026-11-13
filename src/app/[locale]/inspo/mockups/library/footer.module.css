@@ -43,25 +43,15 @@
 	border-top: var(--stroke-hairline) solid var(--color-divider);
 }
 
-/* The studio's name as the page's last word, edge to edge (Claude Type). */
-.signLine {
-	font-size: 15cqi;
-	white-space: nowrap;
-	text-align: center;
+/* The real wordmark as the page's last word, edge to edge (Claude Type): the lockup with its mark
+   runs about 7.4em wide, so 12.5cqi fills the frame without clipping. */
+.sign .signLine {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	font-size: 12.5cqi;
 }
 
-/* The one accent: the ✹ of the lockup in the hue, cut out of the display ink. */
-.signStar {
-	--sign-star-size: 0.5em;
-	--sign-star-gap: 0.12em;
-	display: inline-block;
-	margin-inline: var(--sign-star-gap);
-	font-size: var(--sign-star-size);
-	font-style: normal;
-	vertical-align: middle;
-	color: var(--hue);
-	-webkit-text-fill-color: var(--hue);
-}
 
 @container (min-width: 30rem) {
 	.sign {

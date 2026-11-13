@@ -178,3 +178,11 @@
 	align-content: center;
 	min-height: var(--hero-fill);
 }
+
+/* The real wordmark at caption size, then the discipline. */
+.skyMark {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-8);
+	font-size: var(--text-xs);
+}

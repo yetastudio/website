@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Button, Divider, Link, Text } from '@/components/ui';
+import { Button, Divider, Link, Text, Wordmark } from '@/components/ui';
 import { BOOKING_URL } from '@/components/layout/sections';
 import { SHOTS } from '@/components/layout/content';
 import { FooterReadout } from './footer-live';
@@ -44,8 +44,7 @@ function FooterColumn({ title, items }: { title: string; items: string[] }) {
 
 /**
  * Footer A, after Claude Type: one line and one action over quiet link columns, then the studio's
- * name as a full-width serif italic sign-off, the page's last word. The sign-off is set in
- * the neutral display ink; the accent is the ✹ between the two words, the only glyph in colour.
+ * wordmark as a full-width sign-off, the page's last word.
  */
 function FooterSignOff() {
 	const t = useTranslations('footer');
@@ -82,14 +81,8 @@ function FooterSignOff() {
 						{t('agency')}
 					</Text>
 				</div>
-				{/* The brand lockup "Yeta ✹ Studio", drawn as type: the name is already said in the base line. */}
-				<Text family="serif" italic weight="regular" tone="display" leading="tight" className={styles.signLine} aria-hidden="true">
-					Yeta
-					<span className={cx(styles.signStar, shared.hued)} data-hue="pink">
-						✹
-					</span>
-					Studio
-				</Text>
+				{/* The real wordmark as the sign-off; the name is already said in the base line. */}
+				<Wordmark alt="" className={styles.signLine} />
 			</div>
 		</div>
 	);
@@ -99,7 +92,7 @@ function FooterSignOff() {
  * Footer B, after Koto: a colophon on the inverse band the site footer already uses (near-black on
  * the light page, light on the dark one). A two-tone line, a small card with our latest shot, and
  * contact rows split by hairlines; the way in is the booking row, a plain link as in the site
- * footer. The accent is the hue dot in the card's caption.
+ * footer.
  */
 function FooterColophon() {
 	const t = useTranslations('footer');
@@ -123,7 +116,6 @@ function FooterColophon() {
 							<Image src={SHOTS[0].dark} alt="" fill sizes="(min-width: 1024px) 200px, 40vw" className={cx(shared.image, 'u-only-dark')} />
 						</span>
 						<figcaption className={styles.colophonCaption}>
-							<span className={cx(shared.dot, shared.hued)} data-hue="green" aria-hidden="true" />
 							<Text as="span" size="xs" tone="subtle">
 								{`${work('caseStudy')} · ${work('projects.yeta.name')}`}
 							</Text>

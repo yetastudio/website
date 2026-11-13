@@ -44,12 +44,6 @@ function WhyLedger() {
 	return (
 		<div className={shared.container}>
 			<div className={cx(shared.frame, styles.ledger)}>
-				<span className={styles.eyebrow}>
-					<span className={cx(shared.dot, shared.hued)} data-hue="pink" aria-hidden="true" />
-					<Text as="span" size="xs" tone="subtle">
-						{t('featuresLabel')}
-					</Text>
-				</span>
 				<Heading level={3} size="4xl" family="serif" weight="regular" leading="tight" tone="strong" className={styles.ledgerClaim}>
 					{t.rich('p3', { em: (chunks) => <Accent>{chunks}</Accent> })}
 				</Heading>

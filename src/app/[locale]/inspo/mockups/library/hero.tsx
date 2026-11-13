@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Accent, Button, Heading, LogoMark, Surface, Text } from '@/components/ui';
+import { Accent, Button, Heading, LogoMark, Surface, Text, Wordmark } from '@/components/ui';
 import { BOOKING_URL } from '@/components/layout/sections';
 import { SHOTS } from '@/components/layout/content';
 
@@ -30,9 +30,12 @@ function HeroSky() {
 		<div className={shared.container}>
 			<div className={shared.frame}>
 				<div className={cx(shared.sky, styles.skyBand)}>
-					<Text as="span" size="xs" tone="subtle">
-						Yeta ✹ Studio · Design &amp; Development
-					</Text>
+					<span className={styles.skyMark}>
+						<Wordmark alt="Yeta Studio" />
+						<Text as="span" size="xs" tone="subtle">
+							Design &amp; Development
+						</Text>
+					</span>
 				</div>
 				<div className={styles.skyBody}>
 					<Heading level={3} size="5xl" tone="display" leading="tight" className={styles.skySplit}>
@@ -61,12 +64,6 @@ function HeroPairing() {
 		<div className={shared.container}>
 			<div className={cx(shared.frame, styles.pairing)}>
 				<span className={cx(styles.pairingGlow, shared.hued)} data-hue="violet" aria-hidden="true" />
-				<Surface tone="tint" radius="pill" className={styles.pairingChip}>
-					<span className={cx(shared.dot, shared.hued)} data-hue="violet" aria-hidden="true" />
-					<Text as="span" size="xs" tone="strong">
-						Design &amp; Development Studio
-					</Text>
-				</Surface>
 				<Heading level={3} size="5xl" leading="tight" className={styles.pairingTitle}>
 					<Text as="span" family="serif" italic weight="regular" tone="subtle" className={styles.pairingSerif}>
 						because great brands

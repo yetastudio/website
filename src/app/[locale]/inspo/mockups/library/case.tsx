@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Avatar, Button, Surface, Text } from '@/components/ui';
+import { Avatar, Button, Surface, Text, Wordmark } from '@/components/ui';
 import { BOOKING_URL } from '@/components/layout/sections';
 import { SHOTS, TESTIMONIALS } from '@/components/layout/content';
 
@@ -49,9 +49,8 @@ function Shot({ index, alt, sizes }: { index: number; alt: string; sizes: string
 
 /**
  * Case A, after Deel and COLLINS: the hero on the site's inverse band (Deel's dark band on the light
- * page), a small label, the title in the Editorial serif and one line (COLLINS). The facts card
- * straddles the band's lower edge; the shots run off the frame's right edge below it. The accent is
- * the hue dot beside the label.
+ * page), the wordmark as the title and one line (COLLINS). The facts card
+ * straddles the band's lower edge; the shots run off the frame's right edge below it.
  */
 function CaseStraddle() {
 	const t = useTranslations('ourWork');
@@ -60,15 +59,9 @@ function CaseStraddle() {
 		<div className={shared.container}>
 			<div className={cx(shared.frame, styles.straddle)}>
 				<div className={cx(styles.straddleBand, 'scheme-inverse')}>
-					<span className={styles.straddleLabel}>
-						<span className={cx(shared.dot, shared.hued)} data-hue="violet" aria-hidden="true" />
-						<Text as="span" size="xs" tone="subtle">
-							{t('caseStudy')}
-						</Text>
-					</span>
-					<Text as="h3" family="serif" weight="regular" leading="none" tone="strong" className={styles.straddleTitle}>
-						{project('name')}
-					</Text>
+					<h3 className={styles.straddleTitle}>
+						<Wordmark canvas="inverse" alt={project('name')} />
+					</h3>
 					<Text size="sm" tone="subtle" leading="normal" className={styles.straddleLine}>
 						{project('result')}
 					</Text>
