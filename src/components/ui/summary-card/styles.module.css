@@ -159,7 +159,7 @@
 	max-width: var(--measure-narrow);
 	font-size: var(--text-md);
 	font-weight: var(--font-weight-light);
-	line-height: var(--leading-spacious);
+	line-height: var(--leading-relaxed);
 	letter-spacing: var(--tracking-tight);
 	text-box: trim-both cap alphabetic;
 }

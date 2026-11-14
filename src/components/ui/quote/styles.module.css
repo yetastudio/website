@@ -61,7 +61,7 @@
 
 .block.size-md .body {
 	font-size: var(--text-md);
-	line-height: var(--leading-comfortable);
+	line-height: var(--leading-normal);
 }
 
 .block.size-lg .body {

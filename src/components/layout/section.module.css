@@ -57,7 +57,7 @@
 	.ctaText {
 		max-width: none;
 		font-size: var(--text-lg);
-		line-height: var(--leading-airy);
+		line-height: var(--leading-relaxed);
 	}
 
 	.mobileOnly {

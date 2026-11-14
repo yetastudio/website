@@ -30,7 +30,7 @@
 	font-family: var(--font-serif);
 	font-size: var(--text-xl);
 	font-weight: var(--font-weight-regular);
-	line-height: var(--leading-cozy);
+	line-height: var(--leading-snug);
 	letter-spacing: var(--tracking-tight);
 	color: var(--color-text);
 }
@@ -93,7 +93,7 @@
 
 .row .description {
 	font-size: var(--text-xs);
-	line-height: var(--leading-open);
+	line-height: var(--leading-relaxed);
 }
 
 @media (min-width: 1024px) {
@@ -116,6 +116,6 @@
 
 	.responsive .description {
 		font-size: var(--text-xs);
-		line-height: var(--leading-open);
+		line-height: var(--leading-relaxed);
 	}
 }

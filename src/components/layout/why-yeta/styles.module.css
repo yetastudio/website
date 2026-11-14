@@ -28,7 +28,7 @@
 
 .p1MobileLight {
 	max-width: var(--measure-narrow);
-	line-height: var(--leading-spacious); /* 16/30 */
+	line-height: var(--leading-relaxed);
 }
 
 /* ── Mobile chip card (Figma 728:665: radius 32, padding 16, gap 12) ── */

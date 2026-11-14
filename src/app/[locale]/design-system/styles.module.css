@@ -5,6 +5,11 @@
 	max-width: 44rem;
 }
 
+.intro .introTitle {
+	/* "components" can't break: on a phone the 5xl step would push it past a 360px screen, so it scales down to 4xl there. */
+	font-size: clamp(var(--text-4xl), 13vw, var(--text-5xl));
+}
+
 .introMeta {
 	display: flex;
 	flex-wrap: wrap;

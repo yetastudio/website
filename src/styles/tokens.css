@@ -206,6 +206,7 @@
 	--font-weight-bold: 700;
 	--font-weight-serif-thin: 200;
 
+	/* Type scale on a 4px grid, each step 1.2–1.33× the one below; display is the only fluid size. */
 	--text-2xs: 0.625rem; /* 10 */
 	--text-xs: 0.75rem; /* 12 */
 	--text-sm: 0.875rem; /* 14 */
@@ -216,28 +217,21 @@
 	--text-3xl: 2.5rem; /* 40 */
 	--text-4xl: 3rem; /* 48 */
 	--text-5xl: 4rem; /* 64 */
-	--text-feature: 1.2305rem; /* 19.69: Figma feature chip (Large ×1.40625) */
 	--text-display: clamp(3.15rem, 2.525rem + 2.562vw, 5.6rem); /* 50.4 @390 → 89.6 @1920 (hero wordmark) */
 
-	/* Line-height, tightest to loosest. The newer steps keep Figma's px line-heights as ratios. */
+	/* Line-height: six steps, quarter steps from snug up. Headings sit at tight/snug, body copy at
+	   normal (WCAG 1.4.12 asks body text to hold up at 1.5), long-form and small copy at relaxed/loose. */
 	--leading-none: 1;
 	--leading-tight: 1.1;
 	--leading-snug: 1.25;
-	--leading-cozy: 1.3333; /* Figma 32px on 24 (craft card title) */
-	--leading-normal: 1.45;
-	--leading-comfortable: 1.5; /* Figma 24px on 16 (quotes) */
-	--leading-roomy: 1.6; /* Figma 32px on 20 (landing and case-study body), 16px on 10 (develop terminal) */
-	--leading-open: 1.6667; /* Figma 20px on 12 (card copy) */
-	--leading-relaxed: 1.7;
-	--leading-airy: 1.8; /* Figma 36px on 20 (section CTA) */
-	--leading-spacious: 1.875; /* Figma 30px on 16 (summary, why-yeta, case study) */
-	--leading-loose: 2; /* Figma 24px on 12, 20px on 10 (mobile quotes, card subtitles) */
+	--leading-normal: 1.5;
+	--leading-relaxed: 1.75;
+	--leading-loose: 2;
 
-	/* Tracking. Figma sets -3% on all Funnel Display text, -2% on the serif italic accents. */
+	/* Tracking: Funnel Display runs at -3% everywhere (Figma); uppercase eyebrows open up. */
 	--tracking-tight: -0.03em;
-	--tracking-snug: -0.02em;
 	--tracking-normal: 0;
-	--tracking-wide: 0.12em; /* uppercase eyebrows */
+	--tracking-wide: 0.12em;
 
 	/* ───────────────────────── Space ───────────────────────── */
 	--space-2: 0.125rem;

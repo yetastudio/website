@@ -221,7 +221,7 @@
 
 	.group {
 		--button-min-height: calc(var(--control-lg) * 1.2);
-		--button-font-size: calc(var(--text-sm) * 1.2);
+		--button-font-size: var(--text-md);
 		gap: calc(var(--space-8) * 1.2);
 		width: 15rem; /* 240 */
 		padding: calc(var(--space-8) * 1.2);
