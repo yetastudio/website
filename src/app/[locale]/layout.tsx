@@ -9,7 +9,7 @@ import { routing } from '@/i18n/routing';
 import { ThemeProvider, themeScript } from '@/context/ThemeContext';
 
 //! Fonts
-import { editorialNew, funnelDisplay } from '../fonts';
+import { editorialNew, editorialNewExtras, funnelDisplay } from '../fonts';
 
 //! UI Core
 import { SmoothScroll } from '@/components/layout/smooth-scroll';
@@ -65,7 +65,7 @@ export default async function LocaleLayout({
 	const messages = await getMessages();
 
 	return (
-		<html lang={locale} className={`${funnelDisplay.variable} ${editorialNew.variable}`} suppressHydrationWarning>
+		<html lang={locale} className={`${funnelDisplay.variable} ${editorialNew.variable} ${editorialNewExtras.variable}`} suppressHydrationWarning>
 			<head>
 				{/* Applies the stored theme before first paint. */}
 				<script dangerouslySetInnerHTML={{ __html: themeScript }} />
