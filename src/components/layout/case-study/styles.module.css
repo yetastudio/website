@@ -169,7 +169,7 @@
 .eyebrow {
 	font-size: var(--text-xs);
 	font-weight: var(--font-weight-light);
-	line-height: 1.667;
+	line-height: var(--leading-open);
 	letter-spacing: var(--tracking-tight);
 	text-align: center;
 	color: color-mix(in srgb, var(--color-text) 50%, transparent);
@@ -221,7 +221,7 @@
 	padding: var(--space-12);
 	font-size: var(--text-xs);
 	font-weight: var(--font-weight-light);
-	line-height: 2;
+	line-height: var(--leading-loose);
 	letter-spacing: var(--tracking-tight);
 	text-align: center;
 	text-wrap: balance;
@@ -259,7 +259,7 @@
 	gap: calc(2lh - 1cap);
 	font-size: var(--text-md);
 	font-weight: var(--font-weight-light);
-	line-height: 1.875;
+	line-height: var(--leading-spacious);
 	letter-spacing: var(--tracking-tight);
 }
 

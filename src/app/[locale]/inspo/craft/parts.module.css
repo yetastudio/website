@@ -152,7 +152,7 @@
 	background: var(--ss-ink-2);
 	font-family: var(--font-mono);
 	font-size: var(--text-2xs);
-	letter-spacing: 0;
+	letter-spacing: var(--tracking-normal);
 	color: var(--color-text-subtle);
 	text-box: trim-both cap alphabetic;
 }

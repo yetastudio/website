@@ -37,7 +37,7 @@
 	max-width: var(--measure); /* the Figma break after "brands" comes from <br> in the copy */
 	font-size: var(--text-lg);
 	font-weight: var(--font-weight-regular);
-	line-height: 1.44;
+	line-height: var(--leading-normal);
 	letter-spacing: var(--tracking-tight);
 	color: var(--color-text);
 	text-wrap: balance;
@@ -216,7 +216,7 @@
 		max-width: 40.2rem; /* 643.2 */
 		font-size: var(--text-2xl);
 		font-weight: var(--font-weight-light);
-		line-height: 1.25;
+		line-height: var(--leading-snug);
 	}
 
 	.group {

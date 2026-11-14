@@ -12,12 +12,13 @@
  * off the tile), not UI spacing; UI spacing, radii and type read the scale.
  */
 
+/* The tile clips the scene's rounded corners (once, in gradient-tile); the root only clips square,
+   since a second rounded clip here let the wash fringe the panels at the corners. */
 .root {
 	position: absolute;
 	inset: 0;
 	z-index: var(--z-raised);
 	overflow: hidden;
-	border-radius: inherit;
 	pointer-events: none;
 	user-select: none;
 	--scene-accent: var(--color-text-strong);

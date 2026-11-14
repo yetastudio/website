@@ -118,7 +118,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: var(--ss-row-title);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     line-height: var(--ss-row-line);
     color: var(--ss-text-strong);
   }

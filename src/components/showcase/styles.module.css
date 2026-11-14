@@ -220,7 +220,7 @@
 }
 
 .table code {
-	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+	font-family: var(--font-mono);
 	font-size: var(--text-xs);
 	letter-spacing: var(--tracking-normal);
 	color: var(--color-text-strong);

@@ -39,8 +39,8 @@
     border-radius: var(--ss-radius-pill);
     background: var(--ss-accent-soft);
     color: var(--ss-text-strong);
-    font-size: 12px;
-    font-weight: 500;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-medium);
     white-space: nowrap;
   }
 

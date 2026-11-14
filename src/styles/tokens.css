@@ -219,15 +219,25 @@
 	--text-feature: 1.2305rem; /* 19.69: Figma feature chip (Large ×1.40625) */
 	--text-display: clamp(3.15rem, 2.525rem + 2.562vw, 5.6rem); /* 50.4 @390 → 89.6 @1920 (hero wordmark) */
 
+	/* Line-height, tightest to loosest. The newer steps keep Figma's px line-heights as ratios. */
 	--leading-none: 1;
 	--leading-tight: 1.1;
 	--leading-snug: 1.25;
+	--leading-cozy: 1.3333; /* Figma 32px on 24 (craft card title) */
 	--leading-normal: 1.45;
+	--leading-comfortable: 1.5; /* Figma 24px on 16 (quotes) */
+	--leading-roomy: 1.6; /* Figma 32px on 20 (landing and case-study body), 16px on 10 (develop terminal) */
+	--leading-open: 1.6667; /* Figma 20px on 12 (card copy) */
 	--leading-relaxed: 1.7;
+	--leading-airy: 1.8; /* Figma 36px on 20 (section CTA) */
+	--leading-spacious: 1.875; /* Figma 30px on 16 (summary, why-yeta, case study) */
+	--leading-loose: 2; /* Figma 24px on 12, 20px on 10 (mobile quotes, card subtitles) */
 
-	/* Figma sets -3% tracking on all Funnel Display text. */
+	/* Tracking. Figma sets -3% on all Funnel Display text, -2% on the serif italic accents. */
 	--tracking-tight: -0.03em;
+	--tracking-snug: -0.02em;
 	--tracking-normal: 0;
+	--tracking-wide: 0.12em; /* uppercase eyebrows */
 
 	/* ───────────────────────── Space ───────────────────────── */
 	--space-2: 0.125rem;

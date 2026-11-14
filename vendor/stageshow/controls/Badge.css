@@ -1,3 +1,4 @@
+/* Yeta: type values that match a design token read it; the other sizes are Stageshow's miniature UI scale, kept as upstream. */
 /* Badge */
 
 @layer stageshow {
@@ -17,7 +18,7 @@
     border-radius: var(--ss-radius-pill);
     background: var(--ss-ink-2);
     font-size: 11px;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--ss-text-strong);
     white-space: nowrap;
     /* A tone change (Working to Ready) eases on the same pill, no swap */

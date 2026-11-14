@@ -1,3 +1,4 @@
+/* Yeta: type values that match a design token read it; the other sizes are Stageshow's miniature UI scale, kept as upstream. */
 /* Stageshow kit: the stage. Tokens, the looks (theme, palette,
    fidelity), edge fades, the still and placing switches, the keyframes more
    than one part shares, and the guards against host CSS. Imported by
@@ -110,11 +111,11 @@
     user-select: none;
     /* The baseline every demo is designed against, pinned here so the host
        page's type (a blog's 15px body, its letter-spacing) never reaches in */
-    font-size: 16px;
-    font-weight: 400;
+    font-size: var(--text-md);
+    font-weight: var(--font-weight-regular);
     font-style: normal;
     line-height: normal;
-    letter-spacing: normal;
+    letter-spacing: var(--tracking-normal);
     word-spacing: normal;
     text-align: start;
     text-indent: 0;

@@ -1,3 +1,4 @@
+/* Yeta: type values that match a design token read it; the other sizes are Stageshow's miniature UI scale, kept as upstream. */
 /* Field */
 
 @layer stageshow {
@@ -12,7 +13,7 @@
 
   .ss-field__label {
     font-size: 11.5px;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--ss-text-strong);
   }
 
@@ -97,7 +98,7 @@
      placeholder is centered the same way, so they share a line. */
   .ss-field__chars,
   .ss-field__placeholder {
-    line-height: 1;
+    line-height: var(--leading-none);
     text-box: trim-both cap alphabetic;
   }
 

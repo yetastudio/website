@@ -41,13 +41,13 @@
 .desktop .quote {
 	max-width: 19.5rem; /* 312 */
 	font-size: var(--text-md);
-	line-height: 1.5;
+	line-height: var(--leading-comfortable);
 }
 
 .mobile .quote {
 	max-width: 13.25rem; /* 212 */
 	font-size: var(--text-xs);
-	line-height: 2;
+	line-height: var(--leading-loose);
 }
 
 .author {
@@ -59,7 +59,7 @@
 	padding: var(--space-6);
 	font-weight: var(--font-weight-light);
 	letter-spacing: var(--tracking-tight);
-	line-height: 1;
+	line-height: var(--leading-none);
 }
 
 .person {

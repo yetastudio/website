@@ -1,3 +1,4 @@
+/* Yeta: type values that match a design token read it; the other sizes are Stageshow's miniature UI scale, kept as upstream. */
 /* Avatar */
 
 @layer stageshow {
@@ -17,8 +18,8 @@
     /* Opaque: avatars overlap in a pile, and a translucent fill onion-skins */
     background: var(--ss-fill, var(--ss-ink-3));
     color: var(--ss-text-strong);
-    font-weight: 600;
-    line-height: 1;
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--leading-none);
     transition: background 0.3s ease, color 0.3s ease;
   }
 
@@ -32,7 +33,7 @@
     background: linear-gradient(180deg, #a5abb8, #858a96);
     color: #fff;
     font-family: ui-rounded, 'SF Pro Rounded', -apple-system, system-ui, sans-serif;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     letter-spacing: 0.01em;
   }
 

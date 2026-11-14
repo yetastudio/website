@@ -1,3 +1,4 @@
+/* Yeta: type values that match a design token read it; the other sizes are Stageshow's miniature UI scale, kept as upstream. */
 /* Phones (phone.tsx): frames, the status bar, the lock screen and
    notification banners. */
 
@@ -185,7 +186,7 @@
   .ss-phone[data-frame="android"] .ss-phone__time {
     font-family: system-ui, sans-serif;
     font-size: 15px;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
   }
 
   .ss-phone[data-frame="android"] .ss-phone__content[data-status] {
@@ -268,7 +269,7 @@
     font-variation-settings: "opsz" 17;
     font-size: 17.67px;
     font-weight: 590;
-    letter-spacing: 0;
+    letter-spacing: var(--tracking-normal);
   }
 
   .ss-phone__island {
@@ -345,7 +346,7 @@
   .ss-lock__date {
     margin-top: 66px;
     font-size: 22px;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     letter-spacing: -0.01em;
     opacity: 0.85;
   }
@@ -353,8 +354,8 @@
   .ss-lock__clock {
     margin-top: -4px;
     font-size: 112px;
-    font-weight: 700;
-    line-height: 1;
+    font-weight: var(--font-weight-bold);
+    line-height: var(--leading-none);
     letter-spacing: -0.035em;
     font-variant-numeric: tabular-nums;
     opacity: 0.92;
@@ -480,14 +481,14 @@
     flex: 1;
     min-width: 0;
     overflow: hidden;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     white-space: nowrap;
     text-overflow: ellipsis;
   }
 
   .ss-notification__time {
     flex-shrink: 0;
-    font-size: 12px;
+    font-size: var(--text-xs);
     letter-spacing: -0.005em;
     color: rgba(60, 60, 67, 0.6);
   }
