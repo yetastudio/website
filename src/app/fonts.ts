@@ -13,19 +13,33 @@ export const funnelDisplay = localFont({
 	display: 'swap',
 });
 
-/**
+/*
  * PP Editorial New: the editorial accent. Card titles and emphasised words only.
- * Not preloaded: preloading pulled all three cuts (~120 KB) into every page's first load, though
- * the landing never uses Ultralight and only shows Italic below the fold. The browser fetches each
- * cut when text first uses it.
+ *
+ * One family, declared in two parts so only the cut the first viewport needs is preloaded. Both parts
+ * name the same font-family, so the browser joins their faces into one family and `--font-serif`
+ * resolves weight and style across all three as before.
+ * - Regular is preloaded: the hero slogan sets its emphasised words in it, and the slogan is the
+ *   landing's largest paint on phones, so its paint waits for this file.
+ * - Ultralight and Italic are fetched only when text uses them (the landing never uses Ultralight
+ *   and shows Italic below the fold), instead of competing with the hero for bandwidth.
  */
+
 export const editorialNew = localFont({
-	src: [
-		{ path: '../../public/fonts/PPEditorialNew-Ultralight.otf', weight: '200', style: 'normal' },
-		{ path: '../../public/fonts/PPEditorialNew-Regular.otf', weight: '400', style: 'normal' },
-		{ path: '../../public/fonts/PPEditorialNew-Italic.otf', weight: '400', style: 'italic' },
-	],
+	src: [{ path: '../../public/fonts/PPEditorialNew-Regular.otf', weight: '400', style: 'normal' }],
 	variable: '--font-editorial-new',
 	display: 'swap',
+	declarations: [{ prop: 'font-family', value: "'PP Editorial New'" }],
+});
+
+/** The rest of the PP Editorial New family (see above). Its class only has to be on the page so its faces load. */
+export const editorialNewExtras = localFont({
+	src: [
+		{ path: '../../public/fonts/PPEditorialNew-Ultralight.otf', weight: '200', style: 'normal' },
+		{ path: '../../public/fonts/PPEditorialNew-Italic.otf', weight: '400', style: 'italic' },
+	],
+	variable: '--font-editorial-new-extras',
+	display: 'swap',
 	preload: false,
+	declarations: [{ prop: 'font-family', value: "'PP Editorial New'" }],
 });
