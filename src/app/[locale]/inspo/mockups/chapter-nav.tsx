@@ -7,7 +7,9 @@ import { useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from './use-autoplay';
 
 //! Components
-import { Heading, SegmentedControl, Surface, Text } from '@/components/ui';
+import { Heading, Text } from '@/components/ui/text';
+import { SegmentedControl } from '@/components/ui/segmented-control';
+import { Surface } from '@/components/ui/surface';
 
 //! Styles
 import styles from './mockups.module.css';

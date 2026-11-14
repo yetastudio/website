@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 
 //! Hooks
 import { useTranslations } from 'next-intl';
@@ -9,7 +9,10 @@ import { usePathname } from '@/i18n/navigation';
 
 //! Components
 import { Link as LocaleLink } from '@/i18n/navigation';
-import { BrandMark, Button, Dialog, ThemeSwitch } from '@/components/ui';
+import { BrandMark } from '@/components/ui/brand';
+import { Button } from '@/components/ui/button';
+import { Dialog } from '@/components/ui/dialog';
+import { ThemeSwitch } from '@/components/ui/theme-switch';
 import { LocaleSwitch } from '@/components/ui/locale-switch';
 import { BOOKING_URL, SECTIONS, type SectionId } from '../sections';
 
@@ -20,6 +23,36 @@ import { cx } from '@/lib/cx';
 import styles from './styles.module.css';
 
 /**
+ * The section the reading line is in, as a tiny external store. The scroll handler writes it and
+ * only the two link lists read it, so a section change re-renders five links, not the whole header
+ * (theme switches, the CTA, the menu dialog).
+ */
+type ActiveStore = {
+	get: () => SectionId | null;
+	set: (id: SectionId | null) => void;
+	subscribe: (onChange: () => void) => () => void;
+};
+
+function createActiveStore(): ActiveStore {
+	let active: SectionId | null = null;
+	const listeners = new Set<() => void>();
+	return {
+		get: () => active,
+		set: (id) => {
+			if (id === active) return;
+			active = id;
+			listeners.forEach((listener) => listener());
+		},
+		subscribe: (onChange) => {
+			listeners.add(onChange);
+			return () => listeners.delete(onChange);
+		},
+	};
+}
+
+const serverActive = () => null;
+
+/**
  * The white active pill is the landing's index (landing only). A reading line sits at 40% of the
  * viewport; the active link is the last section whose top has crossed it, so the pill does not
  * follow the scroll: when the section changes it hands over, sliding to the new link with the
@@ -27,11 +60,10 @@ import styles from './styles.module.css';
  * it while the page scrolls there, so the pill never steps through the sections in between.
  * Above the first section the pill fades out.
  */
-function useScrollNav(enabled: boolean) {
+function useScrollNav(enabled: boolean, store: ActiveStore) {
 	const navRef = useRef<HTMLElement>(null);
 	const indicatorRef = useRef<HTMLSpanElement>(null);
 	const target = useRef<SectionId | null>(null);
-	const [active, setActive] = useState<SectionId | null>(null);
 
 	useEffect(() => {
 		const nav = navRef.current;
@@ -78,7 +110,7 @@ function useScrollNav(enabled: boolean) {
 			place(next, instant || !placed);
 			placed = true;
 			shown = next;
-			setActive(next);
+			store.set(next);
 		};
 
 		const schedule = () => {
@@ -125,9 +157,37 @@ function useScrollNav(enabled: boolean) {
 			window.removeEventListener('resize', relayout);
 			observer.disconnect();
 		};
-	}, [enabled]);
+	}, [enabled, store]);
 
-	return { navRef, indicatorRef, active };
+	return { navRef, indicatorRef };
+}
+
+/** The section links, in the pill or the menu sheet. The only part of the header that follows the scroll. */
+function NavLinks({ store, variant, onLanding, onNavigate }: { store: ActiveStore; variant: 'pill' | 'sheet'; onLanding: boolean; onNavigate: () => void }) {
+	const t = useTranslations('nav');
+	const active = useSyncExternalStore(store.subscribe, store.get, serverActive);
+
+	return SECTIONS.map(({ id, key }) => {
+		const shared = {
+			className: cx(styles.navLink, variant === 'sheet' && styles.sheetLink),
+			'aria-current': active === id ? ('location' as const) : undefined,
+			onClick: onNavigate,
+		};
+		return (
+			<li key={id}>
+				{/* On the landing, a plain anchor lets Lenis smooth-scroll; elsewhere, go to this locale's landing. */}
+				{onLanding ? (
+					<a href={`#${id}`} {...shared}>
+						{t(key)}
+					</a>
+				) : (
+					<LocaleLink href={{ pathname: '/', hash: id }} {...shared}>
+						{t(key)}
+					</LocaleLink>
+				)}
+			</li>
+		);
+	});
 }
 
 /**
@@ -139,31 +199,10 @@ export function Header() {
 	const tc = useTranslations('common');
 	const pathname = usePathname();
 	const onLanding = pathname === '/';
-	const { navRef, indicatorRef, active } = useScrollNav(onLanding);
+	const [store] = useState(createActiveStore);
+	const { navRef, indicatorRef } = useScrollNav(onLanding, store);
 	const [menuOpen, setMenuOpen] = useState(false);
-
-	const navLinks = (variant: 'pill' | 'sheet') =>
-		SECTIONS.map(({ id, key }) => {
-			const shared = {
-				className: cx(styles.navLink, variant === 'sheet' && styles.sheetLink),
-				'aria-current': active === id ? ('location' as const) : undefined,
-				onClick: () => setMenuOpen(false),
-			};
-			return (
-				<li key={id}>
-					{/* On the landing, a plain anchor lets Lenis smooth-scroll; elsewhere, go to this locale's landing. */}
-					{onLanding ? (
-						<a href={`#${id}`} {...shared}>
-							{t(key)}
-						</a>
-					) : (
-						<LocaleLink href={{ pathname: '/', hash: id }} {...shared}>
-							{t(key)}
-						</LocaleLink>
-					)}
-				</li>
-			);
-		});
+	const closeMenu = useCallback(() => setMenuOpen(false), []);
 
 	return (
 		<>
@@ -184,7 +223,9 @@ export function Header() {
 
 					<nav ref={navRef} aria-label={t('label')} className={cx(styles.pill, 'u-bevel')}>
 						<span ref={indicatorRef} className={cx('t-tabs-pill', styles.indicator)} aria-hidden="true" />
-						<ul className={styles.navList}>{navLinks('pill')}</ul>
+						<ul className={styles.navList}>
+							<NavLinks store={store} variant="pill" onLanding={onLanding} onNavigate={closeMenu} />
+						</ul>
 					</nav>
 
 					<div className={styles.actions}>
@@ -205,9 +246,11 @@ export function Header() {
 				</div>
 			</header>
 
-			<Dialog open={menuOpen} onClose={() => setMenuOpen(false)} title={tc('menu')} placement="right">
+			<Dialog open={menuOpen} onClose={closeMenu} title={tc('menu')} placement="right">
 				<nav aria-label={t('label')} className={styles.sheet}>
-					<ul className={styles.sheetList}>{navLinks('sheet')}</ul>
+					<ul className={styles.sheetList}>
+						<NavLinks store={store} variant="sheet" onLanding={onLanding} onNavigate={closeMenu} />
+					</ul>
 					<div className={styles.sheetFooter}>
 						<Button href={BOOKING_URL} size="2xl" iconEnd="external-link" fullWidth>
 							{t('getInTouch')}

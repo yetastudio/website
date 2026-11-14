@@ -1,4 +1,7 @@
 // Design system barrel. Registry and status live in src/components/ui/REGISTRY.md.
+// An index of what exists, not an import path: app code imports each module directly
+// (`@/components/ui/button`), since one import from here bundles every client component.
+// ESLint (no-restricted-imports) enforces it.
 
 //* Primitives
 export { Text, Heading, Accent } from './text';

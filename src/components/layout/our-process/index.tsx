@@ -2,7 +2,10 @@
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Button, Carousel, ProcessCard, SectionHeader } from '@/components/ui';
+import { Button } from '@/components/ui/button';
+import { Carousel } from '@/components/ui/carousel';
+import { ProcessCard } from '@/components/ui/process-card';
+import { SectionHeader } from '@/components/ui/section-header';
 import { ProcessScene } from '@/components/ui/process-scene';
 import { isProcessStep } from '@/components/ui/process-scene/shared';
 import { PROCESS } from '../content';

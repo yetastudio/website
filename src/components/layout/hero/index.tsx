@@ -5,7 +5,8 @@ import type { CSSProperties, ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Button, LogoMark } from '@/components/ui';
+import { Button } from '@/components/ui/button';
+import { LogoMark } from '@/components/ui/brand';
 import { Reveal } from '@/components/ui/reveal';
 import { revealLine } from '@/components/ui/reveal/line';
 import { BOOKING_URL } from '../sections';
@@ -75,7 +76,8 @@ export function Hero() {
 			<h1 id="hero-title" className={cx(styles.title, revealLine(1))}>
 				<span className={styles.word}>Yeta</span>
 				{/* 58.5 @390 → 96 @1920: tracks the wordmark size (Figma ratio 96 / 89.6). */}
-				<LogoMark canvas="auto" size="calc(var(--text-display) * 1.0714)" alt="✹" />
+				{/* The page's largest paint now that the hero shows from first paint: fetch it ahead of the rest. */}
+				<LogoMark canvas="auto" size="calc(var(--text-display) * 1.0714)" alt="✹" priority />
 				<span className={styles.word}>Studio</span>
 			</h1>
 

@@ -9,6 +9,10 @@ import { ENTRY_MS, SCENE_HEIGHT, SCENE_WIDTH, type WhyTourCopy } from './shared'
 import look from './look.module.css';
 import styles from './together.module.css';
 
+// Static parts, hoisted: the scene redraws on every state change and these never change.
+const YETA_MARK = <LogoMark size={20} alt="" />;
+const SEND_ICON = <SendHorizontal size={12} strokeWidth={2} aria-hidden />;
+
 // Made to work together: a review thread between the client and the studio.
 // The client's question is there. Yeta's cursor (the tour's, handed over) steps
 // into the reply field, types a warm answer and sends it; the reply lands in
@@ -60,7 +64,7 @@ export function TogetherScene({ copy, playing }: { copy: WhyTourCopy['together']
 					<Collapse open={s.reply} reveal="drop">
 						<div className={styles.next}>
 							<div className={styles.row}>
-								<LogoMark size={20} alt="" />
+								{YETA_MARK}
 								<Text className={look.strong}>{copy.reply}</Text>
 							</div>
 						</div>
@@ -79,7 +83,7 @@ export function TogetherScene({ copy, playing }: { copy: WhyTourCopy['together']
 							{s.focus && <span className={styles.caret} />}
 						</div>
 						<span data-target="send">
-							<Button size="small" variant="primary" icon={<SendHorizontal size={12} strokeWidth={2} aria-hidden />} />
+							<Button size="small" variant="primary" icon={SEND_ICON} />
 						</span>
 					</div>
 				</div>

@@ -2,7 +2,10 @@
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Button, Carousel, CraftCard, SectionHeader } from '@/components/ui';
+import { Button } from '@/components/ui/button';
+import { Carousel } from '@/components/ui/carousel';
+import { CraftCard } from '@/components/ui/craft-card';
+import { SectionHeader } from '@/components/ui/section-header';
 import { CRAFT, CRAFT_LIGHT_DESKTOP_HUES } from '../content';
 import { BOOKING_URL } from '../sections';
 

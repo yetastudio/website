@@ -8,22 +8,16 @@ import { useTranslations } from 'next-intl';
 
 //! Components
 import { Cell, ShowcaseSection, SpecTable, Specimen, ThemePair } from '@/components/showcase';
-import {
-	CardStack,
-	Carousel,
-	CaseStudy,
-	CaseStudyDialog,
-	CraftCard,
-	GradientTile,
-	Icon,
-	ProcessCard,
-	ProjectCard,
-	SectionHeader,
-	SummaryCard,
-	TestimonialCard,
-	type Project,
-	type TileHue,
-} from '@/components/ui';
+import { CardStack } from '@/components/ui/card-stack';
+import { Carousel } from '@/components/ui/carousel';
+import { CaseStudy, CaseStudyDialog, ProjectCard, type Project } from '@/components/ui/project-card';
+import { CraftCard } from '@/components/ui/craft-card';
+import { GradientTile, type TileHue } from '@/components/ui/gradient-tile';
+import { Icon } from '@/components/ui/icon';
+import { ProcessCard } from '@/components/ui/process-card';
+import { SectionHeader } from '@/components/ui/section-header';
+import { SummaryCard } from '@/components/ui/summary-card';
+import { TestimonialCard } from '@/components/ui/testimonial-card';
 import { CRAFT, PROCESS, PROJECT_TOOLS, SHOTS, TESTIMONIALS } from '@/components/layout/content';
 
 //! Utils

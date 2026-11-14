@@ -4,7 +4,7 @@
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Text } from '@/components/ui';
+import { Text } from '@/components/ui/text';
 import { TILE_SCENES } from './scenes';
 
 //! Data

@@ -57,16 +57,21 @@ function boxStyle([left, top, width, height]: Box): CSSProperties {
 	return { left, top, width, height };
 }
 
+/*
+ * The blob layers load lazily: tiles sit below the fold, each one is drawn for both themes and
+ * hidden for one of them, and an eager <img> is preloaded by React in the document head. Lazy
+ * images in a hidden theme (or a hidden breakpoint layout) are never fetched.
+ */
 function Layers({ hue, intensity, theme, shape }: { hue: TileHue; intensity: 'soft' | 'strong'; theme: 'dark' | 'light'; shape: TileShape }) {
 	const steps = STEPS[intensity][theme];
 	const geometry = GEOMETRY[shape][theme];
 	return (
 		<span className={cx(styles.layers, theme === 'dark' ? 'u-only-dark' : 'u-only-light')} aria-hidden="true">
 			<span className={cx(styles.layer, styles.base)} style={boxStyle(geometry.base)}>
-				<img src={`/landing/gradients/${theme}-${hue}-${steps}-base.svg`} alt="" draggable={false} />
+				<img src={`/landing/gradients/${theme}-${hue}-${steps}-base.svg`} alt="" draggable={false} loading="lazy" decoding="async" />
 			</span>
 			<span className={cx(styles.layer, styles.overlay)} style={boxStyle(geometry.overlay)}>
-				<img src={`/landing/gradients/${theme}-${hue}-${steps}-overlay.svg`} alt="" draggable={false} />
+				<img src={`/landing/gradients/${theme}-${hue}-${steps}-overlay.svg`} alt="" draggable={false} loading="lazy" decoding="async" />
 			</span>
 		</span>
 	);

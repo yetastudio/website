@@ -7,7 +7,10 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Button, CardStack, CaseStudyDialog, PaginationDots, ProjectCard, type Project } from '@/components/ui';
+import { Button } from '@/components/ui/button';
+import { CardStack } from '@/components/ui/card-stack';
+import { CaseStudyDialog, ProjectCard, type Project } from '@/components/ui/project-card';
+import { PaginationDots } from '@/components/ui/pagination-dots';
 
 //! Styles
 import section from '../section.module.css';
@@ -43,13 +46,8 @@ export function WorkGallery({ projects, label, itemLabel }: { projects: Project[
 			<div className={section.desktopOnly}>
 				<div className={styles.grid}>
 					{shown.map((project, i) => (
-						<ProjectCard
-							key={page * PER_PAGE + i}
-							project={project}
-							size="desktop"
-							priority={page === 0 && i === 0}
-							onOpen={() => setActive(project)}
-						/>
+						/* No `priority`: the gallery sits far below the fold, so its shots load lazily instead of competing with the hero. */
+						<ProjectCard key={page * PER_PAGE + i} project={project} size="desktop" onOpen={() => setActive(project)} />
 					))}
 				</div>
 				{pages > 1 && (

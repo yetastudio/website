@@ -25,10 +25,10 @@ function ScribbleArt({ name }: { name: Scribble }) {
 	return (
 		<span className={cx(styles.scribble, styles[name])} aria-hidden="true">
 			<span className={styles.scribbleInner}>
-				<img src={`/landing/summary/scribble-${name}-light-idle.svg`} alt="" className={cx(styles.idle, 'u-only-light')} />
-				<img src={`/landing/summary/scribble-${name}-dark-idle.svg`} alt="" className={cx(styles.idle, 'u-only-dark')} />
-				<img src={`/landing/summary/scribble-${name}-light-active.svg`} alt="" className={cx(styles.active, 'u-only-light')} />
-				<img src={`/landing/summary/scribble-${name}-dark-active.svg`} alt="" className={cx(styles.active, 'u-only-dark')} />
+				<img loading="lazy" decoding="async" src={`/landing/summary/scribble-${name}-light-idle.svg`} alt="" className={cx(styles.idle, 'u-only-light')} />
+				<img loading="lazy" decoding="async" src={`/landing/summary/scribble-${name}-dark-idle.svg`} alt="" className={cx(styles.idle, 'u-only-dark')} />
+				<img loading="lazy" decoding="async" src={`/landing/summary/scribble-${name}-light-active.svg`} alt="" className={cx(styles.active, 'u-only-light')} />
+				<img loading="lazy" decoding="async" src={`/landing/summary/scribble-${name}-dark-active.svg`} alt="" className={cx(styles.active, 'u-only-dark')} />
 			</span>
 		</span>
 	);
@@ -37,10 +37,10 @@ function ScribbleArt({ name }: { name: Scribble }) {
 function SparkLines({ side }: { side: 'left' | 'right' }) {
 	return (
 		<span className={cx(styles.spark, styles[`spark-${side}`])} aria-hidden="true">
-			<img src="/landing/summary/spark-lines-light-idle.svg" alt="" className={cx(styles.idle, 'u-only-light')} />
-			<img src="/landing/summary/spark-lines-dark-idle.svg" alt="" className={cx(styles.idle, 'u-only-dark')} />
-			<img src={`/landing/summary/spark-lines-${side}-light-active.svg`} alt="" className={cx(styles.active, 'u-only-light')} />
-			<img src={`/landing/summary/spark-lines-${side}-dark-active.svg`} alt="" className={cx(styles.active, 'u-only-dark')} />
+			<img loading="lazy" decoding="async" src="/landing/summary/spark-lines-light-idle.svg" alt="" className={cx(styles.idle, 'u-only-light')} />
+			<img loading="lazy" decoding="async" src="/landing/summary/spark-lines-dark-idle.svg" alt="" className={cx(styles.idle, 'u-only-dark')} />
+			<img loading="lazy" decoding="async" src={`/landing/summary/spark-lines-${side}-light-active.svg`} alt="" className={cx(styles.active, 'u-only-light')} />
+			<img loading="lazy" decoding="async" src={`/landing/summary/spark-lines-${side}-dark-active.svg`} alt="" className={cx(styles.active, 'u-only-dark')} />
 		</span>
 	);
 }

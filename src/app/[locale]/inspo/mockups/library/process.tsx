@@ -2,7 +2,7 @@
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Heading, Text } from '@/components/ui';
+import { Heading, Text } from '@/components/ui/text';
 import { PROCESS } from '@/components/layout/content';
 import { ProcessOneStep, ProcessRail } from './process-live';
 

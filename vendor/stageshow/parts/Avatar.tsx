@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from 'react'
+import { memo, type HTMLAttributes } from 'react'
 import { useLook } from '../looks'
 import './Avatar.css'
 
@@ -26,7 +26,8 @@ const PEOPLE = ['#c98f6e', '#6f9b7d', '#7b86c7', '#c47a9e', '#8c9ab0', '#c2a35a'
 // A look can recolor them with --ss-person-1 to -6 and --ss-person-text (yeta.css does)
 const hue = (name: string) => { let h = 0; for (const c of name) h = (h * 31 + c.charCodeAt(0)) % 9973; const i = h % PEOPLE.length; return `var(--ss-person-${i + 1}, ${PEOPLE[i]})` }
 
-export function Avatar({ name = '', plain = false, size = 24, tone = name ? 'person' : 'ink', src, ring, className, style, ...rest }: AvatarProps) {
+// Yeta: memoised so a scene's state changes don't redraw avatars whose props stay the same.
+export const Avatar = memo(function Avatar({ name = '', plain = false, size = 24, tone = name ? 'person' : 'ink', src, ring, className, style, ...rest }: AvatarProps) {
   const { fidelity } = useLook()
   const disc = plain || fidelity === 'minimal'
   const person = tone === 'person' && !disc ? { background: hue(name), color: 'var(--ss-person-text, #fff)' } : undefined
@@ -44,4 +45,4 @@ export function Avatar({ name = '', plain = false, size = 24, tone = name ? 'per
       {src && !disc ? <img src={src} alt="" /> : disc ? null : <span className="ss-avatar__initial">{initials.toUpperCase()}</span>}
     </span>
   )
-}
+})

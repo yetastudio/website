@@ -2,7 +2,9 @@
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Button, Surface, Text } from '@/components/ui';
+import { Button } from '@/components/ui/button';
+import { Surface } from '@/components/ui/surface';
+import { Text } from '@/components/ui/text';
 import { BOOKING_URL } from '@/components/layout/sections';
 
 //! Styles

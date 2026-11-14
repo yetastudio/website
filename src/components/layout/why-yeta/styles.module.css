@@ -33,8 +33,11 @@
 
 /* ── Mobile chip card (Figma 728:665: radius 32, padding 16, gap 12) ── */
 /* Wide enough for the open chip's scene (288 + the card's 16 inset on each side), with that
-   scene's room kept at its foot: 12 above it, its height at its 288 × 148 ratio (./tour). */
-.card {
+   scene's room kept at its foot: 12 above it, its height at its 288 × 148 ratio (./tour).
+   Scoped under .section so it outranks Surface's own padding, radius and tone classes whatever
+   order the stylesheets load in (with equal specificity, Surface loading last dropped the room
+   and the open scene spilled out of the card). */
+.section .card {
 	--why-card-width: 20rem; /* 320 */
 	--why-room: calc(var(--space-12) + (min(100cqi, var(--why-card-width)) - 2 * var(--space-16)) * 148 / 288);
 
@@ -94,7 +97,7 @@
 		display: none;
 	}
 
-	.card {
+	.section .card {
 		display: none;
 	}
 

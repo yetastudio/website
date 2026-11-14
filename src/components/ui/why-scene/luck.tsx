@@ -6,6 +6,9 @@ import { ENTRY_MS, SCENE_HEIGHT, SCENE_WIDTH, type WhyTourCopy } from './shared'
 import look from './look.module.css';
 import styles from './luck.module.css';
 
+// Static parts, hoisted: the scene redraws on every state change and these never change.
+const PLAY_ICON = <Play size={10} strokeWidth={2.25} aria-hidden />;
+
 // Luck has nothing to do with it: the call is made by a test, not a hunch.
 // An A/B test reads both variants; their bars fill and their rates roll up,
 // and B is marked the winner. Yeta's cursor presses Run test and, once the
@@ -51,7 +54,7 @@ export function LuckScene({ copy, playing }: { copy: WhyTourCopy['luck']; playin
 					<div className={styles.head}>
 						<span className={look.label}>{copy.test}</span>
 						<span data-target="run">
-							<Button size="small" variant="secondary" icon={<Play size={10} strokeWidth={2.25} aria-hidden />}>
+							<Button size="small" variant="secondary" icon={PLAY_ICON}>
 								{copy.run}
 							</Button>
 						</span>

@@ -5,7 +5,10 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Accent, Button, Heading, LogoMark, Surface, Text, Wordmark } from '@/components/ui';
+import { Accent, Heading, Text } from '@/components/ui/text';
+import { Button } from '@/components/ui/button';
+import { LogoMark, Wordmark } from '@/components/ui/brand';
+import { Surface } from '@/components/ui/surface';
 import { BOOKING_URL } from '@/components/layout/sections';
 import { SHOTS } from '@/components/layout/content';
 

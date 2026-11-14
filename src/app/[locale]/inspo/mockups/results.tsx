@@ -7,7 +7,9 @@ import { useEffect, useRef, useState } from 'react';
 import { useAutoplay } from './use-autoplay';
 
 //! Components
-import { Surface, Text, type TileHue } from '@/components/ui';
+import { Surface } from '@/components/ui/surface';
+import { Text } from '@/components/ui/text';
+import type { TileHue } from '@/components/ui/gradient-tile';
 
 //! Styles
 import styles from './mockups.module.css';

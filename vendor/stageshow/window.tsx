@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from 'react'
+import { memo, type HTMLAttributes, type ReactNode } from 'react'
 import { useLook } from './looks'
 import './window.css'
 
@@ -237,7 +237,8 @@ export interface TextProps extends HTMLAttributes<HTMLSpanElement> {
  * Text that knows the stage's fidelity: real words normally, a bar of about
  * the same width in minimal. Write real copy once and every look follows.
  */
-export function Text({ children, w, h = 6, tone = 3, wrap, filler, className, style, ...rest }: TextProps) {
+// Yeta: memoised, like the other leaf parts a scene redraws on every act.set (string children, the look from context).
+export const Text = memo(function Text({ children, w, h = 6, tone = 3, wrap, filler, className, style, ...rest }: TextProps) {
   const { fidelity } = useLook()
   if (fidelity === 'minimal' || (filler && fidelity !== 'realistic')) {
     const size = typeof style?.fontSize === 'number' ? style.fontSize : 11
@@ -248,7 +249,7 @@ export function Text({ children, w, h = 6, tone = 3, wrap, filler, className, st
       {children}
     </span>
   )
-}
+})
 
 export interface PromptProps extends HTMLAttributes<HTMLDivElement> {
   /** The working directory shown before the prompt. */

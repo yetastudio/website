@@ -5,6 +5,12 @@ import { SCENE_HEIGHT, SCENE_WIDTH, sceneCursor, type SceneCopy } from './shared
 import look from './look.module.css';
 import styles from './design.module.css';
 
+// Static parts, hoisted: the scene redraws on every state change and these never change.
+const POINTER_ICON = <MousePointer2 size={12} strokeWidth={1.75} aria-hidden />;
+const FRAME_ICON = <Frame size={12} strokeWidth={1.75} aria-hidden />;
+const SQUARE_ICON = <Square size={12} strokeWidth={1.75} aria-hidden />;
+const TYPE_ICON = <Type size={12} strokeWidth={1.75} aria-hidden />;
+
 // Design: a design tool. The window hangs off the tile's top-left corner,
 // the canvas on the left with one frame selected, its inspector on the right.
 // Beats: the cursor takes the Radius slider and drags it; the frame's corners
@@ -65,16 +71,16 @@ export function DesignScene({ copy }: { copy: SceneCopy['design'] }) {
 					<div className={`${look.panel} ${styles.win}`}>
 						<div className={styles.bar}>
 							<span className={styles.tool} data-active>
-								<MousePointer2 size={12} strokeWidth={1.75} aria-hidden />
+								{POINTER_ICON}
 							</span>
 							<span className={styles.tool}>
-								<Frame size={12} strokeWidth={1.75} aria-hidden />
+								{FRAME_ICON}
 							</span>
 							<span className={styles.tool}>
-								<Square size={12} strokeWidth={1.75} aria-hidden />
+								{SQUARE_ICON}
 							</span>
 							<span className={styles.tool}>
-								<Type size={12} strokeWidth={1.75} aria-hidden />
+								{TYPE_ICON}
 							</span>
 							<Bar w={56} h={5} tone={3} className={styles.file} />
 						</div>
