@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Avatar, Badge, Bar, Roll, Stage, States, Text, type Act } from '@stageshow';
 import { ArrowUpRight, Globe } from 'lucide-react';
 
@@ -41,7 +42,8 @@ async function script(a: Act<S>) {
 	await a.wait(1500);
 }
 
-export function LaunchScene({ copy }: { copy: SceneCopy['launch'] }) {
+// Memoised: WhyScene and the stage hosts re-render around it with the same copy and playing flag.
+export const LaunchScene = memo(function LaunchScene({ copy }: { copy: SceneCopy['launch'] }) {
 	return (
 		<Stage<S> width={SCENE_WIDTH} height={SCENE_HEIGHT} initial={POSTER} poster={POSTER} script={script} className={styles.stage}>
 			{(s) => {
@@ -89,4 +91,4 @@ export function LaunchScene({ copy }: { copy: SceneCopy['launch'] }) {
 			}}
 		</Stage>
 	);
-}
+});

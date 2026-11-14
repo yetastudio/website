@@ -1,5 +1,5 @@
 //! React Core
-import type { SVGAttributes } from 'react';
+import { memo, type SVGAttributes } from 'react';
 
 //! Icons
 import {
@@ -140,7 +140,8 @@ export const iconNames: IconName[] = [
 ];
 
 /** One icon API for the brand glyphs and the few supplemental ones. Colour is `currentColor`. */
-export function Icon({ name, size = 'lg', label, className, ...rest }: IconProps) {
+/* Memoised: a pure leaf (buttons and chips re-render it with the same name and size). */
+export const Icon = memo(function Icon({ name, size = 'lg', label, className, ...rest }: IconProps) {
 	const a11y = label ? { role: 'img', 'aria-label': label } : { 'aria-hidden': true as const };
 	const classes = cx(styles.icon, styles[size], className);
 
@@ -163,7 +164,7 @@ export function Icon({ name, size = 'lg', label, className, ...rest }: IconProps
 			{glyph.body}
 		</svg>
 	);
-}
+});
 
 export type { GlyphName };
 export default Icon;

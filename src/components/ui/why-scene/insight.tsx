@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Avatar, Button, Count, Stage, Text, type Act } from '@stageshow';
 import { TrendingUp } from 'lucide-react';
 
@@ -37,7 +38,8 @@ async function script(a: Act<S>) {
 
 const percent = (n: number) => `+${Math.round(n)}%`;
 
-export function InsightScene({ copy, playing }: { copy: WhyTourCopy['insight']; playing: boolean }) {
+// Memoised: WhyScene and the stage hosts re-render around it with the same copy and playing flag.
+export const InsightScene = memo(function InsightScene({ copy, playing }: { copy: WhyTourCopy['insight']; playing: boolean }) {
 	return (
 		<Stage<S>
 			width={SCENE_WIDTH}
@@ -81,4 +83,4 @@ export function InsightScene({ copy, playing }: { copy: WhyTourCopy['insight']; 
 			)}
 		</Stage>
 	);
-}
+});

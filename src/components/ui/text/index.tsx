@@ -1,5 +1,5 @@
 //! React Core
-import type { ElementType, HTMLAttributes, ReactNode } from 'react';
+import { memo, type ElementType, type HTMLAttributes, type ReactNode } from 'react';
 
 //! Utils
 import { cx } from '@/lib/cx';
@@ -35,7 +35,8 @@ export type TextProps = HTMLAttributes<HTMLElement> & {
  * The text primitive. Every visible string goes through Text, Heading or Accent,
  * so size, weight, colour and tracking always come from tokens.
  */
-export function Text({
+/* Memoised: a pure leaf that parents re-render with the same props (autoplay lists, live mockups, scenes). */
+export const Text = memo(function Text({
 	as: Component = 'p',
 	size = 'md',
 	weight = 'light',
@@ -68,7 +69,7 @@ export function Text({
 			{children}
 		</Component>
 	);
-}
+});
 
 export type HeadingProps = Omit<TextProps, 'as'> & {
 	/** Semantic level. Size is independent: pick it with `size`. */

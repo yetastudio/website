@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Badge, Button, Count, Meter, Stage, type Act } from '@stageshow';
 import { Play } from 'lucide-react';
 
@@ -38,7 +39,8 @@ async function script(a: Act<S>) {
 
 const rate = (n: number) => `${n.toFixed(1)}%`;
 
-export function LuckScene({ copy, playing }: { copy: WhyTourCopy['luck']; playing: boolean }) {
+// Memoised: WhyScene and the stage hosts re-render around it with the same copy and playing flag.
+export const LuckScene = memo(function LuckScene({ copy, playing }: { copy: WhyTourCopy['luck']; playing: boolean }) {
 	return (
 		<Stage<S>
 			width={SCENE_WIDTH}
@@ -80,4 +82,4 @@ export function LuckScene({ copy, playing }: { copy: WhyTourCopy['luck']; playin
 			)}
 		</Stage>
 	);
-}
+});
