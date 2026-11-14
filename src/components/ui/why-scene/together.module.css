@@ -10,17 +10,9 @@
 
 /* Each arrival opens its own room, so the lines under it move with it */
 .next {
-	padding-top: var(--space-10);
+	padding-top: var(--space-8);
 }
 
-/* Resolved sits on the words' column, under the reply */
-.resolved {
-	padding-left: var(--space-28);
-}
-
-.tick {
-	color: var(--scene-accent);
-}
 
 /* The reply field and its send button, where the cursor writes. */
 .composer {
@@ -28,7 +20,7 @@
 	align-items: center;
 	gap: var(--space-6);
 	width: var(--composer-width);
-	margin-top: var(--space-12);
+	margin-top: var(--space-10);
 	--composer-width: 252px;
 }
 

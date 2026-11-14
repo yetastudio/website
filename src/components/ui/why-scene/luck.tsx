@@ -1,4 +1,4 @@
-import { Badge, Button, Count, Meter, Stage, Text, type Act } from '@stageshow';
+import { Badge, Button, Count, Meter, Stage, type Act } from '@stageshow';
 import { Play } from 'lucide-react';
 
 import { sceneCursor } from './cursor';
@@ -8,9 +8,8 @@ import styles from './luck.module.css';
 
 // Luck has nothing to do with it: the call is made by a test, not a hunch.
 // An A/B test reads both variants; their bars fill and their rates roll up,
-// and B is marked the winner with what it won by. Yeta's cursor presses Run
-// test and, once the rates are in, reads the result. The poster is the
-// finished test with B ahead.
+// and B is marked the winner. Yeta's cursor presses Run test and, once the
+// rates are in, settles on B. The poster is the finished test with B ahead.
 //
 // Real strings: the test's name, Winner (A and B are the variants' letters).
 
@@ -30,7 +29,7 @@ async function script(a: Act<S>) {
 	await a.wait(700);
 	a.mark('winner');
 	await a.set({ win: true });
-	await a.move({ at: 'result', x: 0.85, y: 0.9 });
+	await a.move({ at: 'b', x: 0.3, y: 0.7 });
 	await a.wait(400);
 }
 
@@ -73,9 +72,6 @@ export function LuckScene({ copy, playing }: { copy: WhyTourCopy['luck']; playin
 								</Badge>
 							</span>
 						</div>
-					</div>
-					<div className={`${look.arrive} ${styles.result}`} data-on={s.win || undefined} data-target="result">
-						<Text className={look.strong}>{copy.result}</Text>
 					</div>
 				</div>
 			)}

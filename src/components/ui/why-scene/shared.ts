@@ -22,7 +22,7 @@ export const CURSOR_IDLE_MS = 1100;
  */
 export const SCENE_PAYOFF_MS: Record<WhySceneName, number> = {
 	insight: 2800,
-	together: 3600,
+	together: 3800,
 	luck: 2900,
 	defy: 2900,
 	pixel: 2400,
@@ -32,9 +32,9 @@ export const SCENE_PAYOFF_MS: Record<WhySceneName, number> = {
 
 /** The words each scene shows, from messages `whyYeta.tour.<scene>`. */
 export type WhyTourCopy = {
-	insight: { quote: string; metric: string; action: string };
-	together: { ask: string; reply: string; resolved: string };
-	luck: { test: string; winner: string; run: string; result: string };
+	insight: { quote: string; metric: string; buy: string };
+	together: { ask: string; reply: string; thanks: string };
+	luck: { test: string; winner: string; run: string };
 	defy: { metric: string; boost: string };
 	pixel: { cta: string };
 	vision: { title: string; cta: string; live: string; deploy: string; deploying: string };

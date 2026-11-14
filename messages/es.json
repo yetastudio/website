@@ -68,20 +68,19 @@
     },
     "tour": {
       "insight": {
-        "quote": "“El registro es muy largo.”",
-        "metric": "Registros",
-        "action": "Acortar registro"
+        "quote": "“No encuentro dónde comprar.”",
+        "metric": "Ventas",
+        "buy": "Comprar"
       },
       "together": {
         "ask": "¿Le damos más fuerza al hero?",
-        "reply": "Listo, fijate.",
-        "resolved": "Resuelto"
+        "reply": "¡Hecho! Ya tiene más fuerza, mirá.",
+        "thanks": "¡Me encanta, gracias!"
       },
       "luck": {
         "test": "Test A/B",
         "winner": "Ganadora",
-        "run": "Correr test",
-        "result": "B: +48% conversión"
+        "run": "Correr test"
       },
       "defy": {
         "metric": "Alcance de marca",

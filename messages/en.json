@@ -68,20 +68,19 @@
     },
     "tour": {
       "insight": {
-        "quote": "“The sign-up is too long.”",
-        "metric": "Sign-ups",
-        "action": "Shorten sign-up"
+        "quote": "“I can’t find where to buy.”",
+        "metric": "Sales",
+        "buy": "Buy"
       },
       "together": {
         "ask": "Can the hero feel bolder?",
-        "reply": "Done. Take a look.",
-        "resolved": "Resolved"
+        "reply": "Done! It’s bolder now, take a look.",
+        "thanks": "Love it, thank you!"
       },
       "luck": {
         "test": "A/B test",
         "winner": "Winner",
-        "run": "Run test",
-        "result": "B: +48% conversion"
+        "run": "Run test"
       },
       "defy": {
         "metric": "Brand reach",

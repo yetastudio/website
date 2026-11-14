@@ -68,20 +68,19 @@
     },
     "tour": {
       "insight": {
-        "quote": "“O cadastro é longo demais.”",
-        "metric": "Cadastros",
-        "action": "Encurtar cadastro"
+        "quote": "“Não acho onde comprar.”",
+        "metric": "Vendas",
+        "buy": "Comprar"
       },
       "together": {
         "ask": "Dá pra deixar o hero mais forte?",
-        "reply": "Feito. Dá uma olhada.",
-        "resolved": "Resolvido"
+        "reply": "Pronto! Ficou mais forte, olha só.",
+        "thanks": "Amei, obrigada!"
       },
       "luck": {
         "test": "Teste A/B",
         "winner": "Vencedora",
-        "run": "Rodar teste",
-        "result": "B: +48% conversão"
+        "run": "Rodar teste"
       },
       "defy": {
         "metric": "Alcance da marca",
