@@ -216,10 +216,11 @@ export interface BarProps extends HTMLAttributes<HTMLSpanElement> {
 
 /** A placeholder: a line of text, a value, an icon slot or a pill. A line
  * gives way in a narrow row as text would; where it fits, it is exactly `w`. */
-export function Bar({ w, h = 6, tone = 3, r = 2, shrink, className, style, ...rest }: BarProps) {
+// Yeta: memoised, like Text (scenes draw dozens of placeholder bars and redraw on every act.set).
+export const Bar = memo(function Bar({ w, h = 6, tone = 3, r = 2, shrink, className, style, ...rest }: BarProps) {
   const gives = shrink ?? (typeof w === 'number' && w > h * 3)
   return <span {...rest} className={`ss-bar${className ? ` ${className}` : ''}`} data-shrink={gives || undefined} style={{ width: w, height: h, borderRadius: r, background: INK[tone - 1], ...style }} />
-}
+})
 
 export interface TextProps extends HTMLAttributes<HTMLSpanElement> {
   children: string

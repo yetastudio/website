@@ -51,8 +51,10 @@ type ChapterId = (typeof CHAPTERS)[number]['value'];
  */
 export function ChapterNavMockup() {
 	const [active, setActive] = useState<ChapterId>('about');
-	const [progress, setProgress] = useState(0);
 	const scrollRef = useRef<HTMLDivElement>(null);
+	// The hairline follows the scroll by writing its transform directly: a scroll event no longer
+	// re-renders the bar, the segmented control and every chapter.
+	const progressRef = useRef<HTMLSpanElement>(null);
 	const reduceMotion = useReducedMotion();
 	// While a picked chapter scrolls into place, scroll-spy must not fight the pick.
 	const pickedRef = useRef<ChapterId | null>(null);
@@ -62,7 +64,7 @@ export function ChapterNavMockup() {
 		if (!scroller) return;
 		const onScroll = () => {
 			const max = scroller.scrollHeight - scroller.clientHeight;
-			setProgress(max > 0 ? scroller.scrollTop / max : 0);
+			if (progressRef.current) progressRef.current.style.transform = `scaleX(${max > 0 ? scroller.scrollTop / max : 0})`;
 			const sections = Array.from(scroller.querySelectorAll<HTMLElement>('[data-chapter]'));
 			const line = scroller.scrollTop + scroller.clientHeight * 0.35;
 			const atEnd = scroller.scrollTop >= max - 2;
@@ -95,7 +97,7 @@ export function ChapterNavMockup() {
 			<div className={styles.chapterBar}>
 				<SegmentedControl label="Case study chapters" size="sm" options={CHAPTERS} value={active} onChange={pick} />
 				<span className={styles.chapterProgress} aria-hidden="true">
-					<span className={styles.chapterProgressFill} style={{ transform: `scaleX(${progress})` }} />
+					<span ref={progressRef} className={styles.chapterProgressFill} style={{ transform: 'scaleX(0)' }} />
 				</span>
 			</div>
 			{/* data-lenis-prevent: the page's smooth scroll must leave this nested scroller alone. */}
