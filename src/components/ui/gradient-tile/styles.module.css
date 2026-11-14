@@ -1,10 +1,14 @@
+/* One rounded clip for the whole tile, applied after its layers are composited. An overflow clip
+   with a radius masks each composited layer on its own, which left a thin arc of the wash showing
+   wherever a scene panel runs off a corner. The tile draws nothing outside its box (u-outline's
+   ring sits inside it), so the clip costs nothing. */
 .tile {
 	position: relative;
 	display: grid;
 	place-items: center;
-	overflow: hidden;
 	isolation: isolate;
 	border-radius: var(--radius-2xl);
+	clip-path: inset(0 round var(--radius-2xl));
 	background-color: var(--color-surface-band);
 	color: var(--color-text);
 }
