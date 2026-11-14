@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState, type HTMLAttributes, type ReactNode } from 'react'
+import { memo, useLayoutEffect, useState, type HTMLAttributes, type ReactNode } from 'react'
 import { Roll } from '../motion/Roll'
 import './Button.css'
 
@@ -31,7 +31,8 @@ export type ButtonProps = HTMLAttributes<HTMLSpanElement> & {
  * arrives later (a tick once it's done) grows its slot open and fades in, and
  * one that leaves closes it, so the width changes as one movement too.
  */
-export function Button({ variant = 'secondary', size = 'medium', icon, trailingIcon, children, className, ...rest }: ButtonProps) {
+// Yeta: memoised (scenes pass hoisted icon elements, so its props stay equal between scene states).
+export const Button = memo(function Button({ variant = 'secondary', size = 'medium', icon, trailingIcon, children, className, ...rest }: ButtonProps) {
   // The leading slot stays mounted once it has held an icon, so it can open
   // and close; an icon that arrives after mount opens it a frame later, from
   // closed, rather than appearing at full size
@@ -65,4 +66,4 @@ export function Button({ variant = 'secondary', size = 'medium', icon, trailingI
       {trailingIcon && <span className="ss-button__icon">{trailingIcon}</span>}
     </span>
   )
-}
+})

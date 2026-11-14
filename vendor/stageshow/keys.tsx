@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import './keys.css'
 
 // Keystrokes shown as keycaps (act.key): the caps for a combo, and the rows
@@ -16,7 +17,8 @@ const KEYCAPS: Record<string, string> = { cmd: '⌘', shift: '⇧', alt: '⌥', 
 export const capsOf = (combo: string) => combo.split('+').map((k) => KEYCAPS[k.trim().toLowerCase()] ?? k.trim().toUpperCase())
 
 /** The last row (fading out) and the current one. */
-export function Keycaps({ rows, at }: { rows: (Keys | null)[]; at: KeysAt }) {
+// Yeta: memoised (the stage passes a memoised rows array), so scene state changes don't redraw the caps.
+export const Keycaps = memo(function Keycaps({ rows, at }: { rows: (Keys | null)[]; at: KeysAt }) {
   return (
     <>
       {rows.map(
@@ -33,4 +35,4 @@ export function Keycaps({ rows, at }: { rows: (Keys | null)[]; at: KeysAt }) {
       )}
     </>
   )
-}
+})

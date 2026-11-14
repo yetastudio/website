@@ -5,6 +5,10 @@ import { SCENE_HEIGHT, SCENE_WIDTH, type SceneCopy } from './shared';
 import look from './look.module.css';
 import styles from './launch.module.css';
 
+// Static parts, hoisted: the scene redraws on every state change and these never change.
+const GLOBE_ICON = <Globe size={12} strokeWidth={1.75} aria-hidden />;
+const OUT_ICON = <ArrowUpRight size={12} strokeWidth={1.75} aria-hidden className={styles.out} />;
+
 // Launch: a deploy going live. The production deployment hangs off the
 // tile's top-left corner: its status, the commit it ships, and one slot
 // under them that holds the build's progress while it runs and the live
@@ -69,9 +73,9 @@ export function LaunchScene({ copy }: { copy: SceneCopy['launch'] }) {
 								),
 								ready: (
 									<span className={styles.url}>
-										<Globe size={12} strokeWidth={1.75} aria-hidden />
+										{GLOBE_ICON}
 										<Text className={styles.address}>{copy.url}</Text>
-										<ArrowUpRight size={12} strokeWidth={1.75} aria-hidden className={styles.out} />
+										{OUT_ICON}
 									</span>
 								),
 							}}

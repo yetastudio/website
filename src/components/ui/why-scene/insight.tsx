@@ -6,6 +6,9 @@ import { ENTRY_MS, SCENE_HEIGHT, SCENE_WIDTH, type WhyTourCopy } from './shared'
 import look from './look.module.css';
 import styles from './insight.module.css';
 
+// Static parts, hoisted: the scene redraws on every state change and these never change.
+const TREND_ICON = <TrendingUp size={12} strokeWidth={2} aria-hidden />;
+
 // From insight to impact: what a user said becomes what the brand gains, in
 // three readable beats. The insight: a shopper's quote, "I can't find where to
 // buy", over the product card it is about, its Buy link small and faint. The
@@ -68,7 +71,7 @@ export function InsightScene({ copy, playing }: { copy: WhyTourCopy['insight']; 
 						</div>
 						<div className={`${look.arrive} ${styles.impact}`} data-on={s.clear || undefined}>
 							<span className={styles.tile}>
-								<TrendingUp size={12} strokeWidth={2} aria-hidden />
+								{TREND_ICON}
 							</span>
 							<Text className={look.label}>{copy.metric}</Text>
 							<Count value={s.value} format={percent} className={`${look.strong} ${styles.value}`} data-target="value" />

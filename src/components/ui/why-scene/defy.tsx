@@ -6,6 +6,9 @@ import { ENTRY_MS, SCENE_HEIGHT, SCENE_WIDTH, type WhyTourCopy } from './shared'
 import look from './look.module.css';
 import styles from './defy.module.css';
 
+// Static parts, hoisted: the scene redraws on every state change and these never change.
+const TREND_ICON = <TrendingUp size={12} strokeWidth={2} aria-hidden />;
+
 // Building brands that defy luck: growth that keeps climbing, not one lucky
 // spike. The brand's reach draws in as a steady line, quarter after quarter,
 // and its multiple rolls up with it. The line is ink; only its end dot takes
@@ -52,7 +55,7 @@ export function DefyScene({ copy, playing }: { copy: WhyTourCopy['defy']; playin
 					<div className={styles.head}>
 						<span className={look.label}>{copy.metric}</span>
 						<span className={styles.boost} data-target="boost">
-							<Button size="small" variant="secondary" icon={<TrendingUp size={12} strokeWidth={2} aria-hidden />}>
+							<Button size="small" variant="secondary" icon={TREND_ICON}>
 								{copy.boost}
 							</Button>
 						</span>

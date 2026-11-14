@@ -8,6 +8,10 @@ import { ENTRY_MS, SCENE_HEIGHT, SCENE_WIDTH, type WhyTourCopy } from './shared'
 import look from './look.module.css';
 import styles from './goals.module.css';
 
+// Static parts, hoisted: the scene redraws on every state change and these never change.
+const YETA_MARK = <LogoMark size={20} alt="" />;
+const TICK_ICON = <Check size={10} strokeWidth={2.5} aria-hidden className={styles.tick} />;
+
 // Your goals are our goals: one goal, shared. The client and the studio sit
 // on the same goal card; progress fills past the target mark and the goal is
 // marked Reached. Yeta's cursor presses the goal's track to start it and
@@ -54,7 +58,7 @@ export function GoalsScene({ copy, playing }: { copy: WhyTourCopy['goals']; play
 					<div className={styles.head}>
 						<span className={styles.pair}>
 							<Avatar name="Ana" size={20} />
-							<LogoMark size={20} alt="" />
+							{YETA_MARK}
 						</span>
 						<span className={look.strong}>{copy.label}</span>
 					</div>
@@ -62,7 +66,7 @@ export function GoalsScene({ copy, playing }: { copy: WhyTourCopy['goals']; play
 						<span className={look.label}>{copy.metric}</span>
 						<Count value={s.run ? RESULT : 0} format={percent} className={`${look.strong} ${styles.value}`} />
 						<span className={look.arrive} data-on={s.done || undefined}>
-							<Badge icon={<Check size={10} strokeWidth={2.5} aria-hidden className={styles.tick} />}>{copy.reached}</Badge>
+							<Badge icon={TICK_ICON}>{copy.reached}</Badge>
 						</span>
 					</div>
 					<div className={styles.track} data-done={s.done || undefined} data-target="track">
