@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { useId } from 'react';
+import { memo, useId } from 'react';
 
 //! Utils
 import { cx } from '@/lib/cx';
@@ -22,7 +22,8 @@ export type YetaCursorProps = {
  * cursor style and the Why Yeta tour); the site never replaces the visitor's own pointer.
  * Gradient ids come from useId, so any number of cursors can share a page.
  */
-export function YetaCursor({ className }: YetaCursorProps) {
+// Memoised: a pure part its parents redraw with the same props.
+export const YetaCursor = memo(function YetaCursor({ className }: YetaCursorProps) {
 	const id = useId().replace(/[^a-zA-Z0-9_-]/g, '');
 	const fill = `yeta-cursor-fill-${id}`;
 	const stroke = `yeta-cursor-stroke-${id}`;
@@ -46,6 +47,6 @@ export function YetaCursor({ className }: YetaCursorProps) {
 			</defs>
 		</svg>
 	);
-}
+});
 
 export default YetaCursor;

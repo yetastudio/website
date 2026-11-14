@@ -1,3 +1,4 @@
+import { memo } from 'react';
 //! Next Core
 import Image from 'next/image';
 
@@ -27,7 +28,8 @@ function initials(name: string) {
 }
 
 /** Inspo component (Figma uses it inside Testimonial Card and the case-study team row). */
-export function Avatar({ name, src, size = 'md', className }: AvatarProps) {
+// Memoised: a pure part its parents redraw with the same props.
+export const Avatar = memo(function Avatar({ name, src, size = 'md', className }: AvatarProps) {
 	return (
 		<span className={cx(styles.avatar, styles[size], 'u-bevel', className)}>
 			{src ? (
@@ -39,7 +41,7 @@ export function Avatar({ name, src, size = 'md', className }: AvatarProps) {
 			)}
 		</span>
 	);
-}
+});
 
 export type AvatarGroupProps = {
 	people: ReadonlyArray<{ name: string; src?: string }>;
@@ -49,7 +51,8 @@ export type AvatarGroupProps = {
 	className?: string;
 };
 
-export function AvatarGroup({ people, size = 'md', max = 4, className }: AvatarGroupProps) {
+// Memoised: a pure part its parents redraw with the same props.
+export const AvatarGroup = memo(function AvatarGroup({ people, size = 'md', max = 4, className }: AvatarGroupProps) {
 	const shown = people.slice(0, max);
 	const rest = people.length - shown.length;
 	return (
@@ -64,6 +67,6 @@ export function AvatarGroup({ people, size = 'md', max = 4, className }: AvatarG
 			)}
 		</span>
 	);
-}
+});
 
 export default Avatar;

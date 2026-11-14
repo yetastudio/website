@@ -1,21 +1,7 @@
 'use client';
 
 //! React Core
-import {
-	createContext,
-	useCallback,
-	useContext,
-	useEffect,
-	useId,
-	useLayoutEffect,
-	useRef,
-	useState,
-	type FocusEvent,
-	type KeyboardEvent,
-	type MouseEvent,
-	type PointerEvent as ReactPointerEvent,
-	type ReactNode,
-} from 'react';
+import { memo, createContext, useCallback, useContext, useEffect, useId, useLayoutEffect, useRef, useState, type FocusEvent, type KeyboardEvent, type MouseEvent, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 
 //! Next Core
 import { Link as LocaleLink, localeHref } from '@/i18n/navigation';
@@ -386,8 +372,9 @@ export function MenuGroup({ label, children, className }: MenuGroupProps) {
 }
 
 /** A hairline between groups of items. */
-export function MenuSeparator({ className }: { className?: string }) {
+// Memoised: a pure part its parents redraw with the same props.
+export const MenuSeparator = memo(function MenuSeparator({ className }: { className?: string }) {
 	return <div role="separator" className={cx(styles.separator, className)} />;
-}
+});
 
 export default DropdownMenu;

@@ -77,10 +77,11 @@ export type HeadingProps = Omit<TextProps, 'as'> & {
 };
 
 /** Headings default to Funnel Display Bold at the tight (1.1) line height, the Figma Headline role. */
-export function Heading({ level = 2, size = '4xl', weight = 'bold', leading = 'tight', ...rest }: HeadingProps) {
+// Memoised: a pure part its parents redraw with the same props.
+export const Heading = memo(function Heading({ level = 2, size = '4xl', weight = 'bold', leading = 'tight', ...rest }: HeadingProps) {
 	const tag = `h${level}` as ElementType;
 	return <Text as={tag} size={size} weight={weight} leading={leading} {...rest} />;
-}
+});
 
 export type AccentProps = HTMLAttributes<HTMLElement> & {
 	children: ReactNode;

@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { useEffect, useRef, useState, type HTMLAttributes, type ReactNode } from 'react';
+import { memo, useEffect, useRef, useState, type HTMLAttributes, type ReactNode } from 'react';
 
 //! Utils
 import { cx } from '@/lib/cx';
@@ -33,7 +33,8 @@ export type SkeletonProps = Omit<HTMLAttributes<HTMLSpanElement>, 'children'> & 
  * loading. Pulses with the transitions.dev "Skeleton loader" (stands still under reduced motion) and
  * is hidden from assistive tech: the region that loads says so (see SkeletonReveal).
  */
-export function Skeleton({ shape = 'text', lines = 1, size, width, ratio = '16 / 9', className, style, ...rest }: SkeletonProps) {
+// Memoised: a pure part its parents redraw with the same props.
+export const Skeleton = memo(function Skeleton({ shape = 'text', lines = 1, size, width, ratio = '16 / 9', className, style, ...rest }: SkeletonProps) {
 	const textSize = size ?? 'md';
 	const circleSize = size ?? 'md';
 	return (
@@ -51,7 +52,7 @@ export function Skeleton({ shape = 'text', lines = 1, size, width, ratio = '16 /
 			{shape === 'rect' && <span className={cx(styles.bone, styles.rectBone)} style={{ aspectRatio: ratio }} />}
 		</span>
 	);
-}
+});
 
 export type SkeletonRevealProps = {
 	/** Flip to true when the data arrives: skeleton and content cross-fade with a matching blur. */

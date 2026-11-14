@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { forwardRef, useId, useRef, type ReactNode, type SelectHTMLAttributes } from 'react';
+import { forwardRef, memo, useId, useRef, type ReactNode, type SelectHTMLAttributes } from 'react';
 
 //! Components
 import { Icon } from '@/components/ui/icon';
@@ -41,7 +41,9 @@ const labelSizeFor = { sm: 'sm', md: 'md', lg: 'md' } as const;
  * Inspo component (component.gallery "Select"): a native `<select>` dressed as Input. The list,
  * keyboard (type-ahead, arrows, Enter / Space) and mobile pickers stay the platform's.
  */
-export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select(
+// Memoised: forms re-render around their fields with the same props.
+export const Select = memo(
+	forwardRef<HTMLSelectElement, SelectProps>(function Select(
 	{ id: idProp, label, hideLabel, hint, error, optional, size = 'lg', placeholder, options, className, disabled, required, value, defaultValue, children, ...rest },
 	ref
 ) {
@@ -101,6 +103,6 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
 			<FieldMessage hintId={hintId} errorId={errorId} hint={hint} error={showError ? error : undefined} />
 		</div>
 	);
-});
-
+})
+);
 export default Select;

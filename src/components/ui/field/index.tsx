@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { forwardRef, useEffect, useId, useRef, type InputHTMLAttributes, type ReactNode, type TextareaHTMLAttributes } from 'react';
+import { forwardRef, memo, useEffect, useId, useRef, type InputHTMLAttributes, type ReactNode, type TextareaHTMLAttributes } from 'react';
 
 //! Hooks
 import { useTranslations } from 'next-intl';
@@ -93,7 +93,9 @@ function Chrome({
 export type InputProps = FieldChrome & Omit<InputHTMLAttributes<HTMLInputElement>, 'className'>;
 
 /** Inspo component: labelled text input with hint and error states. */
-export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
+// Memoised: galleries and forms re-render around their fields with the same props.
+export const Input = memo(
+	forwardRef<HTMLInputElement, InputProps>(function Input(
 	{ label, hint, error, optional, className, disabled, required, ...rest },
 	ref
 ) {
@@ -113,12 +115,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
 			/>
 		</Chrome>
 	);
-});
-
+})
+);
 export type TextareaProps = FieldChrome & Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'className'>;
 
 /** Inspo component: the multi-line sibling of Input. Grows with its content. */
-export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function Textarea(
+// Memoised: galleries and forms re-render around their fields with the same props.
+export const Textarea = memo(
+	forwardRef<HTMLTextAreaElement, TextareaProps>(function Textarea(
 	{ label, hint, error, optional, className, disabled, required, rows = 4, ...rest },
 	ref
 ) {
@@ -140,4 +144,5 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
 			/>
 		</Chrome>
 	);
-});
+})
+);

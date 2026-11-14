@@ -1,3 +1,4 @@
+import { memo } from 'react';
 //! Next Core
 import Image from 'next/image';
 
@@ -26,7 +27,8 @@ export type TestimonialCardProps = {
  * Figma Testimonial Card (1213:1430). The quote sits on an inverse wash tile
  * (pastel on the dark site, deep on the light one); the author row stays on the card.
  */
-export function TestimonialCard({ quote, name, role, company, avatar, hue, size = 'desktop', className }: TestimonialCardProps) {
+// Memoised: a pure part its parents redraw with the same props.
+export const TestimonialCard = memo(function TestimonialCard({ quote, name, role, company, avatar, hue, size = 'desktop', className }: TestimonialCardProps) {
 	return (
 		<figure className={cx(styles.card, styles[size], 'u-outline', className)}>
 			<GradientTile hue={hue} shape={size === 'desktop' ? 'testimonial' : 'testimonial-compact'} intensity={size === 'desktop' ? 'strong' : 'soft'} className={styles.tile}>
@@ -45,6 +47,6 @@ export function TestimonialCard({ quote, name, role, company, avatar, hue, size 
 			</figcaption>
 		</figure>
 	);
-}
+});
 
 export default TestimonialCard;
