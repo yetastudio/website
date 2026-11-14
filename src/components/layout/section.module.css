@@ -27,7 +27,7 @@
 	max-width: 17.5rem;
 	font-size: var(--text-md);
 	font-weight: var(--font-weight-light);
-	line-height: var(--space-32);
+	line-height: var(--leading-loose);
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
 }
@@ -57,7 +57,7 @@
 	.ctaText {
 		max-width: none;
 		font-size: var(--text-lg);
-		line-height: var(--leading-relaxed);
+		line-height: var(--leading-normal);
 	}
 
 	.mobileOnly {

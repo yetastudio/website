@@ -40,7 +40,7 @@
 	gap: var(--space-6);
 	font-size: var(--text-sm);
 	font-weight: var(--font-weight-medium);
-	line-height: var(--leading-snug);
+	line-height: var(--leading-normal);
 	color: var(--color-text-strong);
 }
 

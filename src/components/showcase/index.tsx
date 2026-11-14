@@ -53,7 +53,7 @@ export function Specimen({ title, note, children, className }: { title: string; 
 	return (
 		<div className={cx(styles.specimen, className)}>
 			<div className={styles.specimenHeader}>
-				<Heading level={3} size="lg" weight="regular">
+				<Heading level={3} size="lg" weight="regular" leading="snug">
 					{title}
 				</Heading>
 				{note && (

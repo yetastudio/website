@@ -101,7 +101,7 @@
 .label {
 	font-size: var(--text-sm);
 	font-weight: var(--font-weight-regular);
-	line-height: var(--leading-snug);
+	line-height: var(--leading-normal);
 	color: var(--color-text);
 }
 

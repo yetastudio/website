@@ -5,7 +5,7 @@
 	width: 100%;
 	min-width: 0;
 	font-size: var(--text-sm);
-	line-height: var(--leading-snug);
+	line-height: var(--leading-normal);
 	letter-spacing: var(--tracking-tight);
 }
 

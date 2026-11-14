@@ -204,7 +204,7 @@
 .title {
 	color: var(--color-text-strong);
 	font-weight: var(--font-weight-regular);
-	line-height: var(--leading-snug);
+	line-height: var(--leading-normal);
 	overflow-wrap: anywhere;
 }
 

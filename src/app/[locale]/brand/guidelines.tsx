@@ -180,7 +180,7 @@ export default function BrandGuidelines() {
 				</Specimen>
 				<Specimen title="Gradients" note="Metallic on dark, ink on light. Only for the wordmark, display titles and the marks themselves.">
 					<ThemePair>
-						<Text as="span" size="5xl" weight="bold" tone="display">
+						<Text as="span" size="5xl" weight="bold" tone="display" leading="none">
 							Yeta Studio
 						</Text>
 					</ThemePair>
@@ -202,26 +202,26 @@ export default function BrandGuidelines() {
 					<Text size="xs" tone="faint">
 						Display · Funnel Display SemiBold · −3%
 					</Text>
-					<Text size="5xl" weight="semibold" tone="display" leading="tight">
+					<Text size="5xl" weight="semibold" tone="display" leading="none">
 						Yeta Studio
 					</Text>
 					<Text size="xs" tone="faint">
-						Title · Funnel Display Bold 48/60
+						Headline · Funnel Display Bold 48/52.8
 					</Text>
 					<Heading level={3} size="4xl">
 						Our Process
 					</Heading>
 					<Text size="xs" tone="faint">
-						Lead · Funnel Display Light 20/32 with Editorial accents
+						Lead · Funnel Display Light 20/30 with Editorial accents
 					</Text>
-					<Text size="lg" leading="relaxed">
+					<Text size="lg">
 						We craft experiences that blend <Accent italic={false}>creativity</Accent>, <Accent italic={false}>technology</Accent>, and{' '}
 						<Accent italic={false}>strategy</Accent>. Born to <Accent underline>elevate</Accent> your brand.
 					</Text>
 					<Text size="xs" tone="faint">
 						Card title · PP Editorial New Regular
 					</Text>
-					<Text family="serif" size="2xl">
+					<Text family="serif" size="2xl" leading="none">
 						Design with intention.
 					</Text>
 				</ThemePair>
