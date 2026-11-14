@@ -64,19 +64,17 @@
 	border-radius: var(--radius-md);
 }
 
-/* Scoped under .home so they outrank the mark's own `.frame { display }` whatever order the
-   stylesheets load in (with equal specificity, the brand module loading last showed both marks). */
-.home .markDesktop {
-	display: none;
+/* One inline mark, 40 on phones and 48 from 1280 up (Figma). Scoped under .home so it outranks
+   the mark's own `.frame` rules whatever order the stylesheets load in. */
+.home .mark {
+	width: var(--space-40);
+	height: var(--space-40);
 }
 
 @media (min-width: 1280px) {
-	.home .markDesktop {
-		display: inline-block;
-	}
-
-	.home .markMobile {
-		display: none;
+	.home .mark {
+		width: var(--space-48);
+		height: var(--space-48);
 	}
 }
 

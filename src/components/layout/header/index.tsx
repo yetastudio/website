@@ -9,7 +9,7 @@ import { usePathname } from '@/i18n/navigation';
 
 //! Components
 import { Link as LocaleLink } from '@/i18n/navigation';
-import { BrandMark } from '@/components/ui/brand';
+import { InlineBrandMark } from '@/components/ui/brand/inline';
 import { Button } from '@/components/ui/button';
 import { Dialog } from '@/components/ui/dialog';
 import { ThemeSwitch } from '@/components/ui/theme-switch';
@@ -214,8 +214,8 @@ export function Header() {
 					{/* The theme button sits beside the brand mark so both sides of the centred pill weigh the same. */}
 					<div className={styles.lead}>
 						<LocaleLink href="/" className={styles.home} aria-label={tc('home')}>
-							<BrandMark size={48} alt="" className={styles.markDesktop} />
-							<BrandMark size={40} alt="" className={styles.markMobile} />
+							{/* Inline, so the mark paints with the first frame instead of waiting for its image request. */}
+							<InlineBrandMark className={styles.mark} />
 						</LocaleLink>
 						<ThemeSwitch variant="cycle" size="xl" buttonVariant="glass" className={styles.cycleDesktop} />
 						<ThemeSwitch variant="cycle" size="lg" buttonVariant="ghost" className={styles.cycleMobile} />
