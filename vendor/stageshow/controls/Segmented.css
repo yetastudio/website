@@ -28,8 +28,8 @@
     place-items: center;
     height: var(--ss-row);
     padding: 0 10px;
-    font-size: 12px;
-    font-weight: 500;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-medium);
     color: var(--ss-text);
     transition: color 0.2s ease;
   }

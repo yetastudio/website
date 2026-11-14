@@ -1,3 +1,4 @@
+/* Yeta: type values that match a design token read it; the other sizes are Stageshow's miniature UI scale, kept as upstream. */
 /* Kbd */
 
 @layer stageshow {
@@ -19,8 +20,8 @@
     border-radius: 4px;
     font-family: inherit;
     font-size: 11px;
-    font-weight: 500;
-    line-height: 1;
+    font-weight: var(--font-weight-medium);
+    line-height: var(--leading-none);
     font-variant-numeric: tabular-nums;
     color: var(--ss-text);
     background: var(--ss-ink-1);
@@ -28,5 +29,5 @@
   }
 
   .ss-kbd[data-plain] { gap: 1px; }
-  .ss-kbd[data-plain] .ss-kbd__key { min-width: 0; padding: 0; background: none; box-shadow: none; font-size: 12px; }
+  .ss-kbd[data-plain] .ss-kbd__key { min-width: 0; padding: 0; background: none; box-shadow: none; font-size: var(--text-xs); }
 }

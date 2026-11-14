@@ -1,3 +1,4 @@
+/* Yeta: type values that match a design token read it; the other sizes are Stageshow's miniature UI scale, kept as upstream. */
 /* Connector */
 
 @layer stageshow {
@@ -101,7 +102,7 @@
     background: var(--ss-raised);
     box-shadow: 0 0 0 1px var(--ss-line), var(--ss-shadow-card);
     font-size: 10.5px;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     line-height: 14px;
     color: var(--ss-text-strong);
     white-space: nowrap;

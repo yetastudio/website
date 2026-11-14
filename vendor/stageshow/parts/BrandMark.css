@@ -32,7 +32,7 @@
 
   .ss-brand__initial {
     color: var(--ss-text-strong);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
   }
 }
 

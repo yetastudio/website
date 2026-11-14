@@ -1,3 +1,4 @@
+/* Yeta: type values that match a design token read it; the other sizes are Stageshow's miniature UI scale, kept as upstream. */
 /* The iOS keyboard (ios.tsx). */
 
 @layer stageshow {
@@ -66,12 +67,12 @@
     border-radius: 8.5px;
     background: var(--ss-kb-key);
     font-size: 23px;
-    line-height: 1;
+    line-height: var(--leading-none);
     transition: background-color 0.12s ease;
   }
 
   .ss-kb[data-dark] .ss-kb__key {
-    font-weight: 400;
+    font-weight: var(--font-weight-regular);
   }
 
   .ss-kb__key[data-down] {

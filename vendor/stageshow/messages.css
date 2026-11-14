@@ -1,3 +1,4 @@
+/* Yeta: type values that match a design token read it; the other sizes are Stageshow's miniature UI scale, kept as upstream. */
 /* Messages (messages.tsx): Thread, Bubble, Stamp, Receipt and the chat look. */
 
 @layer stageshow {
@@ -34,7 +35,7 @@
      falls below 10px on the page) */
   .ss-phone__content .ss-stamp,
   .ss-phone__content .ss-receipt {
-    font-size: 14px;
+    font-size: var(--text-sm);
   }
 
   .ss-thread[data-app="sms"] {
@@ -149,7 +150,7 @@
     background: var(--ss-thread-ground, #fff);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 0 0 0.5px rgba(0, 0, 0, 0.05);
     font-size: 13px;
-    line-height: 1;
+    line-height: var(--leading-none);
     pointer-events: none;
     transform-origin: 50% 50%;
     transform: scale(0);
@@ -180,7 +181,7 @@
     display: block;
     width: 1em;
     height: 1em;
-    line-height: 1;
+    line-height: var(--leading-none);
     text-align: center;
   }
 
@@ -355,7 +356,7 @@
     margin: 10px 0 6px;
     color: #8e8e93;
     font-size: 0.7em;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     text-align: center;
   }
 
@@ -366,7 +367,7 @@
     justify-items: end;
     color: #8e8e93;
     font-size: 0.66em;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     position: relative;
     top: 0;
     will-change: transform;

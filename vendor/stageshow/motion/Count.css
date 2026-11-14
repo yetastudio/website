@@ -34,7 +34,7 @@
        in plain text; a fixed 1ch box set tracked figures wider than the text */
     height: 1em;
     overflow: hidden;
-    line-height: 1;
+    line-height: var(--leading-none);
     vertical-align: baseline;
     /* The window's edges soften a touch, so a figure passing them is never
        sliced; the figure at rest sits inside the clear middle */
@@ -52,7 +52,7 @@
   .ss-count__strip > span {
     display: block;
     height: 1em;
-    line-height: 1;
+    line-height: var(--leading-none);
     text-align: left; /* a digit sits on its cell's left like set type; centered, a leading 1 drifts off the column */
   }
 

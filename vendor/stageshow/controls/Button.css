@@ -1,3 +1,4 @@
+/* Yeta: type values that match a design token read it; the other sizes are Stageshow's miniature UI scale, kept as upstream. */
 /* Button */
 
 @layer stageshow {
@@ -23,9 +24,9 @@
     padding: 0 var(--ss-button-pad);
     border-radius: var(--ss-radius-sm);
     font-size: 13px;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     letter-spacing: -0.005em;
-    line-height: 1.25;
+    line-height: var(--leading-snug);
     white-space: nowrap;
     color: var(--ss-text-strong);
     background: var(--ss-surface);
@@ -44,7 +45,7 @@
     --ss-button-pad-icon: 6px;
     --ss-button-icon: 12px;
     --ss-button-gap: 5px;
-    font-size: 12px;
+    font-size: var(--text-xs);
   }
 
   .ss-button[data-size="large"] {
@@ -54,7 +55,7 @@
     --ss-button-icon: 16px;
     --ss-button-gap: 7px;
     border-radius: var(--ss-radius-md);
-    font-size: 14px;
+    font-size: var(--text-sm);
   }
 
   .ss-button[data-leading] { padding-left: var(--ss-button-pad-icon); }

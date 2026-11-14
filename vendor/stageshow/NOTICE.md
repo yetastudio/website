@@ -32,4 +32,8 @@ system's semantic tokens (`src/styles/tokens.css`), registers it as the
 `yeta` theme in `looks.ts` and makes it the default theme of `Stage`
 (`stage.tsx`, `stageshow.css`), and lets a look recolor named avatars
 (`parts/Avatar.tsx` reads `--ss-person-1` to `-6` and `--ss-person-text`,
-falling back to the upstream colors). Nothing else differs from upstream.
+falling back to the upstream colors). Type values that match a Yeta token
+exactly read that token (`--text-*` for 10/12/14/16px, `--font-weight-*`,
+`--leading-none`, `--leading-snug`, `--tracking-normal`); the rest of the
+kit's miniature type scale stays as upstream, flagged by a one-line comment
+at the top of each file that keeps raw values. Nothing else differs from upstream.

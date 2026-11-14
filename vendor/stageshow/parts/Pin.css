@@ -32,8 +32,8 @@
     border-radius: var(--ss-pin-r);
     background: var(--ss-ink-3);
     color: var(--ss-text-strong);
-    font-weight: 600;
-    line-height: 1;
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--leading-none);
   }
 
   .ss-pin[data-tone="accent"] .ss-pin__face {
