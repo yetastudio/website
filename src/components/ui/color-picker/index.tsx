@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { useId, useRef, useState, useSyncExternalStore, type KeyboardEvent, type ReactNode } from 'react';
+import { useId, useMemo, useRef, useState, useSyncExternalStore, type KeyboardEvent, type ReactNode } from 'react';
 
 //! Hooks
 import { useTranslations } from 'next-intl';
@@ -62,11 +62,14 @@ export const BRAND_SWATCHES: ReadonlyArray<ColorSwatch> = [
 	{ label: 'Violet', value: '--color-swatch-violet' },
 ];
 
-const DEFAULT_LABELS: ColorPickerLabels = {
-	hex: 'Hex',
-	custom: 'Any colour',
-	invalid: 'Enter 6 hex digits (0–9, A–F)',
-};
+function useDefaultLabels(): ColorPickerLabels {
+	const t = useTranslations('common.ui.colorPicker');
+	return {
+		hex: t('hex'),
+		custom: t('custom'),
+		invalid: t('invalid'),
+	};
+}
 
 /** `#abc`, `abc`, `#aabbcc` or `aabbcc` → `#aabbcc`; anything else → null. */
 export function normalizeHex(text: string | null | undefined): string | null {
@@ -117,7 +120,7 @@ const fillOf = (value: string) => (value.startsWith('--') ? `var(${value})` : va
  */
 export function ColorPicker({
 	label,
-	swatches = BRAND_SWATCHES,
+	swatches: swatchesProp,
 	value,
 	defaultValue = null,
 	onChange,
@@ -131,7 +134,13 @@ export function ColorPicker({
 	className,
 }: ColorPickerProps) {
 	const t = useTranslations('common');
-	const copy = { ...DEFAULT_LABELS, ...labels };
+	const copy = { ...useDefaultLabels(), ...labels };
+	const ui = useTranslations('common.ui.colorPicker');
+	// The brand accents are named in the page language; custom swatches keep the labels they were given.
+	const swatches = useMemo(
+		() => swatchesProp ?? BRAND_SWATCHES.map((swatch) => ({ ...swatch, label: ui(`swatches.${swatch.value.replace('--color-swatch-', '')}`) })),
+		[swatchesProp, ui]
+	);
 	const id = useId();
 	const legendId = `${id}-legend`;
 	const hintId = `${id}-hint`;

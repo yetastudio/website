@@ -611,7 +611,7 @@ function ProgressIndicatorSection() {
 					[code('current'), 'number', '—', 'Index; earlier = complete, later = upcoming'],
 					[code('orientation'), 'horizontal | vertical', 'horizontal', '—'],
 					[code('label'), 'string', '—', 'Accessible name of the list'],
-					[code('statusLabels'), 'Partial<Record<status, string>>', 'English', 'Pass translations'],
+					[code('statusLabels'), 'Partial<Record<status, string>>', 'Page language', 'Override per instance'],
 				]}
 			/>
 			<Usage use="Multi-step flows and timelines with a known sequence: onboarding, a project's phases, checkout." avoid="Continuous progress (ProgressBar), navigation between peers (Tabs), or more than about seven steps." />

@@ -15,6 +15,9 @@ import {
 	type ReactNode,
 } from 'react';
 
+//! Hooks
+import { useTranslations } from 'next-intl';
+
 //! Components
 import { Icon } from '@/components/ui/icon';
 import { FieldMessage, Label, describedBy } from '@/components/ui/label';
@@ -86,8 +89,8 @@ export const Stepper = forwardRef<HTMLInputElement, StepperProps>(function Stepp
 		largeStep,
 		size = 'lg',
 		formatValue,
-		decrementLabel = 'Decrease',
-		incrementLabel = 'Increase',
+		decrementLabel,
+		incrementLabel,
 		disabled,
 		required,
 		className,
@@ -97,6 +100,7 @@ export const Stepper = forwardRef<HTMLInputElement, StepperProps>(function Stepp
 	},
 	ref
 ) {
+	const ui = useTranslations('common.ui.stepper');
 	const id = useId();
 	const inputId = idProp ?? `${id}-input`;
 	const hintId = `${id}-hint`;
@@ -246,7 +250,7 @@ export const Stepper = forwardRef<HTMLInputElement, StepperProps>(function Stepp
 					type="button"
 					tabIndex={-1}
 					className={styles.button}
-					aria-label={decrementLabel}
+					aria-label={decrementLabel ?? ui('decrease')}
 					aria-controls={inputId}
 					disabled={disabled || atMin}
 					onPointerDown={(event) => onButtonPointerDown(event, -step)}
@@ -306,7 +310,7 @@ export const Stepper = forwardRef<HTMLInputElement, StepperProps>(function Stepp
 					type="button"
 					tabIndex={-1}
 					className={styles.button}
-					aria-label={incrementLabel}
+					aria-label={incrementLabel ?? ui('increase')}
 					aria-controls={inputId}
 					disabled={disabled || atMax}
 					onPointerDown={(event) => onButtonPointerDown(event, step)}

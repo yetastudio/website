@@ -64,14 +64,18 @@ export type DateInputProps = {
 
 const EMPTY: DateParts = { day: '', month: '', year: '' };
 
-const DEFAULT_MESSAGES: DateInputMessages = {
-	required: 'Enter a date',
-	missing: (segments) => `Date must include a ${segments.join(' and ')}`,
-	invalid: 'Date must be a real date',
-	year: 'Year must include 4 numbers',
-	min: (date) => `Date must be on or after ${date}`,
-	max: (date) => `Date must be on or before ${date}`,
-};
+/** Default messages in the page language; `missing` joins the segment names as a list ("day and month"). */
+function useDefaultMessages(locale: string): DateInputMessages {
+	const t = useTranslations('common.ui.dateInput');
+	return {
+		required: t('required'),
+		missing: (segments) => t('missing', { segments: new Intl.ListFormat(locale, { type: 'conjunction' }).format(segments) }),
+		invalid: t('invalid'),
+		year: t('year'),
+		min: (date) => t('min', { date }),
+		max: (date) => t('max', { date }),
+	};
+}
 
 const pad = (n: number, size = 2) => String(n).padStart(size, '0');
 
@@ -149,7 +153,7 @@ export function DateInput({
 
 	const segments = useMemo(() => order ?? localeOrder(locale), [order, locale]);
 	const names = useMemo(() => segmentNames(locale), [locale]);
-	const copy = { ...DEFAULT_MESSAGES, ...messages };
+	const copy = { ...useDefaultMessages(locale), ...messages };
 
 	const shownMessage = disabled ? undefined : (error ?? check?.message);
 	const invalidSegments: DateSegment[] = disabled ? [] : error ? (errorSegments ?? segments) : (check?.segments ?? []);

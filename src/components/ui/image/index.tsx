@@ -6,6 +6,9 @@ import { useCallback, useEffect, useRef, useState, type ReactNode, type Syntheti
 //! Next Core
 import NextImage, { type ImageProps as NextImageProps } from 'next/image';
 
+//! Hooks
+import { useTranslations } from 'next-intl';
+
 //! Components
 import { Icon } from '@/components/ui/icon';
 
@@ -32,7 +35,7 @@ export type ImageProps = Omit<NextImageProps, 'fill' | 'className' | 'style' | '
 	caption?: ReactNode;
 	/** A pulsing placeholder until the image loads, then the transitions.dev "Skeleton reveal" cross-fade. Needs JS. */
 	skeleton?: boolean;
-	/** Text shown when the image fails to load. Defaults to "Image unavailable". */
+	/** Text shown when the image fails to load. Defaults to the translated "Image unavailable". */
 	fallbackLabel?: string;
 	className?: string;
 };
@@ -54,13 +57,15 @@ export function Image({
 	radius = 'lg',
 	caption,
 	skeleton = false,
-	fallbackLabel = 'Image unavailable',
+	fallbackLabel,
 	sizes,
 	width,
 	height,
 	className,
 	...rest
 }: ImageProps) {
+	const ui = useTranslations('common.ui.image');
+	const fallbackText = fallbackLabel ?? ui('unavailable');
 	const [status, setStatus] = useState<Status>('loading');
 	const [pulsing, setPulsing] = useState(skeleton);
 	const lightRef = useRef<HTMLImageElement>(null);
@@ -122,10 +127,10 @@ export function Image({
 				{srcDark !== undefined && <NextImage ref={darkRef} src={srcDark} {...shared} className={cx(styles.image, styles[fit], 'u-only-dark')} />}
 			</div>
 			{status === 'error' && (
-				<div className={styles.fallback} role="img" aria-label={alt || fallbackLabel}>
+				<div className={styles.fallback} role="img" aria-label={alt || fallbackText}>
 					<Icon name="image-off" size="lg" />
 					<span className={styles.fallbackLabel} aria-hidden="true">
-						{fallbackLabel}
+						{fallbackText}
 					</span>
 				</div>
 			)}

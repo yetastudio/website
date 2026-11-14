@@ -52,10 +52,13 @@ export type RatingProps = {
 	className?: string;
 };
 
-const DEFAULT_LABELS: RatingLabels = {
-	value: (value, max) => `Rated ${value} out of ${max}`,
-	star: (count) => (count === 1 ? '1 star' : `${count} stars`),
-};
+function useDefaultLabels(): RatingLabels {
+	const t = useTranslations('common.ui.rating');
+	return {
+		value: (value, max) => t('value', { value, max }),
+		star: (count) => t('star', { count }),
+	};
+}
 
 const ICON_SIZE: Record<RatingSize, IconSize> = { sm: 'sm', md: 'lg', lg: 'xl' };
 
@@ -87,7 +90,7 @@ export function Rating({
 }: RatingProps) {
 	const t = useTranslations('common');
 	const locale = useLocale();
-	const copy = { ...DEFAULT_LABELS, ...labels };
+	const copy = { ...useDefaultLabels(), ...labels };
 	const id = useId();
 	const groupName = name ?? `${id}-rating`;
 	const hintId = `${id}-hint`;

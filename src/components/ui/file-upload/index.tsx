@@ -69,17 +69,20 @@ export type FileUploadProps = {
 
 type Item = { id: number; file: BrowserFile; status: FileStatus; progress?: number; error?: string };
 
-const DEFAULT_LABELS: FileUploadLabels = {
-	drop: 'Drag files here or',
-	choose: 'Choose files',
-	type: (name) => `${name} is not an accepted file type`,
-	size: (name, limit) => `${name} is larger than ${limit}`,
-	count: (max) => `Add up to ${max} ${max === 1 ? 'file' : 'files'}`,
-	added: (count) => (count === 1 ? '1 file added' : `${count} files added`),
-	removed: (name) => `${name} removed`,
-	uploaded: (name) => `${name} uploaded`,
-	failed: 'Upload failed',
-};
+function useDefaultLabels(): FileUploadLabels {
+	const t = useTranslations('common.ui.fileUpload');
+	return {
+		drop: t('drop'),
+		choose: t('choose'),
+		type: (name) => t('type', { name }),
+		size: (name, limit) => t('size', { name, limit }),
+		count: (max) => t('count', { max }),
+		added: (count) => t('added', { count }),
+		removed: (name) => t('removed', { name }),
+		uploaded: (name) => t('uploaded', { name }),
+		failed: t('failed'),
+	};
+}
 
 /** The files that made it in (not refused, not failed). */
 const acceptedFiles = (list: Item[]) => list.filter((item) => item.status !== 'error').map((item) => item.file);
@@ -124,7 +127,7 @@ export function FileUpload({
 }: FileUploadProps) {
 	const t = useTranslations('common');
 	const locale = useLocale();
-	const copy = { ...DEFAULT_LABELS, ...labels };
+	const copy = { ...useDefaultLabels(), ...labels };
 	const id = useId();
 	const inputId = `${id}-input`;
 	const labelId = `${id}-label`;

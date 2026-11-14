@@ -15,6 +15,9 @@ import {
 	type ReactNode,
 } from 'react';
 
+//! Hooks
+import { useTranslations } from 'next-intl';
+
 //! Components
 import { Icon } from '@/components/ui/icon';
 import { Label } from '@/components/ui/label';
@@ -121,7 +124,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(functi
 		size = 'lg',
 		variant = 'field',
 		shortcut,
-		clearLabel = 'Clear search',
+		clearLabel,
 		nested,
 		hint,
 		placeholder,
@@ -132,6 +135,8 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(functi
 	},
 	ref
 ) {
+	const ui = useTranslations('common.ui');
+	const clearText = clearLabel ?? ui('searchInput.clear');
 	const id = useId();
 	const inputId = idProp ?? `${id}-input`;
 	const hintId = `${id}-hint`;
@@ -344,8 +349,8 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(functi
 				<button
 					type="button"
 					className={cx('t-clear-btn', styles.clear)}
-					aria-label={clearLabel}
-					title={clearLabel}
+					aria-label={clearText}
+					title={clearText}
 					disabled={disabled}
 					// Keep focus in the field while pressing the button (the snippet's pointer guard).
 					onPointerDown={(event) => {

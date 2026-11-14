@@ -69,14 +69,17 @@ export type DatepickerProps = {
 
 type Phase = 'closed' | 'open' | 'closing';
 
-const DEFAULT_LABELS: DatepickerLabels = {
-	choose: 'Choose date',
-	change: (date) => `Change date, ${date}`,
-	previousMonth: 'Previous month',
-	nextMonth: 'Next month',
-	invalid: (format) => `Enter a date as ${format}`,
-	unavailable: 'Choose an available date',
-};
+function useDefaultLabels(): DatepickerLabels {
+	const t = useTranslations('common.ui.datepicker');
+	return {
+		choose: t('choose'),
+		change: (date) => t('change', { date }),
+		previousMonth: t('previousMonth'),
+		nextMonth: t('nextMonth'),
+		invalid: (format) => t('invalid', { format }),
+		unavailable: t('unavailable'),
+	};
+}
 
 // useLayoutEffect warns during server rendering; placement is measured on the client only.
 const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
@@ -170,7 +173,7 @@ export function Datepicker({
 	const t = useTranslations('common');
 	const pageLocale = useLocale();
 	const locale = localeProp ?? pageLocale;
-	const copy = { ...DEFAULT_LABELS, ...labels };
+	const copy = { ...useDefaultLabels(), ...labels };
 	const id = useId();
 	const inputId = `${id}-input`;
 	const dialogId = `${id}-dialog`;

@@ -51,18 +51,21 @@ export type RichTextEditorProps = {
 type Tool = 'bold' | 'italic' | 'bulletList' | 'numberedList' | 'link';
 type Pressed = Record<Tool, boolean>;
 
-const DEFAULT_LABELS: RichTextEditorLabels = {
-	toolbar: 'Formatting',
-	bold: 'Bold',
-	italic: 'Italic',
-	bulletList: 'Bulleted list',
-	numberedList: 'Numbered list',
-	link: 'Link',
-	linkUrl: 'Link address',
-	applyLink: 'Apply',
-	removeLink: 'Remove link',
-	cancel: 'Cancel',
-};
+function useDefaultLabels(): RichTextEditorLabels {
+	const t = useTranslations('common.ui.richTextEditor');
+	return {
+		toolbar: t('toolbar'),
+		bold: t('bold'),
+		italic: t('italic'),
+		bulletList: t('bulletList'),
+		numberedList: t('numberedList'),
+		link: t('link'),
+		linkUrl: t('linkUrl'),
+		applyLink: t('applyLink'),
+		removeLink: t('removeLink'),
+		cancel: t('cancel'),
+	};
+}
 
 /** Toolbar groups, split by separators. */
 const GROUPS: Tool[][] = [['bold', 'italic'], ['bulletList', 'numberedList'], ['link']];
@@ -122,7 +125,7 @@ export function RichTextEditor({
 	className,
 }: RichTextEditorProps) {
 	const t = useTranslations('common');
-	const copy = { ...DEFAULT_LABELS, ...labels };
+	const copy = { ...useDefaultLabels(), ...labels };
 	const id = useId();
 	const labelId = `${id}-label`;
 	const editorId = `${id}-editor`;

@@ -4,7 +4,7 @@
 import { useMemo, type ReactNode } from 'react';
 
 //! Hooks
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 //! Components
 import { Button } from '@/components/ui/button';
@@ -56,14 +56,17 @@ export type FileProps = {
 	className?: string;
 };
 
-const DEFAULT_LABELS: FileLabels = {
-	download: (name) => `Download ${name}`,
-	remove: (name) => `Remove ${name}`,
-	uploading: (name) => `Uploading ${name}`,
-	progress: (percent) => `Uploading… ${percent}%`,
-	pending: 'Uploading…',
-	success: 'Uploaded',
-};
+function useDefaultLabels(): FileLabels {
+	const t = useTranslations('common.ui.file');
+	return {
+		download: (name) => t('download', { name }),
+		remove: (name) => t('remove', { name }),
+		uploading: (name) => t('uploading', { name }),
+		progress: (percent) => t('progress', { percent }),
+		pending: t('pending'),
+		success: t('success'),
+	};
+}
 
 const UNITS = ['byte', 'kilobyte', 'megabyte', 'gigabyte'] as const;
 
@@ -116,7 +119,7 @@ export function File({
 	className,
 }: FileProps) {
 	const locale = useLocale();
-	const copy = { ...DEFAULT_LABELS, ...labels };
+	const copy = { ...useDefaultLabels(), ...labels };
 	const icon = useMemo(() => iconFor(name, type), [name, type]);
 	const extension = extensionOf(name);
 	const percent = progress === undefined ? undefined : Math.round(Math.min(100, Math.max(0, progress)));

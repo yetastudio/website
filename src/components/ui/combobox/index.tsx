@@ -66,8 +66,6 @@ const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : us
 /** Case- and accent-insensitive form used to match what was typed. */
 const fold = (text: string) => text.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
 
-const defaultResults = (count: number) => (count === 1 ? '1 result available' : `${count} results available`);
-
 /** Wraps the typed part of a label so the match reads at a glance. */
 function Highlight({ label, query }: { label: string; query: string }) {
 	const folded = fold(label);
@@ -104,12 +102,13 @@ export function Combobox({
 	required,
 	disabled,
 	name,
-	emptyMessage = 'No results',
-	toggleLabel = 'Show options',
-	resultsLabel = defaultResults,
+	emptyMessage,
+	toggleLabel,
+	resultsLabel,
 	className,
 }: ComboboxProps) {
 	const t = useTranslations('common');
+	const ui = useTranslations('common.ui.combobox');
 	const id = useId();
 	const inputId = `${id}-input`;
 	const listId = `${id}-listbox`;
@@ -331,7 +330,7 @@ export function Combobox({
 					type="button"
 					tabIndex={-1}
 					className={styles.toggle}
-					aria-label={toggleLabel}
+					aria-label={toggleLabel ?? ui('toggle')}
 					aria-expanded={open}
 					aria-controls={listId}
 					disabled={disabled}
@@ -395,11 +394,11 @@ export function Combobox({
 							);
 						})}
 					</ul>
-					{filtered.length === 0 && <p className={styles.empty}>{emptyMessage}</p>}
+					{filtered.length === 0 && <p className={styles.empty}>{emptyMessage ?? ui('empty')}</p>}
 				</div>
 			</div>
 			<span role="status" className="u-visually-hidden">
-				{open && draft !== null ? resultsLabel(filtered.length) : ''}
+				{open && draft !== null ? (resultsLabel ? resultsLabel(filtered.length) : ui('results', { count: filtered.length })) : ''}
 			</span>
 			{showError ? (
 				<p id={errorId} className={styles.error}>

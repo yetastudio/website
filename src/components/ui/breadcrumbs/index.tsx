@@ -1,6 +1,9 @@
 //! React Core
 import type { ReactNode } from 'react';
 
+//! Hooks
+import { useTranslations } from 'next-intl';
+
 //! Components
 import { DropdownMenu, MenuItem } from '@/components/ui/dropdown-menu';
 import { Icon } from '@/components/ui/icon';
@@ -44,15 +47,17 @@ export type BreadcrumbsProps = {
  */
 export function Breadcrumbs({
 	items,
-	label = 'Breadcrumb',
+	label,
 	separator = 'chevron',
 	maxItems = 4,
 	itemsBeforeCollapse = 1,
 	itemsAfterCollapse = 2,
-	moreLabel = 'Show hidden pages',
+	moreLabel,
 	size = 'md',
 	className,
 }: BreadcrumbsProps) {
+	const ui = useTranslations('common.ui.breadcrumbs');
+	const moreText = moreLabel ?? ui('more');
 	const collapse = items.length > maxItems && itemsBeforeCollapse + itemsAfterCollapse < items.length;
 	const head = collapse ? items.slice(0, itemsBeforeCollapse) : items;
 	const hidden = collapse ? items.slice(itemsBeforeCollapse, items.length - itemsAfterCollapse) : [];
@@ -84,15 +89,15 @@ export function Breadcrumbs({
 	};
 
 	return (
-		<nav aria-label={label} className={cx(styles.breadcrumbs, styles[size], className)}>
+		<nav aria-label={label ?? ui('label')} className={cx(styles.breadcrumbs, styles[size], className)}>
 			<ol className={styles.list}>
 				{head.map((item, index) => crumb(item, index))}
 				{collapse && (
 					<li className={styles.item}>
 						{sep}
 						<DropdownMenu
-							label={moreLabel}
-							trigger={{ variant: 'ghost', size: 'sm', icon: 'ellipsis', label: moreLabel, className: styles.more }}
+							label={moreText}
+							trigger={{ variant: 'ghost', size: 'sm', icon: 'ellipsis', label: moreText, className: styles.more }}
 						>
 							{hidden.map((item) => (
 								<MenuItem key={item.label} href={item.href}>

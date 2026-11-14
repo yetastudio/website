@@ -1,6 +1,9 @@
 //! React Core
 import type { HTMLAttributes, ReactNode } from 'react';
 
+//! Hooks
+import { useTranslations } from 'next-intl';
+
 //! Components
 import { Icon } from '@/components/ui/icon';
 
@@ -28,16 +31,19 @@ export type ProgressIndicatorProps = Omit<HTMLAttributes<HTMLOListElement>, 'chi
 	orientation?: 'horizontal' | 'vertical';
 	/** Accessible name of the list ("Project progress"). */
 	label: string;
-	/** Status words read after each step's label. English defaults; pass translations. */
+	/** Status words read after each step's label. Default to the page language (`common.ui.progressIndicator`). */
 	statusLabels?: Partial<Record<StepStatus, string>>;
 };
 
-const defaultStatusLabels: Record<StepStatus, string> = {
-	complete: 'Completed',
-	current: 'Current step',
-	upcoming: 'Not started',
-	error: 'Needs attention',
-};
+function useDefaultStatusLabels(): Record<StepStatus, string> {
+	const t = useTranslations('common.ui.progressIndicator');
+	return {
+		complete: t('complete'),
+		current: t('current'),
+		upcoming: t('upcoming'),
+		error: t('error'),
+	};
+}
 
 function statusFor(index: number, current: number | undefined, own?: StepStatus): StepStatus {
 	if (own) return own;
@@ -60,7 +66,7 @@ export function ProgressIndicator({
 	className,
 	...rest
 }: ProgressIndicatorProps) {
-	const words = { ...defaultStatusLabels, ...statusLabels };
+	const words = { ...useDefaultStatusLabels(), ...statusLabels };
 	return (
 		<ol aria-label={label} className={cx(styles.steps, styles[orientation], className)} {...rest}>
 			{steps.map((step, index) => {

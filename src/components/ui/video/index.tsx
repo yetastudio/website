@@ -3,6 +3,9 @@
 //! React Core
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type FocusEvent, type KeyboardEvent, type ReactNode } from 'react';
 
+//! Hooks
+import { useTranslations } from 'next-intl';
+
 //! Components
 import { Button } from '@/components/ui/button';
 import { Icon, type IconName } from '@/components/ui/icon';
@@ -31,18 +34,21 @@ export type VideoLabels = {
 	unavailable: string;
 };
 
-const DEFAULT_LABELS: VideoLabels = {
-	play: 'Play',
-	pause: 'Pause',
-	mute: 'Mute',
-	unmute: 'Unmute',
-	captions: 'Captions',
-	fullscreen: 'Full screen',
-	exitFullscreen: 'Exit full screen',
-	seek: 'Seek',
-	timeOf: (current, duration) => `${current} of ${duration}`,
-	unavailable: 'This video could not be loaded.',
-};
+function useDefaultLabels(): VideoLabels {
+	const t = useTranslations('common.ui.video');
+	return {
+		play: t('play'),
+		pause: t('pause'),
+		mute: t('mute'),
+		unmute: t('unmute'),
+		captions: t('captions'),
+		fullscreen: t('fullscreen'),
+		exitFullscreen: t('exitFullscreen'),
+		seek: t('seek'),
+		timeOf: (current, duration) => t('timeOf', { current, duration }),
+		unavailable: t('unavailable'),
+	};
+}
 
 export type VideoProps = {
 	/** One file. Use `sources` to offer several formats. */
@@ -63,7 +69,7 @@ export type VideoProps = {
 	radius?: 'md' | 'lg' | 'xl' | '2xl';
 	/** Renders `figure` + `figcaption` under the player. */
 	caption?: ReactNode;
-	/** Control names, for translated pages. English by default. */
+	/** Control names. Default to the page language (`common.ui.video`); override per instance. */
 	labels?: Partial<VideoLabels>;
 	className?: string;
 };
@@ -118,7 +124,7 @@ export function Video({
 	labels: labelOverrides,
 	className,
 }: VideoProps) {
-	const labels = { ...DEFAULT_LABELS, ...labelOverrides };
+	const labels = { ...useDefaultLabels(), ...labelOverrides };
 	const rootRef = useRef<HTMLDivElement>(null);
 	const videoRef = useRef<HTMLVideoElement>(null);
 	const idleTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);

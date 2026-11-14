@@ -80,15 +80,12 @@ export function Pagination({
 	boundaryCount = 1,
 	variant = 'auto',
 	label,
-	pageLabel = (n) => `Page ${n}`,
-	statusLabel = (n, total) => (
-		<>
-			Page <strong>{n}</strong> of {total}
-		</>
-	),
+	pageLabel,
+	statusLabel,
 	className,
 }: PaginationProps) {
 	const t = useTranslations('common');
+	const ui = useTranslations('common.ui.pagination');
 	const count = Math.max(1, pageCount);
 	const current = Math.min(Math.max(1, page), count);
 	const atStart = current <= 1;
@@ -130,7 +127,7 @@ export function Pagination({
 		const shared = {
 			className: cx(styles.page, isCurrent && styles.current),
 			'aria-current': isCurrent ? ('page' as const) : undefined,
-			'aria-label': pageLabel(n),
+			'aria-label': pageLabel ? pageLabel(n) : ui('page', { page: n }),
 		};
 		if (getHref) {
 			const href = getHref(n);
@@ -171,7 +168,7 @@ export function Pagination({
 		<ul className={cx(styles.list, styles.compact, variant === 'auto' && styles.autoCompact)}>
 			<li>{step(-1, true)}</li>
 			<li className={styles.status} aria-live="polite">
-				{statusLabel(current, count)}
+				{statusLabel ? statusLabel(current, count) : ui.rich('status', { page: current, count, strong: (chunks) => <strong>{chunks}</strong> })}
 			</li>
 			<li>{step(1, true)}</li>
 		</ul>
