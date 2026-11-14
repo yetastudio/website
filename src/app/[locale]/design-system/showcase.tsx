@@ -48,7 +48,7 @@ export default function DesignSystemShowcase() {
 					<Chip>Design System</Chip>
 					<Chip>v1 · light + dark</Chip>
 				</div>
-				<Heading level={1} size="5xl" tone="display">
+				<Heading level={1} size="5xl" tone="display" className={styles.introTitle}>
 					Yeta ✹ Studio, in components
 				</Heading>
 				<Text size="lg" tone="subtle">
