@@ -1,5 +1,7 @@
 'use client';
 
+import { memo } from 'react';
+
 //! Components
 import { Bar, Stage, Window, type Act } from '@stageshow';
 import { Icon } from '@/components/ui/icon';
@@ -46,7 +48,8 @@ async function script(a: Act<S>) {
 }
 
 /** The landing, in miniature, in one scheme. */
-function MiniLanding({ scheme }: { scheme: Scheme }) {
+// Memoised: a pure part its parents redraw with the same props.
+const MiniLanding = memo(function MiniLanding({ scheme }: { scheme: Scheme }) {
 	return (
 		<div className={styles.heroPage}>
 			<div className={cx(styles.heroNav, 'u-bevel')}>
@@ -79,7 +82,7 @@ function MiniLanding({ scheme }: { scheme: Scheme }) {
 			</div>
 		</div>
 	);
-}
+});
 
 export function HeroDemoMockup() {
 	return (
