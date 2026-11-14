@@ -46,9 +46,8 @@
 	transition-duration: var(--duration-instant);
 }
 
-/* The header's active pill: white with black type in both themes (light scheme inside it). */
+/* The header's active pill: black with white type on light, white with black type on dark. */
 .current {
-	color-scheme: light;
 	background-color: var(--color-nav-active-surface);
 	color: var(--color-nav-active-text);
 	box-shadow: var(--shadow-bevel);

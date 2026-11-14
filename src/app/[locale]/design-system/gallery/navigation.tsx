@@ -150,9 +150,9 @@ export default function NavigationGallery() {
 				id="navigation"
 				eyebrow={GROUP}
 				title="Navigation"
-				description="A nav landmark with grouped links, purpose icons and counts. The current link carries aria-current and sits on the header's white active pill, black type in both themes."
+				description="A nav landmark with grouped links, purpose icons and counts. The current link carries aria-current and sits on the header's active pill: black on light, white on dark."
 			>
-				<Specimen title="Vertical, grouped" note="Click a link: the white pill moves to it. Hover tints a row; Disabled is text, out of the tab order.">
+				<Specimen title="Vertical, grouped" note="Click a link: the active pill moves to it. Hover tints a row; Disabled is text, out of the tab order.">
 					<ThemePair align="start">
 						<div className={styles.sidebar}>
 							<Navigation label="Workspace">
@@ -187,7 +187,7 @@ export default function NavigationGallery() {
 				</Specimen>
 				<Specimen
 					title="Horizontal"
-					note="The header's glass bar: the white pill is the transitions.dev Tabs sliding pill, it slides when the current link changes and scrolls sideways on narrow screens."
+					note="The header's glass bar: the active pill is the transitions.dev Tabs sliding pill, it slides when the current link changes and scrolls sideways on narrow screens."
 				>
 					<ThemePair layout="column">
 						<Navigation label="Studio sections" orientation="horizontal">
@@ -218,7 +218,7 @@ export default function NavigationGallery() {
 				id="pagination"
 				eyebrow={GROUP}
 				title="Pagination"
-				description="Pages of a long list. Every page is named “Page n”, the current one is aria-current=&quot;page&quot; on the white pill, ellipses are decorative and the bar keeps the same number of slots on every page. Not the carousel's PaginationDots."
+				description="Pages of a long list. Every page is named “Page n”, the current one is aria-current=&quot;page&quot; on the active pill, ellipses are decorative and the bar keeps the same number of slots on every page. Not the carousel's PaginationDots."
 			>
 				<Specimen title="Full" note="Previous and Next are ghost Buttons; at the ends they stay focusable with aria-disabled. Pass getHref for real links (server-rendered lists).">
 					<ThemePair>
@@ -559,7 +559,7 @@ export default function NavigationGallery() {
 				title="Tree view"
 				description="Nested hierarchy, such as a file system. WAI-ARIA APG tree: one tab stop, Up/Down through visible nodes, Right opens or enters, Left closes or goes up, Home/End, * opens siblings, type-ahead, Enter/Space select. Branches open with Card resize."
 			>
-				<Specimen title="Files, selectable" note="Folder and file icons, trailing meta; the selected node sits on the control pill (aria-selected, like Tabs), not the white aria-current pill. Clicking a folder opens and selects it.">
+				<Specimen title="Files, selectable" note="Folder and file icons, trailing meta; the selected node sits on the control pill (aria-selected, like Tabs), not the aria-current active pill. Clicking a folder opens and selects it.">
 					<ThemePair align="start">
 						<Surface tone="raised" radius="lg" padding="xs" className={styles.sidebar}>
 							<TreeView label="Project files" defaultExpanded={['src', 'components']} selectedId={file} onSelect={setFile}>

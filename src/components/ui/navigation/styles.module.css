@@ -77,10 +77,9 @@
 	transition-duration: var(--duration-instant);
 }
 
-/* The header's active pill: white with black type in both themes. Light scheme inside it, so the
-   badge and icon resolve their light values on the white fill. */
+/* The header's active pill: black with white type on light, white with black type on dark. It follows
+   the page's scheme like the header's, so no color-scheme of its own (a pinned one would freeze the fill). */
 .current {
-	color-scheme: light;
 	color: var(--color-nav-active-text);
 }
 
@@ -114,7 +113,7 @@
 	line-height: var(--leading-none);
 }
 
-/* ── Horizontal: the header's glass bar with the sliding white pill ── */
+/* ── Horizontal: the header's glass bar with the sliding active pill ── */
 .horizontal {
 	max-width: 100%;
 }
@@ -141,7 +140,6 @@
 }
 
 .horizontal .pill {
-	color-scheme: light; /* its bevel resolves the light values on the white fill */
 	top: var(--space-4);
 	height: calc(100% - var(--space-8));
 	border-radius: var(--radius-sm);

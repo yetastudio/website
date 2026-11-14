@@ -68,7 +68,7 @@ export function paginationSlots(page: number, count: number, siblingCount = 1, b
 /**
  * Inspo component (component.gallery "Pagination"): moves between pages of a long list.
  * A labelled nav landmark around a list; the current page is aria-current="page" on the header's
- * white active pill; every item is named "Page n"; ellipses are decorative. Previous / Next stay
+ * active pill (black on light, white on dark); every item is named "Page n"; ellipses are decorative. Previous / Next stay
  * focusable at the ends (aria-disabled). Not the carousel's PaginationDots.
  */
 export function Pagination({

@@ -47,7 +47,7 @@
 }
 
 /* Selected (aria-selected): the control pill Tabs and SegmentedControl use for a picked item.
-   The white nav pill stays for aria-current (Navigation, Pagination). Reads best on a raised panel. */
+   The nav active pill stays for aria-current (Navigation, Pagination). Reads best on a raised panel. */
 .selected > .row,
 .selected > .row:hover {
 	background-color: var(--color-surface-control);

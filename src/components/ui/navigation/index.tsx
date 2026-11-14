@@ -30,8 +30,8 @@ export type NavigationProps = {
 
 /**
  * Inspo component (component.gallery "Navigation"): a nav landmark with a list of links.
- * The current link carries aria-current and sits on the header's white active pill
- * (`--color-nav-active-*`, black type in both themes). In the horizontal bar the pill is the
+ * The current link carries aria-current and sits on the header's active pill (`--color-nav-active-*`:
+ * black with white type on light, white with black type on dark). In the horizontal bar the pill is the
  * transitions.dev "Tabs sliding" pill: it slides when the current link changes and snaps on
  * first paint and resize.
  */
