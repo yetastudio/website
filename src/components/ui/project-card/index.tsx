@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element -- tool logos are tiny static SVGs. */
 
 //! React Core
-import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { memo, useCallback, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 
 //! Next Core
 import Image from 'next/image';
@@ -44,8 +44,13 @@ export type Project = {
 
 const TOOL_LABEL = { figma: 'Figma', react: 'React', nextjs: 'Next.js', vercel: 'Vercel', slack: 'Slack', loom: 'Loom' } as const;
 
+/*
+ * Wordmark and Shot are memoised: the card re-renders on every autoplay step, hover and focus,
+ * and neither the title nor the stacked light/dark images change with any of those.
+ */
+
 /** "Yeta ✹ Studio" wordmark with the gradient Figma uses on project cards. */
-function Wordmark({ name, active }: { name: string; active?: boolean }) {
+const Wordmark = memo(function Wordmark({ name, active }: { name: string; active?: boolean }) {
 	const [first, ...rest] = name.split(' ');
 	return (
 		<span className={cx(styles.wordmark, active && styles.wordmarkActive)}>
@@ -54,31 +59,31 @@ function Wordmark({ name, active }: { name: string; active?: boolean }) {
 			<span className={styles.wordmarkText}>{rest.join(' ')}</span>
 		</span>
 	);
-}
+});
 
 /** One project screen, light and dark exports stacked. Fills its positioned parent. */
-export function Shot({ shot, sizes, priority }: { shot: ProjectShot; sizes: string; priority?: boolean }) {
+export const Shot = memo(function Shot({ shot, sizes, priority }: { shot: ProjectShot; sizes: string; priority?: boolean }) {
 	return (
 		<>
 			<Image src={shot.light} alt={shot.alt} fill sizes={sizes} className={cx(styles.image, 'u-only-light')} priority={priority} />
 			<Image src={shot.dark} alt={shot.alt} fill sizes={sizes} className={cx(styles.image, 'u-only-dark')} priority={priority} />
 		</>
 	);
-}
+});
 
 function ToolLogo({ tool }: { tool: Project['tools'][number] }) {
 	if (tool === 'vercel') {
 		return (
 			<>
-				<img src="/landing/our-work/tools/vercel-light.svg" alt="" className={cx(styles.toolLogo, 'u-only-light')} />
-				<img src="/landing/our-work/tools/vercel-dark.svg" alt="" className={cx(styles.toolLogo, 'u-only-dark')} />
+				<img loading="lazy" decoding="async" src="/landing/our-work/tools/vercel-light.svg" alt="" className={cx(styles.toolLogo, 'u-only-light')} />
+				<img loading="lazy" decoding="async" src="/landing/our-work/tools/vercel-dark.svg" alt="" className={cx(styles.toolLogo, 'u-only-dark')} />
 			</>
 		);
 	}
 	if (tool === 'nextjs') {
-		return <img src="/landing/our-work/tools/nextjs.svg" alt="" className={cx(styles.toolLogo, styles.nextjs)} />;
+		return <img loading="lazy" decoding="async" src="/landing/our-work/tools/nextjs.svg" alt="" className={cx(styles.toolLogo, styles.nextjs)} />;
 	}
-	return <img src={`/landing/our-work/tools/${tool}.svg`} alt="" className={styles.toolLogo} />;
+	return <img loading="lazy" decoding="async" src={`/landing/our-work/tools/${tool}.svg`} alt="" className={styles.toolLogo} />;
 }
 
 /**
