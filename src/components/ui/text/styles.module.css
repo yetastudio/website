@@ -32,6 +32,7 @@
 .leading-snug { line-height: var(--leading-snug); }
 .leading-normal { line-height: var(--leading-normal); }
 .leading-relaxed { line-height: var(--leading-relaxed); }
+.leading-loose { line-height: var(--leading-loose); }
 
 /* Tones */
 .tone-default { color: var(--color-text); }

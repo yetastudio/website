@@ -26,7 +26,7 @@ export type TextProps = HTMLAttributes<HTMLElement> & {
 	italic?: boolean;
 	align?: 'start' | 'center' | 'end';
 	/** Line height. Defaults to `normal`. */
-	leading?: 'none' | 'tight' | 'snug' | 'normal' | 'relaxed';
+	leading?: 'none' | 'tight' | 'snug' | 'normal' | 'relaxed' | 'loose';
 	/** Balanced wrapping for short centred copy. */
 	balance?: boolean;
 };

@@ -46,7 +46,7 @@
 	min-height: var(--button-min-height, calc(var(--control-lg) * 1.2));
 	padding: calc(var(--space-8) * 1.2) var(--space-12) calc(var(--space-8) * 1.2) calc(var(--space-12) * 1.2);
 	gap: calc(var(--space-4) * 1.2);
-	font-size: var(--button-font-size, calc(var(--text-sm) * 1.2));
+	font-size: var(--button-font-size, var(--text-md));
 }
 
 .xl.rounded {

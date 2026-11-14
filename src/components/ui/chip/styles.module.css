@@ -53,12 +53,12 @@
 	min-height: calc(var(--control-sm) * 1.40625);
 	padding: calc(var(--space-8) * 1.40625) calc(var(--space-16) * 1.40625) calc(var(--space-8) * 1.40625) calc(var(--space-14) * 1.40625);
 	gap: calc(var(--space-4) * 1.40625);
-	font-size: var(--text-feature);
+	font-size: var(--text-lg);
 }
 
 .xl .icon {
-	width: var(--text-feature);
-	height: var(--text-feature);
+	width: var(--text-lg);
+	height: var(--text-lg);
 }
 
 @media (hover: hover) and (pointer: fine) {
