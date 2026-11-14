@@ -28,9 +28,12 @@
 	padding: var(--space-24);
 }
 
+/* clip-path on .tile only clips painting, so the oversized artwork would still widen the page's
+   scrollable area. This square clip keeps it in the tile's box; the round corner stays on clip-path. */
 .layers {
 	position: absolute;
 	inset: 0;
+	overflow: hidden;
 	pointer-events: none;
 }
 
