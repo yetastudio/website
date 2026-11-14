@@ -152,7 +152,7 @@
 	font-family: var(--font-serif);
 	font-size: var(--text-lg);
 	font-weight: var(--font-weight-serif-thin);
-	line-height: 1;
+	line-height: var(--leading-none);
 }
 
 .paragraph {
@@ -170,7 +170,7 @@
 	font-family: var(--font-serif);
 	font-size: var(--text-lg);
 	font-weight: var(--font-weight-serif-thin);
-	line-height: 1;
+	line-height: var(--leading-none);
 	letter-spacing: var(--tracking-normal);
 	text-wrap: balance;
 }

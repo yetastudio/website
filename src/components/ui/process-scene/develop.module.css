@@ -62,7 +62,7 @@
 	padding-right: var(--space-8);
 	font-family: var(--font-mono);
 	font-size: var(--text-2xs);
-	letter-spacing: 0;
+	letter-spacing: var(--tracking-normal);
 	text-align: right;
 	color: var(--color-text-faint);
 }
@@ -81,7 +81,7 @@
 	display: block;
 	font-family: var(--font-mono);
 	font-size: var(--text-xs);
-	letter-spacing: 0;
+	letter-spacing: var(--tracking-normal);
 	white-space: pre;
 	color: var(--color-text-subtle);
 	transition: opacity var(--duration-exit) ease;
@@ -142,7 +142,7 @@
 	font-family: var(--font-mono);
 	font-size: var(--text-2xs);
 	line-height: 1.6;
-	letter-spacing: 0;
+	letter-spacing: var(--tracking-normal);
 	color: var(--color-text-subtle);
 	--ss-term-dim: var(--color-text-faint);
 }

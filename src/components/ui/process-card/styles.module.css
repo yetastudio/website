@@ -36,7 +36,7 @@
 	font-family: var(--font-serif);
 	font-size: var(--text-2xl);
 	font-weight: var(--font-weight-regular);
-	line-height: 1;
+	line-height: var(--leading-none);
 	letter-spacing: var(--tracking-tight);
 }
 
