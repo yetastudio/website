@@ -4,7 +4,9 @@
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Link, LocaleSwitch, ThemeSwitch } from '@/components/ui';
+import { Link } from '@/components/ui/link';
+import { LocaleSwitch } from '@/components/ui/locale-switch';
+import { ThemeSwitch } from '@/components/ui/theme-switch';
 import { Link as LocaleLink } from '@/i18n/navigation';
 import { BOOKING_URL, SECTIONS, SOCIALS } from '../sections';
 
@@ -20,12 +22,12 @@ function Lettering({ label }: { label: string }) {
 		<div className={styles.lettering} role="img" aria-label={label}>
 			{/* Site dark → footer light → ink. Site light → footer dark → metallic. */}
 			<span className={styles.letteringDesktop}>
-				<img src="/landing/footer/you-entered-the-agency-ink.svg" alt="" className="u-only-dark" width={864} height={83} />
-				<img src="/landing/footer/you-entered-the-agency-metallic.svg" alt="" className="u-only-light" width={864} height={83} />
+				<img loading="lazy" decoding="async" src="/landing/footer/you-entered-the-agency-ink.svg" alt="" className="u-only-dark" width={864} height={83} />
+				<img loading="lazy" decoding="async" src="/landing/footer/you-entered-the-agency-metallic.svg" alt="" className="u-only-light" width={864} height={83} />
 			</span>
 			<span className={styles.letteringMobile}>
-				<img src="/landing/footer/you-entered-the-agency-ink-mobile.svg" alt="" className="u-only-dark" width={342} height={140} />
-				<img src="/landing/footer/you-entered-the-agency-metallic-mobile.svg" alt="" className="u-only-light" width={342} height={140} />
+				<img loading="lazy" decoding="async" src="/landing/footer/you-entered-the-agency-ink-mobile.svg" alt="" className="u-only-dark" width={342} height={140} />
+				<img loading="lazy" decoding="async" src="/landing/footer/you-entered-the-agency-metallic-mobile.svg" alt="" className="u-only-light" width={342} height={140} />
 			</span>
 		</div>
 	);
