@@ -5,7 +5,8 @@ import type { CSSProperties, ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Button, LogoMark } from '@/components/ui';
+import { Button } from '@/components/ui/button';
+import { LogoMark } from '@/components/ui/brand';
 import { Reveal } from '@/components/ui/reveal';
 import { revealLine } from '@/components/ui/reveal/line';
 import { BOOKING_URL } from '../sections';

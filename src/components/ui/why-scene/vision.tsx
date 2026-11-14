@@ -7,6 +7,10 @@ import { ENTRY_MS, SCENE_HEIGHT, SCENE_WIDTH, type WhyTourCopy } from './shared'
 import look from './look.module.css';
 import styles from './vision.module.css';
 
+// Static parts, hoisted: the scene redraws on every state change and these never change.
+const ROCKET_ICON = <Rocket size={12} strokeWidth={2} aria-hidden />;
+const SPINNER = <Spinner size={10} />;
+
 // Turning vision into product: a wireframe becomes the page. The sketch is
 // drawn at the page's own geometry (a title bar, a crossed image box, a
 // dashed button); each part resolves in reading order into the real thing,
@@ -67,11 +71,11 @@ export function VisionScene({ copy, playing }: { copy: WhyTourCopy['vision']; pl
 								align="end"
 								states={{
 									idle: (
-										<Button size="small" variant="primary" icon={<Rocket size={12} strokeWidth={2} aria-hidden />}>
+										<Button size="small" variant="primary" icon={ROCKET_ICON}>
 											{copy.deploy}
 										</Button>
 									),
-									launching: <Badge icon={<Spinner size={10} />}>{copy.deploying}</Badge>,
+									launching: <Badge icon={SPINNER}>{copy.deploying}</Badge>,
 									live: (
 										<Badge dot className={styles.live}>
 											{copy.live}

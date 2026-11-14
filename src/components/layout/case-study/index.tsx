@@ -2,7 +2,15 @@
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Button, Carousel, CaseStudy, Chip, GradientTile, Heading, Icon, LogoMark, Surface, Text, type Project, type ProjectShot } from '@/components/ui';
+import { Button } from '@/components/ui/button';
+import { Carousel } from '@/components/ui/carousel';
+import { CaseStudy, type Project, type ProjectShot } from '@/components/ui/project-card';
+import { Chip } from '@/components/ui/chip';
+import { GradientTile } from '@/components/ui/gradient-tile';
+import { Heading, Text } from '@/components/ui/text';
+import { Icon } from '@/components/ui/icon';
+import { LogoMark } from '@/components/ui/brand';
+import { Surface } from '@/components/ui/surface';
 import { Shot } from '@/components/ui/project-card';
 import { BOOKING_URL } from '../sections';
 import type { ProjectEntry } from '../our-work/projects';

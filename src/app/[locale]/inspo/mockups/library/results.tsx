@@ -2,7 +2,7 @@
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Accent, Text } from '@/components/ui';
+import { Accent, Text } from '@/components/ui/text';
 import { TESTIMONIALS } from '@/components/layout/content';
 import { ResultsOneFigure } from './results-live';
 

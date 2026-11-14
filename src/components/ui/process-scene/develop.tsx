@@ -5,6 +5,10 @@ import { SCENE_HEIGHT, SCENE_WIDTH, type SceneCopy } from './shared';
 import look from './look.module.css';
 import styles from './develop.module.css';
 
+// Static parts, hoisted: the scene redraws on every state change and these never change.
+const SPINNER = <Spinner size={10} />;
+const CHECK_ICON = <Check size={10} strokeWidth={2.5} aria-hidden />;
+
 // Develop: code, then a build. An editor hangs off the tile's left gutter and
 // runs off the bottom; a terminal straddles its right edge, over the editor's
 // empty margin, never over the code. Beats: one line is typed in the
@@ -144,13 +148,13 @@ export function DevelopScene({ copy }: { copy: SceneCopy['develop'] }) {
 										none: <span className={styles.statusLine} />,
 										building: (
 											<span className={styles.statusLine}>
-												<Spinner size={10} />
+												{SPINNER}
 												<span className="dim">{copy.building}</span>
 											</span>
 										),
 										passed: (
 											<span className={`${styles.statusLine} ok`}>
-												<Check size={10} strokeWidth={2.5} aria-hidden />
+												{CHECK_ICON}
 												<span>{copy.passed}</span>
 											</span>
 										),

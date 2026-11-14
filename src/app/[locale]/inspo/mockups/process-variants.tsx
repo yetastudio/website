@@ -10,7 +10,8 @@ import { useAutoplay } from './use-autoplay';
 import { useVariantHidden } from './library/variant-context';
 
 //! Components
-import { Button, Text } from '@/components/ui';
+import { Button } from '@/components/ui/button';
+import { Text } from '@/components/ui/text';
 import { ProcessScene } from '@/components/ui/process-scene';
 import { isProcessStep } from '@/components/ui/process-scene/shared';
 import { PROCESS } from '@/components/layout/content';

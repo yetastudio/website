@@ -3,7 +3,8 @@ import type { ReactNode } from 'react';
 
 //! Components
 import { ShowcaseSection, ThemePair } from '@/components/showcase';
-import { Chip, Text } from '@/components/ui';
+import { Chip } from '@/components/ui/chip';
+import { Text } from '@/components/ui/text';
 import { ReferenceCard } from '../proposal';
 import { CraftBentoMockup } from './bento';
 import { CraftTilesMockup } from './tiles';

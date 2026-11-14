@@ -64,16 +64,18 @@
 	border-radius: var(--radius-md);
 }
 
-.markDesktop {
+/* Scoped under .home so they outrank the mark's own `.frame { display }` whatever order the
+   stylesheets load in (with equal specificity, the brand module loading last showed both marks). */
+.home .markDesktop {
 	display: none;
 }
 
 @media (min-width: 1280px) {
-	.markDesktop {
+	.home .markDesktop {
 		display: inline-block;
 	}
 
-	.markMobile {
+	.home .markMobile {
 		display: none;
 	}
 }

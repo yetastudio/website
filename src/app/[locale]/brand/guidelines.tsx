@@ -2,7 +2,12 @@
 
 //! Components
 import { Cell, ShowcaseLayout, ShowcaseNav, ShowcaseSection, SpecTable, Specimen, ThemePair } from '@/components/showcase';
-import { Accent, BrandMark, Button, Chip, Heading, Icon, LogoMark, MessyBrandMark, Surface, Text } from '@/components/ui';
+import { Accent, Heading, Text } from '@/components/ui/text';
+import { BrandMark, LogoMark, MessyBrandMark } from '@/components/ui/brand';
+import { Button } from '@/components/ui/button';
+import { Chip } from '@/components/ui/chip';
+import { Icon } from '@/components/ui/icon';
+import { Surface } from '@/components/ui/surface';
 import { GuidelineCard } from './guideline-card';
 
 //! Utils

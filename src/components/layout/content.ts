@@ -1,5 +1,7 @@
 //! Types
-import type { IconName, Project, TileHue } from '@/components/ui';
+import type { IconName } from '@/components/ui/icon';
+import type { Project } from '@/components/ui/project-card';
+import type { TileHue } from '@/components/ui/gradient-tile';
 
 /** Our Craft cards (Figma 1475:2271 / 1475:2350), in page order. Copy lives in messages `ourCraft.cards.<key>`. */
 export const CRAFT: ReadonlyArray<{ key: string; icon: IconName; hue: TileHue }> = [

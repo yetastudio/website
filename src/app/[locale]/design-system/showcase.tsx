@@ -2,7 +2,8 @@
 
 //! Components
 import { ShowcaseLayout, ShowcaseNav } from '@/components/showcase';
-import { Accent, Chip, Heading, Text } from '@/components/ui';
+import { Accent, Heading, Text } from '@/components/ui/text';
+import { Chip } from '@/components/ui/chip';
 import { Foundations } from './foundations';
 import { InspoComponents, Primitives } from './primitives';
 import { Composites } from './composites';

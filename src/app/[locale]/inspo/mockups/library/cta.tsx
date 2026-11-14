@@ -2,7 +2,8 @@
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Accent, Button, Text } from '@/components/ui';
+import { Accent, Text } from '@/components/ui/text';
+import { Button } from '@/components/ui/button';
 import { BOOKING_URL } from '@/components/layout/sections';
 import { CtaHello } from './cta-live';
 

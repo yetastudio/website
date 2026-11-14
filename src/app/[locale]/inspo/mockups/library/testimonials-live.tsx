@@ -12,7 +12,11 @@ import { useTranslations } from 'next-intl';
 import { useAutoplay } from '../use-autoplay';
 
 //! Components
-import { Avatar, Button, PaginationDots, Surface, Text } from '@/components/ui';
+import { Avatar } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { PaginationDots } from '@/components/ui/pagination-dots';
+import { Surface } from '@/components/ui/surface';
+import { Text } from '@/components/ui/text';
 import { TESTIMONIALS } from '@/components/layout/content';
 
 //! Utils

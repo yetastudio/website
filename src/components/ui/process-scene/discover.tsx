@@ -5,6 +5,9 @@ import { SCENE_HEIGHT, SCENE_WIDTH, sceneCursor, type SceneCopy } from './shared
 import look from './look.module.css';
 import styles from './discover.module.css';
 
+// Static parts, hoisted: the scene redraws on every state change and these never change.
+const TAG_ICON = <Tag size={10} strokeWidth={2} aria-hidden />;
+
 // Discover: research notes. Interview notes hang off the tile's top-left
 // corner, one quote among the transcript. Beats: the cursor drag-selects the
 // quote (the highlight stays under the I-beam), the selection turns into a
@@ -87,7 +90,7 @@ export function DiscoverScene({ copy }: { copy: SceneCopy['discover'] }) {
 								<span data-target="q-end" className={styles.anchor} />
 							</div>
 							<span className={styles.tag} data-on={s.tag || undefined}>
-								<Badge tone="accent" icon={<Tag size={10} strokeWidth={2} aria-hidden />}>
+								<Badge tone="accent" icon={TAG_ICON}>
 									{copy.tag}
 								</Badge>
 							</span>

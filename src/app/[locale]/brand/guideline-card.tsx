@@ -2,7 +2,8 @@
 import type { ReactNode } from 'react';
 
 //! Components
-import { Icon, Text } from '@/components/ui';
+import { Icon } from '@/components/ui/icon';
+import { Text } from '@/components/ui/text';
 
 //! Utils
 import { cx } from '@/lib/cx';

@@ -4,7 +4,7 @@
  */
 
 //! Types
-import type { TileHue } from '@/components/ui';
+import type { TileHue } from '@/components/ui/gradient-tile';
 import type { Reference } from '../data';
 
 /** The six Our Craft beats, in the landing's order, with the hue each card carries. */

@@ -1,4 +1,4 @@
-import type { ReactNode, Ref } from 'react'
+import { memo, type ReactNode, type Ref } from 'react'
 import { MacCrosshair, MacGrab, MacIbeam, MacOpenHand, MacPointer, MacPointingHand, MacResizeEW, MacResizeNESW, MacResizeNS, MacResizeNWSE, MacWait } from './cursors'
 import type { Point } from './measure'
 // Yeta: the studio's own cursor glyph (src/components/ui/cursor) for the `yeta` style.
@@ -65,7 +65,8 @@ function SolidArrow() {
 }
 
 /** The cursor element. The stage moves it (a transform on cursorRef) and marks it pressed or idle. */
-export function Cursor({ cursorRef, style = 'yeta', kind }: { cursorRef: Ref<HTMLDivElement>; style?: CursorStyle; kind: CursorKind }) {
+// Yeta: memoised, so a stage re-rendering its scene (every act.set) leaves the cursor alone unless its kind changes.
+export const Cursor = memo(function Cursor({ cursorRef, style = 'yeta', kind }: { cursorRef: Ref<HTMLDivElement>; style?: CursorStyle; kind: CursorKind }) {
   return (
     <div ref={cursorRef} className="ss-cursor" data-style={style} data-kind={kind} aria-hidden>
       {style === 'touch' && <span className="ss-cursor__streak" />}
@@ -93,7 +94,7 @@ export function Cursor({ cursorRef, style = 'yeta', kind }: { cursorRef: Ref<HTM
       </div>
     </div>
   )
-}
+})
 
 /** A ring that spreads from the click point and fades, drawn under the cursor. */
 export function ripple(root: HTMLElement, at: Point) {

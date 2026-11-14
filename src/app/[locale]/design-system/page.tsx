@@ -3,8 +3,8 @@ import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
 
 //! Components
-import { Header } from '@/components/layout';
-import { ToastProvider } from '@/components/ui';
+import { Header } from '@/components/layout/header';
+import { ToastProvider } from '@/components/ui/toast';
 import DesignSystemShowcase from './showcase';
 
 export const metadata: Metadata = {

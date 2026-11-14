@@ -7,7 +7,9 @@ import { useSyncExternalStore } from 'react';
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Button, LogoMark, Text } from '@/components/ui';
+import { Button } from '@/components/ui/button';
+import { LogoMark } from '@/components/ui/brand';
+import { Text } from '@/components/ui/text';
 import { BOOKING_URL } from '@/components/layout/sections';
 
 //! Utils

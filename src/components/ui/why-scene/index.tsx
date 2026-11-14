@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 //! Hooks
 import { useTranslations } from 'next-intl';
@@ -43,8 +43,11 @@ const LINGER_MS = 400;
  * on the server, plays only while its host says so and it is on screen, and
  * shows the poster alone under reduced motion. Words come from messages
  * `whyYeta.tour.<scene>`.
+ *
+ * Memoised: the tour re-renders every chip on each step, but a scene only has to
+ * re-render when its own `playing` flips, not while another chip plays.
  */
-export function WhyScene({ scene, playing = false, className }: WhySceneProps) {
+export const WhyScene = memo(function WhyScene({ scene, playing = false, className }: WhySceneProps) {
 	const t = useTranslations('whyYeta');
 	const copy = t.raw('tour') as WhyTourCopy;
 
@@ -73,7 +76,7 @@ export function WhyScene({ scene, playing = false, className }: WhySceneProps) {
 			{scene === 'goals' && <GoalsScene copy={copy.goals} playing={live} />}
 		</div>
 	);
-}
+});
 
 // Plain constants and types live in ./shared, so a server component can read them;
 // this module is a client boundary.

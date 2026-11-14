@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
 
 //! Components
-import { Header } from '@/components/layout';
+import { Header } from '@/components/layout/header';
 import BrandGuidelines from './guidelines';
 
 export const metadata: Metadata = {

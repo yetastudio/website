@@ -2,7 +2,9 @@
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { CardStack, SectionHeader, TestimonialCard } from '@/components/ui';
+import { CardStack } from '@/components/ui/card-stack';
+import { SectionHeader } from '@/components/ui/section-header';
+import { TestimonialCard } from '@/components/ui/testimonial-card';
 import { TESTIMONIALS } from '../content';
 
 //! Utils

@@ -569,6 +569,8 @@ export function Stage<S extends object>({
   }, [state]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const look = useMemo(() => ({ theme, palette, fidelity, layout }), [theme, palette, fidelity, layout])
+  // Yeta: a stable rows array lets the memoised Keycaps skip the stage's scene re-renders
+  const keyRows = useMemo(() => [lastKeys, keys], [lastKeys, keys])
   const showCursor = cursor && (!script || !still || cursor.still)
 
   return (
@@ -608,7 +610,7 @@ export function Stage<S extends object>({
         <StillContext.Provider value={still}>
           <LookContext.Provider value={look}>{children(state, rectFor, layout)}</LookContext.Provider>
         </StillContext.Provider>
-        {script && <Keycaps rows={[lastKeys, keys]} at={typeof keysAt === 'string' ? keysAt : keysAt[layout]} />}
+        {script && <Keycaps rows={keyRows} at={typeof keysAt === 'string' ? keysAt : keysAt[layout]} />}
         {showCursor && <Cursor cursorRef={cursorRef} style={cursor!.style} kind={kind} />}
       </div>
     </div>

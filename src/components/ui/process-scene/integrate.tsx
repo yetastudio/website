@@ -5,6 +5,9 @@ import { SCENE_HEIGHT, SCENE_WIDTH, sceneCursor, type SceneCopy } from './shared
 import look from './look.module.css';
 import styles from './integrate.module.css';
 
+// Static parts, hoisted: the scene redraws on every state change and these never change.
+const DONE_ICON = <Check size={12} strokeWidth={2.25} aria-hidden />;
+
 // Integrate: two of the client's tools, wired together. A workflow canvas
 // hangs off the tile's top-left corner with two app nodes on it, Slack and
 // Notion. Beats: the cursor presses Connect under Notion; the line draws
@@ -72,7 +75,7 @@ export function IntegrateScene({ copy }: { copy: SceneCopy['integrate'] }) {
 								<Button
 									variant={s.done ? 'secondary' : 'primary'}
 									size="small"
-									icon={s.done ? <Check size={12} strokeWidth={2.25} aria-hidden /> : undefined}
+									icon={s.done ? DONE_ICON : undefined}
 									className={styles.connect}
 									data-target="connect"
 									data-done={s.done || undefined}
