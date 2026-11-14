@@ -16,6 +16,8 @@ type MarkProps = {
 	/** Accessible name. Pass an empty string when the mark is decorative next to the wordmark. */
 	alt?: string;
 	className?: string;
+	/** The page's largest paint (the hero tile): fetched at high priority and decoded in step with the paint. */
+	priority?: boolean;
 };
 
 type FillableMarkProps = MarkProps & {
@@ -31,9 +33,11 @@ function src(name: string, canvas: 'light' | 'dark', fill?: string) {
 	return fill ? `${name}-${canvas}-${fill}` : `${name}-${canvas}`;
 }
 
-function Mark({ name, fill, size = 60, canvas = 'auto', alt, className }: MarkProps & { name: string; fill?: string }) {
+function Mark({ name, fill, size = 60, canvas = 'auto', alt, className, priority = false }: MarkProps & { name: string; fill?: string }) {
 	const px = typeof size === 'number' ? size : 96;
-	const common = { width: px, height: px, draggable: false, decoding: 'async' as const };
+	const common = priority
+		? { width: px, height: px, draggable: false, fetchPriority: 'high' as const }
+		: { width: px, height: px, draggable: false, decoding: 'async' as const };
 	if (canvas === 'light' || canvas === 'dark') {
 		return (
 			<img
