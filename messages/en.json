@@ -20,7 +20,114 @@
     "notifications": "Notifications",
     "skipToContent": "Skip to content",
     "language": "Language",
-    "home": "Yeta Studio home"
+    "home": "Yeta Studio home",
+    "ui": {
+      "searchInput": {
+        "clear": "Clear search"
+      },
+      "stepper": {
+        "decrease": "Decrease",
+        "increase": "Increase"
+      },
+      "combobox": {
+        "empty": "No results",
+        "toggle": "Show options",
+        "results": "{count, plural, one {# result available} other {# results available}}"
+      },
+      "dateInput": {
+        "required": "Enter a date",
+        "missing": "Date must include a {segments}",
+        "invalid": "Date must be a real date",
+        "year": "Year must include 4 numbers",
+        "min": "Date must be on or after {date}",
+        "max": "Date must be on or before {date}"
+      },
+      "datepicker": {
+        "choose": "Choose date",
+        "change": "Change date, {date}",
+        "previousMonth": "Previous month",
+        "nextMonth": "Next month",
+        "invalid": "Enter a date as {format}",
+        "unavailable": "Choose an available date"
+      },
+      "colorPicker": {
+        "hex": "Hex",
+        "custom": "Any colour",
+        "invalid": "Enter 6 hex digits (0–9, A–F)",
+        "swatches": {
+          "pink": "Pink",
+          "orange": "Orange",
+          "yellow": "Yellow",
+          "green": "Green",
+          "blue": "Blue",
+          "violet": "Violet"
+        }
+      },
+      "file": {
+        "download": "Download {name}",
+        "remove": "Remove {name}",
+        "uploading": "Uploading {name}",
+        "progress": "Uploading… {percent}%",
+        "pending": "Uploading…",
+        "success": "Uploaded"
+      },
+      "fileUpload": {
+        "drop": "Drag files here or",
+        "choose": "Choose files",
+        "type": "{name} is not an accepted file type",
+        "size": "{name} is larger than {limit}",
+        "count": "{max, plural, one {Add up to # file} other {Add up to # files}}",
+        "added": "{count, plural, one {# file added} other {# files added}}",
+        "removed": "{name} removed",
+        "uploaded": "{name} uploaded",
+        "failed": "Upload failed"
+      },
+      "richTextEditor": {
+        "toolbar": "Formatting",
+        "bold": "Bold",
+        "italic": "Italic",
+        "bulletList": "Bulleted list",
+        "numberedList": "Numbered list",
+        "link": "Link",
+        "linkUrl": "Link address",
+        "applyLink": "Apply",
+        "removeLink": "Remove link",
+        "cancel": "Cancel"
+      },
+      "progressIndicator": {
+        "complete": "Completed",
+        "current": "Current step",
+        "upcoming": "Not started",
+        "error": "Needs attention"
+      },
+      "breadcrumbs": {
+        "label": "Breadcrumb",
+        "more": "Show hidden pages"
+      },
+      "image": {
+        "unavailable": "Image unavailable"
+      },
+      "video": {
+        "play": "Play",
+        "pause": "Pause",
+        "mute": "Mute",
+        "unmute": "Unmute",
+        "captions": "Captions",
+        "fullscreen": "Full screen",
+        "exitFullscreen": "Exit full screen",
+        "seek": "Seek",
+        "timeOf": "{current} of {duration}",
+        "unavailable": "This video could not be loaded."
+      },
+      "pagination": {
+        "page": "Page {page}",
+        "status": "Page <strong>{page}</strong> of {count}"
+      },
+      "rating": {
+        "value": "Rated {value} out of {max}",
+        "star": "{count, plural, one {# star} other {# stars}}"
+      }
+    }
   },
   "theme": {
     "label": "Theme",
@@ -68,20 +175,23 @@
     },
     "tour": {
       "insight": {
-        "quote": "“The sign-up is too long.”",
-        "metric": "Sign-ups"
+        "quote": "“I can’t find where to buy.”",
+        "metric": "Sales",
+        "buy": "Buy"
       },
       "together": {
         "ask": "Can the hero feel bolder?",
-        "reply": "Done. Take a look.",
-        "resolved": "Resolved"
+        "reply": "Done! It’s bolder now, take a look.",
+        "thanks": "Love it, thank you!"
       },
       "luck": {
         "test": "A/B test",
-        "winner": "Winner"
+        "winner": "Winner",
+        "run": "Run test"
       },
       "defy": {
-        "metric": "Brand reach"
+        "metric": "Brand reach",
+        "boost": "See growth"
       },
       "pixel": {
         "cta": "Start a project"
@@ -89,7 +199,9 @@
       "vision": {
         "title": "Ready to launch",
         "cta": "Get started",
-        "live": "Live"
+        "live": "Live",
+        "deploy": "Launch",
+        "deploying": "Launching…"
       },
       "goals": {
         "label": "Q3 goal",
@@ -290,20 +402,20 @@
       "jorge": {
         "quote": "“Yeta blended design, strategy, and tech in a way that just made sense. They helped us redefine how we communicate with our audience.”",
         "name": "Jorge R.",
-        "role": "Founder",
+        "role": "Co-founder & CEO",
         "company": "Sintaxis",
         "quoteMobile": "“Yeta blended design, strategy, and tech in a way that just made sense. They didn’t just build a website — they helped us redefine how we communicate with our audience.”"
       },
       "marcelo": {
         "quote": "“They quickly understood our product and translated our vision into a clean, functional experience that resonates with our users.”",
         "name": "Marcelo Z.",
-        "role": "Founder",
+        "role": "CTO",
         "company": "apx.school"
       },
       "lisette": {
         "quote": "“From kickoff to delivery, Yeta exceeded expectations. Their process is structured but flexible, creative yet data-informed.”",
         "name": "Lisette T.",
-        "role": "Founder",
+        "role": "Head of Product",
         "company": "NovaTech"
       }
     },

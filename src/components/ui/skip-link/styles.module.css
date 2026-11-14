@@ -1,0 +1,26 @@
+/* Same geometry and motion as the header's inline skip link. */
+.skip {
+	top: var(--space-8);
+	left: var(--space-8);
+	z-index: calc(var(--z-header) + 1);
+	padding: var(--space-8) var(--space-12);
+	border-radius: var(--radius-md);
+	background-color: var(--color-surface-inverse);
+	color: var(--color-text-inverse);
+	font-size: var(--text-sm);
+	white-space: nowrap;
+	translate: 0 -200%;
+	transition: translate var(--duration-micro) var(--ease-out);
+}
+
+.fixed {
+	position: fixed;
+}
+
+.absolute {
+	position: absolute;
+}
+
+.skip:focus-visible {
+	translate: 0 0;
+}

@@ -1,0 +1,104 @@
+/* One grid for both variants: icon · content · (action) · dismiss. The icon and the dismiss button
+   centre on the first line of text, so a long body never drags them down. */
+.alert {
+	--alert-line: calc(var(--text-sm) * var(--leading-normal));
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	grid-template-areas:
+		'icon content dismiss'
+		'. action .';
+	align-items: start;
+	width: 100%;
+	color: var(--color-text);
+	font-size: var(--text-sm);
+	line-height: var(--leading-normal);
+	letter-spacing: var(--tracking-tight);
+}
+
+/* ── Variants ── */
+.inline {
+	padding: var(--space-12) var(--space-12) var(--space-12) var(--space-14);
+	border-radius: var(--radius-md);
+	background-color: var(--color-surface-raised);
+}
+
+.banner {
+	padding: var(--space-10) var(--page-gutter);
+	border-block-end: var(--stroke-hairline) solid var(--color-divider);
+	background-color: var(--color-surface-glass);
+	backdrop-filter: blur(var(--blur-glass));
+	-webkit-backdrop-filter: blur(var(--blur-glass));
+}
+
+@media (min-width: 640px) {
+	.banner {
+		grid-template-columns: auto minmax(0, 1fr) auto auto;
+		grid-template-areas: 'icon content action dismiss';
+	}
+
+	.banner .action {
+		margin: 0 0 0 var(--space-12);
+		align-self: center;
+	}
+}
+
+/* ── Parts ── */
+.iconSlot {
+	grid-area: icon;
+	display: flex;
+	align-items: center;
+	height: var(--alert-line);
+	margin-inline-end: var(--space-10);
+}
+
+.icon {
+	color: var(--color-text-subtle);
+}
+
+.content {
+	grid-area: content;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-2);
+	min-width: 0;
+}
+
+.title {
+	color: var(--color-text-strong);
+	font-weight: var(--font-weight-medium);
+}
+
+.body {
+	color: var(--color-text-subtle);
+	font-weight: var(--font-weight-light);
+	overflow-wrap: anywhere;
+}
+
+.bodyOnly {
+	color: var(--color-text);
+}
+
+.action {
+	grid-area: action;
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-8);
+	margin-block-start: var(--space-10);
+}
+
+.dismiss {
+	grid-area: dismiss;
+	margin-block: calc((var(--alert-line) - var(--control-sm)) / 2);
+	margin-inline: var(--space-8) calc(var(--space-4) * -1);
+}
+
+.banner .dismiss {
+	align-self: center;
+	margin-block: calc(var(--space-2) * -1);
+}
+
+/* ── Tones: only the icon carries the hue ── */
+.tone-info .icon { color: var(--color-info); }
+.tone-success .icon { color: var(--color-success); }
+.tone-warning .icon { color: var(--color-warning); }
+.tone-danger .icon { color: var(--color-danger); }

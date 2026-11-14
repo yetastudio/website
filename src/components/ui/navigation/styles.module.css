@@ -1,0 +1,159 @@
+.nav {
+	min-width: 0;
+}
+
+.list {
+	display: flex;
+	list-style: none;
+}
+
+.vertical .list {
+	flex-direction: column;
+	gap: var(--space-2);
+}
+
+/* Groups after the first one breathe apart. */
+.vertical .group + .group,
+.vertical li:not(.group) + .group {
+	margin-top: var(--space-16);
+}
+
+.group {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-4);
+}
+
+.heading {
+	padding-inline: var(--space-10);
+	color: var(--color-text-faint);
+	font-size: var(--text-2xs);
+	font-weight: var(--font-weight-regular);
+	line-height: var(--leading-snug);
+}
+
+/* ── Items ── */
+.item {
+	position: relative;
+	z-index: 1; /* above the sliding pill */
+	display: flex;
+	align-items: center;
+	gap: var(--space-8);
+	min-height: var(--control-sm);
+	padding: var(--space-6) var(--space-10);
+	border-radius: var(--radius-sm);
+	color: var(--color-text-subtle);
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-regular);
+	line-height: var(--leading-snug);
+	white-space: nowrap;
+	text-decoration: none;
+	transition:
+		background-color var(--duration-micro) var(--ease-out),
+		color var(--tabs-dur) var(--tabs-ease);
+}
+
+.label {
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.icon {
+	color: inherit;
+	opacity: 0.8;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.item:not(.disabled):not(.current):hover {
+		background-color: var(--color-surface-tint-hover);
+		color: var(--color-text-strong);
+	}
+}
+
+.item:not(.disabled):active {
+	transform: scale(0.98);
+	transition-duration: var(--duration-instant);
+}
+
+/* The header's active pill: black with white type on light, white with black type on dark. It follows
+   the page's scheme like the header's, so no color-scheme of its own (a pinned one would freeze the fill). */
+.current {
+	color: var(--color-nav-active-text);
+}
+
+.current .icon {
+	opacity: 1;
+}
+
+.vertical .current {
+	background-color: var(--color-nav-active-surface);
+	box-shadow: var(--shadow-bevel);
+}
+
+.disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
+}
+
+/* Count or status: a small tinted pill, tabular figures. */
+.badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: var(--space-20);
+	height: var(--space-20);
+	padding-inline: var(--space-6);
+	border-radius: var(--radius-pill);
+	background-color: var(--color-surface-tint-hover);
+	color: inherit;
+	font-size: var(--text-2xs);
+	font-variant-numeric: tabular-nums;
+	line-height: var(--leading-none);
+}
+
+/* ── Horizontal: the header's glass bar with the sliding active pill ── */
+.horizontal {
+	max-width: 100%;
+}
+
+.horizontal .list {
+	align-items: center;
+	gap: var(--space-2);
+	max-width: 100%;
+	padding: var(--space-4);
+	border-radius: var(--radius-md);
+	background-color: var(--color-surface-glass);
+	backdrop-filter: blur(var(--blur-glass));
+	-webkit-backdrop-filter: blur(var(--blur-glass));
+	overflow-x: auto;
+	scrollbar-width: none;
+}
+
+.horizontal .item {
+	padding-inline: var(--space-12);
+}
+
+.pillSlot {
+	display: contents;
+}
+
+.horizontal .pill {
+	top: var(--space-4);
+	height: calc(100% - var(--space-8));
+	border-radius: var(--radius-sm);
+	background-color: var(--color-nav-active-surface);
+	box-shadow: var(--shadow-bevel);
+	opacity: 0;
+}
+
+.horizontal[data-pill='ready'] .pill {
+	opacity: 1;
+}
+
+/* Until the pill is measured (server render, first paint), the current link paints its own fill. */
+.horizontal:not([data-pill='ready']) .current {
+	background-color: var(--color-nav-active-surface);
+	box-shadow: var(--shadow-bevel);
+}

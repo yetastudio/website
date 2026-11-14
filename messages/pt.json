@@ -20,7 +20,114 @@
     "notifications": "Notificações",
     "skipToContent": "Pular para o conteúdo",
     "language": "Idioma",
-    "home": "Início da Yeta Studio"
+    "home": "Início da Yeta Studio",
+    "ui": {
+      "searchInput": {
+        "clear": "Limpar busca"
+      },
+      "stepper": {
+        "decrease": "Diminuir",
+        "increase": "Aumentar"
+      },
+      "combobox": {
+        "empty": "Nenhum resultado",
+        "toggle": "Ver opções",
+        "results": "{count, plural, one {# resultado disponível} other {# resultados disponíveis}}"
+      },
+      "dateInput": {
+        "required": "Informe uma data",
+        "missing": "A data deve incluir {segments}",
+        "invalid": "Informe uma data válida",
+        "year": "O ano precisa ter 4 dígitos",
+        "min": "A data precisa ser {date} ou posterior",
+        "max": "A data precisa ser {date} ou anterior"
+      },
+      "datepicker": {
+        "choose": "Escolher data",
+        "change": "Alterar data, {date}",
+        "previousMonth": "Mês anterior",
+        "nextMonth": "Próximo mês",
+        "invalid": "Informe a data como {format}",
+        "unavailable": "Escolha uma data disponível"
+      },
+      "colorPicker": {
+        "hex": "Hex",
+        "custom": "Outra cor",
+        "invalid": "Informe 6 dígitos hex (0–9, A–F)",
+        "swatches": {
+          "pink": "Rosa",
+          "orange": "Laranja",
+          "yellow": "Amarelo",
+          "green": "Verde",
+          "blue": "Azul",
+          "violet": "Violeta"
+        }
+      },
+      "file": {
+        "download": "Baixar {name}",
+        "remove": "Remover {name}",
+        "uploading": "Enviando {name}",
+        "progress": "Enviando… {percent}%",
+        "pending": "Enviando…",
+        "success": "Enviado"
+      },
+      "fileUpload": {
+        "drop": "Arraste arquivos aqui ou",
+        "choose": "Escolher arquivos",
+        "type": "{name} não é um tipo de arquivo aceito",
+        "size": "{name} é maior que {limit}",
+        "count": "{max, plural, one {Adicione até # arquivo} other {Adicione até # arquivos}}",
+        "added": "{count, plural, one {# arquivo adicionado} other {# arquivos adicionados}}",
+        "removed": "{name} removido",
+        "uploaded": "{name} enviado",
+        "failed": "Falha no envio"
+      },
+      "richTextEditor": {
+        "toolbar": "Formatação",
+        "bold": "Negrito",
+        "italic": "Itálico",
+        "bulletList": "Lista com marcadores",
+        "numberedList": "Lista numerada",
+        "link": "Link",
+        "linkUrl": "Endereço do link",
+        "applyLink": "Aplicar",
+        "removeLink": "Remover link",
+        "cancel": "Cancelar"
+      },
+      "progressIndicator": {
+        "complete": "Concluído",
+        "current": "Etapa atual",
+        "upcoming": "Não iniciado",
+        "error": "Precisa de atenção"
+      },
+      "breadcrumbs": {
+        "label": "Trilha de navegação",
+        "more": "Ver páginas ocultas"
+      },
+      "image": {
+        "unavailable": "Imagem indisponível"
+      },
+      "video": {
+        "play": "Reproduzir",
+        "pause": "Pausar",
+        "mute": "Silenciar",
+        "unmute": "Ativar som",
+        "captions": "Legendas",
+        "fullscreen": "Tela cheia",
+        "exitFullscreen": "Sair da tela cheia",
+        "seek": "Progresso do vídeo",
+        "timeOf": "{current} de {duration}",
+        "unavailable": "Não foi possível carregar este vídeo."
+      },
+      "pagination": {
+        "page": "Página {page}",
+        "status": "Página <strong>{page}</strong> de {count}"
+      },
+      "rating": {
+        "value": "Avaliação: {value} de {max}",
+        "star": "{count, plural, one {# estrela} other {# estrelas}}"
+      }
+    }
   },
   "theme": {
     "label": "Tema",
@@ -68,20 +175,23 @@
     },
     "tour": {
       "insight": {
-        "quote": "“O cadastro é longo demais.”",
-        "metric": "Cadastros"
+        "quote": "“Não acho onde comprar.”",
+        "metric": "Vendas",
+        "buy": "Comprar"
       },
       "together": {
         "ask": "Dá pra deixar o hero mais forte?",
-        "reply": "Feito. Dá uma olhada.",
-        "resolved": "Resolvido"
+        "reply": "Pronto! Ficou mais forte, olha só.",
+        "thanks": "Amei, obrigada!"
       },
       "luck": {
         "test": "Teste A/B",
-        "winner": "Vencedora"
+        "winner": "Vencedora",
+        "run": "Rodar teste"
       },
       "defy": {
-        "metric": "Alcance da marca"
+        "metric": "Alcance da marca",
+        "boost": "Ver crescimento"
       },
       "pixel": {
         "cta": "Começar um projeto"
@@ -89,7 +199,9 @@
       "vision": {
         "title": "Pronto para lançar",
         "cta": "Começar",
-        "live": "No ar"
+        "live": "No ar",
+        "deploy": "Lançar",
+        "deploying": "Lançando…"
       },
       "goals": {
         "label": "Meta do trimestre",
@@ -290,20 +402,20 @@
       "jorge": {
         "quote": "“A Yeta uniu design, estratégia e tecnologia de um jeito que simplesmente fez sentido. Eles nos ajudaram a redefinir como nos comunicamos com nosso público.”",
         "name": "Jorge R.",
-        "role": "Fundador",
+        "role": "Cofundador e CEO",
         "company": "Sintaxis",
         "quoteMobile": "“A Yeta uniu design, estratégia e tecnologia de um jeito que simplesmente fez sentido. Eles não só construíram um site — nos ajudaram a redefinir como nos comunicamos com nosso público.”"
       },
       "marcelo": {
         "quote": "“Eles entenderam nosso produto rapidamente e traduziram nossa visão em uma experiência limpa e funcional que conversa com nossos usuários.”",
         "name": "Marcelo Z.",
-        "role": "Fundador",
+        "role": "CTO",
         "company": "apx.school"
       },
       "lisette": {
         "quote": "“Do kickoff à entrega, a Yeta superou as expectativas. O processo é estruturado mas flexível, criativo e ao mesmo tempo guiado por dados.”",
         "name": "Lisette T.",
-        "role": "Fundadora",
+        "role": "Head de Produto",
         "company": "NovaTech"
       }
     },

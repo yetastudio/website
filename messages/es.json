@@ -20,7 +20,114 @@
     "notifications": "Notificaciones",
     "skipToContent": "Saltar al contenido",
     "language": "Idioma",
-    "home": "Inicio de Yeta Studio"
+    "home": "Inicio de Yeta Studio",
+    "ui": {
+      "searchInput": {
+        "clear": "Borrar búsqueda"
+      },
+      "stepper": {
+        "decrease": "Disminuir",
+        "increase": "Aumentar"
+      },
+      "combobox": {
+        "empty": "Sin resultados",
+        "toggle": "Ver opciones",
+        "results": "{count, plural, one {# resultado disponible} other {# resultados disponibles}}"
+      },
+      "dateInput": {
+        "required": "Ingresá una fecha",
+        "missing": "La fecha debe incluir {segments}",
+        "invalid": "Ingresá una fecha válida",
+        "year": "El año tiene que tener 4 dígitos",
+        "min": "La fecha tiene que ser el {date} o posterior",
+        "max": "La fecha tiene que ser el {date} o anterior"
+      },
+      "datepicker": {
+        "choose": "Elegir fecha",
+        "change": "Cambiar fecha, {date}",
+        "previousMonth": "Mes anterior",
+        "nextMonth": "Mes siguiente",
+        "invalid": "Ingresá la fecha como {format}",
+        "unavailable": "Elegí una fecha disponible"
+      },
+      "colorPicker": {
+        "hex": "Hex",
+        "custom": "Otro color",
+        "invalid": "Ingresá 6 dígitos hex (0–9, A–F)",
+        "swatches": {
+          "pink": "Rosa",
+          "orange": "Naranja",
+          "yellow": "Amarillo",
+          "green": "Verde",
+          "blue": "Azul",
+          "violet": "Violeta"
+        }
+      },
+      "file": {
+        "download": "Descargar {name}",
+        "remove": "Quitar {name}",
+        "uploading": "Subiendo {name}",
+        "progress": "Subiendo… {percent}%",
+        "pending": "Subiendo…",
+        "success": "Subido"
+      },
+      "fileUpload": {
+        "drop": "Arrastrá archivos acá o",
+        "choose": "Elegir archivos",
+        "type": "{name} no es un tipo de archivo aceptado",
+        "size": "{name} pesa más de {limit}",
+        "count": "{max, plural, one {Agregá hasta # archivo} other {Agregá hasta # archivos}}",
+        "added": "{count, plural, one {# archivo agregado} other {# archivos agregados}}",
+        "removed": "Se quitó {name}",
+        "uploaded": "Se subió {name}",
+        "failed": "No se pudo subir"
+      },
+      "richTextEditor": {
+        "toolbar": "Formato",
+        "bold": "Negrita",
+        "italic": "Cursiva",
+        "bulletList": "Lista con viñetas",
+        "numberedList": "Lista numerada",
+        "link": "Enlace",
+        "linkUrl": "Dirección del enlace",
+        "applyLink": "Aplicar",
+        "removeLink": "Quitar enlace",
+        "cancel": "Cancelar"
+      },
+      "progressIndicator": {
+        "complete": "Completado",
+        "current": "Paso actual",
+        "upcoming": "Sin empezar",
+        "error": "Requiere atención"
+      },
+      "breadcrumbs": {
+        "label": "Ruta de navegación",
+        "more": "Ver páginas ocultas"
+      },
+      "image": {
+        "unavailable": "Imagen no disponible"
+      },
+      "video": {
+        "play": "Reproducir",
+        "pause": "Pausar",
+        "mute": "Silenciar",
+        "unmute": "Activar sonido",
+        "captions": "Subtítulos",
+        "fullscreen": "Pantalla completa",
+        "exitFullscreen": "Salir de pantalla completa",
+        "seek": "Progreso del video",
+        "timeOf": "{current} de {duration}",
+        "unavailable": "No se pudo cargar este video."
+      },
+      "pagination": {
+        "page": "Página {page}",
+        "status": "Página <strong>{page}</strong> de {count}"
+      },
+      "rating": {
+        "value": "Calificación: {value} de {max}",
+        "star": "{count, plural, one {# estrella} other {# estrellas}}"
+      }
+    }
   },
   "theme": {
     "label": "Tema",
@@ -68,20 +175,23 @@
     },
     "tour": {
       "insight": {
-        "quote": "“El registro es muy largo.”",
-        "metric": "Registros"
+        "quote": "“No encuentro dónde comprar.”",
+        "metric": "Ventas",
+        "buy": "Comprar"
       },
       "together": {
         "ask": "¿Le damos más fuerza al hero?",
-        "reply": "Listo, fijate.",
-        "resolved": "Resuelto"
+        "reply": "¡Hecho! Ya tiene más fuerza, mirá.",
+        "thanks": "¡Me encanta, gracias!"
       },
       "luck": {
         "test": "Test A/B",
-        "winner": "Ganadora"
+        "winner": "Ganadora",
+        "run": "Correr test"
       },
       "defy": {
-        "metric": "Alcance de marca"
+        "metric": "Alcance de marca",
+        "boost": "Ver crecimiento"
       },
       "pixel": {
         "cta": "Empezar un proyecto"
@@ -89,7 +199,9 @@
       "vision": {
         "title": "Listo para lanzar",
         "cta": "Empezar",
-        "live": "En vivo"
+        "live": "En vivo",
+        "deploy": "Lanzar",
+        "deploying": "Lanzando…"
       },
       "goals": {
         "label": "Meta del trimestre",
@@ -290,20 +402,20 @@
       "jorge": {
         "quote": "“Yeta combinó diseño, estrategia y tecnología de una forma que simplemente tenía sentido. Nos ayudaron a redefinir cómo nos comunicamos con nuestra audiencia.”",
         "name": "Jorge R.",
-        "role": "Fundador",
+        "role": "Cofundador y CEO",
         "company": "Sintaxis",
         "quoteMobile": "“Yeta combinó diseño, estrategia y tecnología de una forma que simplemente tenía sentido. No solo construyeron un sitio web: nos ayudaron a redefinir cómo nos comunicamos con nuestra audiencia.”"
       },
       "marcelo": {
         "quote": "“Entendieron nuestro producto enseguida y tradujeron nuestra visión en una experiencia limpia y funcional que conecta con nuestros usuarios.”",
         "name": "Marcelo Z.",
-        "role": "Fundador",
+        "role": "CTO",
         "company": "apx.school"
       },
       "lisette": {
         "quote": "“Del kickoff a la entrega, Yeta superó las expectativas. Su proceso es estructurado pero flexible, creativo y a la vez guiado por datos.”",
         "name": "Lisette T.",
-        "role": "Fundadora",
+        "role": "Head of Product",
         "company": "NovaTech"
       }
     },

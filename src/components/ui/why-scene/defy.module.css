@@ -4,7 +4,14 @@
 	display: flex;
 	align-items: center;
 	gap: var(--space-8);
-	height: var(--space-16);
+	width: var(--head-width);
+	height: var(--space-24);
+	--head-width: 240px;
+}
+
+/* The press that makes the line rise, on the head's far end. */
+.boost {
+	margin-inline-start: auto;
 }
 
 .value {
@@ -20,8 +27,6 @@
 /* The line and its soft fill in ink; the end dot alone in the chip's hue */
 .chart {
 	--ss-accent: var(--color-text-strong);
-
-	margin-top: var(--space-10);
 }
 
 .chart :global(.ss-chart__line) {
@@ -35,4 +40,12 @@
 
 .chart :global(.ss-chart__dot) {
 	fill: var(--scene-accent);
+}
+
+/* The chart's box, named for the cursor that rides the line (the kit's Chart takes no target). */
+.chartTarget {
+	display: block;
+	width: fit-content;
+	margin-top: var(--space-10);
+	line-height: 0;
 }

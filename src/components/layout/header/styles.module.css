@@ -149,7 +149,8 @@
 /* Tabs sliding pill (.t-tabs-pill) behind the active link: white with black type in both themes.
    It keeps the nav's inset on every side (the first link's pill sits as far from the edge as from
    the top), and its radius is the nav's radius minus that inset. JS writes translateX, width and
-   opacity from the scroll position (useScrollNav). */
+   opacity when the active section changes or a link is clicked (useScrollNav); the tabs-sliding
+   tween carries it from one link to the next, and it fades out above the first section. */
 .pill {
 	--nav-pill-inset: var(--space-6);
 }
@@ -160,6 +161,16 @@
 	border-radius: calc(var(--radius-md) - var(--nav-pill-inset));
 	background-color: var(--color-nav-active-surface);
 	opacity: 0;
+	transition:
+		transform var(--tabs-dur) var(--tabs-ease),
+		width var(--tabs-dur) var(--tabs-ease),
+		opacity var(--duration-enter) var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.pill .indicator {
+		transition: none;
+	}
 }
 
 .pill[data-pill='ready'] .indicator {

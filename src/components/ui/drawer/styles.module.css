@@ -1,0 +1,11 @@
+.drawer {
+	color: var(--color-text);
+}
+
+.description {
+	margin-bottom: var(--space-16);
+	color: var(--color-text-subtle);
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-light);
+	line-height: var(--leading-normal);
+}

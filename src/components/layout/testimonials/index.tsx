@@ -38,10 +38,13 @@ export function Testimonials() {
 			</SectionHeader>
 
 			<div className={section.mobileOnly}>
-				{/* Figma puts Marcelo (the middle card) in front of the stack. */}
-				<CardStack label={t('carousel')} itemLabel={t('card')} variant="fan" initialIndex={1}>
-					{cards('mobile')}
-				</CardStack>
+				{/* The fan sits inset by how far its back cards peek out, so they stay whole on screen. */}
+				<div className={styles.fan}>
+					{/* Figma puts Marcelo (the middle card) in front of the stack. */}
+					<CardStack label={t('carousel')} itemLabel={t('card')} variant="fan" initialIndex={1}>
+						{cards('mobile')}
+					</CardStack>
+				</div>
 			</div>
 			<div className={section.desktopOnly}>
 				<div className={styles.grid}>{cards('desktop')}</div>

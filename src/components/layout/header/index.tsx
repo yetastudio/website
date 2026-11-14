@@ -19,88 +19,110 @@ import { cx } from '@/lib/cx';
 //! Styles
 import styles from './styles.module.css';
 
-const clamp = (value: number, min = 0, max = 1) => Math.min(max, Math.max(min, value));
-const lerp = (from: number, to: number, t: number) => from + (to - from) * t;
-
 /**
- * The white active pill follows the scroll (landing only). A reading line sits at 40% of the
- * viewport; between two sections the pill travels from one link to the next in proportion to how
- * far that line has gone from the first section's top to the next one's, so it moves while you
- * scroll instead of jumping. Above the first section it fades in as that section nears the line.
- * The link the pill mostly covers is the active one (aria-current). It is the transitions.dev
- * "Tabs sliding" pill, driven by scroll instead of a tween.
+ * The white active pill is the landing's index (landing only). A reading line sits at 40% of the
+ * viewport; the active link is the last section whose top has crossed it, so the pill does not
+ * follow the scroll: when the section changes it hands over, sliding to the new link with the
+ * transitions.dev "Tabs sliding" tween. A click hands over at once to the link clicked and holds
+ * it while the page scrolls there, so the pill never steps through the sections in between.
+ * Above the first section the pill fades out.
  */
 function useScrollNav(enabled: boolean) {
 	const navRef = useRef<HTMLElement>(null);
 	const indicatorRef = useRef<HTMLSpanElement>(null);
+	const target = useRef<SectionId | null>(null);
 	const [active, setActive] = useState<SectionId | null>(null);
 
 	useEffect(() => {
 		const nav = navRef.current;
 		const indicator = indicatorRef.current;
 		if (!enabled || !nav || !indicator) return;
-		indicator.style.transition = 'none'; // the scroll is the animation
-		nav.dataset.pill = 'ready';
 		let frame = 0;
+		let placed = false;
+		let releaseTimer = 0;
+		let shown: SectionId | null = null;
 
-		const update = () => {
-			frame = 0;
-			const sections = SECTIONS.map(({ id }) => document.getElementById(id));
-			const links = SECTIONS.map(({ id }) => nav.querySelector<HTMLElement>(`a[href="#${id}"]`));
-			if (sections.some((node) => !node) || links.some((node) => !node)) return;
-
-			const line = window.innerHeight * 0.4;
-			const tops = sections.map((node) => node!.getBoundingClientRect().top - line);
-			const box = nav.getBoundingClientRect();
-			// Pad each link by the nav's padding minus the pill's inset, so the pill keeps the inset on every side.
-			const pad = parseFloat(getComputedStyle(nav).paddingLeft) - parseFloat(getComputedStyle(indicator).top);
-			const geometry = links.map((link) => {
-				const rect = link!.getBoundingClientRect();
-				return { x: rect.left - box.left - nav.clientLeft - pad, width: rect.width + pad * 2 };
-			});
-
-			const last = SECTIONS.length - 1;
-			let index = -1;
-			tops.forEach((top, i) => {
-				if (top <= 0) index = i;
-			});
-
-			let x: number;
-			let width: number;
-			let opacity = 1;
-			let current: number | null;
-			if (index < 0) {
-				opacity = clamp(1 - tops[0] / (window.innerHeight * 0.5));
-				({ x, width } = geometry[0]);
-				current = opacity >= 0.5 ? 0 : null;
-			} else if (index >= last) {
-				({ x, width } = geometry[last]);
-				current = last;
-			} else {
-				const progress = clamp(-tops[index] / (tops[index + 1] - tops[index]));
-				x = lerp(geometry[index].x, geometry[index + 1].x, progress);
-				width = lerp(geometry[index].width, geometry[index + 1].width, progress);
-				current = progress < 0.5 ? index : index + 1;
+		// Move the pill to a link. The first placement (and any resize) lands without the tween.
+		const place = (id: SectionId | null, instant: boolean) => {
+			const link = id ? nav.querySelector<HTMLElement>(`a[href="#${id}"]`) : null;
+			if (instant) indicator.style.transition = 'none';
+			if (link) {
+				const box = nav.getBoundingClientRect();
+				const rect = link.getBoundingClientRect();
+				// Pad the link by the nav's padding minus the pill's inset, so the pill keeps the inset on every side.
+				const pad = parseFloat(getComputedStyle(nav).paddingLeft) - parseFloat(getComputedStyle(indicator).top);
+				indicator.style.transform = `translateX(${rect.left - box.left - nav.clientLeft - pad}px)`;
+				indicator.style.width = `${rect.width + pad * 2}px`;
 			}
+			indicator.style.opacity = link ? '1' : '0';
+			if (instant) {
+				void indicator.offsetWidth;
+				indicator.style.removeProperty('transition');
+			}
+		};
 
-			indicator.style.transform = `translateX(${x}px)`;
-			indicator.style.width = `${width}px`;
-			indicator.style.opacity = String(opacity);
-			setActive(current === null ? null : SECTIONS[current].id);
+		const sectionAtLine = (): SectionId | null => {
+			const line = window.innerHeight * 0.4;
+			let current: SectionId | null = null;
+			for (const { id } of SECTIONS) {
+				const node = document.getElementById(id);
+				if (node && node.getBoundingClientRect().top - line <= 0) current = id;
+			}
+			return current;
+		};
+
+		const update = (instant = false) => {
+			frame = 0;
+			const next = target.current ?? sectionAtLine();
+			if (next === shown && placed && !instant) return;
+			place(next, instant || !placed);
+			placed = true;
+			shown = next;
+			setActive(next);
 		};
 
 		const schedule = () => {
-			if (!frame) frame = requestAnimationFrame(update);
+			if (!frame) frame = requestAnimationFrame(() => update());
 		};
-		schedule();
-		window.addEventListener('scroll', schedule, { passive: true });
-		window.addEventListener('resize', schedule);
-		const observer = new ResizeObserver(schedule);
+		const relayout = () => {
+			cancelAnimationFrame(frame);
+			frame = requestAnimationFrame(() => update(true));
+		};
+
+		// A click hands the pill over now; the lock lifts once the scroll it started has settled.
+		const release = () => {
+			window.clearTimeout(releaseTimer);
+			releaseTimer = window.setTimeout(() => {
+				target.current = null;
+				schedule();
+			}, 160);
+		};
+		const onClick = (event: MouseEvent) => {
+			const link = (event.target as Element).closest<HTMLAnchorElement>('a[href^="#"]');
+			const id = link?.getAttribute('href')?.slice(1) as SectionId | undefined;
+			if (!id || !SECTIONS.some((section) => section.id === id)) return;
+			target.current = id;
+			update();
+			release();
+		};
+		const onScroll = () => {
+			if (target.current) release();
+			schedule();
+		};
+
+		nav.dataset.pill = 'ready';
+		update(true);
+		nav.addEventListener('click', onClick);
+		window.addEventListener('scroll', onScroll, { passive: true });
+		window.addEventListener('resize', relayout);
+		const observer = new ResizeObserver(relayout);
 		observer.observe(nav);
 		return () => {
 			cancelAnimationFrame(frame);
-			window.removeEventListener('scroll', schedule);
-			window.removeEventListener('resize', schedule);
+			window.clearTimeout(releaseTimer);
+			nav.removeEventListener('click', onClick);
+			window.removeEventListener('scroll', onScroll);
+			window.removeEventListener('resize', relayout);
 			observer.disconnect();
 		};
 	}, [enabled]);

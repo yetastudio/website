@@ -87,16 +87,29 @@
    Paths use pathLength=1, so a dash of 1 is the whole stroke. Hidden until the hero's Reveal adds
    .is-shown, then drawn; without motion they simply appear drawn, and a <noscript> rule in the
    root layout shows them without JS. */
-.ray,
-.scribble {
+.ray {
 	stroke: var(--color-text);
 	stroke-dasharray: 1;
 	stroke-dashoffset: 1;
 }
 
-:global(.is-shown) .ray,
-:global(.is-shown) .scribble {
+:global(.is-shown) .ray {
 	stroke-dashoffset: 0;
+}
+
+/* The strike is one whole scribble, revealed by a left-to-right wipe (its stroke can't be dashed). */
+.scribble {
+	stroke: var(--color-text);
+}
+
+.strike .doodleSvg {
+	--strike-hidden: inset(-30% 105% -30% -5%);
+	--strike-shown: inset(-30% -5% -30% -5%);
+	clip-path: var(--strike-hidden);
+}
+
+:global(.is-shown) .strike .doodleSvg {
+	clip-path: var(--strike-shown);
 }
 
 /* The word under the sparkle carries a sheen band that crosses it as the sparkle shines. */
@@ -127,15 +140,25 @@
 		animation: word-sheen var(--doodle-shine-period) var(--ease-in-out) var(--doodle-delay) infinite;
 	}
 
-	/* The strike crosses "luck" out once, like a pen. */
-	:global(.is-shown) .scribble {
-		animation: doodle-draw var(--strike-draw) var(--ease-in-out) var(--strike-delay) both;
+	/* The strike crosses the whole word out once, like a pen moving across it. */
+	:global(.is-shown) .strike .doodleSvg {
+		animation: strike-wipe var(--strike-draw) var(--ease-in-out) var(--strike-delay) both;
 	}
 }
 
 @keyframes doodle-draw {
 	from {
 		stroke-dashoffset: 1;
+	}
+}
+
+@keyframes strike-wipe {
+	from {
+		clip-path: var(--strike-hidden);
+	}
+
+	to {
+		clip-path: var(--strike-shown);
 	}
 }
 

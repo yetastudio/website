@@ -110,18 +110,21 @@
     letter-spacing: var(--tracking-tight);
   }
 
-  /* The classic arrow on every scheme: a black outline round a white body (the macOS
-     pointer's two paths with their fills swapped). Only the arrow is pinned light, so
-     it never inverts; the line cursors keep following the surface. */
-  .ss-stage[data-theme="yeta"] .ss-cursor__glyph[data-glyph="pointer"] {
+  /* The classic arrow (cursor style 'arrow' or 'real') on every scheme: a black outline round a
+     white body (the macOS pointer's two paths with their fills swapped). Only that arrow is
+     pinned light, so it never inverts; the line cursors keep following the surface. The 'yeta'
+     style is left alone: its glyph (YetaCursor) draws its own contrast for the scheme it sits on,
+     a metallic body on light and an ink body with a metallic rim on dark, as the Why Yeta tour
+     cursor does. Pinning it would leave it black on black, white on white. */
+  .ss-stage[data-theme="yeta"] .ss-cursor:not([data-style="yeta"]) .ss-cursor__glyph[data-glyph="pointer"] {
     color-scheme: light;
   }
 
-  .ss-stage[data-theme="yeta"] .ss-cursor__glyph[data-glyph="pointer"] path:first-child {
+  .ss-stage[data-theme="yeta"] .ss-cursor:not([data-style="yeta"]) .ss-cursor__glyph[data-glyph="pointer"] path:first-child {
     fill: var(--color-text-strong);
   }
 
-  .ss-stage[data-theme="yeta"] .ss-cursor__glyph[data-glyph="pointer"] path:last-child {
+  .ss-stage[data-theme="yeta"] .ss-cursor:not([data-style="yeta"]) .ss-cursor__glyph[data-glyph="pointer"] path:last-child {
     fill: var(--color-surface-raised);
   }
 

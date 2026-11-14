@@ -1,0 +1,101 @@
+/* Geometry and colour only. The pulse (on the bones) and the reveal (on the layers) are the
+   transitions.dev "Skeleton loader and reveal" (.t-skel*). Unlayered rules here win over the
+   snippet's absolute stacking, so a Skeleton sits in the flow like the content it replaces. */
+
+.skeleton {
+	position: relative;
+	inset: auto;
+	z-index: auto;
+	min-width: 0;
+}
+
+.bone {
+	display: block;
+	background-color: var(--color-fill-muted);
+}
+
+/* ── Text: each line is as tall as a line of the copy (font size × normal leading) ── */
+.text {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.line {
+	width: 100%;
+	height: calc(var(--skeleton-font) * 0.85);
+	margin-block: calc(var(--skeleton-font) * (var(--leading-normal) - 0.85) / 2);
+	border-radius: var(--radius-xs);
+}
+
+.lastLine {
+	width: 60%;
+}
+
+.text-xs { --skeleton-font: var(--text-xs); }
+.text-sm { --skeleton-font: var(--text-sm); }
+.text-md { --skeleton-font: var(--text-md); }
+.text-lg { --skeleton-font: var(--text-lg); }
+.text-xl { --skeleton-font: var(--text-xl); }
+
+/* ── Circle: the Avatar scale, plus the 60px control for tiles ── */
+.circle {
+	display: inline-flex;
+	flex-shrink: 0;
+}
+
+.circleBone {
+	border-radius: var(--radius-pill);
+}
+
+.circle-xs,
+.circle-sm {
+	width: var(--icon-lg);
+	height: var(--icon-lg);
+}
+
+.circle-md {
+	width: var(--space-28);
+	height: var(--space-28);
+}
+
+.circle-lg {
+	width: var(--space-40);
+	height: var(--space-40);
+}
+
+.circle-xl {
+	width: var(--control-xl);
+	height: var(--control-xl);
+}
+
+/* ── Rect: media, thumbnails and card bodies ── */
+.rect {
+	display: flex;
+	width: 100%;
+}
+
+.rectBone {
+	width: 100%;
+	border-radius: var(--radius-md);
+}
+
+/* ── SkeletonReveal: both layers share one grid cell, so the taller one sets the height ── */
+.reveal {
+	display: grid;
+	min-width: 0;
+}
+
+.layer {
+	grid-area: 1 / 1;
+	position: relative;
+	inset: auto;
+	min-width: 0;
+}
+
+/* Skeletons inside the layer pulse on their own; only the layer fades, so the fade is not doubled. */
+.skeletonLayer .skeleton {
+	opacity: 1;
+	filter: none;
+	transition: none;
+}

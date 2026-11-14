@@ -1,0 +1,87 @@
+/* Badge vs Chip: the Chip is a frosted pill (19px+) for tags and eyebrows; the Badge is a squarer,
+   smaller status mark (16 / 20px) with tabular figures, so counts never change width as they tick. */
+.badge {
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-4);
+	width: fit-content;
+	font-family: var(--font-sans);
+	font-weight: var(--font-weight-regular);
+	font-variant-numeric: tabular-nums;
+	letter-spacing: var(--tracking-tight);
+	line-height: var(--leading-none);
+	white-space: nowrap;
+	vertical-align: middle;
+}
+
+/* ── Sizes ── */
+.sm {
+	min-height: var(--space-16);
+	padding-inline: var(--space-4);
+	font-size: var(--text-2xs);
+}
+
+.md {
+	min-height: var(--icon-lg);
+	padding-inline: var(--space-6);
+	font-size: var(--text-xs);
+}
+
+/* ── Label: neutral fill, hairline bevel, the status as a leading dot ── */
+.label {
+	border-radius: var(--radius-xs);
+	background-color: var(--color-fill-muted);
+	color: var(--color-text);
+}
+
+.dot {
+	flex-shrink: 0;
+	width: var(--space-6);
+	height: var(--space-6);
+	border-radius: var(--radius-pill);
+	background-color: currentColor;
+}
+
+/* ── Count: an ink pill, as wide as it is tall for one digit ── */
+.count {
+	border-radius: var(--radius-pill);
+	background-color: var(--color-surface-inverse);
+	color: var(--color-text-inverse);
+}
+
+.count.sm {
+	min-width: var(--space-16);
+}
+
+.count.md {
+	min-width: var(--icon-lg);
+}
+
+/* ── Dot only ── */
+.dotOnly {
+	position: relative;
+	display: inline-block;
+	flex-shrink: 0;
+	border-radius: var(--radius-pill);
+	background-color: currentColor;
+	vertical-align: middle;
+}
+
+.dot-sm {
+	width: var(--space-6);
+	height: var(--space-6);
+}
+
+.dot-md {
+	width: var(--space-8);
+	height: var(--space-8);
+}
+
+/* ── Tones (dot only) ── */
+.tone-neutral { color: var(--color-text-strong); }
+.tone-info { color: var(--color-info); }
+.tone-success { color: var(--color-success); }
+.tone-warning { color: var(--color-warning); }
+.tone-danger { color: var(--color-danger); }

@@ -1,0 +1,116 @@
+.pagination {
+	min-width: 0;
+}
+
+.list {
+	display: flex;
+	flex-wrap: wrap; /* a forced `full` bar wraps on narrow screens instead of overflowing the page */
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-2);
+	list-style: none;
+}
+
+/* ── Page items: Button md geometry (34, radius 12), ghost until current ── */
+.page {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: var(--control-md);
+	height: var(--control-md);
+	padding-inline: var(--space-8);
+	border-radius: var(--radius-md);
+	color: var(--color-text-subtle);
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-regular);
+	font-variant-numeric: tabular-nums;
+	line-height: var(--leading-none);
+	letter-spacing: var(--tracking-normal);
+	text-decoration: none;
+	transition:
+		background-color var(--duration-micro) var(--ease-out),
+		color var(--duration-micro) var(--ease-out),
+		transform var(--duration-micro) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.page:not(.current):hover {
+		background-color: var(--color-surface-control-hover);
+		color: var(--color-text-strong);
+	}
+}
+
+.page:not(.current):active {
+	background-color: var(--color-surface-control-pressed);
+	transform: scale(0.98);
+	transition-duration: var(--duration-instant);
+}
+
+/* The header's active pill: black with white type on light, white with black type on dark. */
+.current {
+	background-color: var(--color-nav-active-surface);
+	color: var(--color-nav-active-text);
+	box-shadow: var(--shadow-bevel);
+	cursor: default;
+}
+
+.ellipsis {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: var(--control-sm);
+	color: var(--color-text-faint);
+}
+
+.edge:first-child {
+	margin-inline-end: var(--space-6);
+}
+
+.edge:last-child {
+	margin-inline-start: var(--space-6);
+}
+
+/* Prev / Next are DS Buttons (ghost, md): subtle until hovered, the page numbers' type size. */
+.list .step {
+	--button-font-size: var(--text-sm);
+	color: var(--color-text-subtle);
+}
+
+/* ── Compact: [←] Page 3 of 12 [→] ── */
+.compact {
+	gap: var(--space-8);
+}
+
+.status {
+	min-width: calc(var(--space-80) + var(--space-16));
+	color: var(--color-text-subtle);
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-light);
+	font-variant-numeric: tabular-nums;
+	text-align: center;
+	white-space: nowrap;
+}
+
+.status strong {
+	color: var(--color-text-strong);
+	font-weight: var(--font-weight-regular);
+}
+
+/* ── Auto: full on wider screens, compact on phones ── */
+.compact {
+	flex-wrap: nowrap;
+}
+
+.autoCompact {
+	display: none;
+}
+
+@media (max-width: 479px) {
+	.autoFull {
+		display: none;
+	}
+
+	.autoCompact {
+		display: flex;
+	}
+}

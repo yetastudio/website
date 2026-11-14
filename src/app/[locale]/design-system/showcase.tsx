@@ -6,6 +6,11 @@ import { Accent, Chip, Heading, Text } from '@/components/ui';
 import { Foundations } from './foundations';
 import { InspoComponents, Primitives } from './primitives';
 import { Composites } from './composites';
+import FormsGallery, { NAV as FORMS_NAV } from './gallery/forms';
+import InputsGallery, { NAV as INPUTS_NAV } from './gallery/inputs';
+import FeedbackGallery, { NAV as FEEDBACK_NAV } from './gallery/feedback';
+import NavigationGallery, { NAV as NAVIGATION_NAV } from './gallery/navigation';
+import LayoutGallery, { NAV as LAYOUT_NAV } from './gallery/content';
 
 //! Styles
 import styles from './styles.module.css';
@@ -28,6 +33,11 @@ const navItems = [
 	{ id: 'project-card', label: 'Project card', group: 'Patterns' },
 	{ id: 'summary-card', label: 'Summary card', group: 'Patterns' },
 	{ id: 'inspo', label: 'Inspo components', group: 'Inspo' },
+	...FORMS_NAV,
+	...INPUTS_NAV,
+	...FEEDBACK_NAV,
+	...NAVIGATION_NAV,
+	...LAYOUT_NAV,
 ];
 
 export default function DesignSystemShowcase() {
@@ -50,6 +60,11 @@ export default function DesignSystemShowcase() {
 			<Primitives />
 			<Composites />
 			<InspoComponents />
+			<FormsGallery />
+			<InputsGallery />
+			<FeedbackGallery />
+			<NavigationGallery />
+			<LayoutGallery />
 		</ShowcaseLayout>
 	);
 }

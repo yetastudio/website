@@ -1,7 +1,9 @@
-import { Badge, Bar, Button, Stage, Text, type Act } from '@stageshow';
+import { Badge, Bar, Button, Spinner, Stage, States, Text, type Act } from '@stageshow';
+import { Rocket } from 'lucide-react';
 import type { CSSProperties, ReactNode } from 'react';
 
-import { SCENE_HEIGHT, SCENE_WIDTH, type WhyTourCopy } from './shared';
+import { sceneCursor } from './cursor';
+import { ENTRY_MS, SCENE_HEIGHT, SCENE_WIDTH, type WhyTourCopy } from './shared';
 import look from './look.module.css';
 import styles from './vision.module.css';
 
@@ -9,29 +11,35 @@ import styles from './vision.module.css';
 // drawn at the page's own geometry (a title bar, a crossed image box, a
 // dashed button); each part resolves in reading order into the real thing,
 // and the page is marked Live. Dashed edges never resize, they only fade.
-// The poster is the live page.
+// Yeta's cursor presses Launch: the control turns into Launching… while the
+// sketch resolves in reading order, and lands on Live once the page is real,
+// like a deploy. The poster is the live page.
 //
-// Real strings: the page title, the button, Live.
+// Real strings: the page title, the button, Launch, Launching…, Live.
 
-type S = { built: boolean; live: boolean };
+type S = { launching: boolean; built: boolean; live: boolean };
 
-const INITIAL: S = { built: false, live: false };
-const POSTER: S = { built: true, live: true };
+const INITIAL: S = { launching: false, built: false, live: false };
+const POSTER: S = { launching: false, built: true, live: true };
 
 async function script(a: Act<S>) {
-	await a.wait(350);
+	await a.wait(ENTRY_MS);
+	a.mark('launch');
+	await a.click('launch');
+	await a.set({ launching: true });
+	await a.wait(140);
 	a.mark('build');
 	await a.set({ built: true });
-	await a.wait(900);
+	await a.wait(1050);
 	a.mark('live');
-	await a.set({ live: true });
-	await a.wait(450);
+	await a.set({ launching: false, live: true });
+	await a.wait(400);
 }
 
 /** One part of the page: its sketch and its finished face in one cell, crossfaded in reading order. */
-function Part({ i, sketch, product, className }: { i: number; sketch: ReactNode; product: ReactNode; className?: string }) {
+function Part({ i, sketch, product, className, target }: { i: number; sketch: ReactNode; product: ReactNode; className?: string; target?: string }) {
 	return (
-		<div className={className ? `${styles.part} ${className}` : styles.part} style={{ '--i': i } as CSSProperties}>
+		<div className={className ? `${styles.part} ${className}` : styles.part} style={{ '--i': i } as CSSProperties} data-target={target}>
 			<div className={styles.sketch}>{sketch}</div>
 			<div className={styles.product}>{product}</div>
 		</div>
@@ -46,16 +54,31 @@ export function VisionScene({ copy, playing }: { copy: WhyTourCopy['vision']; pl
 			initial={INITIAL}
 			poster={POSTER}
 			script={playing ? script : undefined}
+			cursor={playing ? sceneCursor : undefined}
 			play="once"
 		>
 			{(s) => (
 				<div className={look.panel} data-built={s.built || undefined}>
 					<div className={styles.head}>
 						<Part i={0} sketch={<Bar w={104} h={8} tone={3} />} product={<Text className={look.strong}>{copy.title}</Text>} />
-						<span className={look.arrive} data-on={s.live || undefined}>
-							<Badge dot className={styles.live}>
-								{copy.live}
-							</Badge>
+						<span className={styles.status} data-target="launch">
+							<States
+								value={s.live ? 'live' : s.launching ? 'launching' : 'idle'}
+								align="end"
+								states={{
+									idle: (
+										<Button size="small" variant="primary" icon={<Rocket size={12} strokeWidth={2} aria-hidden />}>
+											{copy.deploy}
+										</Button>
+									),
+									launching: <Badge icon={<Spinner size={10} />}>{copy.deploying}</Badge>,
+									live: (
+										<Badge dot className={styles.live}>
+											{copy.live}
+										</Badge>
+									),
+								}}
+							/>
 						</span>
 					</div>
 					<Part
@@ -72,6 +95,7 @@ export function VisionScene({ copy, playing }: { copy: WhyTourCopy['vision']; pl
 					<Part
 						i={2}
 						className={styles.cta}
+						target="cta"
 						sketch={
 							<span className={styles.pill}>
 								<Bar w={56} h={5} tone={3} />

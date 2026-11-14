@@ -7,12 +7,16 @@
 	min-width: 0;
 }
 
-/* Bleeds to the viewport edge on the right, like the Figma track. */
+/*
+ * Bleeds to both viewport edges, so a slide centres on the screen, not on the column. The inline
+ * inset is measured (half the track minus half a slide), so the first card starts centred and the
+ * last one can reach the centre too; before it is measured the gutter holds the place.
+ */
 .track {
 	display: flex;
-	width: calc(100% + var(--page-gutter));
-	margin-inline-end: calc(var(--page-gutter) * -1);
-	padding-inline-end: var(--page-gutter);
+	width: calc(100% + var(--page-gutter) * 2);
+	margin-inline: calc(var(--page-gutter) * -1);
+	padding-inline: var(--carousel-inset, var(--page-gutter));
 	padding-block: var(--space-4);
 	overflow-x: auto;
 	overscroll-behavior-x: contain;
@@ -39,9 +43,11 @@
 	gap: var(--space-16);
 }
 
+/* One card per swipe: a fling stops at the next card instead of gliding past several. */
 .slide {
 	flex-shrink: 0;
-	scroll-snap-align: start;
+	scroll-snap-align: center;
+	scroll-snap-stop: always;
 }
 
 /* Inspo dots sit in the gap Figma already leaves below the track, so the layout height matches the design. */

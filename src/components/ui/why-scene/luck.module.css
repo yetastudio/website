@@ -1,5 +1,15 @@
 /* Luck: an A/B test, two variants on one grid of fixed tracks, the winner marked on its own row. */
 
+/* The test's name and the press that runs it, on the two ends of one row. */
+.head {
+	--head-width: 240px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: var(--head-width);
+	height: var(--space-24);
+}
+
 .variants {
 	display: flex;
 	flex-direction: column;
@@ -55,9 +65,3 @@
 	background: var(--scene-accent);
 }
 
-.after {
-	display: flex;
-	flex-direction: column;
-	gap: var(--space-6);
-	margin-top: var(--space-16);
-}

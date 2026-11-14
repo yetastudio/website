@@ -3,13 +3,15 @@ import { Check } from 'lucide-react';
 
 import { LogoMark } from '@/components/ui/brand';
 
-import { SCENE_HEIGHT, SCENE_WIDTH, type WhyTourCopy } from './shared';
+import { sceneCursor } from './cursor';
+import { ENTRY_MS, SCENE_HEIGHT, SCENE_WIDTH, type WhyTourCopy } from './shared';
 import look from './look.module.css';
 import styles from './goals.module.css';
 
 // Your goals are our goals: one goal, shared. The client and the studio sit
 // on the same goal card; progress fills past the target mark and the goal is
-// marked Reached. The poster is the reached goal.
+// marked Reached. Yeta's cursor presses the goal's track to start it and
+// rides the fill past the target. The poster is the reached goal.
 //
 // Real strings: the goal, the metric, Reached.
 
@@ -24,10 +26,11 @@ const TARGET = 20;
 const RESULT = 24;
 
 async function script(a: Act<S>) {
-	await a.wait(350);
+	await a.wait(ENTRY_MS);
 	a.mark('progress');
+	await a.click({ at: 'track', x: 0.08, y: 0.5 });
 	await a.set({ run: true });
-	await a.wait(1000);
+	await a.move({ at: 'track', x: RESULT / SCALE, y: 0.5 }, { duration: 900 });
 	a.mark('reached');
 	await a.set({ done: true });
 	await a.wait(450);
@@ -43,6 +46,7 @@ export function GoalsScene({ copy, playing }: { copy: WhyTourCopy['goals']; play
 			initial={INITIAL}
 			poster={POSTER}
 			script={playing ? script : undefined}
+			cursor={playing ? sceneCursor : undefined}
 			play="once"
 		>
 			{(s) => (
@@ -61,7 +65,7 @@ export function GoalsScene({ copy, playing }: { copy: WhyTourCopy['goals']; play
 							<Badge icon={<Check size={10} strokeWidth={2.5} aria-hidden className={styles.tick} />}>{copy.reached}</Badge>
 						</span>
 					</div>
-					<div className={styles.track} data-done={s.done || undefined}>
+					<div className={styles.track} data-done={s.done || undefined} data-target="track">
 						<Meter value={s.run ? RESULT / SCALE : 0} />
 						<span className={styles.target} style={{ left: `${(TARGET / SCALE) * 100}%` }} />
 					</div>

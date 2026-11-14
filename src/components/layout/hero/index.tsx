@@ -45,12 +45,17 @@ function Sparkle() {
 	);
 }
 
-/** The Figma strike over "luck", inline so it can be drawn like a pen crossing the word out. */
+/**
+ * The Figma strike over "luck", inline so it can be drawn like a pen crossing the word out: one
+ * scribble, painted stroke by stroke from the first letter to the last. It stretches with the word
+ * (longer translations) at a constant pen width, so it is revealed by a wipe rather than a dash:
+ * a dash can't be measured on a non-scaling stroke and broke into pieces.
+ */
 function Strike() {
 	return (
 		<span className={cx(styles.doodle, styles.strike)} aria-hidden="true" data-doodle>
 			<svg viewBox="0 0 65 23" fill="none" preserveAspectRatio="none" className={styles.doodleSvg}>
-				<path d={SCRIBBLE} pathLength={1} strokeWidth={1.6} vectorEffect="non-scaling-stroke" className={styles.scribble} />
+				<path d={SCRIBBLE} strokeWidth={1.6} vectorEffect="non-scaling-stroke" strokeLinecap="round" strokeLinejoin="round" className={styles.scribble} />
 			</svg>
 		</span>
 	);
