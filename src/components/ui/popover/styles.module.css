@@ -62,7 +62,7 @@
 .title {
 	color: var(--color-text-strong);
 	font-weight: var(--font-weight-medium);
-	line-height: var(--leading-snug);
+	line-height: var(--leading-normal);
 }
 
 .close {

@@ -167,13 +167,13 @@ export function Foundations() {
 			>
 				<Specimen title="Families">
 					<ThemePair layout="column" align="start">
-						<Text size="3xl" weight="medium" tone="display">
+						<Text size="3xl" weight="medium" tone="display" leading="tight">
 							Funnel Display
 						</Text>
 						<Text size="sm" tone="subtle">
 							Light 300 · Regular 400 · Medium 500 · Bold 700
 						</Text>
-						<Text size="3xl" family="serif">
+						<Text size="3xl" family="serif" leading="none">
 							PP Editorial New <Accent>Italic</Accent>
 						</Text>
 						<Text size="sm" tone="subtle">
@@ -203,7 +203,7 @@ export function Foundations() {
 						<Text align="center" size="lg" balance>
 							Get a <Accent underline>free consultation</Accent> and find out the difference.
 						</Text>
-						<Text family="serif" size="2xl" align="center">
+						<Text family="serif" size="2xl" align="center" leading="none">
 							Starts with an idea.
 						</Text>
 					</ThemePair>

@@ -22,9 +22,9 @@
 		padding-block: var(--space-64);
 	}
 
-	/* Figma: 20/48 paragraph with a forced break after "development" (<brmd> in the copy). */
+	/* Figma: Lead lg 20/30 paragraph with a forced break after "development" (<brmd> in the copy). */
 	.header > :last-child {
-		line-height: var(--space-48);
+		line-height: var(--leading-normal);
 	}
 }
 

@@ -33,7 +33,7 @@
 	color: inherit;
 	font-size: var(--text-sm);
 	font-weight: var(--font-weight-light);
-	line-height: var(--leading-snug);
+	line-height: var(--leading-normal);
 }
 
 /* ── Sizes: the icon scale ── */

@@ -33,7 +33,7 @@
 	color: var(--color-text);
 	font-size: var(--text-sm);
 	font-weight: var(--font-weight-light);
-	line-height: var(--leading-snug);
+	line-height: var(--leading-normal);
 	cursor: pointer;
 	user-select: none;
 	transition: background-color var(--duration-micro) var(--ease-out);

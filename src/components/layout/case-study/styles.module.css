@@ -52,7 +52,7 @@
 	gap: var(--space-16);
 	font-size: var(--text-display);
 	font-weight: var(--font-weight-bold);
-	line-height: var(--leading-snug);
+	line-height: var(--leading-none);
 	letter-spacing: var(--tracking-tight);
 }
 
@@ -65,12 +65,12 @@
 	-webkit-text-fill-color: transparent;
 }
 
-/* Section lead (Figma 1294:2803): 16/32 on phones in a 280 measure, 20/48 from 768. */
+/* Lead (Figma 1294:2803): 16/32 on phones in a 280 measure, 20/30 from 768, cap-trimmed. */
 .lead {
 	max-width: calc(var(--space-40) * 7); /* 280 */
 	font-size: var(--text-md);
 	font-weight: var(--font-weight-light);
-	line-height: var(--space-32);
+	line-height: var(--leading-loose);
 	letter-spacing: var(--tracking-tight);
 	color: var(--color-text);
 	text-box: trim-both cap alphabetic; /* Figma leading trim */
@@ -133,7 +133,7 @@
 	color: var(--color-text);
 }
 
-/* Lead copy: paragraphs one empty 32px line apart inside leading-trimmed boxes. */
+/* Lead copy: paragraphs one empty line apart inside leading-trimmed boxes (16/32 phones, 20/30 from 768). */
 .leadCopy {
 	display: flex;
 	flex-direction: column;
@@ -141,7 +141,7 @@
 	gap: calc(2lh - 1cap);
 	font-size: var(--text-md);
 	font-weight: var(--font-weight-light);
-	line-height: var(--space-32);
+	line-height: var(--leading-loose);
 	letter-spacing: var(--tracking-tight);
 	color: var(--color-text);
 	text-wrap: pretty;
@@ -169,7 +169,7 @@
 .eyebrow {
 	font-size: var(--text-xs);
 	font-weight: var(--font-weight-light);
-	line-height: var(--leading-relaxed);
+	line-height: var(--leading-normal);
 	letter-spacing: var(--tracking-tight);
 	text-align: center;
 	color: color-mix(in srgb, var(--color-text) 50%, transparent);
@@ -184,9 +184,9 @@
 	width: 100%;
 }
 
-/* Footer label style: Regular 16/32 at 70%. */
+/* Label md: Regular 16/24 at 70%. */
 .highlights .label {
-	line-height: var(--space-32);
+	line-height: var(--leading-normal);
 }
 
 .stats {
@@ -213,15 +213,15 @@
 }
 
 .card .value {
-	letter-spacing: var(--tracking-tight);
+	letter-spacing: var(--tracking-normal);
 }
 
-/* Process description style: Light 12/24, centred, trimmed. */
+/* Body xs: Light 12/18, centred, trimmed. */
 .cardLabel {
 	padding: var(--space-12);
 	font-size: var(--text-xs);
 	font-weight: var(--font-weight-light);
-	line-height: var(--leading-loose);
+	line-height: var(--leading-normal);
 	letter-spacing: var(--tracking-tight);
 	text-align: center;
 	text-wrap: balance;
@@ -246,12 +246,12 @@
 	padding: var(--space-12);
 }
 
-/* Process Card title: Editorial 32/32, tracking −3%. */
+/* Serif Accent 2xl: Editorial 32/32, no tracking. */
 .storyCopy .storyTitle {
-	letter-spacing: var(--tracking-tight);
+	letter-spacing: var(--tracking-normal);
 }
 
-/* Summary paragraph style: Light 16/30, trimmed, one empty line between paragraphs. */
+/* Lead md: Light 16/32, trimmed, one empty line between paragraphs. */
 .storyBody {
 	display: flex;
 	flex-direction: column;
@@ -259,7 +259,7 @@
 	gap: calc(2lh - 1cap);
 	font-size: var(--text-md);
 	font-weight: var(--font-weight-light);
-	line-height: var(--leading-relaxed);
+	line-height: var(--leading-loose);
 	letter-spacing: var(--tracking-tight);
 }
 
@@ -285,7 +285,7 @@
 	.lead {
 		max-width: calc(var(--space-10) * 69); /* 690 */
 		font-size: var(--text-lg);
-		line-height: var(--space-48);
+		line-height: var(--leading-normal);
 	}
 
 	.group {
@@ -307,6 +307,7 @@
 
 	.leadCopy {
 		font-size: var(--text-lg);
+		line-height: var(--leading-normal);
 	}
 
 	.stats {

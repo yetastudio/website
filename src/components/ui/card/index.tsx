@@ -142,7 +142,7 @@ export function CardHeader({ title, eyebrow, level = 3, href, action, className 
 				</Heading>
 				{/* After the heading in the DOM so the title is read first; drawn above it. */}
 				{eyebrow && (
-					<Text as="p" size="xs" tone="subtle" leading="snug" className={styles.eyebrow}>
+					<Text as="p" size="xs" tone="subtle" className={styles.eyebrow}>
 						{eyebrow}
 					</Text>
 				)}

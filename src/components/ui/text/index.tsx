@@ -75,8 +75,8 @@ export type HeadingProps = Omit<TextProps, 'as'> & {
 	level?: 1 | 2 | 3 | 4 | 5 | 6;
 };
 
-/** Headings default to Funnel Display Bold at 1.25 line height, the Figma section-title style. */
-export function Heading({ level = 2, size = '4xl', weight = 'bold', leading = 'snug', ...rest }: HeadingProps) {
+/** Headings default to Funnel Display Bold at the tight (1.1) line height, the Figma Headline role. */
+export function Heading({ level = 2, size = '4xl', weight = 'bold', leading = 'tight', ...rest }: HeadingProps) {
 	const tag = `h${level}` as ElementType;
 	return <Text as={tag} size={size} weight={weight} leading={leading} {...rest} />;
 }
