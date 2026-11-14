@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { useRef, useState } from 'react';
+import { memo, useRef, useState } from 'react';
 
 //! Hooks
 import { useTranslations } from 'next-intl';
@@ -22,6 +22,22 @@ import { cx } from '@/lib/cx';
 //! Styles
 import styles from './mockups.module.css';
 
+/** One step of the index, memoised: a step change re-renders the step that leaves and the one that arrives. */
+const WalkStep = memo(function WalkStep({ index, title, current, onPick }: { index: number; title: string; current: boolean; onPick: (index: number) => void }) {
+	return (
+		<li>
+			<Button variant="ghost" size="md" fullWidth className={styles.walkStep} aria-current={current ? 'step' : undefined} onClick={() => onPick(index)}>
+				<Text as="span" size="sm" family="serif" italic tone={current ? 'strong' : 'faint'} className={styles.walkNumeral}>
+					{String(index + 1).padStart(2, '0')}
+				</Text>
+				<Text as="span" size="md" tone={current ? 'strong' : 'subtle'}>
+					{title}
+				</Text>
+			</Button>
+		</li>
+	);
+});
+
 /**
  * Proposal 02: Our Process as a walkthrough. A numbered index beside one process tile;
  * the tile plays that step's Stageshow scene while its dot fills, then the next step
@@ -41,28 +57,9 @@ export function ProcessWalkthroughMockup() {
 		<div className={styles.container}>
 			<div ref={rootRef} className={styles.walkthrough} {...autoplay.handlers}>
 				<ol className={styles.walkIndex}>
-					{PROCESS.map((item, index) => {
-						const current = index === active;
-						return (
-							<li key={item.key}>
-								<Button
-									variant="ghost"
-									size="md"
-									fullWidth
-									className={styles.walkStep}
-									aria-current={current ? 'step' : undefined}
-									onClick={() => setActive(index)}
-								>
-									<Text as="span" size="sm" family="serif" italic tone={current ? 'strong' : 'faint'} className={styles.walkNumeral}>
-										{String(index + 1).padStart(2, '0')}
-									</Text>
-									<Text as="span" size="md" tone={current ? 'strong' : 'subtle'}>
-										{t(`steps.${item.key}.title`)}
-									</Text>
-								</Button>
-							</li>
-						);
-					})}
+					{PROCESS.map((item, index) => (
+						<WalkStep key={item.key} index={index} title={t(`steps.${item.key}.title`)} current={index === active} onPick={setActive} />
+					))}
 				</ol>
 
 				<div className={styles.walkStage}>
