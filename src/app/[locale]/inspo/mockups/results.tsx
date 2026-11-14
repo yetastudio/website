@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 //! Hooks
 import { useAutoplay } from './use-autoplay';
@@ -28,27 +28,30 @@ const COUNT_DURATION = 900;
  * simply shows the value.
  */
 function CountUp({ value, primed, start }: { value: number; primed: boolean; start: boolean }) {
-	const [progress, setProgress] = useState(0);
+	const figureRef = useRef<HTMLSpanElement>(null);
 
+	// The count writes the figure straight into the span each frame, so the animation costs no React
+	// render per frame (it used to set state ~55 times per counter).
 	useEffect(() => {
-		if (!start) return;
+		const figure = figureRef.current;
+		if (!start || !figure) return;
 		let frame = 0;
 		const begin = performance.now();
 		const tick = (now: number) => {
-			const next = Math.min(1, (now - begin) / COUNT_DURATION);
-			setProgress(next);
-			if (next < 1) frame = requestAnimationFrame(tick);
+			const progress = Math.min(1, (now - begin) / COUNT_DURATION);
+			// Ease out cubic: fast start, gentle landing on the real figure.
+			figure.textContent = String(Math.round(value * (1 - (1 - progress) ** 3)));
+			if (progress < 1) frame = requestAnimationFrame(tick);
 		};
 		frame = requestAnimationFrame(tick);
 		return () => cancelAnimationFrame(frame);
-	}, [start]);
-
-	// Ease out cubic: fast start, gentle landing on the real figure.
-	const shown = start ? Math.round(value * (1 - (1 - progress) ** 3)) : primed ? 0 : value;
+	}, [start, value]);
 
 	return (
 		<>
-			<span aria-hidden="true">{shown}</span>
+			<span ref={figureRef} aria-hidden="true">
+				{start || primed ? 0 : value}
+			</span>
 			<span className="u-visually-hidden">{value}</span>
 		</>
 	);
