@@ -1,5 +1,5 @@
 //! React Core
-import type { ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 
 //! Components
 import { GradientTile, type TileHue } from '@/components/ui/gradient-tile';
@@ -26,7 +26,8 @@ export type ProcessCardProps = {
 };
 
 /** Figma Process Card, Size=Large (1204:1323): wash tile on top, Editorial title, short description. */
-export function ProcessCard({ title, description, icon, hue, scene, step, stepLabel = 'Step', headingLevel = 3, className }: ProcessCardProps) {
+// Memoised: a pure part its parents redraw with the same props.
+export const ProcessCard = memo(function ProcessCard({ title, description, icon, hue, scene, step, stepLabel = 'Step', headingLevel = 3, className }: ProcessCardProps) {
 	const Title = `h${headingLevel}` as const;
 	return (
 		<article className={cx(styles.card, 'u-outline', className)}>
@@ -46,6 +47,6 @@ export function ProcessCard({ title, description, icon, hue, scene, step, stepLa
 			</div>
 		</article>
 	);
-}
+});
 
 export default ProcessCard;

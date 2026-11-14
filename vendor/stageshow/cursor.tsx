@@ -1,4 +1,4 @@
-import { memo, type ReactNode, type Ref } from 'react'
+import { memo, type ComponentType, type Ref } from 'react'
 import { MacCrosshair, MacGrab, MacIbeam, MacOpenHand, MacPointer, MacPointingHand, MacResizeEW, MacResizeNESW, MacResizeNS, MacResizeNWSE, MacWait } from './cursors'
 import type { Point } from './measure'
 // Yeta: the studio's own cursor glyph (src/components/ui/cursor) for the `yeta` style.
@@ -25,7 +25,7 @@ export type CursorKind = 'pointer' | 'ibeam' | 'crosshair' | 'hand' | 'open' | '
  */
 export type CursorStyle = 'real' | 'large' | 'circle' | 'touch' | 'arrow' | 'yeta'
 
-const GLYPHS: Record<CursorKind, () => ReactNode> = {
+const GLYPHS: Record<CursorKind, ComponentType> = {
   pointer: MacPointer,
   ibeam: MacIbeam,
   crosshair: MacCrosshair,

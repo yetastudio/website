@@ -1,3 +1,4 @@
+import { memo } from 'react';
 //! Components
 import { GradientTile, type TileHue } from '@/components/ui/gradient-tile';
 import { Icon, type IconName } from '@/components/ui/icon';
@@ -27,7 +28,8 @@ export type CraftCardProps = {
 };
 
 /** Figma Craft Card (1472:4250): a colour-wash tile with an icon and a three-line text pane. */
-export function CraftCard({ title, subtitle, description, icon, hue, hueLight, layout = 'responsive', headingLevel = 3, className }: CraftCardProps) {
+// Memoised: a pure part its parents redraw with the same props.
+export const CraftCard = memo(function CraftCard({ title, subtitle, description, icon, hue, hueLight, layout = 'responsive', headingLevel = 3, className }: CraftCardProps) {
 	const Title = `h${headingLevel}` as const;
 	return (
 		<article className={cx(styles.card, styles[layout], 'u-outline', className)}>
@@ -39,6 +41,6 @@ export function CraftCard({ title, subtitle, description, icon, hue, hueLight, l
 			</div>
 		</article>
 	);
-}
+});
 
 export default CraftCard;

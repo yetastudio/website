@@ -1,17 +1,7 @@
 'use client';
 
 //! React Core
-import {
-	useEffect,
-	useId,
-	useLayoutEffect,
-	useMemo,
-	useRef,
-	useState,
-	type FocusEvent,
-	type KeyboardEvent,
-	type ReactNode,
-} from 'react';
+import { memo, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type FocusEvent, type KeyboardEvent, type ReactNode } from 'react';
 
 //! Hooks
 import { useTranslations } from 'next-intl';
@@ -67,7 +57,8 @@ const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : us
 const fold = (text: string) => text.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
 
 /** Wraps the typed part of a label so the match reads at a glance. */
-function Highlight({ label, query }: { label: string; query: string }) {
+// Memoised: a pure part its parents redraw with the same props.
+const Highlight = memo(function Highlight({ label, query }: { label: string; query: string }) {
 	const folded = fold(label);
 	const needle = fold(query.trim());
 	const start = needle ? folded.indexOf(needle) : -1;
@@ -80,7 +71,7 @@ function Highlight({ label, query }: { label: string; query: string }) {
 			{label.slice(start + needle.length)}
 		</>
 	);
-}
+});
 
 /**
  * Inspo component (component.gallery "Combobox"): an editable combobox with a list popup,

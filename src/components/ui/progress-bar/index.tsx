@@ -1,5 +1,5 @@
 //! React Core
-import { useId, type CSSProperties, type HTMLAttributes, type ReactNode } from 'react';
+import { memo, useId, type CSSProperties, type HTMLAttributes, type ReactNode } from 'react';
 
 //! Utils
 import { cx } from '@/lib/cx';
@@ -35,7 +35,8 @@ export type ProgressBarProps = Omit<HTMLAttributes<HTMLDivElement>, 'children' |
  * `role="progressbar"` with aria-valuenow / min / max; indeterminate bars omit aria-valuenow.
  * Under reduced motion the fill jumps instead of sliding and the indeterminate sweep becomes a slow fade.
  */
-export function ProgressBar({
+// Memoised: a pure part its parents redraw with the same props.
+export const ProgressBar = memo(function ProgressBar({
 	label,
 	hideLabel,
 	value,
@@ -88,6 +89,6 @@ export function ProgressBar({
 			)}
 		</div>
 	);
-}
+});
 
 export default ProgressBar;

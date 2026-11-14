@@ -7,7 +7,7 @@
  */
 
 //! React Core
-import { useState, type FormEvent, type ReactNode } from 'react';
+import { memo, useState, type FormEvent, type ReactNode } from 'react';
 
 //! Components
 import { Cell, ShowcaseSection, Specimen, ThemePair } from '@/components/showcase';
@@ -73,7 +73,8 @@ function SampleLabel(props: Omit<LabelProps, 'as' | 'htmlFor'>) {
 	return <Label {...props} as="span" />;
 }
 
-function Usage({ use, avoid }: { use: ReactNode; avoid: ReactNode }) {
+// Memoised: a pure part its parents redraw with the same props.
+const Usage = memo(function Usage({ use, avoid }: { use: ReactNode; avoid: ReactNode }) {
 	return (
 		<div className={styles.usage}>
 			<Text size="sm" tone="subtle">
@@ -84,7 +85,7 @@ function Usage({ use, avoid }: { use: ReactNode; avoid: ReactNode }) {
 			</Text>
 		</div>
 	);
-}
+});
 
 /** One brief form per canvas, so each panel keeps its own errors and focus. */
 function BriefForm() {

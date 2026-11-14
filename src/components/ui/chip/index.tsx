@@ -1,5 +1,5 @@
 //! React Core
-import type { ElementType, HTMLAttributes, ReactNode } from 'react';
+import { memo, type ElementType, type HTMLAttributes, type ReactNode } from 'react';
 
 //! Components
 import { Icon, type IconName } from '@/components/ui/icon';
@@ -36,7 +36,8 @@ export type ChipProps = HTMLAttributes<HTMLElement> & {
 const iconSize = { xs: 'sm', sm: 'sm', lg: 'sm', xl: 'lg' } as const;
 
 /** The Figma Chip / Badge: a frosted pill used for section eyebrows and feature tags. */
-export function Chip({ children, size = 'sm', fill = 'tint', icon, tone = 'neutral', as: Component = 'span', className, ...rest }: ChipProps) {
+// Memoised: a pure part its parents redraw with the same props.
+export const Chip = memo(function Chip({ children, size = 'sm', fill = 'tint', icon, tone = 'neutral', as: Component = 'span', className, ...rest }: ChipProps) {
 	const interactive = Component === 'button' || Component === 'a';
 	return (
 		<Component
@@ -48,6 +49,6 @@ export function Chip({ children, size = 'sm', fill = 'tint', icon, tone = 'neutr
 			{children}
 		</Component>
 	);
-}
+});
 
 export default Chip;

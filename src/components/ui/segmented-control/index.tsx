@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { useEffect, useId, useLayoutEffect, useRef, type KeyboardEvent } from 'react';
+import { memo, useEffect, useId, useLayoutEffect, useRef, type KeyboardEvent } from 'react';
 
 //! Components
 import { Icon, type IconName } from '@/components/ui/icon';
@@ -41,7 +41,7 @@ const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : us
  * transitions.dev "Tabs sliding" pill: it slides between segments when the user picks one,
  * and snaps (no animation) on first paint, resize and changes the user did not make.
  */
-export function SegmentedControl<T extends string>({
+function SegmentedControlBase<T extends string>({
 	label,
 	options,
 	value,
@@ -132,5 +132,9 @@ export function SegmentedControl<T extends string>({
 		</div>
 	);
 }
+
+// Memoised (theme and locale switches and galleries re-render around it with the same props); the cast
+// keeps the generic signature, which memo would otherwise erase.
+export const SegmentedControl = memo(SegmentedControlBase) as typeof SegmentedControlBase;
 
 export default SegmentedControl;

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 //! Utils
 import { cx } from '@/lib/cx';
 
@@ -12,13 +13,14 @@ export type DividerProps = {
 };
 
 /** Inspo component: the hairline used between footer columns and in case-study rows. */
-export function Divider({ orientation = 'horizontal', semantic = false, className }: DividerProps) {
+// Memoised: a pure part its parents redraw with the same props.
+export const Divider = memo(function Divider({ orientation = 'horizontal', semantic = false, className }: DividerProps) {
 	return (
 		<div
 			className={cx(styles.divider, styles[orientation], className)}
 			{...(semantic ? { role: 'separator', 'aria-orientation': orientation } : { 'aria-hidden': true })}
 		/>
 	);
-}
+});
 
 export default Divider;

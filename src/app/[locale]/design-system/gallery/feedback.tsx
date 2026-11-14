@@ -7,7 +7,7 @@
  */
 
 //! React Core
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 
 //! Components
 import { Cell, ShowcaseSection, SpecTable, Specimen, ThemePair } from '@/components/showcase';
@@ -48,7 +48,8 @@ export const NAV: Array<{ id: string; label: string; group: string }> = [
 
 const EYEBROW = 'Gallery · Feedback';
 
-function Usage({ use, avoid }: { use: string; avoid: string }) {
+// Memoised: a pure part its parents redraw with the same props.
+const Usage = memo(function Usage({ use, avoid }: { use: string; avoid: string }) {
 	return (
 		<dl className={styles.usage}>
 			<Text as="dt" size="sm" weight="regular">
@@ -65,7 +66,7 @@ function Usage({ use, avoid }: { use: string; avoid: string }) {
 			</Text>
 		</dl>
 	);
-}
+});
 
 function code(text: string) {
 	return <code key={text}>{text}</code>;
@@ -367,7 +368,8 @@ function SpinnerSection() {
 
 /* ───────────────────────── Skeleton ───────────────────────── */
 
-function CardSkeleton() {
+// Memoised: a pure part its parents redraw with the same props.
+const CardSkeleton = memo(function CardSkeleton() {
 	return (
 		<div className={styles.card}>
 			<Skeleton shape="rect" />
@@ -375,7 +377,7 @@ function CardSkeleton() {
 			<Skeleton size="sm" lines={2} />
 		</div>
 	);
-}
+});
 
 function SkeletonSection() {
 	const [loaded, setLoaded] = useState(true);

@@ -7,7 +7,7 @@
  */
 
 //! React Core
-import { useState, type ReactNode } from 'react';
+import { memo, useState, type ReactNode } from 'react';
 
 //! Components
 import { Cell, ShowcaseSection, SpecTable, Specimen, ThemePair } from '@/components/showcase';
@@ -45,7 +45,8 @@ export const NAV: Array<{ id: string; label: string; group: string }> = [
 ];
 
 /** "Use it for / Don't use it for", one line each. */
-function Usage({ use, avoid }: { use: ReactNode; avoid: ReactNode }) {
+// Memoised: a pure part its parents redraw with the same props.
+const Usage = memo(function Usage({ use, avoid }: { use: ReactNode; avoid: ReactNode }) {
 	return (
 		<div className={styles.usage}>
 			<Text size="sm" tone="subtle">
@@ -56,7 +57,7 @@ function Usage({ use, avoid }: { use: ReactNode; avoid: ReactNode }) {
 			</Text>
 		</div>
 	);
-}
+});
 
 const SHOT = {
 	one: { light: '/landing/our-work/project-shot-1-light.png', dark: '/landing/our-work/project-shot-1-dark.png' },

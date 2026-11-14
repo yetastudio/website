@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element -- decorative scribbles exported from Figma. */
 
 //! React Core
-import { useId, type ReactNode } from 'react';
+import { memo, useId, type ReactNode } from 'react';
 
 //! Hooks
 import { useTranslations } from 'next-intl';
@@ -21,7 +21,8 @@ import styles from './styles.module.css';
 type Scribble = 'top-left' | 'top-right' | 'bottom-right' | 'bottom-left';
 
 /** Idle and active strokes, per site theme, stacked so hover can cross-fade them. */
-function ScribbleArt({ name }: { name: Scribble }) {
+// Memoised: a pure part its parents redraw with the same props.
+const ScribbleArt = memo(function ScribbleArt({ name }: { name: Scribble }) {
 	return (
 		<span className={cx(styles.scribble, styles[name])} aria-hidden="true">
 			<span className={styles.scribbleInner}>
@@ -32,9 +33,10 @@ function ScribbleArt({ name }: { name: Scribble }) {
 			</span>
 		</span>
 	);
-}
+});
 
-function SparkLines({ side }: { side: 'left' | 'right' }) {
+// Memoised: a pure part its parents redraw with the same props.
+const SparkLines = memo(function SparkLines({ side }: { side: 'left' | 'right' }) {
 	return (
 		<span className={cx(styles.spark, styles[`spark-${side}`])} aria-hidden="true">
 			<img loading="lazy" decoding="async" src="/landing/summary/spark-lines-light-idle.svg" alt="" className={cx(styles.idle, 'u-only-light')} />
@@ -43,13 +45,14 @@ function SparkLines({ side }: { side: 'left' | 'right' }) {
 			<img loading="lazy" decoding="async" src={`/landing/summary/spark-lines-${side}-dark-active.svg`} alt="" className={cx(styles.active, 'u-only-dark')} />
 		</span>
 	);
-}
+});
 
 /**
  * Figma Summary card (786:762 / 786:805): "Yeta ✹ Studio in a nutshell". Hover (or focus
  * within) is the Figma Active variant: the scribbles turn metallic.
  */
-export function SummaryCard({ className }: { className?: string }) {
+// Memoised: a pure part its parents redraw with the same props.
+export const SummaryCard = memo(function SummaryCard({ className }: { className?: string }) {
 	const t = useTranslations('summary');
 	const titleId = useId();
 
@@ -87,6 +90,6 @@ export function SummaryCard({ className }: { className?: string }) {
 			<p className={styles.paragraph}>{t.rich('p2', richTags)}</p>
 		</article>
 	);
-}
+});
 
 export default SummaryCard;
