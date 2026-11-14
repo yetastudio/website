@@ -1,5 +1,5 @@
 //! React Core
-import type { ElementType, HTMLAttributes, ReactNode } from 'react';
+import { memo, type ElementType, type HTMLAttributes, type ReactNode } from 'react';
 
 //! Utils
 import { cx } from '@/lib/cx';
@@ -35,7 +35,8 @@ export type TextProps = HTMLAttributes<HTMLElement> & {
  * The text primitive. Every visible string goes through Text, Heading or Accent,
  * so size, weight, colour and tracking always come from tokens.
  */
-export function Text({
+/* Memoised: a pure leaf that parents re-render with the same props (autoplay lists, live mockups, scenes). */
+export const Text = memo(function Text({
 	as: Component = 'p',
 	size = 'md',
 	weight = 'light',
@@ -68,7 +69,7 @@ export function Text({
 			{children}
 		</Component>
 	);
-}
+});
 
 export type HeadingProps = Omit<TextProps, 'as'> & {
 	/** Semantic level. Size is independent: pick it with `size`. */
@@ -76,10 +77,11 @@ export type HeadingProps = Omit<TextProps, 'as'> & {
 };
 
 /** Headings default to Funnel Display Bold at the tight (1.1) line height, the Figma Headline role. */
-export function Heading({ level = 2, size = '4xl', weight = 'bold', leading = 'tight', ...rest }: HeadingProps) {
+// Memoised: a pure part its parents redraw with the same props.
+export const Heading = memo(function Heading({ level = 2, size = '4xl', weight = 'bold', leading = 'tight', ...rest }: HeadingProps) {
 	const tag = `h${level}` as ElementType;
 	return <Text as={tag} size={size} weight={weight} leading={leading} {...rest} />;
-}
+});
 
 export type AccentProps = HTMLAttributes<HTMLElement> & {
 	children: ReactNode;

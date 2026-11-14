@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element -- static brand SVGs inside a scene: next/image adds nothing and would rasterise them. */
 
 //! React Core
-import type { HTMLAttributes } from 'react';
+import { memo, type HTMLAttributes } from 'react';
 
 //! Components
 import { Bar, Check } from '@stageshow';
@@ -25,15 +25,17 @@ import styles from './parts.module.css';
 type DivProps = HTMLAttributes<HTMLDivElement> & Record<`data-${string}`, unknown>;
 
 /** A blinking text caret: solid while keys are going in. */
-export function TypeCaret({ on, typing }: { on: boolean; typing?: boolean }) {
+// Memoised: a pure part its parents redraw with the same props.
+export const TypeCaret = memo(function TypeCaret({ on, typing }: { on: boolean; typing?: boolean }) {
 	return <span className={styles.caret} data-on={on || undefined} data-typing={typing || undefined} aria-hidden />;
-}
+});
 
 /**
  * A sticky note on a board. With `words` it is the idea the story is about (and takes the
  * beat's hue as a thin tab); without, a quiet note of placeholder lines.
  */
-export function Note({
+// Memoised: the scenes on this board redraw on every act.set; a note only when its words or caret change.
+export const Note = memo(function Note({
 	words,
 	bars = [44, 30],
 	hued = false,
@@ -57,25 +59,27 @@ export function Note({
 			)}
 		</div>
 	);
-}
+});
 
 /**
  * One node of a flow: a page in the sitemap. The goal node keeps a slot for the beat's hue
  * dot, which grows in when `lit`, so the label never shifts.
  */
-export function FlowNode({ label, goal = false, lit = true, className, ...rest }: DivProps & { label?: string; goal?: boolean; lit?: boolean }) {
+// Memoised: a pure part its parents redraw with the same props.
+export const FlowNode = memo(function FlowNode({ label, goal = false, lit = true, className, ...rest }: DivProps & { label?: string; goal?: boolean; lit?: boolean }) {
 	return (
 		<div {...rest} className={cx(styles.node, className)}>
 			{goal && <span className={cx(look.hueDot, styles.goalDot)} data-on={lit || undefined} />}
 			{label ? <span className={look.strong}>{label}</span> : <Bar w={40} h={5} tone={3} />}
 		</div>
 	);
-}
+});
 
 export type Tool = 'nextjs' | 'react' | 'vercel' | 'figma' | 'slack' | 'loom';
 
 /** A tool's real mark, from the landing's Our Work assets. Vercel has one artwork per canvas. */
-export function ToolMark({ tool, className }: { tool: Tool; className?: string }) {
+// Memoised: a pure part its parents redraw with the same props.
+export const ToolMark = memo(function ToolMark({ tool, className }: { tool: Tool; className?: string }) {
 	if (tool === 'vercel') {
 		return (
 			<span className={cx(styles.mark, className)}>
@@ -89,10 +93,11 @@ export function ToolMark({ tool, className }: { tool: Tool; className?: string }
 			<img src={`/landing/our-work/tools/${tool}.svg`} alt="" />
 		</span>
 	);
-}
+});
 
 /** A row of the stack: the tool's mark, its name and a check that fills as it is added. */
-export function ToolRow({ tool, name, on, className, ...rest }: DivProps & { tool: Tool; name: string; on: boolean }) {
+// Memoised: a pure part its parents redraw with the same props.
+export const ToolRow = memo(function ToolRow({ tool, name, on, className, ...rest }: DivProps & { tool: Tool; name: string; on: boolean }) {
 	return (
 		<div {...rest} className={cx(styles.toolRow, className)}>
 			<ToolMark tool={tool} />
@@ -100,10 +105,11 @@ export function ToolRow({ tool, name, on, className, ...rest }: DivProps & { too
 			<Check on={on} size={14} className={styles.toolCheck} />
 		</div>
 	);
-}
+});
 
 /** A release in the changelog: its version, what it brought and a quiet date. */
-export function ReleaseRow({ version, note, latest = false, className, ...rest }: DivProps & { version: string; note: string; latest?: boolean }) {
+// Memoised: a pure part its parents redraw with the same props.
+export const ReleaseRow = memo(function ReleaseRow({ version, note, latest = false, className, ...rest }: DivProps & { version: string; note: string; latest?: boolean }) {
 	return (
 		<div {...rest} className={cx(styles.release, className)} data-latest={latest || undefined}>
 			<span className={styles.version}>{version}</span>
@@ -111,14 +117,15 @@ export function ReleaseRow({ version, note, latest = false, className, ...rest }
 			{latest ? <span className={look.hueDot} /> : <Bar w={22} h={5} tone={2} className={styles.releaseDate} />}
 		</div>
 	);
-}
+});
 
 /**
  * A landing hero as a wireframe or as the designed page. Both states sit in the same
  * slots and cross-fade in reading order, so the structure stays put and only its voice
  * changes: bars become the headline, the outline becomes the button.
  */
-export function DesignFrame({ mode, slots = false, className, ...rest }: DivProps & { mode: 'wire' | 'design'; slots?: boolean }) {
+// Memoised: a pure part its parents redraw with the same props.
+export const DesignFrame = memo(function DesignFrame({ mode, slots = false, className, ...rest }: DivProps & { mode: 'wire' | 'design'; slots?: boolean }) {
 	const copy = SCENE_COPY.intention;
 	return (
 		<div {...rest} className={cx(styles.frame, className)} data-mode={mode} data-slots={slots || undefined}>
@@ -162,7 +169,7 @@ export function DesignFrame({ mode, slots = false, className, ...rest }: DivProp
 			)}
 		</div>
 	);
-}
+});
 
 /** The time the designed booking card shows as picked. */
 const PICKED = 1;

@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { forwardRef, useId, type InputHTMLAttributes, type ReactNode } from 'react';
+import { forwardRef, memo, useId, type InputHTMLAttributes, type ReactNode } from 'react';
 
 //! Components
 import { Icon } from '@/components/ui/icon';
@@ -24,7 +24,9 @@ export type CheckboxProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type' |
  * Inspo components: Checkbox and Switch. Both keep a real <input type="checkbox">
  * so form submission, keyboard and screen readers behave natively.
  */
-export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
+// Memoised: galleries and forms re-render around their fields with the same props.
+export const Checkbox = memo(
+	forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
 	{ label, description, variant = 'checkbox', className, disabled, ...rest },
 	ref
 ) {
@@ -61,12 +63,14 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
 			</span>
 		</label>
 	);
-});
-
+})
+);
 export type SwitchProps = Omit<CheckboxProps, 'variant'>;
 
-export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(props, ref) {
+// Memoised: galleries and forms re-render around their fields with the same props.
+export const Switch = memo(
+	forwardRef<HTMLInputElement, SwitchProps>(function Switch(props, ref) {
 	return <Checkbox ref={ref} variant="switch" {...props} />;
-});
-
+})
+);
 export default Checkbox;

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Bar, Stage, Text, type Act } from '@stageshow';
 import { Frame, MousePointer2, Square, Type } from 'lucide-react';
 
@@ -55,7 +56,8 @@ async function script(a: Act<S>) {
 	await a.wait(1400);
 }
 
-export function DesignScene({ copy }: { copy: SceneCopy['design'] }) {
+// Memoised: WhyScene and the stage hosts re-render around it with the same copy and playing flag.
+export const DesignScene = memo(function DesignScene({ copy }: { copy: SceneCopy['design'] }) {
 	return (
 		<Stage<S>
 			width={SCENE_WIDTH}
@@ -123,4 +125,4 @@ export function DesignScene({ copy }: { copy: SceneCopy['design'] }) {
 			)}
 		</Stage>
 	);
-}
+});

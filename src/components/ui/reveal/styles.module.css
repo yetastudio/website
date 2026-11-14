@@ -20,9 +20,12 @@
 	animation-delay: calc(var(--stagger-stagger) * 3);
 }
 
+/* Starts a hair above 0: Chrome never counts an element whose first paint is fully transparent
+   as the largest contentful paint, so a hero fading in from 0 hands LCP to whatever paints last
+   (a late web-font swap). At 0.01 it is invisible to the eye and the hero counts from its first frame. */
 @keyframes reveal-in {
 	from {
-		opacity: 0;
+		opacity: 0.01;
 		transform: translateY(var(--stagger-distance));
 		filter: blur(var(--stagger-blur));
 	}

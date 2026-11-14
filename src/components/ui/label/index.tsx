@@ -1,5 +1,5 @@
 //! React Core
-import type { HTMLAttributes, ReactNode } from 'react';
+import { memo, type HTMLAttributes, type ReactNode } from 'react';
 
 //! Hooks
 import { useTranslations } from 'next-intl';
@@ -86,7 +86,8 @@ export type FieldMessageProps = {
 };
 
 /** Hint or error line under a control, styled like Input's. The error carries the alert icon. */
-export function FieldMessage({ hintId, errorId, hint, error, className }: FieldMessageProps) {
+// Memoised: a pure part its parents redraw with the same props.
+export const FieldMessage = memo(function FieldMessage({ hintId, errorId, hint, error, className }: FieldMessageProps) {
 	if (error) {
 		return (
 			<p id={errorId} className={cx(styles.error, className)}>
@@ -103,7 +104,7 @@ export function FieldMessage({ hintId, errorId, hint, error, className }: FieldM
 		);
 	}
 	return null;
-}
+});
 
 /** The id aria-describedby should point at: the error while shown, else the hint, else nothing. */
 export function describedBy({ hintId, errorId, hint, error }: Pick<FieldMessageProps, 'hintId' | 'errorId' | 'hint' | 'error'>) {

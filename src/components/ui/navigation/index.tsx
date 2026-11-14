@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { useEffect, useId, useLayoutEffect, useRef, type MouseEventHandler, type ReactNode } from 'react';
+import { memo, useEffect, useId, useLayoutEffect, useRef, type MouseEventHandler, type ReactNode } from 'react';
 
 //! Next Core
 import { Link as LocaleLink, localeHref } from '@/i18n/navigation';
@@ -132,7 +132,8 @@ export type NavItemProps = {
 const EXTERNAL = /^(https?:)?\/\//;
 
 /** One link of a Navigation. Internal routes keep the locale; external ones open a new tab. */
-export function NavItem({ href, children, icon, badge, badgeLabel, current, disabled, onClick, className }: NavItemProps) {
+// Memoised: a pure part its parents redraw with the same props.
+export const NavItem = memo(function NavItem({ href, children, icon, badge, badgeLabel, current, disabled, onClick, className }: NavItemProps) {
 	const ariaCurrent = current === true ? 'page' : current || undefined;
 	const classes = cx(styles.item, ariaCurrent && styles.current, disabled && styles.disabled, className);
 	const content = (
@@ -173,6 +174,6 @@ export function NavItem({ href, children, icon, badge, badgeLabel, current, disa
 			)}
 		</li>
 	);
-}
+});
 
 export default Navigation;

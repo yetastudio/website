@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Bar, Caret, Prompt, Spinner, Stage, States, Text, type Act } from '@stageshow';
 import { Check } from 'lucide-react';
 
@@ -91,7 +92,8 @@ function scriptFor(copy: SceneCopy['develop']) {
 	return script;
 }
 
-export function DevelopScene({ copy }: { copy: SceneCopy['develop'] }) {
+// Memoised: WhyScene and the stage hosts re-render around it with the same copy and playing flag.
+export const DevelopScene = memo(function DevelopScene({ copy }: { copy: SceneCopy['develop'] }) {
 	const poster = posterFor(copy);
 	const space = copy.line.indexOf(' ');
 	return (
@@ -167,4 +169,4 @@ export function DevelopScene({ copy }: { copy: SceneCopy['develop'] }) {
 			}}
 		</Stage>
 	);
-}
+});

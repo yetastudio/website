@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { Avatar, Button, Collapse, Stage, Text, type Act } from '@stageshow';
 import { SendHorizontal } from 'lucide-react';
 
@@ -43,7 +43,8 @@ const scriptFor = (reply: string) =>
 		await a.wait(300);
 	};
 
-export function TogetherScene({ copy, playing }: { copy: WhyTourCopy['together']; playing: boolean }) {
+// Memoised: WhyScene and the stage hosts re-render around it with the same copy and playing flag.
+export const TogetherScene = memo(function TogetherScene({ copy, playing }: { copy: WhyTourCopy['together']; playing: boolean }) {
 	const script = useMemo(() => scriptFor(copy.reply), [copy.reply]);
 	return (
 		<Stage<S>
@@ -90,4 +91,4 @@ export function TogetherScene({ copy, playing }: { copy: WhyTourCopy['together']
 			)}
 		</Stage>
 	);
-}
+});

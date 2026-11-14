@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Avatar, Badge, Bar, Check, Roll, Stage, Text, type Act } from '@stageshow';
 
 import { SCENE_HEIGHT, SCENE_WIDTH, type SceneCopy } from './shared';
@@ -48,7 +49,8 @@ async function script(a: Act<S>) {
 	await a.wait(1200);
 }
 
-export function DefineScene({ copy }: { copy: SceneCopy['define'] }) {
+// Memoised: WhyScene and the stage hosts re-render around it with the same copy and playing flag.
+export const DefineScene = memo(function DefineScene({ copy }: { copy: SceneCopy['define'] }) {
 	return (
 		<Stage<S> width={SCENE_WIDTH} height={SCENE_HEIGHT} initial={POSTER} poster={POSTER} script={script} className={styles.stage}>
 			{(s) => (
@@ -74,4 +76,4 @@ export function DefineScene({ copy }: { copy: SceneCopy['define'] }) {
 			)}
 		</Stage>
 	);
-}
+});

@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 
 //! Components
@@ -76,7 +76,8 @@ export function ShelfVariants({ title, variants }: { title: string; variants: Sh
  * them (transitions.dev card resize); the height is written straight to a custom property, so a
  * resize never re-renders the mockups.
  */
-export function PageSlide({ variants, activeIndex }: { variants: ShelfVariant[]; activeIndex: number }) {
+// Memoised: a pure part its parents redraw with the same props.
+export const PageSlide = memo(function PageSlide({ variants, activeIndex }: { variants: ShelfVariant[]; activeIndex: number }) {
 	const rootRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -109,6 +110,6 @@ export function PageSlide({ variants, activeIndex }: { variants: ShelfVariant[];
 			})}
 		</div>
 	);
-}
+});
 
 export default ShelfVariants;

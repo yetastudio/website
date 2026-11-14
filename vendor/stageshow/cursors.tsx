@@ -1,3 +1,4 @@
+import { memo } from 'react'
 // macOS system cursors. Hotspots are listed in HOTSPOT in stage.tsx.
 // The hands draw a little larger than the arrow, as they do on macOS.
 
@@ -12,7 +13,8 @@ export function MacPointer() {
   )
 }
 
-export function MacIbeam() {
+// Memoised: a pure part its parents redraw with the same props.
+export const MacIbeam = memo(function MacIbeam() {
   return (
     <svg width="10" height="16" viewBox="0 0 10 16" fill="none" overflow="visible">
       {/* A thin edge in the opposite tone, as macOS draws it, so it reads on any surface */}
@@ -20,7 +22,7 @@ export function MacIbeam() {
       <path d="M3 1H7M3 15H7M5 1V15" style={{ stroke: 'var(--ss-cursor-line, #000)' }} strokeWidth="1" strokeLinecap="round" />
     </svg>
   )
-}
+})
 
 export function MacCrosshair() {
   return (

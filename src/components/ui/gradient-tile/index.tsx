@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element -- blob layers are vector art positioned by percentage. */
 
 //! React Core
-import type { CSSProperties, ReactNode } from 'react';
+import { memo, type CSSProperties, type ReactNode } from 'react';
 
 //! Utils
 import { cx } from '@/lib/cx';
@@ -62,7 +62,8 @@ function boxStyle([left, top, width, height]: Box): CSSProperties {
  * hidden for one of them, and an eager <img> is preloaded by React in the document head. Lazy
  * images in a hidden theme (or a hidden breakpoint layout) are never fetched.
  */
-function Layers({ hue, intensity, theme, shape }: { hue: TileHue; intensity: 'soft' | 'strong'; theme: 'dark' | 'light'; shape: TileShape }) {
+// Memoised: a pure part its parents redraw with the same props.
+const Layers = memo(function Layers({ hue, intensity, theme, shape }: { hue: TileHue; intensity: 'soft' | 'strong'; theme: 'dark' | 'light'; shape: TileShape }) {
 	const steps = STEPS[intensity][theme];
 	const geometry = GEOMETRY[shape][theme];
 	return (
@@ -75,7 +76,7 @@ function Layers({ hue, intensity, theme, shape }: { hue: TileHue; intensity: 'so
 			</span>
 		</span>
 	);
-}
+});
 
 export type GradientTileProps = {
 	hue: TileHue;
@@ -97,7 +98,8 @@ export type GradientTileProps = {
  * inverse surface: pastel on the dark site, deep on the light site. Blob layers
  * are exported from Figma and blended with hard-light exactly as in the file.
  */
-export function GradientTile({ hue, hueLight = hue, shape = 'craft', intensity = 'soft', children, underlay, className }: GradientTileProps) {
+// Memoised: a pure part its parents redraw with the same props.
+export const GradientTile = memo(function GradientTile({ hue, hueLight = hue, shape = 'craft', intensity = 'soft', children, underlay, className }: GradientTileProps) {
 	const level = intensity === 'strong' && STRONG_HUES.includes(hue) && STRONG_HUES.includes(hueLight) ? 'strong' : 'soft';
 	return (
 		<div className={cx(styles.tile, 'scheme-inverse', 'u-outline', className)}>
@@ -107,6 +109,6 @@ export function GradientTile({ hue, hueLight = hue, shape = 'craft', intensity =
 			{children && <div className={styles.content}>{children}</div>}
 		</div>
 	);
-}
+});
 
 export default GradientTile;

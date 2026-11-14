@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Button, Chart, Count, Stage, type Act } from '@stageshow';
 import { TrendingUp } from 'lucide-react';
 
@@ -39,7 +40,8 @@ async function script(a: Act<S>) {
 
 const multiple = (n: number) => `${n.toFixed(1)}×`;
 
-export function DefyScene({ copy, playing }: { copy: WhyTourCopy['defy']; playing: boolean }) {
+// Memoised: WhyScene and the stage hosts re-render around it with the same copy and playing flag.
+export const DefyScene = memo(function DefyScene({ copy, playing }: { copy: WhyTourCopy['defy']; playing: boolean }) {
 	return (
 		<Stage<S>
 			width={SCENE_WIDTH}
@@ -70,4 +72,4 @@ export function DefyScene({ copy, playing }: { copy: WhyTourCopy['defy']; playin
 			)}
 		</Stage>
 	);
-}
+});

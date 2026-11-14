@@ -61,7 +61,8 @@ export interface WindowProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title
 }
 
 /** The traffic lights. Every chrome puts them in the same spot: centered in the top 38px, 12px in. */
-function Lights() {
+// Yeta: memoised (no props; the window around it redraws with its scene).
+const Lights = memo(function Lights() {
   return (
     <span className="ss-window__lights">
       <span className="ss-window__dot" />
@@ -69,7 +70,7 @@ function Lights() {
       <span className="ss-window__dot" />
     </span>
   )
-}
+})
 
 function Lock() {
   return (
@@ -216,10 +217,11 @@ export interface BarProps extends HTMLAttributes<HTMLSpanElement> {
 
 /** A placeholder: a line of text, a value, an icon slot or a pill. A line
  * gives way in a narrow row as text would; where it fits, it is exactly `w`. */
-export function Bar({ w, h = 6, tone = 3, r = 2, shrink, className, style, ...rest }: BarProps) {
+// Yeta: memoised, like Text (scenes draw dozens of placeholder bars and redraw on every act.set).
+export const Bar = memo(function Bar({ w, h = 6, tone = 3, r = 2, shrink, className, style, ...rest }: BarProps) {
   const gives = shrink ?? (typeof w === 'number' && w > h * 3)
   return <span {...rest} className={`ss-bar${className ? ` ${className}` : ''}`} data-shrink={gives || undefined} style={{ width: w, height: h, borderRadius: r, background: INK[tone - 1], ...style }} />
-}
+})
 
 export interface TextProps extends HTMLAttributes<HTMLSpanElement> {
   children: string

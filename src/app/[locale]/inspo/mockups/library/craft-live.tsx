@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 
 //! Hooks
@@ -24,6 +24,45 @@ import styles from './craft.module.css';
 
 /** How long a beat holds before the list steps on, in ms. */
 const HOLD = 3600;
+
+/** One beat line, memoised: a step re-renders the line that leaves and the one that arrives. */
+const CraftLine = memo(function CraftLine({
+	index,
+	hue,
+	title,
+	current,
+	onPick,
+}: {
+	index: number;
+	hue: (typeof CRAFT)[number]['hue'];
+	title: string;
+	current: boolean;
+	onPick: (index: number) => void;
+}) {
+	return (
+		<li className={shared.hued} data-hue={hue}>
+			<Button variant="ghost" size="lg" fullWidth className={styles.listItem} aria-pressed={current} onClick={() => onPick(index)}>
+				<span className={styles.listLabel}>
+					<Text as="span" size="xs" family="serif" italic tone="faint" className={cx(styles.listNumber, shared.numeral)}>
+						{String(index + 1).padStart(2, '0')}
+					</Text>
+					<Text
+						as="span"
+						size="2xl"
+						family={current ? 'serif' : 'sans'}
+						italic={current}
+						weight={current ? 'regular' : 'light'}
+						tone={current ? 'strong' : 'faint'}
+						leading="tight"
+						className={styles.listTitle}
+					>
+						{title}
+					</Text>
+				</span>
+			</Button>
+		</li>
+	);
+});
 
 /**
  * Craft A, after Fiasco: the six craft beats as one list in large type, the current one in the
@@ -68,32 +107,9 @@ export function CraftList() {
 		<div className={shared.container}>
 			<div ref={rootRef} className={cx(shared.frame, styles.list)} {...autoplay.handlers}>
 				<ol className={styles.listItems}>
-					{CRAFT.map((item, index) => {
-						const current = index === active;
-						return (
-							<li key={item.key} className={shared.hued} data-hue={item.hue}>
-								<Button variant="ghost" size="lg" fullWidth className={styles.listItem} aria-pressed={current} onClick={() => setActive(index)}>
-									<span className={styles.listLabel}>
-										<Text as="span" size="xs" family="serif" italic tone="faint" className={cx(styles.listNumber, shared.numeral)}>
-											{String(index + 1).padStart(2, '0')}
-										</Text>
-										<Text
-											as="span"
-											size="2xl"
-											family={current ? 'serif' : 'sans'}
-											italic={current}
-											weight={current ? 'regular' : 'light'}
-											tone={current ? 'strong' : 'faint'}
-											leading="tight"
-											className={styles.listTitle}
-										>
-											{t(`cards.${item.key}.title`)}
-										</Text>
-									</span>
-								</Button>
-							</li>
-						);
-					})}
+					{CRAFT.map((item, index) => (
+						<CraftLine key={item.key} index={index} hue={item.hue} title={t(`cards.${item.key}.title`)} current={index === active} onPick={setActive} />
+					))}
 				</ol>
 				<Surface tone="tint" radius="xl" padding="md" bevel className={styles.listStage}>
 					<div className={styles.listCardFrame}>

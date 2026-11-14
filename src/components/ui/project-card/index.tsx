@@ -71,7 +71,8 @@ export const Shot = memo(function Shot({ shot, sizes, priority }: { shot: Projec
 	);
 });
 
-function ToolLogo({ tool }: { tool: Project['tools'][number] }) {
+// Memoised: a pure part its parents redraw with the same props.
+const ToolLogo = memo(function ToolLogo({ tool }: { tool: Project['tools'][number] }) {
 	if (tool === 'vercel') {
 		return (
 			<>
@@ -84,7 +85,7 @@ function ToolLogo({ tool }: { tool: Project['tools'][number] }) {
 		return <img loading="lazy" decoding="async" src="/landing/our-work/tools/nextjs.svg" alt="" className={cx(styles.toolLogo, styles.nextjs)} />;
 	}
 	return <img loading="lazy" decoding="async" src={`/landing/our-work/tools/${tool}.svg`} alt="" className={styles.toolLogo} />;
-}
+});
 
 /**
  * Figma Project Overview Card, Status=Active: the expanded case study.

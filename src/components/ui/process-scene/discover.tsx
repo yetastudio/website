@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Avatar, Badge, Bar, Stage, Text, type Act } from '@stageshow';
 import { Tag } from 'lucide-react';
 
@@ -57,7 +58,8 @@ async function script(a: Act<S>) {
 	await a.wait(1200);
 }
 
-export function DiscoverScene({ copy }: { copy: SceneCopy['discover'] }) {
+// Memoised: WhyScene and the stage hosts re-render around it with the same copy and playing flag.
+export const DiscoverScene = memo(function DiscoverScene({ copy }: { copy: SceneCopy['discover'] }) {
 	return (
 		<Stage<S>
 			width={SCENE_WIDTH}
@@ -106,4 +108,4 @@ export function DiscoverScene({ copy }: { copy: SceneCopy['discover'] }) {
 			)}
 		</Stage>
 	);
-}
+});

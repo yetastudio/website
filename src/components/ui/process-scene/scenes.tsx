@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { DefineScene } from './define';
 import { DesignScene } from './design';
 import { DevelopScene } from './develop';
@@ -14,7 +15,8 @@ export type SceneViewProps = { step: ProcessStep; copy: SceneCopy; className?: s
  * colour wash. Decorative: hidden from assistive tech, nothing focusable, and
  * it never takes the pointer. The copy comes in as props (see ProcessScene).
  */
-export function SceneView({ step, copy, className }: SceneViewProps) {
+// Memoised: WhyScene and the stage hosts re-render around it with the same copy and playing flag.
+export const SceneView = memo(function SceneView({ step, copy, className }: SceneViewProps) {
 	return (
 		<div className={className ? `${look.root} scheme-site ${className}` : `${look.root} scheme-site`} data-step={step} aria-hidden="true">
 			{step === 'discover' && <DiscoverScene copy={copy.discover} />}
@@ -25,4 +27,4 @@ export function SceneView({ step, copy, className }: SceneViewProps) {
 			{step === 'launch' && <LaunchScene copy={copy.launch} />}
 		</div>
 	);
-}
+});

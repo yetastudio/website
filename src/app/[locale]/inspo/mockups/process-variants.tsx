@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 
 //! Hooks
@@ -45,7 +45,8 @@ function StepStage({ step, className }: { step: Step; className?: string }) {
  * transitions.dev 04, text states swap: the old text leaves upward with a blur, the new one enters
  * from below. The text is only swapped at the midpoint, so the line never shows both.
  */
-function SwapText({ text, className }: { text: string; className?: string }) {
+// Memoised: a pure part its parents redraw with the same props.
+const SwapText = memo(function SwapText({ text, className }: { text: string; className?: string }) {
 	const [shown, setShown] = useState(text);
 	const ref = useRef<HTMLSpanElement>(null);
 
@@ -69,7 +70,7 @@ function SwapText({ text, className }: { text: string; className?: string }) {
 			{shown}
 		</span>
 	);
-}
+});
 
 /**
  * Process walkthrough B, Timeline (FLORA, Rox): the scene at full width with the step named above
@@ -77,6 +78,54 @@ function SwapText({ text, className }: { text: string; className?: string }) {
  * the step's hue over the time its scene needs, then hands over; a segment can be picked. The fill
  * is the one accent.
  */
+/*
+ * The step lists below are memoised items with primitive props: a step change re-renders the item
+ * that leaves and the one that arrives, not every button and label in the list.
+ */
+
+/** One chapter of the timeline track. Only the playing segment carries `running`. */
+const TimelineSegment = memo(function TimelineSegment({
+	index,
+	hue,
+	title,
+	state,
+	current,
+	running,
+	onPick,
+	onEnd,
+}: {
+	index: number;
+	hue: Step['hue'];
+	title: string;
+	state: 'done' | 'playing' | 'todo';
+	current: boolean;
+	running: boolean;
+	onPick: (index: number) => void;
+	onEnd: () => void;
+}) {
+	return (
+		<li className={styles.trackItem}>
+			<Button
+				variant="ghost"
+				size="sm"
+				fullWidth
+				className={styles.segment}
+				aria-current={current ? 'step' : undefined}
+				aria-label={`${numeral(index)} ${title}`}
+				onClick={() => onPick(index)}
+			>
+				<span className={styles.segmentBar} data-hue={hue}>
+					<span key={current ? `on-${index}` : 'off'} className={styles.segmentFill} data-state={state} data-running={running || undefined} onAnimationEnd={onEnd} />
+				</span>
+				<Text as="span" size="xs" tone={current ? 'strong' : 'faint'} className={styles.segmentLabel}>
+					<span className={styles.segmentNumeral}>{numeral(index)}</span>
+					<span className={styles.segmentTitle}>{title}</span>
+				</Text>
+			</Button>
+		</li>
+	);
+});
+
 export function ProcessTimelineMockup() {
 	const t = useTranslations('ourProcess');
 	const [active, setActive] = useState(0);
@@ -84,6 +133,7 @@ export function ProcessTimelineMockup() {
 	const autoplay = useAutoplay(rootRef);
 	const step = PROCESS[active];
 	const running = autoplay.enabled && !autoplay.paused;
+	const advance = useCallback(() => setActive((current) => (current + 1) % PROCESS.length), []);
 
 	return (
 		<div className={mockups.container}>
@@ -98,33 +148,22 @@ export function ProcessTimelineMockup() {
 				</div>
 				<StepStage step={step} />
 				<ol className={styles.track}>
-					{PROCESS.map((item, index) => (
-						<li key={item.key} className={styles.trackItem}>
-							<Button
-								variant="ghost"
-								size="sm"
-								fullWidth
-								className={styles.segment}
-								aria-current={index === active ? 'step' : undefined}
-								aria-label={`${numeral(index)} ${t(`steps.${item.key}.title`)}`}
-								onClick={() => setActive(index)}
-							>
-								<span className={styles.segmentBar} data-hue={item.hue}>
-									<span
-										key={index === active ? `on-${active}` : 'off'}
-										className={styles.segmentFill}
-										data-state={index < active ? 'done' : index === active ? (autoplay.enabled ? 'playing' : 'done') : 'todo'}
-										data-running={running || undefined}
-										onAnimationEnd={() => setActive((current) => (current + 1) % PROCESS.length)}
-									/>
-								</span>
-								<Text as="span" size="xs" tone={index === active ? 'strong' : 'faint'} className={styles.segmentLabel}>
-									<span className={styles.segmentNumeral}>{numeral(index)}</span>
-									<span className={styles.segmentTitle}>{t(`steps.${item.key}.title`)}</span>
-								</Text>
-							</Button>
-						</li>
-					))}
+					{PROCESS.map((item, index) => {
+						const state = index < active ? 'done' : index === active ? (autoplay.enabled ? 'playing' : 'done') : 'todo';
+						return (
+							<TimelineSegment
+								key={item.key}
+								index={index}
+								hue={item.hue}
+								title={t(`steps.${item.key}.title`)}
+								state={state}
+								current={index === active}
+								running={state === 'playing' && running}
+								onPick={setActive}
+								onEnd={advance}
+							/>
+						);
+					})}
 				</ol>
 			</div>
 		</div>
@@ -200,13 +239,70 @@ export function ProcessStickyMockup() {
  * and a hairline under its name fills while its scene plays; when it is full the next row opens. Any row can be
  * opened by hand; the hairline is the one accent.
  */
+/** One accordion row. Only the open row gets the fill and its running state. */
+const AccordionRow = memo(function AccordionRow({
+	item,
+	index,
+	title,
+	description,
+	open,
+	fill,
+	running,
+	onPick,
+	onAdvance,
+}: {
+	item: Step;
+	index: number;
+	title: string;
+	description: string;
+	open: boolean;
+	fill: boolean;
+	running: boolean;
+	onPick: (index: number) => void;
+	onAdvance: () => void;
+}) {
+	return (
+		<div className={styles.row} data-open={open || undefined}>
+			<Button
+				variant="ghost"
+				size="lg"
+				fullWidth
+				className={styles.rowHead}
+				aria-expanded={open}
+				aria-controls={`process-row-${item.key}`}
+				onClick={() => onPick(index)}
+			>
+				<span className={styles.rowLabel}>
+					<Text as="span" family="serif" italic tone={open ? 'strong' : 'faint'} className={styles.rowNumeral}>
+						{numeral(index)}
+					</Text>
+					<Text as="span" family="serif" weight="regular" tone={open ? 'strong' : 'subtle'} className={styles.rowTitle}>
+						{title}
+					</Text>
+				</span>
+			</Button>
+			<span className={styles.rowRule} data-hue={item.hue} aria-hidden="true">
+				{fill && <span key={`fill-${index}`} className={styles.rowRuleFill} data-running={running || undefined} onAnimationEnd={onAdvance} />}
+			</span>
+			<div id={`process-row-${item.key}`} className={styles.rowBody} inert={!open}>
+				<div className={styles.rowInner}>
+					<Text size="sm" tone="subtle" leading="relaxed" className={styles.rowCopy}>
+						{description}
+					</Text>
+					{open && <StepStage step={item} className={styles.rowStage} />}
+				</div>
+			</div>
+		</div>
+	);
+});
+
 export function ProcessAccordionMockup() {
 	const t = useTranslations('ourProcess');
 	const [active, setActive] = useState(0);
 	const rootRef = useRef<HTMLDivElement>(null);
 	const autoplay = useAutoplay(rootRef);
 
-	const advance = () => setActive((index) => (index + 1) % PROCESS.length);
+	const advance = useCallback(() => setActive((index) => (index + 1) % PROCESS.length), []);
 
 	return (
 		<div className={mockups.container}>
@@ -214,39 +310,18 @@ export function ProcessAccordionMockup() {
 				{PROCESS.map((item, index) => {
 					const open = index === active;
 					return (
-						<div key={item.key} className={styles.row} data-open={open || undefined}>
-							<Button
-								variant="ghost"
-								size="lg"
-								fullWidth
-								className={styles.rowHead}
-								aria-expanded={open}
-								aria-controls={`process-row-${item.key}`}
-								onClick={() => setActive(index)}
-							>
-								<span className={styles.rowLabel}>
-									<Text as="span" family="serif" italic tone={open ? 'strong' : 'faint'} className={styles.rowNumeral}>
-										{numeral(index)}
-									</Text>
-									<Text as="span" family="serif" weight="regular" tone={open ? 'strong' : 'subtle'} className={styles.rowTitle}>
-										{t(`steps.${item.key}.title`)}
-									</Text>
-								</span>
-							</Button>
-							<span className={styles.rowRule} data-hue={item.hue} aria-hidden="true">
-								{open && autoplay.enabled && (
-									<span key={`fill-${active}`} className={styles.rowRuleFill} data-running={!autoplay.paused || undefined} onAnimationEnd={advance} />
-								)}
-							</span>
-							<div id={`process-row-${item.key}`} className={styles.rowBody} inert={!open}>
-								<div className={styles.rowInner}>
-									<Text size="sm" tone="subtle" leading="relaxed" className={styles.rowCopy}>
-										{t(`steps.${item.key}.description`)}
-									</Text>
-									{open && <StepStage step={item} className={styles.rowStage} />}
-								</div>
-							</div>
-						</div>
+						<AccordionRow
+							key={item.key}
+							item={item}
+							index={index}
+							title={t(`steps.${item.key}.title`)}
+							description={t(`steps.${item.key}.description`)}
+							open={open}
+							fill={open && autoplay.enabled}
+							running={open && !autoplay.paused}
+							onPick={setActive}
+							onAdvance={advance}
+						/>
 					);
 				})}
 			</div>

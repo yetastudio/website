@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from 'react'
+import { memo, type HTMLAttributes } from 'react'
 import './Check.css'
 
 /**
@@ -7,7 +7,8 @@ import './Check.css'
  * in one mark, never a spinner fading out over a fill fading in. The tick
  * fades out intact rather than undrawing.
  */
-export function Check({ on, pending, size = 16, className, ...rest }: HTMLAttributes<HTMLSpanElement> & { on: boolean; pending?: boolean; size?: number }) {
+// Yeta: memoised (a leaf part scenes redraw on every act.set).
+export const Check = memo(function Check({ on, pending, size = 16, className, ...rest }: HTMLAttributes<HTMLSpanElement> & { on: boolean; pending?: boolean; size?: number }) {
   return (
     <span {...rest} className={`ss-check${className ? ` ${className}` : ''}`} data-on={on || undefined} data-pending={(pending && !on) || undefined} style={{ width: size, height: size, ...rest.style }}>
       <svg viewBox="0 0 16 16" width={size} height={size} aria-hidden>
@@ -18,4 +19,4 @@ export function Check({ on, pending, size = 16, className, ...rest }: HTMLAttrib
       </svg>
     </span>
   )
-}
+})

@@ -42,6 +42,12 @@ function subscribe(onChange: () => void) {
 const readMetres = () => Math.round(window.scrollY * METRES_PER_PX * 100) / 100;
 const readNothing = () => 0;
 
+/** The live figure, on its own: scrolling re-renders this span, not the footer's links, button and mark. */
+function ScrolledMetres() {
+	const metres = useSyncExternalStore(subscribe, readMetres, readNothing);
+	return <>{metres.toFixed(2)}</>;
+}
+
 /**
  * Footer C, after Seasats and Legend: the links pressed into one thin band at the top (Legend), a
  * live readout of how far the reader scrolled to get here (Seasats), and the ✹ mark rising from the
@@ -51,7 +57,6 @@ const readNothing = () => 0;
 export function FooterReadout() {
 	const t = useTranslations('footer');
 	const nav = useTranslations('nav');
-	const metres = useSyncExternalStore(subscribe, readMetres, readNothing);
 	return (
 		<div className={shared.container}>
 			<div className={cx(shared.frame, styles.readout)}>
@@ -74,7 +79,7 @@ export function FooterReadout() {
 						</Text>
 						<Text as="span" size="3xl" family="serif" weight="regular" leading="none" tone="strong" className={shared.numeral}>
 							<span className={cx(styles.readoutHue, shared.hued)} data-hue="green">
-								{metres.toFixed(2)}
+								<ScrolledMetres />
 							</span>{' '}
 							m
 						</Text>

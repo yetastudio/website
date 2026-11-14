@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Avatar, Badge, Bar, Count, Meter, Stage, type Act } from '@stageshow';
 import { Check } from 'lucide-react';
 
@@ -42,7 +43,8 @@ async function script(a: Act<S>) {
 
 const percent = (n: number) => `+${Math.round(n)}%`;
 
-export function GoalsScene({ copy, playing }: { copy: WhyTourCopy['goals']; playing: boolean }) {
+// Memoised: WhyScene and the stage hosts re-render around it with the same copy and playing flag.
+export const GoalsScene = memo(function GoalsScene({ copy, playing }: { copy: WhyTourCopy['goals']; playing: boolean }) {
 	return (
 		<Stage<S>
 			width={SCENE_WIDTH}
@@ -80,4 +82,4 @@ export function GoalsScene({ copy, playing }: { copy: WhyTourCopy['goals']; play
 			)}
 		</Stage>
 	);
-}
+});
