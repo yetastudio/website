@@ -226,6 +226,7 @@
 	--leading-cozy: 1.3333; /* Figma 32px on 24 (craft card title) */
 	--leading-normal: 1.45;
 	--leading-comfortable: 1.5; /* Figma 24px on 16 (quotes) */
+	--leading-roomy: 1.6; /* Figma 32px on 20 (landing and case-study body), 16px on 10 (develop terminal) */
 	--leading-open: 1.6667; /* Figma 20px on 12 (card copy) */
 	--leading-relaxed: 1.7;
 	--leading-airy: 1.8; /* Figma 36px on 20 (section CTA) */
