@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode, type RefObject } from 'react';
 
 //! Stageshow
 import { bezier } from '@stageshow';
@@ -58,17 +58,54 @@ const travel = bezier([0.45, 0, 0.1, 1]);
 
 class Stopped extends Error {}
 
-type TourValue = {
+type TourState = {
 	/** What the tour has open, if anything. */
 	tour: string | null;
-	/** What a visitor has open (hover, then focus), if anything. */
-	visitor: string | null;
+	/** What a visitor has open by hovering or focusing (hover wins), if anything. */
+	hover: string | null;
+	focused: string | null;
 	/** The last chip shown, by the tour or a visitor: a panel or accordion keeps it until the next. */
 	last: string | null;
 	/** False until the tour has run once: the poster stays open meanwhile. */
 	started: boolean;
 	/** The chip whose scene plays its story; every other scene shows its poster. */
 	playing: string | null;
+};
+
+const INITIAL_TOUR: TourState = { tour: null, hover: null, focused: null, last: null, started: false, playing: null };
+
+/*
+ * The tour's state lives in a small store rather than in context: each step changes it a few
+ * times, and through context every chip of all three layouts re-rendered on every change. Chips
+ * subscribe with a selector instead, so only the chips whose own state changes re-render (the
+ * one closing and the one opening). The running tour reads it directly between awaits.
+ */
+type TourStore = {
+	get: () => TourState;
+	set: (patch: Partial<TourState>) => void;
+	subscribe: (onChange: () => void) => () => void;
+};
+
+function createTourStore(): TourStore {
+	let state = INITIAL_TOUR;
+	const listeners = new Set<() => void>();
+	return {
+		get: () => state,
+		set: (patch) => {
+			const next = { ...state, ...patch };
+			if ((Object.keys(patch) as Array<keyof TourState>).every((key) => next[key] === state[key])) return;
+			state = next;
+			listeners.forEach((listener) => listener());
+		},
+		subscribe: (onChange) => {
+			listeners.add(onChange);
+			return () => listeners.delete(onChange);
+		},
+	};
+}
+
+type TourValue = {
+	store: TourStore;
 	enter: (id: string) => void;
 	leave: (id: string) => void;
 	focus: (id: string) => void;
@@ -83,13 +120,22 @@ function useTour() {
 	return value;
 }
 
+/** A primitive derived from the tour state; the caller re-renders only when it changes. */
+function useTourSelect<T extends string | number | boolean | null>(select: (state: TourState) => T): T {
+	const { store } = useTour();
+	return useSyncExternalStore(
+		store.subscribe,
+		() => select(store.get()),
+		() => select(INITIAL_TOUR)
+	);
+}
+
 /** The chip a group shows open. Floating chips can all be closed; a panel or accordion always shows one. */
-function useOpen(kind: 'float' | 'sticky', keys: readonly string[], poster: string) {
-	const { tour, visitor, last, started } = useTour();
+function openOf(state: TourState, kind: 'float' | 'sticky', keys: readonly string[], poster: string) {
 	const mine = (key: string | null) => (key && keys.includes(key) ? key : null);
-	const live = mine(visitor) ?? mine(tour);
-	if (kind === 'float') return live ?? (started ? null : poster);
-	return live ?? mine(last) ?? poster;
+	const live = mine(state.hover ?? state.focused) ?? mine(state.tour);
+	if (kind === 'float') return live ?? (state.started ? null : poster);
+	return live ?? mine(state.last) ?? poster;
 }
 
 /** Mounts a scene the first time its chip opens, and keeps it so it can fold away. */
@@ -132,73 +178,61 @@ function nodesOf(section: HTMLElement, layout: Layout) {
 }
 
 export function WhyTour({ children }: { children: ReactNode }) {
-	const [tour, setTour] = useState<string | null>(null);
-	const [hover, setHover] = useState<string | null>(null);
-	const [focused, setFocused] = useState<string | null>(null);
-	const [last, setLast] = useState<string | null>(null);
-	const [started, setStarted] = useState(false);
-	const [playing, setPlaying] = useState<string | null>(null);
-	const visitor = hover ?? focused;
+	const [store] = useState(createTourStore);
 
 	const cursorRef = useRef<HTMLDivElement>(null);
 	const controls = useRef<{ start: (resume: boolean) => void; stop: () => void } | null>(null);
-	// What the running tour reads between awaits (state lags a render behind)
-	const live = useRef({ tour, last, hover: null as string | null, focus: null as string | null, started: false });
-	live.current.tour = tour;
-	live.current.last = last;
 	// The chip a visitor last opened, so the tour picks up after it
 	const visited = useRef<string | null>(null);
 	const resumeTimer = useRef(0);
 
 	// A visitor takes over: their chip opens and plays, the tour's chip closes and its cursor steps away
-	const takeOver = useCallback((id: string) => {
-		window.clearTimeout(resumeTimer.current);
-		visited.current = id;
-		controls.current?.stop();
-		setTour(null);
-		setPlaying(id);
-		setLast(id);
-	}, []);
+	const takeOver = useCallback(
+		(id: string) => {
+			window.clearTimeout(resumeTimer.current);
+			visited.current = id;
+			controls.current?.stop();
+			store.set({ tour: null, playing: id, last: id });
+		},
+		[store]
+	);
 	// Once no chip is held, the tour picks up again after a moment
 	const release = useCallback(() => {
-		if (live.current.hover || live.current.focus) return;
+		const { hover, focused } = store.get();
+		if (hover || focused) return;
 		window.clearTimeout(resumeTimer.current);
 		resumeTimer.current = window.setTimeout(() => controls.current?.start(true), RESUME_MS);
-	}, []);
+	}, [store]);
 
 	const enter = useCallback(
 		(id: string) => {
-			live.current.hover = id;
-			setHover(id);
+			store.set({ hover: id });
 			takeOver(id);
 		},
-		[takeOver]
+		[store, takeOver]
 	);
 	const leave = useCallback(
 		(id: string) => {
-			if (live.current.hover !== id) return;
-			live.current.hover = null;
-			setHover(null);
+			if (store.get().hover !== id) return;
+			store.set({ hover: null });
 			release();
 		},
-		[release]
+		[store, release]
 	);
 	const focus = useCallback(
 		(id: string) => {
-			live.current.focus = id;
-			setFocused(id);
+			store.set({ focused: id });
 			takeOver(id);
 		},
-		[takeOver]
+		[store, takeOver]
 	);
 	const blur = useCallback(
 		(id: string) => {
-			if (live.current.focus !== id) return;
-			live.current.focus = null;
-			setFocused(null);
+			if (store.get().focused !== id) return;
+			store.set({ focused: null });
 			release();
 		},
-		[release]
+		[store, release]
 	);
 
 	useEffect(() => {
@@ -309,16 +343,13 @@ export function WhyTour({ children }: { children: ReactNode }) {
 				nodes.findIndex((n) => n.hasAttribute('data-why-poster'))
 			);
 
-			const { tour: open, last: shown } = live.current;
+			const { tour: open, last: shown } = store.get();
 			const from = resume ? (visited.current ?? open ?? shown) : (open ?? shown);
 			let i = from && keys.includes(from) ? keys.indexOf(from) : poster;
 
 			if (!resume) {
 				// The chip that is open stays on its payoff: a story never rewinds in view
-				live.current.started = true;
-				setStarted(true);
-				setTour(keys[i]);
-				setLast(keys[i]);
+				store.set({ started: true, tour: keys[i], last: keys[i] });
 				await wait(HOLD_FIRST_MS, signal);
 				if (withCursor) {
 					place(target(nodes[i]));
@@ -333,8 +364,8 @@ export function WhyTour({ children }: { children: ReactNode }) {
 			}
 
 			for (;;) {
-				if (floating && live.current.tour) {
-					setTour(null);
+				if (floating && store.get().tour) {
+					store.set({ tour: null });
 					await wait(FOLD_MS, signal);
 				}
 				i = (i + 1) % nodes.length;
@@ -343,11 +374,10 @@ export function WhyTour({ children }: { children: ReactNode }) {
 					await glide(target(node), signal);
 					await wait(HOVER_MS, signal);
 				}
-				setTour(keys[i]);
-				setLast(keys[i]);
+				store.set({ tour: keys[i], last: keys[i] });
 				// In the phone card the scene shows once its chip has slid into place: its story starts then
 				if (!withCursor) await wait(SETTLE_MS, signal);
-				setPlaying(keys[i]);
+				store.set({ playing: keys[i] });
 				const scene = node.dataset.whyScene as WhySceneName;
 				const story = (SCENE_PAYOFF_MS[scene] ?? 1800) + HOLD_MS;
 				if (withCursor) {
@@ -371,10 +401,11 @@ export function WhyTour({ children }: { children: ReactNode }) {
 		};
 		const start = (resume: boolean) => {
 			if (ctrl || reducedMotion.matches || !inView || document.hidden) return;
-			if (live.current.hover || live.current.focus) return;
+			const { hover, focused, started } = store.get();
+			if (hover || focused) return;
 			const run = new AbortController();
 			ctrl = run;
-			loop(run.signal, resume && live.current.started).catch((error) => {
+			loop(run.signal, resume && started).catch((error) => {
 				if (!(error instanceof Stopped)) console.error('[why-yeta] tour stopped', error);
 			});
 		};
@@ -416,12 +447,10 @@ export function WhyTour({ children }: { children: ReactNode }) {
 			desktop.removeEventListener('change', onLayout);
 			controls.current = null;
 		};
-	}, []);
+	}, [store]);
 
-	const value = useMemo<TourValue>(
-		() => ({ tour, visitor, last, started, playing, enter, leave, focus, blur }),
-		[tour, visitor, last, started, playing, enter, leave, focus, blur]
-	);
+	// Stable: the state itself flows through the store, so the context never changes.
+	const value = useMemo<TourValue>(() => ({ store, enter, leave, focus, blur }), [store, enter, leave, focus, blur]);
 
 	return (
 		<TourContext.Provider value={value}>
@@ -473,13 +502,29 @@ type NodeProps = {
  * part; the scene beside it is decorative. Hovering it, or focusing it with
  * the keyboard or a tap, opens it and pauses the tour.
  */
+const OPEN = 1;
+const COVERED = 2;
+const BELOW = 4;
+const PLAYING = 8;
+
 export function WhyNode({ id, scene, step, variant, keys, poster, dir = 'down', anchor = 'start', coveredBy, className, children }: NodeProps) {
-	const { enter, leave, focus, blur, playing } = useTour();
-	const openKey = useOpen(variant === 'float' ? 'float' : 'sticky', keys, poster);
-	const open = openKey === id;
-	const covered = !!coveredBy && openKey === coveredBy;
-	// In the phone card, the chips after the open one move down to make its room
-	const below = variant === 'fold' && openKey !== null && keys.indexOf(id) > keys.indexOf(openKey);
+	const { enter, leave, focus, blur } = useTour();
+	// This chip's own view of the tour, packed into one number: it re-renders only when that changes
+	const view = useTourSelect((state) => {
+		const openKey = openOf(state, variant === 'float' ? 'float' : 'sticky', keys, poster);
+		const isOpen = openKey === id;
+		return (
+			(isOpen ? OPEN : 0) |
+			(coveredBy && openKey === coveredBy ? COVERED : 0) |
+			// In the phone card, the chips after the open one move down to make its room
+			(variant === 'fold' && openKey !== null && keys.indexOf(id) > keys.indexOf(openKey) ? BELOW : 0) |
+			(isOpen && state.playing === id ? PLAYING : 0)
+		);
+	});
+	const open = (view & OPEN) !== 0;
+	const covered = (view & COVERED) !== 0;
+	const below = (view & BELOW) !== 0;
+	const playing = (view & PLAYING) !== 0;
 	const seen = useSeen(open);
 
 	return (
@@ -503,12 +548,10 @@ export function WhyNode({ id, scene, step, variant, keys, poster, dir = 'down', 
 			{children}
 			{variant === 'float' && (
 				<span className={styles.card}>
-					<span className={cx(styles.window, 'u-bevel')}>{seen && <WhyScene scene={scene} playing={open && playing === id} />}</span>
+					<span className={cx(styles.window, 'u-bevel')}>{seen && <WhyScene scene={scene} playing={playing} />}</span>
 				</span>
 			)}
-			{variant === 'fold' && (
-				<span className={cx(styles.well, 'u-bevel')}>{seen && <WhyScene scene={scene} playing={open && playing === id} />}</span>
-			)}
+			{variant === 'fold' && <span className={cx(styles.well, 'u-bevel')}>{seen && <WhyScene scene={scene} playing={playing} />}</span>}
 		</li>
 	);
 }
@@ -518,9 +561,9 @@ export function WhyNode({ id, scene, step, variant, keys, poster, dir = 'down', 
  * the tour (or a visitor) moves along the row. Fixed size, so nothing moves.
  */
 export function WhyPanel({ items, poster, className }: { items: ReadonlyArray<{ id: string; scene: WhySceneName }>; poster: string; className?: string }) {
-	const { playing } = useTour();
 	const keys = useMemo(() => items.map((item) => item.id), [items]);
-	const open = useOpen('sticky', keys, poster) ?? poster;
+	const open = useTourSelect((state) => openOf(state, 'sticky', keys, poster)) ?? poster;
+	const playing = useTourSelect((state) => state.playing);
 	const [seen, setSeen] = useState<ReadonlySet<string>>(() => new Set([open]));
 	if (!seen.has(open)) setSeen(new Set(seen).add(open));
 
