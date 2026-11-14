@@ -1,0 +1,35 @@
+/*
+ * trigger="mount": the reveal plays from first paint as a CSS animation, so the block (the hero)
+ * never waits for JavaScript to show its words. The block is rendered already shown (lines at
+ * rest); the keyframes carry each line in from the hidden state with the Texts reveal's own
+ * duration, easing and stagger.
+ */
+.mount :global(.t-stagger-line) {
+	animation: reveal-in var(--stagger-dur) var(--stagger-ease) backwards;
+}
+
+.mount :global(.t-stagger-line--2) {
+	animation-delay: var(--stagger-stagger);
+}
+
+.mount :global(.t-stagger-line--3) {
+	animation-delay: calc(var(--stagger-stagger) * 2);
+}
+
+.mount :global(.t-stagger-line--4) {
+	animation-delay: calc(var(--stagger-stagger) * 3);
+}
+
+@keyframes reveal-in {
+	from {
+		opacity: 0;
+		transform: translateY(var(--stagger-distance));
+		filter: blur(var(--stagger-blur));
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mount :global(.t-stagger-line) {
+		animation: none;
+	}
+}
