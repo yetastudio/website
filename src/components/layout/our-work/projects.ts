@@ -1,5 +1,7 @@
 //! Types
-import type { IconName, Project, TileHue } from '@/components/ui';
+import type { IconName } from '@/components/ui/icon';
+import type { Project } from '@/components/ui/project-card';
+import type { TileHue } from '@/components/ui/gradient-tile';
 
 //! Content
 import { routing } from '@/i18n/routing';

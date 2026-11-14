@@ -5,7 +5,9 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Accent, Button, Heading, Surface, Text } from '@/components/ui';
+import { Accent, Heading, Text } from '@/components/ui/text';
+import { Button } from '@/components/ui/button';
+import { Surface } from '@/components/ui/surface';
 import { BOOKING_URL } from '@/components/layout/sections';
 import { CRAFT, SHOTS } from '@/components/layout/content';
 import { CraftList } from './craft-live';

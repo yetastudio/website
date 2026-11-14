@@ -9,7 +9,10 @@ import { useTranslations } from 'next-intl';
 import { useAutoplay } from '../use-autoplay';
 
 //! Components
-import { Button, Icon, Surface, Text } from '@/components/ui';
+import { Button } from '@/components/ui/button';
+import { Icon } from '@/components/ui/icon';
+import { Surface } from '@/components/ui/surface';
+import { Text } from '@/components/ui/text';
 import { CRAFT } from '@/components/layout/content';
 
 //! Utils

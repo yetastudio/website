@@ -9,7 +9,9 @@ import { useTranslations } from 'next-intl';
 import { useReducedMotion } from '../use-autoplay';
 
 //! Components
-import { Button, SegmentedControl, Text } from '@/components/ui';
+import { Button } from '@/components/ui/button';
+import { SegmentedControl } from '@/components/ui/segmented-control';
+import { Text } from '@/components/ui/text';
 import { BOOKING_URL } from '@/components/layout/sections';
 
 //! Utils

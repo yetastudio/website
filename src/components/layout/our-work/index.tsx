@@ -2,7 +2,8 @@
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { SectionHeader, type Project } from '@/components/ui';
+import { SectionHeader } from '@/components/ui/section-header';
+import type { Project } from '@/components/ui/project-card';
 import { WorkGallery } from './gallery';
 import { PROJECT_TOOLS, SHOTS } from '../content';
 import { projectSlug } from './projects';

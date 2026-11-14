@@ -1,6 +1,8 @@
 //! Components
 import { Cell, ShowcaseSection, SpecTable, Specimen, ThemePair } from '@/components/showcase';
-import { Accent, Heading, Icon, iconNames, Surface, Text } from '@/components/ui';
+import { Accent, Heading, Text } from '@/components/ui/text';
+import { Icon, iconNames } from '@/components/ui/icon';
+import { Surface } from '@/components/ui/surface';
 
 //! Styles
 import styles from './styles.module.css';

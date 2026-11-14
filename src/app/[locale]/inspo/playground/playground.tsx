@@ -4,7 +4,10 @@
 import { useState } from 'react';
 
 //! Components
-import { Button, SegmentedControl, Surface, Text } from '@/components/ui';
+import { Button } from '@/components/ui/button';
+import { SegmentedControl } from '@/components/ui/segmented-control';
+import { Surface } from '@/components/ui/surface';
+import { Text } from '@/components/ui/text';
 import { PageSlide } from '../mockups/library/variants';
 
 //! Types

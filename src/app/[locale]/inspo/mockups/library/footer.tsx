@@ -5,7 +5,11 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Button, Divider, Link, Text, Wordmark } from '@/components/ui';
+import { Button } from '@/components/ui/button';
+import { Divider } from '@/components/ui/divider';
+import { Link } from '@/components/ui/link';
+import { Text } from '@/components/ui/text';
+import { Wordmark } from '@/components/ui/brand';
 import { BOOKING_URL } from '@/components/layout/sections';
 import { SHOTS } from '@/components/layout/content';
 import { FooterReadout } from './footer-live';

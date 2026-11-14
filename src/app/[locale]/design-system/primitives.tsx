@@ -5,31 +5,22 @@ import { useState } from 'react';
 
 //! Components
 import { Cell, ShowcaseSection, SpecTable, Specimen, ThemePair } from '@/components/showcase';
-import {
-	Accent,
-	Accordion,
-	AccordionItem,
-	Avatar,
-	AvatarGroup,
-	BrandMark,
-	Button,
-	Checkbox,
-	Chip,
-	Dialog,
-	Divider,
-	Heading,
-	Input,
-	Link,
-	LogoMark,
-	PaginationDots,
-	SegmentedControl,
-	Switch,
-	Text,
-	Textarea,
-	ThemeSwitch,
-	Tooltip,
-	useToast,
-} from '@/components/ui';
+import { Accent, Heading, Text } from '@/components/ui/text';
+import { Accordion, AccordionItem } from '@/components/ui/accordion';
+import { Avatar, AvatarGroup } from '@/components/ui/avatar';
+import { BrandMark, LogoMark } from '@/components/ui/brand';
+import { Button } from '@/components/ui/button';
+import { Checkbox, Switch } from '@/components/ui/checkbox';
+import { Chip } from '@/components/ui/chip';
+import { Dialog } from '@/components/ui/dialog';
+import { Divider } from '@/components/ui/divider';
+import { Input, Textarea } from '@/components/ui/field';
+import { Link } from '@/components/ui/link';
+import { PaginationDots } from '@/components/ui/pagination-dots';
+import { SegmentedControl } from '@/components/ui/segmented-control';
+import { ThemeSwitch } from '@/components/ui/theme-switch';
+import { Tooltip } from '@/components/ui/tooltip';
+import { useToast } from '@/components/ui/toast';
 
 //! Styles
 import styles from './styles.module.css';

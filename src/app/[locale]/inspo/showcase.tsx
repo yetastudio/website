@@ -3,7 +3,9 @@ import type { ReactNode } from 'react';
 
 //! Components
 import { ShowcaseLayout, ShowcaseNav, ShowcaseSection } from '@/components/showcase';
-import { Accent, Button, Chip, Heading, Text } from '@/components/ui';
+import { Accent, Heading, Text } from '@/components/ui/text';
+import { Button } from '@/components/ui/button';
+import { Chip } from '@/components/ui/chip';
 import { LibraryShelf, ProposalSection, StoryMap } from './proposal';
 import { BeforeAfterMockup } from './mockups/before-after';
 import { BookingMockup } from './mockups/booking';

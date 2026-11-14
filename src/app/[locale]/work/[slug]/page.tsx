@@ -6,7 +6,8 @@ import { routing } from '@/i18n/routing';
 import { getPathname } from '@/i18n/navigation';
 
 //! Components
-import { Footer, Header } from '@/components/layout';
+import { Footer } from '@/components/layout/footer';
+import { Header } from '@/components/layout/header';
 import { CaseStudyDetail } from '@/components/layout/case-study';
 import { PROJECTS, buildProject, getProjectEntry } from '@/components/layout/our-work/projects';
 

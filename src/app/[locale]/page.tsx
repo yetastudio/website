@@ -2,7 +2,14 @@
 import { setRequestLocale } from 'next-intl/server';
 
 //! Components
-import { Footer, Header, Hero, OurCraft, OurProcess, OurWork, Testimonials, WhyYeta } from '@/components/layout';
+import { Footer } from '@/components/layout/footer';
+import { Header } from '@/components/layout/header';
+import { Hero } from '@/components/layout/hero';
+import { OurCraft } from '@/components/layout/our-craft';
+import { OurProcess } from '@/components/layout/our-process';
+import { OurWork } from '@/components/layout/our-work';
+import { Testimonials } from '@/components/layout/testimonials';
+import { WhyYeta } from '@/components/layout/why-yeta';
 
 //! Styles
 import styles from './page.module.css';

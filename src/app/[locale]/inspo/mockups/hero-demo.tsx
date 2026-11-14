@@ -2,7 +2,8 @@
 
 //! Components
 import { Bar, Stage, Window, type Act } from '@stageshow';
-import { Icon, LogoMark } from '@/components/ui';
+import { Icon } from '@/components/ui/icon';
+import { LogoMark } from '@/components/ui/brand';
 
 //! Utils
 import { cx } from '@/lib/cx';

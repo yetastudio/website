@@ -6,7 +6,8 @@ import { flushSync } from 'react-dom';
 
 //! Components
 import { ThemePair } from '@/components/showcase';
-import { SegmentedControl, Text } from '@/components/ui';
+import { SegmentedControl } from '@/components/ui/segmented-control';
+import { Text } from '@/components/ui/text';
 
 //! Context
 import { VariantHiddenContext } from './variant-context';

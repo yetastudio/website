@@ -2,7 +2,10 @@
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Chip, SectionHeader, Surface, type ChipTone, type IconName } from '@/components/ui';
+import { Chip, type ChipTone } from '@/components/ui/chip';
+import { SectionHeader } from '@/components/ui/section-header';
+import { Surface } from '@/components/ui/surface';
+import type { IconName } from '@/components/ui/icon';
 import type { WhySceneName } from '@/components/ui/why-scene/shared';
 import { WhyNode, WhyPanel, WhyTour } from './tour';
 

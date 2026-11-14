@@ -5,7 +5,11 @@ import type { CSSProperties } from 'react';
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Accent, Button, Heading, Icon, LogoMark, Surface, Text } from '@/components/ui';
+import { Accent, Heading, Text } from '@/components/ui/text';
+import { Button } from '@/components/ui/button';
+import { Icon } from '@/components/ui/icon';
+import { LogoMark } from '@/components/ui/brand';
+import { Surface } from '@/components/ui/surface';
 import { BOOKING_URL } from '@/components/layout/sections';
 
 //! Utils

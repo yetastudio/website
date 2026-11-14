@@ -5,7 +5,10 @@ import type { ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Accent, Divider, LogoMark, Surface, Text } from '@/components/ui';
+import { Accent, Text } from '@/components/ui/text';
+import { Divider } from '@/components/ui/divider';
+import { LogoMark } from '@/components/ui/brand';
+import { Surface } from '@/components/ui/surface';
 
 //! Utils
 import { cx } from '@/lib/cx';

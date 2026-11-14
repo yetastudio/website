@@ -3,7 +3,9 @@
 //! Components
 import { Button as KitButton, Segmented, Stage, Text, type Act } from '@stageshow';
 import { Check } from 'lucide-react';
-import { Accent, Button, Icon, Text as DsText } from '@/components/ui';
+import { Accent, Text as DsText } from '@/components/ui/text';
+import { Button } from '@/components/ui/button';
+import { Icon } from '@/components/ui/icon';
 import { BOOKING_URL } from '@/components/layout/sections';
 
 //! Utils

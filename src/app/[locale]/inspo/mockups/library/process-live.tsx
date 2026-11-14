@@ -9,7 +9,11 @@ import { useTranslations } from 'next-intl';
 import { useAutoplay } from '../use-autoplay';
 
 //! Components
-import { Accent, Heading, Icon, PaginationDots, SegmentedControl, Surface, Text } from '@/components/ui';
+import { Accent, Heading, Text } from '@/components/ui/text';
+import { Icon } from '@/components/ui/icon';
+import { PaginationDots } from '@/components/ui/pagination-dots';
+import { SegmentedControl } from '@/components/ui/segmented-control';
+import { Surface } from '@/components/ui/surface';
 import { ProcessScene } from '@/components/ui/process-scene';
 import { isProcessStep } from '@/components/ui/process-scene/shared';
 import { PROCESS } from '@/components/layout/content';

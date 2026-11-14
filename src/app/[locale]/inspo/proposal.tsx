@@ -3,7 +3,10 @@ import type { ReactNode } from 'react';
 
 //! Components
 import { ShowcaseSection, ThemePair } from '@/components/showcase';
-import { Chip, Link, Surface, Text } from '@/components/ui';
+import { Chip } from '@/components/ui/chip';
+import { Link } from '@/components/ui/link';
+import { Surface } from '@/components/ui/surface';
+import { Text } from '@/components/ui/text';
 
 //! Library
 import { ShelfVariants } from './mockups/library/variants';

@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl';
 
 //! Components
 import { Bar, Connector, Segmented, Stage, Window, type Act } from '@stageshow';
-import { Text } from '@/components/ui';
+import { Text } from '@/components/ui/text';
 import { DesignFrame, FlowNode, Note, ReleaseRow, ToolMark, type Tool } from './parts';
 
 //! Data

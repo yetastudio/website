@@ -5,7 +5,11 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Avatar, Button, Surface, Text, Wordmark } from '@/components/ui';
+import { Avatar } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Surface } from '@/components/ui/surface';
+import { Text } from '@/components/ui/text';
+import { Wordmark } from '@/components/ui/brand';
 import { BOOKING_URL } from '@/components/layout/sections';
 import { SHOTS, TESTIMONIALS } from '@/components/layout/content';
 

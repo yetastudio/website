@@ -8,7 +8,9 @@ import { flushSync } from 'react-dom';
 import { useTranslations } from 'next-intl';
 
 //! Components
-import { Button, Surface, Text } from '@/components/ui';
+import { Button } from '@/components/ui/button';
+import { Surface } from '@/components/ui/surface';
+import { Text } from '@/components/ui/text';
 
 //! Utils
 import { cx } from '@/lib/cx';
