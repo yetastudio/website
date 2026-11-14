@@ -1,5 +1,8 @@
 /* eslint-disable @next/next/no-img-element -- static brand SVGs: next/image adds nothing and would rasterise them. */
 
+//! React Core
+import { memo } from 'react';
+
 //! Utils
 import { cx } from '@/lib/cx';
 
@@ -33,7 +36,8 @@ function src(name: string, canvas: 'light' | 'dark', fill?: string) {
 	return fill ? `${name}-${canvas}-${fill}` : `${name}-${canvas}`;
 }
 
-function Mark({ name, fill, size = 60, canvas = 'auto', alt, className, priority = false }: MarkProps & { name: string; fill?: string }) {
+// Memoised: a pure part its parents redraw with the same props.
+const Mark = memo(function Mark({ name, fill, size = 60, canvas = 'auto', alt, className, priority = false }: MarkProps & { name: string; fill?: string }) {
 	const px = typeof size === 'number' ? size : 96;
 	const common = priority
 		? { width: px, height: px, draggable: false, fetchPriority: 'high' as const }
@@ -57,17 +61,19 @@ function Mark({ name, fill, size = 60, canvas = 'auto', alt, className, priority
 			<img src={`/brand/${src(name, onDarkSite, fill)}.svg`} className={cx(styles.mark, 'u-only-dark')} {...common} alt="" />
 		</span>
 	);
-}
+});
 
 /** The "YETA" block monogram. Primary identifier in the header and footer. */
-export function BrandMark({ fill = 'transparent', alt = 'Yeta Studio', ...rest }: FillableMarkProps) {
+// Memoised: a pure part its parents redraw with the same props.
+export const BrandMark = memo(function BrandMark({ fill = 'transparent', alt = 'Yeta Studio', ...rest }: FillableMarkProps) {
 	return <Mark name="brand-mark" fill={fill} alt={alt} {...rest} />;
-}
+});
 
 /** The ✹ sunburst symbol. Used as the hero tile, favicon and avatar. */
-export function LogoMark({ fill = 'filled', alt = 'Yeta Studio', ...rest }: FillableMarkProps) {
+// Memoised: a pure part its parents redraw with the same props.
+export const LogoMark = memo(function LogoMark({ fill = 'filled', alt = 'Yeta Studio', ...rest }: FillableMarkProps) {
 	return <Mark name="logo-mark" fill={fill} alt={alt} {...rest} />;
-}
+});
 
 export type WordmarkProps = {
 	canvas?: BrandCanvas;

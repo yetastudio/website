@@ -1,6 +1,6 @@
 import { Badge, Bar, Button, Spinner, Stage, States, Text, type Act } from '@stageshow';
 import { Rocket } from 'lucide-react';
-import type { CSSProperties, ReactNode } from 'react';
+import { memo, type CSSProperties, type ReactNode } from 'react';
 
 import { sceneCursor } from './cursor';
 import { ENTRY_MS, SCENE_HEIGHT, SCENE_WIDTH, type WhyTourCopy } from './shared';
@@ -50,7 +50,8 @@ function Part({ i, sketch, product, className, target }: { i: number; sketch: Re
 	);
 }
 
-export function VisionScene({ copy, playing }: { copy: WhyTourCopy['vision']; playing: boolean }) {
+// Memoised: WhyScene and the stage hosts re-render around it with the same copy and playing flag.
+export const VisionScene = memo(function VisionScene({ copy, playing }: { copy: WhyTourCopy['vision']; playing: boolean }) {
 	return (
 		<Stage<S>
 			width={SCENE_WIDTH}
@@ -111,4 +112,4 @@ export function VisionScene({ copy, playing }: { copy: WhyTourCopy['vision']; pl
 			)}
 		</Stage>
 	);
-}
+});

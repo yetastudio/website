@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { forwardRef, type AnchorHTMLAttributes, type ButtonHTMLAttributes, type MouseEvent, type ReactNode } from 'react';
+import { forwardRef, memo, type AnchorHTMLAttributes, type ButtonHTMLAttributes, type MouseEvent, type ReactNode } from 'react';
 
 //! Next Core
 import { Link as LocaleLink, localeHref } from '@/i18n/navigation';
@@ -69,7 +69,9 @@ function isExternal(href: string) {
  * so there is no Dark/Light prop: the same button is dark on the dark canvas
  * and light on the light canvas.
  */
-export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(function Button(props, ref) {
+// Memoised: cards and lists re-render around their buttons (autoplay, hover) with the same props.
+export const Button = memo(
+	forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(function Button(props, ref) {
 	const {
 		children,
 		size = 'lg',
@@ -178,6 +180,7 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
 			{content}
 		</button>
 	);
-});
+})
+);
 
 export default Button;

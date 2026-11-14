@@ -61,7 +61,8 @@ export interface WindowProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title
 }
 
 /** The traffic lights. Every chrome puts them in the same spot: centered in the top 38px, 12px in. */
-function Lights() {
+// Yeta: memoised (no props; the window around it redraws with its scene).
+const Lights = memo(function Lights() {
   return (
     <span className="ss-window__lights">
       <span className="ss-window__dot" />
@@ -69,7 +70,7 @@ function Lights() {
       <span className="ss-window__dot" />
     </span>
   )
-}
+})
 
 function Lock() {
   return (

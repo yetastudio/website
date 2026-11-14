@@ -15,6 +15,9 @@ import { cx } from '@/lib/cx';
 import styles from './scenes.module.css';
 import mockups from './mockups.module.css';
 
+// Static, hoisted: the scene redraws on every state change and this never changes.
+const BOOKED_ICON = <Check size={12} strokeWidth={2.25} aria-hidden />;
+
 // Proposal 07, booking preview. The intro-call card hangs off the top-left
 // corner of a violet-tinted neutral stage and runs off its right and bottom edges.
 // Beats: the arrow picks Tuesday, then 11:30, then Confirm; the same button
@@ -120,7 +123,7 @@ function BookingScene() {
 						<div className={styles.bookActions}>
 							<KitButton
 								variant="primary"
-								icon={s.booked ? <Check size={12} strokeWidth={2.25} aria-hidden /> : undefined}
+								icon={s.booked ? BOOKED_ICON : undefined}
 								data-target="confirm"
 								data-idle={!s.slotOn || undefined}
 							>

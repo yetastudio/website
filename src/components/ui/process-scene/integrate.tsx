@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { BrandMark, Button, Connector, Stage, brandMarks, type Act } from '@stageshow';
 import { Check } from 'lucide-react';
 
@@ -46,7 +47,8 @@ async function script(a: Act<S>) {
 	await a.wait(1400);
 }
 
-export function IntegrateScene({ copy }: { copy: SceneCopy['integrate'] }) {
+// Memoised: WhyScene and the stage hosts re-render around it with the same copy and playing flag.
+export const IntegrateScene = memo(function IntegrateScene({ copy }: { copy: SceneCopy['integrate'] }) {
 	return (
 		<Stage<S>
 			width={SCENE_WIDTH}
@@ -100,4 +102,4 @@ export function IntegrateScene({ copy }: { copy: SceneCopy['integrate'] }) {
 			}}
 		</Stage>
 	);
-}
+});

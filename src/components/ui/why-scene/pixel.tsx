@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Bar, Button, Check, Count, Stage, type Act } from '@stageshow';
 
 import { sceneCursor } from './cursor';
@@ -45,7 +46,8 @@ function Gap({ side, value }: { side: 'start' | 'end'; value: number }) {
 	);
 }
 
-export function PixelScene({ copy, playing }: { copy: WhyTourCopy['pixel']; playing: boolean }) {
+// Memoised: WhyScene and the stage hosts re-render around it with the same copy and playing flag.
+export const PixelScene = memo(function PixelScene({ copy, playing }: { copy: WhyTourCopy['pixel']; playing: boolean }) {
 	return (
 		<Stage<S>
 			width={SCENE_WIDTH}
@@ -81,4 +83,4 @@ export function PixelScene({ copy, playing }: { copy: WhyTourCopy['pixel']; play
 			)}
 		</Stage>
 	);
-}
+});

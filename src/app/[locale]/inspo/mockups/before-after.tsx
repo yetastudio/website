@@ -1,5 +1,7 @@
 'use client';
 
+import { memo } from 'react';
+
 //! Components
 import { Badge, Bar, Stage, Window, type Act } from '@stageshow';
 import { ChevronsLeftRight } from 'lucide-react';
@@ -9,6 +11,9 @@ import { cx } from '@/lib/cx';
 
 //! Styles
 import styles from './scenes.module.css';
+
+// Static, hoisted: the scene redraws on every state change and this never changes.
+const KNOB_ICON = <ChevronsLeftRight size={14} strokeWidth={1.5} aria-hidden />;
 
 // Proposal 04, before / after. One browser window, two versions of the same
 // page under a divider: the untreated template on the left, the page as
@@ -54,7 +59,8 @@ async function script(a: Act<S>) {
 }
 
 /** The template as it arrived: flat, copy on the left, a stock image block on the right, a square button. */
-function Before() {
+// Memoised: a pure part its parents redraw with the same props.
+const Before = memo(function Before() {
 	return (
 		<div className={styles.baBefore}>
 			<div className={styles.baBeforeNav}>
@@ -75,10 +81,11 @@ function Before() {
 			<Badge className={cx(styles.baTag, styles.baTagStart)}>Before</Badge>
 		</div>
 	);
-}
+});
 
 /** The page as shipped, mirrored: a violet-tinted neutral panel on the left, display type with an Editorial accent and a bevelled call to action on the right. */
-function After() {
+// Memoised: a pure part its parents redraw with the same props.
+const After = memo(function After() {
 	return (
 		<div className={styles.baAfter}>
 			<div className={cx(styles.baAfterNav, 'u-bevel')}>
@@ -104,7 +111,7 @@ function After() {
 			</Badge>
 		</div>
 	);
-}
+});
 
 export function BeforeAfterMockup() {
 	return (
@@ -133,7 +140,7 @@ export function BeforeAfterMockup() {
 								</div>
 								<span className={styles.baDivider}>
 									<span className={cx(styles.baKnob, 'u-bevel')} data-target="knob" data-cursor="resize-ew">
-										<ChevronsLeftRight size={14} strokeWidth={1.5} aria-hidden />
+										{KNOB_ICON}
 									</span>
 								</span>
 							</div>

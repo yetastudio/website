@@ -45,7 +45,8 @@ function StepStage({ step, className }: { step: Step; className?: string }) {
  * transitions.dev 04, text states swap: the old text leaves upward with a blur, the new one enters
  * from below. The text is only swapped at the midpoint, so the line never shows both.
  */
-function SwapText({ text, className }: { text: string; className?: string }) {
+// Memoised: a pure part its parents redraw with the same props.
+const SwapText = memo(function SwapText({ text, className }: { text: string; className?: string }) {
 	const [shown, setShown] = useState(text);
 	const ref = useRef<HTMLSpanElement>(null);
 
@@ -69,7 +70,7 @@ function SwapText({ text, className }: { text: string; className?: string }) {
 			{shown}
 		</span>
 	);
-}
+});
 
 /**
  * Process walkthrough B, Timeline (FLORA, Rox): the scene at full width with the step named above

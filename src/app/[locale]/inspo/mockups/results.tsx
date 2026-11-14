@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 
 //! Hooks
 import { useAutoplay } from './use-autoplay';
@@ -27,7 +27,8 @@ const COUNT_DURATION = 900;
  * while it is still off screen, so the figure never drops in view; without motion it
  * simply shows the value.
  */
-function CountUp({ value, primed, start }: { value: number; primed: boolean; start: boolean }) {
+// Memoised: a pure part its parents redraw with the same props.
+const CountUp = memo(function CountUp({ value, primed, start }: { value: number; primed: boolean; start: boolean }) {
 	const figureRef = useRef<HTMLSpanElement>(null);
 
 	// The count writes the figure straight into the span each frame, so the animation costs no React
@@ -55,7 +56,7 @@ function CountUp({ value, primed, start }: { value: number; primed: boolean; sta
 			<span className="u-visually-hidden">{value}</span>
 		</>
 	);
-}
+});
 
 /**
  * Proposal 03: results set large in Editorial on neutral raised tiles, each marked by one hue dot. The figures are the
