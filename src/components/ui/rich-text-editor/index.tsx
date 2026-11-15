@@ -89,6 +89,11 @@ const SHORTCUTS: Partial<Record<Tool, string>> = { bold: 'B', italic: 'I', link:
 
 const NOTHING_PRESSED: Pressed = { bold: false, italic: false, bulletList: false, numberedList: false, link: false };
 
+type LinkBar = { open: boolean; url: string; editing: boolean };
+const LINK_BAR_CLOSED: LinkBar = { open: false, url: '', editing: false };
+/** Close the link bar, keeping the state as is when it already is closed (no re-render for nothing). */
+const closed = (current: LinkBar) => (current.open || current.url || current.editing ? LINK_BAR_CLOSED : current);
+
 const escapeHtml = (text: string) =>
 	text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
@@ -139,7 +144,7 @@ export function RichTextEditor({
 	const [empty, setEmpty] = useState(() => isEmptyHtml(defaultValue));
 	const [pressed, setPressed] = useState<Pressed>(NOTHING_PRESSED);
 	const [focusIndex, setFocusIndex] = useState(0);
-	const [linkBar, setLinkBar] = useState<{ open: boolean; url: string; editing: boolean }>({ open: false, url: '', editing: false });
+	const [linkBar, setLinkBar] = useState<LinkBar>(LINK_BAR_CLOSED);
 
 	const editorRef = useRef<HTMLDivElement>(null);
 	const toolRefs = useRef<Array<HTMLButtonElement | null>>([]);
@@ -162,13 +167,15 @@ export function RichTextEditor({
 			const selection = document.getSelection();
 			if (!editor || !selection?.rangeCount || !editor.contains(selection.anchorNode)) return;
 			savedRange.current = selection.getRangeAt(0).cloneRange();
-			setPressed({
+			const next: Pressed = {
 				bold: document.queryCommandState('bold'),
 				italic: document.queryCommandState('italic'),
 				bulletList: document.queryCommandState('insertUnorderedList'),
 				numberedList: document.queryCommandState('insertOrderedList'),
 				link: Boolean(linkAt(selection.anchorNode)),
-			});
+			};
+			// Most caret moves change no pressed state: keep the same object so the toolbar doesn't re-render
+			setPressed((current) => ((Object.keys(next) as Tool[]).every((tool) => current[tool] === next[tool]) ? current : next));
 		};
 		document.addEventListener('selectionchange', onSelectionChange);
 		return () => document.removeEventListener('selectionchange', onSelectionChange);
@@ -182,7 +189,8 @@ export function RichTextEditor({
 		const editor = editorRef.current;
 		if (!editor) return;
 		const next = editor.innerHTML;
-		setHtml(next);
+		// The HTML is only rendered into the form field, so without a `name` keeping it would re-render for nothing
+		if (name) setHtml(next);
 		setEmpty(isEmptyHtml(next));
 		onChange?.(next);
 	};
@@ -206,7 +214,7 @@ export function RichTextEditor({
 	};
 
 	const closeLinkBar = () => {
-		setLinkBar({ open: false, url: '', editing: false });
+		setLinkBar(closed);
 		restore();
 	};
 
@@ -220,7 +228,7 @@ export function RichTextEditor({
 			else if (selection && !selection.isCollapsed) document.execCommand('createLink', false, url);
 			else document.execCommand('insertHTML', false, `<a href="${escapeHtml(url)}">${escapeHtml(linkBar.url.trim())}</a>`);
 		}
-		setLinkBar({ open: false, url: '', editing: false });
+		setLinkBar(closed);
 		emit();
 	};
 
@@ -235,7 +243,7 @@ export function RichTextEditor({
 			selection?.addRange(range);
 		}
 		document.execCommand('unlink');
-		setLinkBar({ open: false, url: '', editing: false });
+		setLinkBar(closed);
 		emit();
 	};
 

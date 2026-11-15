@@ -33,9 +33,11 @@ export function OurWork() {
 		result: t('projects.yeta.result'),
 		tools: PROJECT_TOOLS,
 	};
-	// Figma repeats the same card three times, each opening on shot 1 of the strip.
+	// Figma repeats the same card three times, each opening on shot 1 of the strip. One project object
+	// for all three, so opening a card whose case study is already showing changes nothing.
 	const shots = SHOTS.map((shot, i) => ({ ...shot, alt: `${base.name}, screen ${i + 1}` }));
-	const projects: Project[] = [0, 1, 2].map(() => ({ ...base, shots }));
+	const project: Project = { ...base, shots };
+	const projects: Project[] = [project, project, project];
 
 	return (
 		<section id="our-work" className={cx(section.section, styles.section)} aria-labelledby="our-work-title">
