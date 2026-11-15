@@ -17,6 +17,13 @@
 	user-select: none;
 }
 
+/* InlineBrandMark gradient stops: the brand files' ink (light canvas) and metal (dark canvas). */
+.inkTop { stop-color: var(--palette-neutral-900); }
+.inkMid { stop-color: var(--palette-neutral-925); }
+.inkBottom { stop-color: var(--palette-neutral-950); }
+.metalTop { stop-color: var(--palette-neutral-300); }
+.metalBottom { stop-color: var(--palette-neutral-600); }
+
 /* Wordmark: the hero lockup, scaled by font-size. */
 .wordmark {
 	--wordmark-gap: 0.18em; /* hero: 16px gap on 89.6px type */

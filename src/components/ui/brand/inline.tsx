@@ -45,16 +45,19 @@ const TILES = [
 	},
 ] as const;
 
-/** The two canvases' fills, as the files draw them: ink for a light canvas, metal for a dark one. */
+/**
+ * The two canvases' fills, as the files draw them: ink for a light canvas, metal for a dark one.
+ * Each stop's colour is a token, set by its class (see styles.module.css).
+ */
 const STOPS: Record<'light' | 'dark', ReadonlyArray<readonly [number, string]>> = {
 	light: [
-		[0, '#111307'],
-		[0.6, '#0F1108'],
-		[1, '#0A0B04'],
+		[0, styles.inkTop],
+		[0.6, styles.inkMid],
+		[1, styles.inkBottom],
 	],
 	dark: [
-		[0, '#C5C7BC'],
-		[1, '#60615C'],
+		[0, styles.metalTop],
+		[1, styles.metalBottom],
 	],
 };
 
@@ -69,8 +72,8 @@ function Glyph({ canvas, className }: { canvas: 'light' | 'dark'; className?: st
 			<defs>
 				{TILES.map((tile, index) => (
 					<linearGradient key={index} id={`${id}-${index}`} x1={tile.x} y1={tile.top} x2={tile.x} y2={tile.bottom} gradientUnits="userSpaceOnUse">
-						{STOPS[canvas].map(([offset, color]) => (
-							<stop key={offset} offset={offset} stopColor={color} />
+						{STOPS[canvas].map(([offset, stop]) => (
+							<stop key={offset} offset={offset} className={stop} />
 						))}
 					</linearGradient>
 				))}
