@@ -277,7 +277,12 @@ export function createAct<S>(signal: AbortSignal, env: ActEnv<S>): Act<S> {
       return signal
     },
     put(patch) {
-      if (!signal.aborted) setState((s) => ({ ...s, ...(typeof patch === 'function' ? patch(s) : patch) }))
+      if (signal.aborted) return
+      setState((s) => {
+        const next = typeof patch === 'function' ? patch(s) : patch
+        // Yeta: a patch that changes nothing keeps the same state, so the scene doesn't re-render for it
+        return covers(s, next) ? s : { ...s, ...next }
+      })
     },
     async set(patch) {
       check()
@@ -507,7 +512,8 @@ export function createAct<S>(signal: AbortSignal, env: ActEnv<S>): Act<S> {
       const interval = opts?.interval ?? 35
       for (let i = 0; i <= text.length; i++) {
         check()
-        setState((s) => ({ ...s, [key]: text.slice(0, i) }))
+        const typed = text.slice(0, i)
+        setState((s) => (s[key] === typed ? s : { ...s, [key]: typed }))
         // Uneven but repeatable rhythm, so every loop types the same way
         await wait(interval * (0.7 + 0.6 * hash(i)))
       }
@@ -657,6 +663,14 @@ export function createAct<S>(signal: AbortSignal, env: ActEnv<S>): Act<S> {
     }
   }
   return a
+}
+
+// Yeta: whether `state` already holds every value in `patch`, so applying it would change nothing.
+export function covers<S>(state: S, patch: Partial<S>) {
+  for (const key in patch) {
+    if (!Object.is(patch[key], state[key])) return false
+  }
+  return true
 }
 
 // A loop that doesn't end where it began jumps on every repeat.

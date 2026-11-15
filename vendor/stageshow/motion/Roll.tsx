@@ -91,7 +91,8 @@ function RollNow({
   }, [align])
   useEffect(() => {
     if (reduced) {
-      setView({ text: children, head: 0, tail: 0, old: '', key: 0, numeric: true })
+      // Yeta: a roll already at rest on this text keeps its view, so a stage going still doesn't re-render it
+      setView((v) => (v.text === children && !v.head && !v.tail && !v.old && !v.key && v.numeric ? v : { text: children, head: 0, tail: 0, old: '', key: 0, numeric: true }))
       return
     }
     if (view.text === children) return
@@ -114,7 +115,7 @@ function RollNow({
     // During interruption this is between endpoints, not the old target.
     fromWidth.current = rootWidth()
     setView({ text: b, head, tail, old: a.slice(head, a.length - tail), key, numeric })
-    const id = setTimeout(() => setView((v) => (v.key === key ? { ...v, old: '' } : v)), 700)
+    const id = setTimeout(() => setView((v) => (v.key === key && v.old ? { ...v, old: '' } : v)), 700)
     return () => clearTimeout(id)
   }, [children, reduced]) // eslint-disable-line react-hooks/exhaustive-deps
   // While the old and new text swap, the box starts at the old text's width,

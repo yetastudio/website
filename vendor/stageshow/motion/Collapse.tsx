@@ -47,6 +47,9 @@ export function Collapse({ open, reveal = 'clip', from = 'above', solid = false,
   // rendering, so the first closing frame already shows it)
   const held = useRef<ReactNode>(children)
   const [released, setReleased] = useState(true)
+  // Yeta: the fallback timer is cleared once transitionend settles the collapse, so the same
+  // settled state is not set twice (that re-rendered the collapse with nothing to change)
+  const settleTimer = useRef(0)
   if (open) held.current = children
   useLayoutEffect(() => {
     const h = inner.current?.scrollHeight ?? 0
@@ -55,8 +58,8 @@ export function Collapse({ open, reveal = 'clip', from = 'above', solid = false,
     setMoving(true)
     if (!open) setReleased(false)
     // No transitionend without a transition (reduced motion): never leave it moving
-    const t = setTimeout(() => { setMoving(false); setReleased(true) }, 900)
-    return () => clearTimeout(t)
+    settleTimer.current = window.setTimeout(() => { setMoving(false); setReleased(true) }, 900)
+    return () => clearTimeout(settleTimer.current)
   }, [open])
   return (
     <div
@@ -69,7 +72,7 @@ export function Collapse({ open, reveal = 'clip', from = 'above', solid = false,
       data-moving={moving || undefined}
       data-tall={tall || undefined}
       onTransitionEnd={(e) => {
-        if (e.target === e.currentTarget && e.propertyName === 'grid-template-rows') { setMoving(false); setReleased(true) }
+        if (e.target === e.currentTarget && e.propertyName === 'grid-template-rows') { clearTimeout(settleTimer.current); setMoving(false); setReleased(true) }
         rest.onTransitionEnd?.(e)
       }}
     >
