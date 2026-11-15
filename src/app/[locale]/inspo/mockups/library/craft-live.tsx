@@ -1,12 +1,12 @@
 'use client';
 
 //! React Core
-import { memo, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 
 //! Hooks
 import { useTranslations } from 'next-intl';
-import { useAutoplay } from '../use-autoplay';
+import { useAutoplayTimer } from '../use-autoplay';
 
 //! Components
 import { Button } from '@/components/ui/button';
@@ -78,14 +78,9 @@ export function CraftList() {
 	const [shown, setShown] = useState(0);
 	const rootRef = useRef<HTMLDivElement>(null);
 	const swapRef = useRef<HTMLDivElement>(null);
-	const autoplay = useAutoplay(rootRef);
+	const advance = useCallback(() => setActive((index) => (index + 1) % CRAFT.length), []);
+	const autoplay = useAutoplayTimer(rootRef, HOLD, advance, active);
 	const beat = CRAFT[shown];
-
-	useEffect(() => {
-		if (!autoplay.enabled || autoplay.paused) return;
-		const timer = window.setTimeout(() => setActive((index) => (index + 1) % CRAFT.length), HOLD);
-		return () => window.clearTimeout(timer);
-	}, [active, autoplay.enabled, autoplay.paused]);
 
 	// transitions.dev 04 · Text states swap: the old copy exits up, swaps, and the new copy enters from below.
 	useEffect(() => {

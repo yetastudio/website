@@ -1,10 +1,10 @@
 'use client';
 
 //! React Core
-import { memo, useEffect, useRef } from 'react';
+import { memo, useEffect, useRef, type RefObject } from 'react';
 
 //! Hooks
-import { useAutoplay } from './use-autoplay';
+import { useReducedMotion } from './use-autoplay';
 
 //! Components
 import { Surface } from '@/components/ui/surface';
@@ -23,40 +23,55 @@ export type ResultFacts = {
 const COUNT_DURATION = 900;
 
 /**
- * Counts up to `value` once, the first time the row is on screen. `primed` holds it at 0
- * while it is still off screen, so the figure never drops in view; without motion it
- * simply shows the value.
+ * A figure that counts up to `value` (see useCountUp). `primed` holds it at 0 until the count
+ * starts, so the figure never drops in view; without motion it simply shows the value.
  */
 // Memoised: a pure part its parents redraw with the same props.
-const CountUp = memo(function CountUp({ value, primed, start }: { value: number; primed: boolean; start: boolean }) {
-	const figureRef = useRef<HTMLSpanElement>(null);
-
-	// The count writes the figure straight into the span each frame, so the animation costs no React
-	// render per frame (it used to set state ~55 times per counter).
-	useEffect(() => {
-		const figure = figureRef.current;
-		if (!start || !figure) return;
-		let frame = 0;
-		const begin = performance.now();
-		const tick = (now: number) => {
-			const progress = Math.min(1, (now - begin) / COUNT_DURATION);
-			// Ease out cubic: fast start, gentle landing on the real figure.
-			figure.textContent = String(Math.round(value * (1 - (1 - progress) ** 3)));
-			if (progress < 1) frame = requestAnimationFrame(tick);
-		};
-		frame = requestAnimationFrame(tick);
-		return () => cancelAnimationFrame(frame);
-	}, [start, value]);
-
+const CountUp = memo(function CountUp({ value, primed }: { value: number; primed: boolean }) {
 	return (
 		<>
-			<span ref={figureRef} aria-hidden="true">
-				{start || primed ? 0 : value}
+			<span data-count={value} aria-hidden="true">
+				{primed ? 0 : value}
 			</span>
 			<span className="u-visually-hidden">{value}</span>
 		</>
 	);
 });
+
+/**
+ * Counts every figure in the root up to its value once, the first time the root is on screen. The
+ * count writes the figures straight into their spans each frame, so neither starting it nor running
+ * it renders anything.
+ */
+function useCountUp(ref: RefObject<HTMLElement | null>, enabled: boolean) {
+	useEffect(() => {
+		const root = ref.current;
+		if (!root || !enabled) return;
+		let frame = 0;
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (!entry.isIntersecting) return;
+				observer.disconnect();
+				const figures = [...root.querySelectorAll<HTMLElement>('[data-count]')];
+				const begin = performance.now();
+				const tick = (now: number) => {
+					const progress = Math.min(1, (now - begin) / COUNT_DURATION);
+					// Ease out cubic: fast start, gentle landing on the real figure.
+					const eased = 1 - (1 - progress) ** 3;
+					for (const figure of figures) figure.textContent = String(Math.round(Number(figure.dataset.count) * eased));
+					if (progress < 1) frame = requestAnimationFrame(tick);
+				};
+				frame = requestAnimationFrame(tick);
+			},
+			{ threshold: 0.4 },
+		);
+		observer.observe(root);
+		return () => {
+			observer.disconnect();
+			cancelAnimationFrame(frame);
+		};
+	}, [ref, enabled]);
+}
 
 /**
  * Proposal 03: results set large in Editorial on neutral raised tiles, each marked by one hue dot. The figures are the
@@ -65,7 +80,8 @@ const CountUp = memo(function CountUp({ value, primed, start }: { value: number;
  */
 export function ResultsMockup({ facts }: { facts: ResultFacts }) {
 	const rootRef = useRef<HTMLDivElement>(null);
-	const autoplay = useAutoplay(rootRef);
+	const enabled = !useReducedMotion();
+	useCountUp(rootRef, enabled);
 
 	const stats: Array<{
 		key: string;
@@ -110,7 +126,7 @@ export function ResultsMockup({ facts }: { facts: ResultFacts }) {
 							<span className={styles.stat}>
 								<span className={styles.statDot} data-hue={stat.hue} aria-hidden="true" />
 								<Text as="span" family="serif" weight="regular" leading="none" className={styles.statValue}>
-									<CountUp value={stat.value} primed={autoplay.enabled} start={autoplay.seen && autoplay.enabled} />
+									<CountUp value={stat.value} primed={enabled} />
 								</Text>
 								<Text as="span" size="xs" leading="snug" align="center" balance>
 									{stat.label}
