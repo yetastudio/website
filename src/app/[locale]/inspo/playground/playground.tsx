@@ -54,7 +54,9 @@ export function Playground({ shelves }: { shelves: PlaygroundShelf[] }) {
 	const [picks, setPicks] = useState<Record<ShelfId, VariantId>>(
 		() => Object.fromEntries(shelves.map((shelf) => [shelf.id, 'a'])) as Record<ShelfId, VariantId>,
 	);
-	const pick = (id: ShelfId) => (variant: VariantId) => setPicks((current) => ({ ...current, [id]: variant }));
+	// Picking the variant already on show keeps the same picks, so it re-renders nothing.
+	const pick = (id: ShelfId) => (variant: VariantId) =>
+		setPicks((current) => (current[id] === variant ? current : { ...current, [id]: variant }));
 
 	return (
 		<div

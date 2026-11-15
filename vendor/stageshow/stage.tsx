@@ -2,7 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, typ
 import './stage.css'
 // The Yeta Studio look (theme="yeta", the default below). Added for yeta.studio.
 import './yeta.css'
-import { checkSeam, createAct, Stopped, type Script } from './act'
+import { checkSeam, covers, createAct, Stopped, type Script } from './act'
 import { Cursor, ripple as spawnRipple, type CursorKind, type CursorStyle } from './cursor'
 import { Keycaps, type Keys, type KeysAt } from './keys'
 import { LookContext, type Fidelity, type Layout, type Palette, type Theme } from './looks'
@@ -91,6 +91,9 @@ export interface StageProps<S> {
 }
 
 const NONE = {}
+
+// Yeta: `to`, unless `s` already holds exactly its values
+const back = <S extends object>(s: S, to: S) => (covers(s, to) && covers(to, s) ? s : to)
 
 export function Stage<S extends object>({
   width,
@@ -211,6 +214,14 @@ export function Stage<S extends object>({
 
   // Rects of every data-target, in stage pixels, refreshed after each commit.
   const [rects, setRects] = useState<Record<string, Rect>>({})
+  // Yeta: whether the scene's last render read rect(). A scene that never does (most of them) has
+  // nothing to redraw when its targets move, so new measurements don't re-render it. One that starts
+  // reading them gets them on the next commit's measure.
+  const readsRects = useRef(false)
+  const storeRects = useCallback((next: Record<string, Rect>) => {
+    if (!readsRects.current) return
+    setRects((prev) => (sameRects(prev, next) ? prev : next))
+  }, [])
   const measureAll = useCallback(() => {
     const root = rootRef.current
     if (!root) return {}
@@ -234,17 +245,15 @@ export function Stage<S extends object>({
         p.frame = 0
         if (!p.owed) return
         p.owed = false
-        const next = measureAll()
-        setRects((prev) => (sameRects(prev, next) ? prev : next))
+        storeRects(measureAll())
       })
     if (p.n >= 4) {
       p.owed = true
       return
     }
     p.n++
-    const next = measureAll()
-    setRects((prev) => (sameRects(prev, next) ? prev : next))
-  }, [measureAll])
+    storeRects(measureAll())
+  }, [measureAll, storeRects])
   useLayoutEffect(remeasure)
   useLayoutEffect(() => () => {
     clock.cancelLayoutRaf(passes.current.frame)
@@ -262,7 +271,10 @@ export function Stage<S extends object>({
       root.removeEventListener('animationend', remeasure)
     }
   }, [remeasure])
-  const rectFor = useCallback((name: string) => rects[name] ?? EMPTY, [rects])
+  const rectFor = useCallback((name: string) => {
+    readsRects.current = true
+    return rects[name] ?? EMPTY
+  }, [rects])
 
   // Placing: until the first measurements (after fonts load) have painted,
   // and again after a wide/compact switch, nothing transitions. Otherwise
@@ -347,13 +359,18 @@ export function Stage<S extends object>({
     resetFrame.current = 0
     rootRef.current?.removeAttribute('data-settling')
   }, [])
-  const reset = useCallback((glide = false) => {
+  // Yeta: `to` is the frame to land on (the poster for a still stage), set in this one update, so
+  // a stage settling on a frame it already shows keeps its state and doesn't re-render the scene.
+  const reset = useCallback((glide = false, to: S = initial) => {
     cancelReset()
     const id = glideId.current
     dragging.current = false
-    setState(initial)
+    // A loop ends on its starting values (see checkSeam): keep that state object rather than an equal one
+    setState((s) => back(s, to))
     setKind(cursor?.kind ?? 'pointer')
-    setKeys((k) => ({ ...k, show: false, down: false }))
+    // Yeta: keep the same object when nothing shows, so an idle reset (a stage scrolling in or out
+    // of view) doesn't re-render the scene for no change
+    setKeys((k) => (k.show || k.down ? { ...k, show: false, down: false } : k))
     setLastKeys(null)
     rootRef.current?.querySelectorAll('[data-hover],[data-pressed]').forEach((el) => {
       el.removeAttribute('data-hover')
@@ -414,9 +431,8 @@ export function Stage<S extends object>({
   useEffect(() => {
     const stage = rootRef.current!
     if (still || !script) {
-      reset()
+      reset(false, poster ?? initial)
       stage.removeAttribute('data-offscreen')
-      setState(poster ?? initial)
       return cancelReset
     }
     // A changed script, layout or motion preference starts a fresh scene.
@@ -572,6 +588,9 @@ export function Stage<S extends object>({
   // Yeta: a stable rows array lets the memoised Keycaps skip the stage's scene re-renders
   const keyRows = useMemo(() => [lastKeys, keys], [lastKeys, keys])
   const showCursor = cursor && (!script || !still || cursor.still)
+  // Render the scene here, so readsRects says whether this render asked for rect()
+  readsRects.current = false
+  const scene = children(state, rectFor, layout)
 
   return (
     <div ref={fitRef} className={`ss-fit${className ? ` ${className}` : ''}`} style={{ maxWidth: grows ? undefined : width, height: designH * scale }}>
@@ -608,7 +627,7 @@ export function Stage<S extends object>({
           />
         )}
         <StillContext.Provider value={still}>
-          <LookContext.Provider value={look}>{children(state, rectFor, layout)}</LookContext.Provider>
+          <LookContext.Provider value={look}>{scene}</LookContext.Provider>
         </StillContext.Provider>
         {script && <Keycaps rows={keyRows} at={typeof keysAt === 'string' ? keysAt : keysAt[layout]} />}
         {showCursor && <Cursor cursorRef={cursorRef} style={cursor!.style} kind={kind} />}
