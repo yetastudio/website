@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 //! Hooks
 import { useTranslations } from 'next-intl';
@@ -36,19 +36,24 @@ export function Composites() {
 	const work = useTranslations('ourWork');
 	const [active, setActive] = useState<Project | null>(null);
 
-	const project: Project = {
-		name: work('projects.yeta.name'),
-		year: work('projects.yeta.year'),
-		country: work('projects.yeta.country'),
-		industry: work('projects.yeta.industry'),
-		services: work('projects.yeta.services'),
-		url: work('projects.yeta.url'),
-		about: work('projects.yeta.about'),
-		challenge: work('projects.yeta.challenge'),
-		result: work('projects.yeta.result'),
-		tools: PROJECT_TOOLS,
-		shots: SHOTS.map((shot, i) => ({ ...shot, alt: `Yeta Studio, screen ${i + 1}` })),
-	};
+	// One project object across renders: opening or closing the dialog keeps the cards' props (and
+	// the open case study) the same, so they don't re-render for it.
+	const project = useMemo<Project>(
+		() => ({
+			name: work('projects.yeta.name'),
+			year: work('projects.yeta.year'),
+			country: work('projects.yeta.country'),
+			industry: work('projects.yeta.industry'),
+			services: work('projects.yeta.services'),
+			url: work('projects.yeta.url'),
+			about: work('projects.yeta.about'),
+			challenge: work('projects.yeta.challenge'),
+			result: work('projects.yeta.result'),
+			tools: PROJECT_TOOLS,
+			shots: SHOTS.map((shot, i) => ({ ...shot, alt: `Yeta Studio, screen ${i + 1}` })),
+		}),
+		[work],
+	);
 
 	const craftCard = (index: number, layout: 'row' | 'stacked') => {
 		const item = CRAFT[index];
