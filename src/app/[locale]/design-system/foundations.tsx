@@ -160,7 +160,7 @@ export function Foundations() {
 				title="Typography"
 				description={
 					<>
-						Funnel Display sets everything at −3% tracking. PP Editorial New is the editorial voice: card titles and the
+						Funnel Display sets everything at −3% tracking. Garabosse is the editorial voice: card titles and the
 						occasional <Accent>emphasised</Accent> word.
 					</>
 				}
@@ -173,11 +173,11 @@ export function Foundations() {
 						<Text size="sm" tone="subtle">
 							Light 300 · Regular 400 · Medium 500 · Bold 700
 						</Text>
-						<Text size="3xl" family="serif" leading="none">
-							PP Editorial New <Accent>Italic</Accent>
+						<Text size="3xl" family="serif" weight="thin" leading="none">
+							Garabosse <Accent italic={false}>Mignon·ne</Accent>
 						</Text>
 						<Text size="sm" tone="subtle">
-							Ultralight 200 · Regular 400 · Italic 400
+							Parangon 200 · Mignon·ne 400
 						</Text>
 					</ThemePair>
 				</Specimen>

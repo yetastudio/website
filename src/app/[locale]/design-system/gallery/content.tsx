@@ -418,7 +418,7 @@ function QuoteSection() {
 			id="quote"
 			eyebrow={GROUP}
 			title="Quote"
-			description="The testimonial cards' voice outside the card: Funnel Display Light, balanced lines, attribution in a small row with the avatar and the role at 60%. Pull quotes lift a passage out of an article in PP Editorial New."
+			description="The testimonial cards' voice outside the card: Funnel Display Light, balanced lines, attribution in a small row with the avatar and the role at 60%. Pull quotes lift a passage out of an article in Garabosse."
 		>
 			<Usage use="a client's words, a quotation in a case study, a passage worth repeating in a long article." avoid="emphasis on your own copy (use Accent) or more than one or two pull quotes per page." />
 			<Specimen title="Block quote: sizes" note="figure › blockquote + figcaption: the attribution is outside the quote; cite holds a work's title, never a name.">
@@ -449,7 +449,7 @@ function QuoteSection() {
 					</Cell>
 				</ThemePair>
 			</Specimen>
-			<Specimen title="Pull quote" note="aside › figure, PP Editorial New Ultralight between two hairlines; the opening mark carries the optional hue.">
+			<Specimen title="Pull quote" note="aside › figure, Garabosse Parangon between two hairlines; the opening mark carries the optional hue.">
 				<ThemePair layout="column" align="start">
 					<Quote variant="pull" size="lg">
 						Every screen after the tokens was a composition, not a design.

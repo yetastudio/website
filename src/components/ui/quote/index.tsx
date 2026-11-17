@@ -30,7 +30,7 @@ export type QuoteProps = {
 	cite?: string;
 	/**
 	 * `block`: a quotation in the flow of the page (`figure` > `blockquote` + `figcaption`).
-	 * `pull`: a passage lifted from the surrounding article, set large in PP Editorial New (`aside`).
+	 * `pull`: a passage lifted from the surrounding article, set large in Garabosse (`aside`).
 	 */
 	variant?: QuoteVariant;
 	/** sm 14 · md 16 · lg 20 for block quotes; pull quotes step up to 20 · 24 · 32. */

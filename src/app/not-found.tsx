@@ -2,7 +2,7 @@
 import Link from 'next/link';
 
 //! Fonts
-import { editorialNew, funnelDisplay } from './fonts';
+import { funnelDisplay, garabosse } from './fonts';
 
 //! Styles
 import '@/styles/tokens.css';
@@ -14,7 +14,7 @@ import './globals.css';
  */
 export default function RootNotFound() {
 	return (
-		<html lang="en" className={`${funnelDisplay.variable} ${editorialNew.variable}`}>
+		<html lang="en" className={`${funnelDisplay.variable} ${garabosse.variable}`}>
 			<body>
 				<main
 					style={{

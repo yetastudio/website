@@ -21,7 +21,7 @@ export type TextProps = HTMLAttributes<HTMLElement> & {
 	weight?: TextWeight;
 	/** Colour role. `display` paints the metallic/ink display gradient. */
 	tone?: TextTone;
-	/** `serif` is PP Editorial New, the editorial accent. */
+	/** `serif` is Garabosse, the editorial accent. */
 	family?: 'sans' | 'serif';
 	italic?: boolean;
 	align?: 'start' | 'center' | 'end';
@@ -91,7 +91,7 @@ export type AccentProps = HTMLAttributes<HTMLElement> & {
 	underline?: boolean;
 };
 
-/** An emphasised word set in PP Editorial New inside Funnel Display copy. */
+/** An emphasised word set in Garabosse inside Funnel Display copy. */
 export function Accent({ italic = true, underline, className, children, ...rest }: AccentProps) {
 	return (
 		<em className={cx(styles.accent, !italic && styles.upright, underline && styles.underline, className)} {...rest}>

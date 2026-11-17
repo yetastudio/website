@@ -56,7 +56,7 @@
     --ss-danger-soft: color-mix(in srgb, var(--color-danger) 14%, transparent);
     --ss-danger-text: var(--color-danger-text);
 
-    /* Type: Funnel Display for every UI string; PP Editorial New is the host's accent,
+    /* Type: Funnel Display for every UI string; Garabosse is the host's accent,
        used by scenes on purpose (a title), never for UI labels; the system mono for code */
     --ss-font: var(--font-sans);
     --ss-serif: var(--font-serif);
