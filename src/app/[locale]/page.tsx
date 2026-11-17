@@ -13,7 +13,7 @@ import { Testimonials } from '@/components/layout/testimonials';
 import { WhyYeta } from '@/components/layout/why-yeta';
 
 //! Content
-import { BOOKING_URL } from '@/components/layout/sections';
+import { BOOKING_URL, SOCIALS } from '@/components/layout/sections';
 import { routing } from '@/i18n/routing';
 import { plain } from '@/lib/markdown';
 import { SITE_URL, alternates } from '@/lib/site';
@@ -48,6 +48,7 @@ async function structuredData(locale: string) {
 				description: meta('description'),
 				slogan: plain(String(hero.raw('slogan'))),
 				knowsAbout: ['Web design', 'Web development', 'UI/UX design', 'Design systems', 'Digital products'],
+				sameAs: SOCIALS.flatMap(({ href }) => (href ? [href] : [])),
 				address: { '@type': 'PostalAddress', addressCountry: 'AR' },
 				contactPoint: {
 					'@type': 'ContactPoint',

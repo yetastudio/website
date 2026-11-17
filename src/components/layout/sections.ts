@@ -13,12 +13,12 @@ export type SectionId = (typeof SECTIONS)[number]['id'];
 export const BOOKING_URL = 'https://cal.com/yetastudio';
 
 /**
- * Social profiles listed in the footer. Figma names them but gives no URLs, so they
- * render as plain text until a real `href` is filled in here.
+ * Social profiles listed in the footer and named as `sameAs` in the Organization JSON-LD.
+ * One without an `href` renders as plain text (Threads has no profile yet).
  */
 export const SOCIALS: ReadonlyArray<{ key: 'linkedin' | 'instagram' | 'threads' | 'twitter'; href: string | null }> = [
-	{ key: 'linkedin', href: null },
-	{ key: 'instagram', href: null },
+	{ key: 'linkedin', href: 'https://www.linkedin.com/company/yeta-studio/' },
+	{ key: 'instagram', href: 'https://www.instagram.com/yeta_studio/' },
 	{ key: 'threads', href: null },
-	{ key: 'twitter', href: null },
+	{ key: 'twitter', href: 'https://x.com/yeta_studio' },
 ];
