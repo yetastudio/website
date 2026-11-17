@@ -193,7 +193,7 @@ export default function BrandGuidelines() {
 				title="Typography"
 				description={
 					<>
-						Funnel Display speaks; PP Editorial New <Accent>whispers</Accent>. The serif only ever appears on a few words, card titles and
+						Funnel Display speaks; Garabosse <Accent>whispers</Accent>. The serif only ever appears on a few words, card titles and
 						quotes.
 					</>
 				}
@@ -219,7 +219,7 @@ export default function BrandGuidelines() {
 						<Accent italic={false}>strategy</Accent>. Born to <Accent underline>elevate</Accent> your brand.
 					</Text>
 					<Text size="xs" tone="faint">
-						Card title · PP Editorial New Regular
+						Card title · Garabosse Mignon·ne
 					</Text>
 					<Text family="serif" size="2xl" leading="none">
 						Design with intention.
