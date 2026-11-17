@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
-import { getPathname } from '@/i18n/navigation';
+import { alternates } from '@/lib/site';
 
 //! Components
 import { Footer } from '@/components/layout/footer';
@@ -33,15 +33,11 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 	const name = tw(`projects.${entry.key}.name`);
 	const title = t('metaTitle', { name });
 	const description = tw(`projects.${entry.key}.tagline`);
-	const path = (target: string) => getPathname({ locale: target, href: `/work/${slug}` });
 
 	return {
 		title,
 		description,
-		alternates: {
-			canonical: path(locale),
-			languages: Object.fromEntries(routing.locales.map((target) => [target, path(target)])),
-		},
+		alternates: alternates(locale, `/work/${slug}`),
 		openGraph: {
 			type: 'article',
 			title,
