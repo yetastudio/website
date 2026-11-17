@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { useCallback, useEffect, useId, useRef, type ReactNode } from 'react';
+import { useCallback, useEffect, useId, useRef, useState, type ReactNode } from 'react';
 
 //! Hooks
 import { useTranslations } from 'next-intl';
@@ -57,6 +57,11 @@ export function Dialog({
 
 	const panelRef = useRef<HTMLDivElement>(null);
 	const isSheet = placement !== 'center';
+
+	// The contents render from the first open on, then stay for the exit motion. Closed, they only added
+	// hidden markup to the server HTML, and their title h2 led the page outline ahead of its h1.
+	const [opened, setOpened] = useState(open);
+	if (open && !opened) setOpened(true);
 
 	// Motion is transitions.dev: a centred dialog is a Modal (.t-modal + is-open / is-closing),
 	// sheets are a Panel reveal (.t-panel-slide + data-open). The states live on the elements,
@@ -123,19 +128,21 @@ export function Dialog({
 				pressedBackdrop.current = false;
 			}}
 		>
-			<div ref={panelRef} className={cx(styles.panel, 'u-bevel', isSheet ? 't-panel-slide' : 't-modal')}>
-				<header className={styles.header}>
-					<h2 id={titleId} className={cx(styles.title, hideTitle && 'u-visually-hidden')}>
-						{title}
-					</h2>
-					<Button icon="close" label={t('close')} variant="ghost" size="md" onClick={onClose} className={styles.close} />
-				</header>
-				{/* Only the scrolling body opts out of Lenis; everything else stays locked while open. */}
-				<div className={styles.body} data-lenis-prevent>
-					{children}
+			{opened && (
+				<div ref={panelRef} className={cx(styles.panel, 'u-bevel', isSheet ? 't-panel-slide' : 't-modal')}>
+					<header className={styles.header}>
+						<h2 id={titleId} className={cx(styles.title, hideTitle && 'u-visually-hidden')}>
+							{title}
+						</h2>
+						<Button icon="close" label={t('close')} variant="ghost" size="md" onClick={onClose} className={styles.close} />
+					</header>
+					{/* Only the scrolling body opts out of Lenis; everything else stays locked while open. */}
+					<div className={styles.body} data-lenis-prevent>
+						{children}
+					</div>
+					{footer && <footer className={styles.footer}>{footer}</footer>}
 				</div>
-				{footer && <footer className={styles.footer}>{footer}</footer>}
-			</div>
+			)}
 		</dialog>
 	);
 }
