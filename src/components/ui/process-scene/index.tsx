@@ -2,6 +2,7 @@
 
 //! Hooks
 import { useTranslations } from 'next-intl';
+import { useHydrated } from '@/hooks/useHydrated';
 
 //! Components
 import { SceneView } from './scenes';
@@ -15,14 +16,16 @@ export type ProcessSceneProps = {
 /**
  * The Our Process step happening, as a small Stageshow product scene for the
  * Process Card's wash tile (342 × 160). Decorative (aria-hidden, nothing
- * focusable, no pointer events). It renders its poster on the server, plays
- * its loop only while on screen, and shows the poster alone under reduced
- * motion. Words come from messages `ourProcess.scenes.<step>`.
+ * focusable, no pointer events). The server sends only its sized root (the
+ * scene's markup was a large share of the landing's HTML); the poster draws on
+ * hydration, the loop plays only while on screen, and reduced motion keeps the
+ * poster alone. Words come from messages `ourProcess.scenes.<step>`.
  */
 export function ProcessScene({ step, className }: ProcessSceneProps) {
 	const t = useTranslations('ourProcess');
 	const copy = t.raw('scenes') as SceneCopy;
-	return <SceneView step={step} copy={copy} className={className} />;
+	const hydrated = useHydrated();
+	return <SceneView step={step} copy={copy} className={className} hollow={!hydrated} />;
 }
 
 // Plain helpers (PROCESS_STEPS, isProcessStep) live in ./shared, so a server

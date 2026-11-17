@@ -10,6 +10,7 @@ import Image from 'next/image';
 
 //! Hooks
 import { useTranslations } from 'next-intl';
+import { useHydrated } from '@/hooks/useHydrated';
 
 //! Components
 import { AccordionItem, Accordion } from '@/components/ui/accordion';
@@ -233,6 +234,9 @@ export function ProjectCard({ project, size = 'desktop', onOpen, priority, class
 	const sizes = isDesktop ? '(min-width: 1024px) 449px, 90vw' : '(min-width: 768px) 334px, 90vw';
 	const shotCount = project.shots.length;
 	const autoplay = isDesktop && shotCount > 1 && !reduceMotion;
+	// Only the shot on show is server-rendered: the others stay hidden until the desktop dots or autoplay
+	// move the strip (the mobile card never does), so they mount on the client, desktop only.
+	const hydrated = useHydrated();
 
 	useEffect(() => {
 		const card = cardRef.current;
@@ -266,7 +270,7 @@ export function ProjectCard({ project, size = 'desktop', onOpen, priority, class
 			<div className={cx(styles.frame, 'u-outline', className)}>
 				{project.shots.map((item, index) => (
 					<div key={index} className={cx(styles.shot, index === shot && styles.shotActive)} aria-hidden={index !== shot}>
-						<Shot shot={item} sizes={sizes} priority={priority && index === 0} />
+						{(index === shot || (hydrated && isDesktop)) && <Shot shot={item} sizes={sizes} priority={priority && index === 0} />}
 					</div>
 				))}
 			</div>

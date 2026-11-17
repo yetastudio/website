@@ -151,17 +151,11 @@ export const Icon = memo(function Icon({ name, size = 'lg', label, className, ..
 	}
 
 	const glyph = name in extraGlyphs ? extraGlyphs[name as ExtraGlyphName] : glyphs[name as GlyphName];
+	// The glyph lives once in /icons.svg (app/icons.svg) instead of inline at every use. No preload: Chrome
+	// fetches <use> apart from a preload (two downloads), and the header's first icon requests it before first paint anyway.
 	return (
-		<svg
-			className={classes}
-			viewBox={glyph.viewBox}
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-			focusable={false}
-			{...a11y}
-			{...rest}
-		>
-			{glyph.body}
+		<svg className={classes} viewBox={glyph.viewBox} fill="none" focusable={false} {...a11y} {...rest}>
+			<use href={`/icons.svg#${name}`} />
 		</svg>
 	);
 });
