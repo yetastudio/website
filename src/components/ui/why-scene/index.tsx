@@ -5,6 +5,7 @@ import { memo, useEffect, useState } from 'react';
 
 //! Hooks
 import { useTranslations } from 'next-intl';
+import { useHydrated } from '@/hooks/useHydrated';
 
 //! Components
 import { DefyScene } from './defy';
@@ -39,8 +40,9 @@ const LINGER_MS = 400;
 /**
  * What one Why Yeta promise means, as a small Stageshow product scene
  * (288 × 148, transparent: its host draws the surface). Decorative
- * (aria-hidden, nothing focusable, no pointer events). It renders its poster
- * on the server, plays only while its host says so and it is on screen, and
+ * (aria-hidden, nothing focusable, no pointer events). The server sends only
+ * its sized root; the poster draws on hydration, it plays only while its host
+ * says so and it is on screen, and
  * shows the poster alone under reduced motion. Words come from messages
  * `whyYeta.tour.<scene>`.
  *
@@ -64,16 +66,22 @@ export const WhyScene = memo(function WhyScene({ scene, playing = false, classNa
 		return () => window.clearTimeout(id);
 	}, [lingering]);
 	const live = playing || lingering;
+	// Decorative, so the server sends only the sized root: the scene's markup was a large share of the landing's HTML.
+	const hydrated = useHydrated();
 
 	return (
 		<div className={cx(look.root, className)} data-scene={scene} aria-hidden="true">
-			{scene === 'insight' && <InsightScene copy={copy.insight} playing={live} />}
-			{scene === 'together' && <TogetherScene copy={copy.together} playing={live} />}
-			{scene === 'luck' && <LuckScene copy={copy.luck} playing={live} />}
-			{scene === 'defy' && <DefyScene copy={copy.defy} playing={live} />}
-			{scene === 'pixel' && <PixelScene copy={copy.pixel} playing={live} />}
-			{scene === 'vision' && <VisionScene copy={copy.vision} playing={live} />}
-			{scene === 'goals' && <GoalsScene copy={copy.goals} playing={live} />}
+			{hydrated && (
+				<>
+					{scene === 'insight' && <InsightScene copy={copy.insight} playing={live} />}
+					{scene === 'together' && <TogetherScene copy={copy.together} playing={live} />}
+					{scene === 'luck' && <LuckScene copy={copy.luck} playing={live} />}
+					{scene === 'defy' && <DefyScene copy={copy.defy} playing={live} />}
+					{scene === 'pixel' && <PixelScene copy={copy.pixel} playing={live} />}
+					{scene === 'vision' && <VisionScene copy={copy.vision} playing={live} />}
+					{scene === 'goals' && <GoalsScene copy={copy.goals} playing={live} />}
+				</>
+			)}
 		</div>
 	);
 });
