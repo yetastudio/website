@@ -1,7 +1,7 @@
 'use client';
 
 //! React Core
-import { Children, useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import { Children, useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 
 //! Hooks
 import { useTranslations } from 'next-intl';
@@ -25,8 +25,21 @@ export type CarouselProps = {
 	gap?: 'sm' | 'md';
 	/** Show the position dots under the track. */
 	showDots?: boolean;
+	/**
+	 * From 768px the track stops being a carousel and becomes a plain list laid out by this
+	 * class (a grid), so a section renders its cards once instead of a carousel plus a grid.
+	 */
+	listFromMd?: string;
 	className?: string;
 };
+
+const MD = '(min-width: 768px)';
+const subscribeMd = (onChange: () => void) => {
+	const query = window.matchMedia(MD);
+	query.addEventListener('change', onChange);
+	return () => query.removeEventListener('change', onChange);
+};
+const noSubscribe = () => () => {};
 
 /**
  * Inspo component: the horizontal, scroll-snapping track the mobile frames draw. The card
@@ -34,11 +47,18 @@ export type CarouselProps = {
  * from both sides. Native scrolling, so touch, trackpad and keyboard all work; dots are
  * added because Figma draws none.
  */
-export function Carousel({ label, itemLabel, children, gap = 'md', showDots = true, className }: CarouselProps) {
+export function Carousel({ label, itemLabel, children, gap = 'md', showDots = true, listFromMd, className }: CarouselProps) {
 	const t = useTranslations('common');
-	const track = useRef<HTMLUListElement>(null);
+	const track = useRef<HTMLOListElement>(null);
 	const [index, setIndex] = useState(0);
 	const items = Children.toArray(children);
+	// The server renders the carousel (mobile first); CSS lays out the list from 768px before
+	// hydration, and the carousel semantics and dots drop once the client knows the width.
+	const asList = useSyncExternalStore(
+		listFromMd ? subscribeMd : noSubscribe,
+		() => Boolean(listFromMd) && window.matchMedia(MD).matches,
+		() => false
+	);
 
 	// Centre the first slide: the inline inset is half the track minus half a slide, kept in
 	// step with resizes. Written straight to a custom property, so it never re-renders.
@@ -94,15 +114,24 @@ export function Carousel({ label, itemLabel, children, gap = 'md', showDots = tr
 	}, []);
 
 	return (
-		<section className={cx(styles.carousel, className)} aria-roledescription="carousel" aria-label={label}>
-			<ul ref={track} className={cx(styles.track, styles[`gap-${gap}`])} tabIndex={0}>
+		<section
+			className={cx(styles.carousel, listFromMd && styles.listFromMd, className)}
+			aria-roledescription={asList ? undefined : 'carousel'}
+			aria-label={label}
+		>
+			<ol ref={track} className={cx(styles.track, styles[`gap-${gap}`], listFromMd)} tabIndex={asList ? undefined : 0}>
 				{items.map((child, i) => (
-					<li key={i} className={styles.slide} aria-roledescription="slide" aria-label={`${i + 1} / ${items.length}`}>
+					<li
+						key={i}
+						className={styles.slide}
+						aria-roledescription={asList ? undefined : 'slide'}
+						aria-label={asList ? undefined : `${i + 1} / ${items.length}`}
+					>
 						{child}
 					</li>
 				))}
-			</ul>
-			{showDots && items.length > 1 && (
+			</ol>
+			{showDots && !asList && items.length > 1 && (
 				<PaginationDots count={items.length} index={index} onSelect={goTo} itemLabel={itemLabel ?? t('slide')} className={styles.dots} />
 			)}
 		</section>

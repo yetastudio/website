@@ -6,27 +6,6 @@
 	min-height: 21.25rem; /* 340 */
 }
 
-.grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-	justify-items: center;
-	gap: var(--space-24) var(--space-40);
-	width: 100%;
-	max-width: 72.125rem; /* 1154: three 358 cards + two 40 gaps */
-	list-style: none;
-}
-
-.grid > li {
-	display: flex;
-	justify-content: center;
-	width: 100%;
-}
-
-.grid .card {
-	width: 100%;
-	min-height: 20rem; /* 320 */
-}
-
 @media (min-width: 768px) {
 	.section {
 		padding-block: var(--space-64);
@@ -35,10 +14,32 @@
 	.header > :last-child {
 		max-width: 25.75rem; /* 412 */
 	}
+
+	/* The carousel's track from 768px. Two classes: it overrides the Carousel's own track styles. */
+	.section .grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+		justify-items: center;
+		gap: var(--space-24) var(--space-40);
+		width: 100%;
+		max-width: 72.125rem; /* 1154: three 358 cards + two 40 gaps */
+		list-style: none;
+	}
+
+	.section .grid > li {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+	}
+
+	.section .grid .card {
+		width: 100%;
+		min-height: 20rem; /* 320 */
+	}
 }
 
 @media (min-width: 1200px) {
-	.grid {
+	.section .grid {
 		grid-template-columns: repeat(3, 22.375rem);
 		justify-content: center;
 	}
