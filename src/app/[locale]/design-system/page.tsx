@@ -7,10 +7,17 @@ import { Header } from '@/components/layout/header';
 import { ToastProvider } from '@/components/ui/toast';
 import DesignSystemShowcase from './showcase';
 
-export const metadata: Metadata = {
-	title: 'Design System',
-	description: 'Tokens, components and states of the Yeta Studio design system, in light and dark.',
-};
+//! Content
+import { alternates } from '@/lib/site';
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+	const { locale } = await params;
+	return {
+		title: 'Design System',
+		description: 'Tokens, components and states of the Yeta Studio design system, in light and dark.',
+		alternates: alternates(locale, '/design-system'),
+	};
+}
 
 export default async function DesignSystemPage({ params }: { params: Promise<{ locale: string }> }) {
 	const { locale } = await params;
