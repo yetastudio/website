@@ -44,18 +44,10 @@ export function OurProcess() {
 				<p>{t.rich('kickoff', richTags)}</p>
 			</SectionHeader>
 
-			<div className={section.mobileOnly}>
-				<Carousel label={t('carousel')} itemLabel={t('card')} gap="sm">
-					{cards}
-				</Carousel>
-			</div>
-			<div className={section.desktopOnly}>
-				<ol className={styles.grid}>
-					{cards.map((card) => (
-						<li key={card.key}>{card}</li>
-					))}
-				</ol>
-			</div>
+			{/* One list: a carousel on phones, the 3 × 2 grid from 768px, so each card and scene renders once. */}
+			<Carousel label={t('carousel')} itemLabel={t('card')} gap="sm" listFromMd={styles.grid}>
+				{cards}
+			</Carousel>
 
 			<div className={section.cta}>
 				<p className={section.ctaText}>{t.rich('cta', richTags)}</p>
