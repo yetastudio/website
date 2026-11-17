@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
+import { SITE_URL } from '@/lib/site';
 
 //! Context
 import { ThemeProvider, themeScript } from '@/context/ThemeContext';
@@ -27,10 +28,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 	const { locale } = await params;
 	const t = await getTranslations({ locale, namespace: 'meta' });
 	return {
-		metadataBase: new URL('https://yeta.studio'),
+		metadataBase: new URL(SITE_URL),
 		title: { default: t('title'), template: `%s ✹ Yeta Studio` },
 		description: t('description'),
 		openGraph: {
+			type: 'website',
+			siteName: 'Yeta Studio',
 			title: t('title'),
 			description: t('description'),
 			images: [{ url: '/brand/og/og-encountered-dark.png', width: 1200, height: 628 }],
